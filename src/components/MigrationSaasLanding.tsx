@@ -34,7 +34,7 @@ const MigrationSaasLanding = () => {
 
 ¿Pueden ayudarme con el setup y los 14 días gratis?`;
     } else if (plan === 'professional') {
-      message = `🔥 Hola! ¡LO QUIERO! Necesito el Plan PROFESSIONAL ($149/mes) con el BONUS de setup personalizado ($497 valor).
+      message = `🔥 Hola! ¡LO QUIERO! Necesito el Plan PROFESSIONAL ($149/mes).
 
 Estoy listo para TRIPLICAR mis ingresos. ¿Cuándo empezamos?`;
     } else if (plan === 'enterprise') {
@@ -201,8 +201,7 @@ Quiero información sobre cómo empezar con los 14 días gratis. ¿Me pueden ayu
       notIncluded: [],
       highlighted: true,
       cta: "¡LO QUIERO!",
-      guarantee: "14 días gratis + Garantía 60 días",
-      bonus: "🎁 BONO: Setup personalizado + 2hrs capacitación ($497 de valor)"
+      guarantee: "14 días gratis + Garantía 60 días"
     },
     {
       name: "Enterprise",
@@ -231,8 +230,7 @@ Quiero información sobre cómo empezar con los 14 días gratis. ¿Me pueden ayu
       notIncluded: [],
       highlighted: false,
       cta: "Contactar Ventas",
-      guarantee: "POC gratuito + Garantía 90 días",
-      bonus: "🎁 BONO: Migración completa + Onboarding VIP ($2,997 de valor)"
+      guarantee: "POC gratuito + Garantía 90 días"
     }
   ];
 
@@ -581,21 +579,19 @@ Quiero información sobre cómo empezar con los 14 días gratis. ¿Me pueden ayu
             <div className="inline-flex items-center bg-slate-800/50 border border-slate-700/50 rounded-xl p-1 mb-8">
               <button
                 onClick={() => setBillingCycle('monthly')}
-                className={`px-6 py-2 rounded-lg font-medium transition-all ${
-                  billingCycle === 'monthly'
-                    ? 'bg-emerald-500 text-white'
-                    : 'text-slate-400 hover:text-white'
-                }`}
+                className={`px-6 py-2 rounded-lg font-medium transition-all ${billingCycle === 'monthly'
+                  ? 'bg-emerald-500 text-white'
+                  : 'text-slate-400 hover:text-white'
+                  }`}
               >
                 Mensual
               </button>
               <button
                 onClick={() => setBillingCycle('yearly')}
-                className={`px-6 py-2 rounded-lg font-medium transition-all relative ${
-                  billingCycle === 'yearly'
-                    ? 'bg-emerald-500 text-white'
-                    : 'text-slate-400 hover:text-white'
-                }`}
+                className={`px-6 py-2 rounded-lg font-medium transition-all relative ${billingCycle === 'yearly'
+                  ? 'bg-emerald-500 text-white'
+                  : 'text-slate-400 hover:text-white'
+                  }`}
               >
                 Anual
                 <span className="absolute -top-8 left-1/2 -translate-x-1/2 bg-red-500 text-white text-xs px-2 py-1 rounded whitespace-nowrap font-bold animate-bounce">
@@ -609,11 +605,10 @@ Quiero información sobre cómo empezar con los 14 días gratis. ¿Me pueden ayu
             {plans.map((plan, index) => (
               <div
                 key={index}
-                className={`relative rounded-2xl p-8 transition-all hover:scale-105 ${
-                  plan.highlighted
-                    ? 'bg-gradient-to-b from-emerald-500/20 to-blue-500/20 border-4 border-emerald-500 shadow-2xl shadow-emerald-500/50 scale-105 z-10'
-                    : 'bg-slate-800/50 border-2 border-slate-700/50'
-                }`}
+                className={`relative rounded-2xl p-8 transition-all hover:scale-105 ${plan.highlighted
+                  ? 'bg-gradient-to-b from-emerald-500/20 to-blue-500/20 border-4 border-emerald-500 shadow-2xl shadow-emerald-500/50 scale-105 z-10'
+                  : 'bg-slate-800/50 border-2 border-slate-700/50'
+                  }`}
               >
                 {plan.badge && (
                   <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-red-500 to-orange-500 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg animate-pulse">
@@ -650,21 +645,15 @@ Quiero información sobre cómo empezar con los 14 días gratis. ¿Me pueden ayu
                     href={getWhatsAppURL(plan.name.toLowerCase())}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`w-full py-4 rounded-xl font-bold text-lg mb-4 transition-all inline-block text-center ${
-                      plan.highlighted
-                        ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white shadow-lg shadow-emerald-500/30 hover:scale-105 animate-pulse'
-                        : 'bg-slate-700 hover:bg-slate-600 text-white'
-                    }`}
+                    className={`w-full py-4 rounded-xl font-bold text-lg mb-4 transition-all inline-block text-center ${plan.highlighted
+                      ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white shadow-lg shadow-emerald-500/30 hover:scale-105 animate-pulse'
+                      : 'bg-slate-700 hover:bg-slate-600 text-white'
+                      }`}
                   >
                     {plan.cta}
                   </a>
 
                   <p className="text-xs text-slate-400 mb-2">{plan.guarantee}</p>
-                  {plan.bonus && (
-                    <p className="text-xs text-yellow-400 font-semibold bg-yellow-400/10 border border-yellow-400/30 rounded-lg p-2">
-                      {plan.bonus}
-                    </p>
-                  )}
                 </div>
 
                 <div className="space-y-3 mb-6">
@@ -745,9 +734,8 @@ Quiero información sobre cómo empezar con los 14 días gratis. ¿Me pueden ayu
                 >
                   <span className="font-bold text-white pr-8 text-lg">{faq.question}</span>
                   <ChevronDown
-                    className={`w-6 h-6 text-emerald-400 flex-shrink-0 transition-transform ${
-                      openFaq === index ? 'rotate-180' : ''
-                    }`}
+                    className={`w-6 h-6 text-emerald-400 flex-shrink-0 transition-transform ${openFaq === index ? 'rotate-180' : ''
+                      }`}
                   />
                 </button>
                 {openFaq === index && (
@@ -842,7 +830,7 @@ Quiero información sobre cómo empezar con los 14 días gratis. ¿Me pueden ayu
                 La plataforma #1 para facilitadores migratorios que quieren escalar sin límites.
               </p>
               <div className="flex gap-2">
-                {[1,2,3,4,5].map((_, i) => (
+                {[1, 2, 3, 4, 5].map((_, i) => (
                   <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
                 ))}
               </div>
