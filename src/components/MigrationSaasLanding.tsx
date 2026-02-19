@@ -23,6 +23,33 @@ const MigrationSaasLanding = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [timeLeft, setTimeLeft] = useState({ hours: 23, minutes: 45, seconds: 30 });
 
+  // WhatsApp Configuration
+  const WHATSAPP_NUMBER = '593986059727'; // +593-98-605-9727
+
+  const getWhatsAppURL = (plan?: string) => {
+    let message = '';
+
+    if (plan === 'starter') {
+      message = `🚀 Hola! Quiero empezar con el Plan STARTER ($49/mes) del SaaS de Gestión Migratoria.
+
+¿Pueden ayudarme con el setup y los 14 días gratis?`;
+    } else if (plan === 'professional') {
+      message = `🔥 Hola! ¡LO QUIERO! Necesito el Plan PROFESSIONAL ($149/mes) con el BONUS de setup personalizado ($497 valor).
+
+Estoy listo para TRIPLICAR mis ingresos. ¿Cuándo empezamos?`;
+    } else if (plan === 'enterprise') {
+      message = `💎 Hola! Necesito hablar sobre el Plan ENTERPRISE ($349/mes).
+
+Procesamos 100+ casos/mes y necesitamos la migración VIP completa. ¿Podemos agendar una llamada?`;
+    } else {
+      message = `👋 Hola! Vengo de la landing page del SaaS de Gestión Migratoria.
+
+Quiero información sobre cómo empezar con los 14 días gratis. ¿Me pueden ayudar?`;
+    }
+
+    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+  };
+
   // Countdown timer para urgencia
   useEffect(() => {
     const timer = setInterval(() => {
@@ -295,7 +322,12 @@ const MigrationSaasLanding = () => {
               <span className="bg-white/20 px-2 py-1 rounded">{String(timeLeft.seconds).padStart(2, '0')}s</span>
             </div>
           </div>
-          <a href="#pricing" className="bg-white text-red-600 px-4 py-1 rounded-full font-bold hover:bg-red-50 transition-all animate-pulse">
+          <a
+            href={getWhatsAppURL()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-white text-red-600 px-4 py-1 rounded-full font-bold hover:bg-red-50 transition-all animate-pulse"
+          >
             ¡APROVECHA AHORA!
           </a>
         </div>
@@ -343,7 +375,9 @@ const MigrationSaasLanding = () => {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-6">
               <a
-                href="#pricing"
+                href={getWhatsAppURL()}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white px-10 py-5 rounded-xl font-bold text-xl transition-all shadow-2xl shadow-emerald-500/50 hover:shadow-emerald-500/75 hover:scale-110 flex items-center gap-3 animate-pulse"
               >
                 SÍ, ¡QUIERO TRIPLICAR MIS INGRESOS!
@@ -458,7 +492,9 @@ const MigrationSaasLanding = () => {
               </span>
             </p>
             <a
-              href="#pricing"
+              href={getWhatsAppURL('professional')}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all shadow-xl shadow-emerald-500/30 hover:scale-105"
             >
               ¡QUIERO ESTO AHORA!
@@ -610,13 +646,18 @@ const MigrationSaasLanding = () => {
                     )}
                   </div>
 
-                  <button className={`w-full py-4 rounded-xl font-bold text-lg mb-4 transition-all ${
-                    plan.highlighted
-                      ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white shadow-lg shadow-emerald-500/30 hover:scale-105 animate-pulse'
-                      : 'bg-slate-700 hover:bg-slate-600 text-white'
-                  }`}>
+                  <a
+                    href={getWhatsAppURL(plan.name.toLowerCase())}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`w-full py-4 rounded-xl font-bold text-lg mb-4 transition-all inline-block text-center ${
+                      plan.highlighted
+                        ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white shadow-lg shadow-emerald-500/30 hover:scale-105 animate-pulse'
+                        : 'bg-slate-700 hover:bg-slate-600 text-white'
+                    }`}
+                  >
                     {plan.cta}
-                  </button>
+                  </a>
 
                   <p className="text-xs text-slate-400 mb-2">{plan.guarantee}</p>
                   {plan.bonus && (
@@ -767,7 +808,9 @@ const MigrationSaasLanding = () => {
 
               <div className="flex flex-col items-center gap-4 mb-6">
                 <a
-                  href="#pricing"
+                  href={getWhatsAppURL()}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white px-12 py-6 rounded-xl font-bold text-2xl transition-all shadow-2xl shadow-emerald-500/50 hover:shadow-emerald-500/75 hover:scale-110 inline-flex items-center gap-3 animate-pulse"
                 >
                   SÍ, QUIERO CRECER - EMPIEZA GRATIS AHORA
