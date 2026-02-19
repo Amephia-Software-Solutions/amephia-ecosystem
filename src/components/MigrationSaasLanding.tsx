@@ -273,32 +273,12 @@ Quiero información sobre cómo empezar con los 14 días gratis. ¿Me pueden ayu
     }
   ];
 
-  const guarantees = [
-    {
-      icon: <Shield className="w-6 h-6" />,
-      title: "Garantía de Dinero 100% Devuelto",
-      description: "60 días para probar TODO. Si no te ahorra mínimo 10 hrs/semana, dinero de vuelta. Sin preguntas."
-    },
-    {
-      icon: <BadgeCheck className="w-6 h-6" />,
-      title: "Garantía de Satisfacción Total",
-      description: "Si algo no funciona como prometimos, lo arreglamos GRATIS o te devolvemos DOBLE."
-    },
-    {
-      icon: <Zap className="w-6 h-6" />,
-      title: "Garantía de Setup en 5 Minutos",
-      description: "Si te toma más de 5 minutos crear tu cuenta y primer caso, te regalamos el primer mes."
-    }
-  ];
+  const guarantees = [];
 
   const urgencyReasons = [
     {
       icon: <Timer className="w-5 h-5" />,
       text: "Solo 7 cupos disponibles este mes (limitamos onboarding para dar mejor servicio)"
-    },
-    {
-      icon: <Gift className="w-5 h-5" />,
-      text: "Bonus de setup personalizado ($497) SOLO para los primeros 20 registros"
     },
     {
       icon: <TrendingUp className="w-5 h-5" />,
