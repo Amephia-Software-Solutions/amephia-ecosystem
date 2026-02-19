@@ -5,8 +5,10 @@ import { Header } from './components/Header';
 import { BentoGrid } from './components/layout/BentoGrid';
 import { GymModule } from './components/modules/GymModule';
 import { FacturacionModule } from './components/modules/FacturacionModule';
+import { MigrationModule } from './components/modules/MigrationModule';
 import { SatelliteModule } from './components/modules/SatelliteModule';
 import { ProjectLanding } from './components/ProjectLanding';
+import MigrationSaasLanding from './components/MigrationSaasLanding';
 
 import { InfoSection } from './components/InfoSection';
 import { GymErpSection } from './components/GymErpSection';
@@ -52,6 +54,11 @@ const PROJECT_META: Record<ProjectId, { title: string; description: string }> = 
     title: 'Asesoría Tecnológica',
     description:
       'Servicios de asesoría para startups y empresas: arquitectura, roadmap de producto y optimización de procesos.',
+  },
+  migration: {
+    title: 'SaaS de Gestión Migratoria',
+    description:
+      'Plataforma multitenancy para facilitadores migratorios: gestión de casos, clientes, documentos, pagos y portal del cliente.',
   },
 };
 
@@ -160,13 +167,18 @@ function App() {
   return (
     <Shell>
       {activeProject ? (
-        <ProjectLanding projectId={activeProject} onBack={closeProject} />
+        activeProject === 'migration' ? (
+          <MigrationSaasLanding />
+        ) : (
+          <ProjectLanding projectId={activeProject} onBack={closeProject} />
+        )
       ) : (
         <>
           <Header />
           <BentoGrid>
             <GymModule onOpenProject={openProject} />
             <FacturacionModule onOpenProject={openProject} />
+            <MigrationModule onOpenProject={openProject} />
             <SatelliteModule title="POS" type="pos" delay={0.3} onOpenProject={openProject} />
             <SatelliteModule title="NUTRI" type="nutri" delay={0.4} onOpenProject={openProject} />
           </BentoGrid>
@@ -227,6 +239,13 @@ function App() {
                 onClick={(event) => handleProjectLinkClick(event, 'advisory')}
               >
                 Servicios de Asesoría
+              </a>
+              <a
+                href="/proyecto/migration"
+                className="hover:text-primary transition-colors"
+                onClick={(event) => handleProjectLinkClick(event, 'migration')}
+              >
+                SaaS de Gestión Migratoria
               </a>
             </div>
           </section>

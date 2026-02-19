@@ -4,6 +4,8 @@ import type { Language } from '../i18n';
 import type { ProjectId } from '../projects';
 import { trackContactClick, trackEvent, trackLeadGenerated } from '../lib/analytics';
 
+import { openEmailClient } from '../lib/emailUtils';
+
 interface ProjectLandingProps {
   projectId: ProjectId;
   onBack: () => void;
@@ -45,19 +47,20 @@ const PROJECT_COPY: Record<Language, Record<ProjectId, ProjectCopy>> = {
       badge: 'Project Landing',
       title: 'Electronic Invoicing System',
       subtitle: 'Automated fiscal compliance and digital documents',
-      description: 'A robust invoicing service that handles document generation, validations, statuses, and integration with accounting flows.',
+      description: 'A robust invoicing service that handles advanced document signing, real-time SRI transmission, and automated fiscal compliance.',
       highlightsTitle: 'Core Scope',
       highlights: [
-        'Automated invoice generation',
-        'Compliance validation flows',
-        'Delivery status and traceability',
-        'API-ready integration layer',
+        'Automated XML signing (X.509 PKCS#12)',
+        'Real-time SRI transmission & authorization',
+        'Direct integration with Production & Testing environments',
+        'Automated RIDE (PDF) & XML delivery',
       ],
       deliverablesTitle: 'What We Deliver',
       deliverables: [
-        'Invoicing engine',
-        'Operations dashboard',
-        'Audit and history records',
+        'High-performance invoicing engine',
+        'Management dashboard with document trace',
+        'Digital certificate secure storage',
+        'Complete fiscal audit trail',
       ],
     },
     pos: {
@@ -136,6 +139,28 @@ const PROJECT_COPY: Record<Language, Record<ProjectId, ProjectCopy>> = {
         'Follow-up sessions with leadership',
       ],
     },
+    migration: {
+      badge: 'SaaS Product',
+      title: 'Migration Management SaaS',
+      subtitle: 'Multi-tenant platform for immigration facilitators',
+      description: 'Complete SaaS platform for immigration consultancies to manage clients, cases, documents, payments, and client portal access.',
+      highlightsTitle: 'Core Features',
+      highlights: [
+        'Multi-tenant architecture with data isolation',
+        'Case and client management',
+        'Document storage and tracking',
+        'Integrated payment processing (Stripe, PayPal)',
+        'Client self-service portal',
+        'Advanced analytics and reporting',
+      ],
+      deliverablesTitle: 'What\'s Included',
+      deliverables: [
+        'Full SaaS platform with admin panel',
+        'Client portal with real-time case tracking',
+        'Payment integrations and invoicing',
+        '14-day free trial and onboarding',
+      ],
+    },
   },
   es: {
     gym: {
@@ -161,19 +186,20 @@ const PROJECT_COPY: Record<Language, Record<ProjectId, ProjectCopy>> = {
       badge: 'Landing del Proyecto',
       title: 'Sistema de Facturación Electrónica',
       subtitle: 'Cumplimiento fiscal automatizado y documentos digitales',
-      description: 'Un servicio robusto de facturación que gestiona generación de comprobantes, validaciones, estados e integración con flujos contables.',
+      description: 'Un servicio robusto de facturación que gestiona firma avanzada de documentos, transmisión en tiempo real al SRI y cumplimiento fiscal automatizado.',
       highlightsTitle: 'Alcance Principal',
       highlights: [
-        'Generación automática de facturas',
-        'Flujos de validación de cumplimiento',
-        'Trazabilidad y estado de entrega',
-        'Capa de integración vía API',
+        'Firma electrónica avanzada (X.509 PKCS#12)',
+        'Transmisión y autorización SRI en tiempo real',
+        'Integración con ambientes de Pruebas y Producción',
+        'Generación automática de RIDE (PDF) y XML',
       ],
       deliverablesTitle: 'Qué Entregamos',
       deliverables: [
-        'Motor de facturación',
-        'Dashboard operativo',
-        'Historial y auditoría de documentos',
+        'Motor de facturación de alto rendimiento',
+        'Dashboard de gestión con trazabilidad',
+        'Almacenamiento seguro de certificados digitales',
+        'Historial y auditoría fiscal completa',
       ],
     },
     pos: {
@@ -252,15 +278,40 @@ const PROJECT_COPY: Record<Language, Record<ProjectId, ProjectCopy>> = {
         'Sesiones de seguimiento con liderazgo',
       ],
     },
+    migration: {
+      badge: 'Producto SaaS',
+      title: 'SaaS de Gestión Migratoria',
+      subtitle: 'Plataforma multitenancy para facilitadores migratorios',
+      description: 'Plataforma SaaS completa para consultoras de inmigración que permite gestionar clientes, casos, documentos, pagos y portal del cliente.',
+      highlightsTitle: 'Funcionalidades Principales',
+      highlights: [
+        'Arquitectura multitenancy con aislamiento de datos',
+        'Gestión completa de casos y clientes',
+        'Almacenamiento y seguimiento de documentos',
+        'Procesamiento de pagos integrado (Stripe, PayPal)',
+        'Portal de autoservicio para clientes',
+        'Analytics y reportes avanzados',
+      ],
+      deliverablesTitle: 'Qué Incluye',
+      deliverables: [
+        'Plataforma SaaS con panel de administración',
+        'Portal del cliente con seguimiento en tiempo real',
+        'Integraciones de pago y facturación',
+        '14 días de prueba gratis y onboarding',
+      ],
+    },
   },
 };
+
+
+// ... existing code ...
 
 export const ProjectLanding = ({ projectId, onBack }: ProjectLandingProps) => {
   const { language } = useLanguage();
   const copy = PROJECT_COPY[language][projectId];
   const whatsappNumber = '593986059727';
   const packagistUrl = 'https://packagist.org/packages/amephia/sri-ec';
-  const contactEmail = 'info@amephia.com';
+  // Email generated at runtime
   const introMessage =
     language === 'es'
       ? `Hola, quiero información del proyecto ${copy.title}.`
@@ -270,8 +321,9 @@ export const ProjectLanding = ({ projectId, onBack }: ProjectLandingProps) => {
     language === 'es'
       ? `Agenda de proyecto: ${copy.title}`
       : `Project consultation: ${copy.title}`;
-  const emailUrl = `mailto:${contactEmail}?subject=${encodeURIComponent(emailSubject)}`;
-  const secondaryUrl = projectId === 'facturacion' ? packagistUrl : emailUrl;
+
+  // For email, we use a button handler instead of mailto: link to avoid scraping
+  const secondaryUrl = projectId === 'facturacion' ? packagistUrl : '#';
   const secondaryLabel =
     projectId === 'facturacion'
       ? language === 'es'
@@ -299,6 +351,8 @@ export const ProjectLanding = ({ projectId, onBack }: ProjectLandingProps) => {
       const context = `project_${projectId}_secondary`;
       trackContactClick('email', context);
       trackLeadGenerated('email', context);
+      // Trigger email client opening
+      openEmailClient(emailSubject);
     }
   };
 

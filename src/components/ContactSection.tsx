@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../i18n';
 import { trackContactClick, trackLeadGenerated } from '../lib/analytics';
+import { getContactEmail, openEmailClient } from '../lib/emailUtils';
 
 const WHATSAPP_NUMBER = '593986059727';
-const CONTACT_EMAIL = 'info@amephia.com';
-const FORM_SUBMIT_ENDPOINT = `https://formsubmit.co/ajax/${CONTACT_EMAIL}`;
+// Email is generated at runtime to avoid scraping
+const FORM_SUBMIT_ENDPOINT = `https://formsubmit.co/ajax/${getContactEmail()}`;
 
 const WhatsAppIcon = () => (
   <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
@@ -103,10 +104,11 @@ export const ContactSection = () => {
     }));
   };
 
-  const trackEmailLead = (context: string) => {
-    trackContactClick('email', context);
-    trackLeadGenerated('email', context);
-  };
+  // Removed unused function
+  // const trackEmailLead = (context: string) => {
+  //   trackContactClick('email', context);
+  //   trackLeadGenerated('email', context);
+  // };
 
   const openWhatsApp = (context = 'contact_whatsapp') => {
     trackContactClick('whatsapp', context);
@@ -195,13 +197,12 @@ export const ContactSection = () => {
               </div>
               <div>
                 <p className="text-xs text-mutedText uppercase tracking-wider">Email</p>
-                <a
-                  href={`mailto:${CONTACT_EMAIL}`}
-                  onClick={() => trackEmailLead('contact_quick_info')}
-                  className="text-white font-medium hover:text-primary transition-colors"
+                <button
+                  onClick={() => openEmailClient('Consulta desde Web')}
+                  className="text-white font-medium hover:text-primary transition-colors text-left"
                 >
-                  {CONTACT_EMAIL}
-                </a>
+                  info<span className="hidden">.remove</span>@amephia.com
+                </button>
               </div>
             </div>
           </motion.div>
@@ -337,13 +338,13 @@ export const ContactSection = () => {
               >
                 <p className="mb-3">{submitError}</p>
                 <div className="flex items-center justify-center gap-3">
-                  <a
-                    href={`mailto:${CONTACT_EMAIL}`}
-                    onClick={() => trackEmailLead('contact_error_fallback')}
-                    className="px-4 py-2 border border-white/20 rounded-lg hover:bg-white/5 transition-colors"
+                  <button
+                    type="button"
+                    onClick={() => openEmailClient('Consulta por error en formulario')}
+                    className="px-4 py-2 border border-white/20 rounded-lg hover:bg-white/5 transition-colors text-white"
                   >
                     {t('contactEmailNow')}
-                  </a>
+                  </button>
                   <button
                     type="button"
                     onClick={() => openWhatsApp('contact_error_fallback')}

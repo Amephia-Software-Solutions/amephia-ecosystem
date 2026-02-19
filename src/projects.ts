@@ -5,6 +5,7 @@ export const PROJECT_IDS = [
   'nutri',
   'ecommerce',
   'advisory',
+  'migration',
 ] as const;
 
 export type ProjectId = (typeof PROJECT_IDS)[number];

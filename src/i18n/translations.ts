@@ -32,8 +32,8 @@ export const translations = {
     posTitle: 'Point of Sale',
     posDesc: 'Fast and intuitive POS for counter sales, returns, instant invoicing, and support for barcode scanners and thermal printers.',
 
-    invoicingTitle: 'Electronic Invoicing',
-    invoicingDesc: 'Fully compliant electronic invoicing system. Generate, send, and manage invoices automatically with tax compliance built-in.',
+    invoicingTitle: 'Electronic Invoicing (SRI)',
+    invoicingDesc: 'Advanced electronic invoicing with XML signing, real-time SRI transmission, and automated RIDE generation.',
 
     accountingTitle: 'Accounting',
     accountingDesc: 'Complete financial management with real-time reports, expense tracking, cash flow analysis, and integration with your existing accounting systems.',
@@ -148,8 +148,8 @@ export const translations = {
     posTitle: 'Punto de Venta',
     posDesc: 'Sistema POS rápido e intuitivo para ventas de mostrador, devoluciones, facturación instantánea y soporte para lector de códigos e impresora térmica.',
 
-    invoicingTitle: 'Facturación Electrónica',
-    invoicingDesc: 'Sistema de facturación electrónica totalmente compatible. Genera, envía y administra facturas automáticamente con cumplimiento fiscal integrado.',
+    invoicingTitle: 'Facturación Electrónica (SRI)',
+    invoicingDesc: 'Facturación avanzada con firma de XML, transmisión al SRI en tiempo real y generación automática de RIDE.',
 
     accountingTitle: 'Contabilidad',
     accountingDesc: 'Gestión financiera completa con reportes en tiempo real, seguimiento de gastos, análisis de flujo de caja e integración con tus sistemas contables existentes.',
