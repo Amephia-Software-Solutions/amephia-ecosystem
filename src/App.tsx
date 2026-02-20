@@ -9,9 +9,9 @@ import { MigrationModule } from './components/modules/MigrationModule';
 import { SatelliteModule } from './components/modules/SatelliteModule';
 import { ProjectLanding } from './components/ProjectLanding';
 import MigrationSaasLanding from './components/MigrationSaasLanding';
+import GymLanding from './components/GymLanding';
 
 import { InfoSection } from './components/InfoSection';
-import { GymErpSection } from './components/GymErpSection';
 import { ProductsSection } from './components/ProductsSection';
 import { StatsSection } from './components/StatsSection';
 import { FaqSection } from './components/FaqSection';
@@ -168,6 +168,10 @@ function App() {
     return <MigrationSaasLanding />;
   }
 
+  if (activeProject === 'gym') {
+    return <GymLanding />;
+  }
+
   return (
     <Shell>
       {activeProject ? (
@@ -188,8 +192,6 @@ function App() {
           <ProductsSection onOpenProject={openProject} />
 
           <StatsSection />
-
-          <GymErpSection />
 
           <FaqSection />
 
