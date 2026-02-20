@@ -1,0 +1,24 @@
+{
+  "name": "AmePhia Systems — Software para Gimnasios Ecuador",
+  "short_name": "AmePhia GYM",
+  "description": "ERP completo para gimnasios: membresías, facturación SRI, POS, inventario, contabilidad NIIF y reportes.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050510",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait-primary",
+  "lang": "es-EC",
+  "categories": ["business", "fitness", "productivity"],
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

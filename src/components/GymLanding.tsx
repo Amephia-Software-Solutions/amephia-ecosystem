@@ -314,12 +314,37 @@ const GymLanding = () => {
     { label: 'FAQ', id: 'faq' },
   ];
 
+  /* — FAQ Schema JSON-LD — */
+  useEffect(() => {
+    const faqLd = {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    };
+    const existing = document.querySelector('script[data-seo="faq"]');
+    if (existing) {
+      existing.textContent = JSON.stringify(faqLd);
+    } else {
+      const s = document.createElement('script');
+      s.type = 'application/ld+json';
+      s.setAttribute('data-seo', 'faq');
+      s.textContent = JSON.stringify(faqLd);
+      document.head.appendChild(s);
+    }
+    return () => { document.querySelector('script[data-seo="faq"]')?.remove(); };
+  }, []);
+
   return (
-    <div className="min-h-screen bg-[#050510] text-white font-sans antialiased overflow-x-hidden">
+    <div className="min-h-screen bg-[#050510] text-white font-sans antialiased overflow-x-hidden" role="document">
       {/* ═══════════════════════════════════════════
           NAV
          ═══════════════════════════════════════════ */}
       <nav
+        aria-label="Navegación principal"
         className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
           scrolled
             ? 'bg-[#050510]/90 backdrop-blur-xl border-b border-white/5 shadow-2xl'
@@ -367,6 +392,8 @@ const GymLanding = () => {
           <button
             className="md:hidden flex flex-col gap-1.5"
             onClick={() => setMobileMenu(!mobileMenu)}
+            aria-label="Abrir menú de navegación"
+            aria-expanded={mobileMenu}
           >
             <span className={`w-6 h-0.5 bg-white transition-all ${mobileMenu ? 'rotate-45 translate-y-2' : ''}`} />
             <span className={`w-6 h-0.5 bg-white transition-all ${mobileMenu ? 'opacity-0' : ''}`} />
@@ -398,6 +425,7 @@ const GymLanding = () => {
         )}
       </nav>
 
+      <main>
       {/* ═══════════════════════════════════════════
           HERO
          ═══════════════════════════════════════════ */}
@@ -1074,6 +1102,8 @@ const GymLanding = () => {
               >
                 <button
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                  aria-expanded={openFaq === i}
+                  aria-controls={`faq-answer-${i}`}
                   className="w-full flex items-center justify-between px-6 py-5 text-left"
                 >
                   <span className="font-semibold text-sm pr-4">{faq.q}</span>
@@ -1084,7 +1114,7 @@ const GymLanding = () => {
                   />
                 </button>
                 {openFaq === i && (
-                  <div className="px-6 pb-5 text-sm text-white/50 leading-relaxed -mt-1">
+                  <div id={`faq-answer-${i}`} role="region" aria-labelledby={`faq-q-${i}`} className="px-6 pb-5 text-sm text-white/50 leading-relaxed -mt-1">
                     {faq.a}
                   </div>
                 )}
@@ -1142,6 +1172,8 @@ const GymLanding = () => {
           </div>
         </div>
       </section>
+
+      </main>
 
       {/* ═══════════════════════════════════════════
           FOOTER

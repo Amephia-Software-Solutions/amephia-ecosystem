@@ -36,6 +36,9 @@ RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
   Header set Referrer-Policy "strict-origin-when-cross-origin"
 </IfModule>
 
+# Custom 404 page
+ErrorDocument 404 /404.html
+
 # SPA fallback — serve index.html for all non-file routes
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
