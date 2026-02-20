@@ -91,6 +91,47 @@ export const ProductsSection = ({ onOpenProject }: ProductsSectionProps) => {
         </motion.div>
       </div>
 
+      {/* Migration SaaS — Featured Product */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        onClick={() => onOpenProject?.('migration')}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            onOpenProject?.('migration');
+          }
+        }}
+        role="button"
+        tabIndex={0}
+        className="group relative mb-8 bg-gradient-to-r from-emerald-500/10 via-blue-500/5 to-purple-500/10 border border-emerald-500/20 rounded-2xl p-6 md:p-8 hover:border-emerald-500/40 transition-all duration-300 cursor-pointer overflow-hidden focus:outline-none focus:ring-2 focus:ring-emerald-500/40"
+      >
+        <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-emerald-500/10 transition-colors" />
+        <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+          <div className="flex-1">
+            <span className="inline-block px-3 py-1 bg-emerald-500/20 border border-emerald-500/30 rounded-full text-[10px] font-mono text-emerald-400 uppercase tracking-wider mb-3">
+              {t('migrationSaasBadge')}
+            </span>
+            <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors">
+              {t('migrationSaasTitle')}
+            </h3>
+            <p className="text-mutedText max-w-2xl leading-relaxed">
+              {t('migrationSaasDesc')}
+            </p>
+          </div>
+          <div className="flex-shrink-0">
+            <span className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 font-medium rounded-lg group-hover:bg-emerald-500 group-hover:text-white transition-all whitespace-nowrap">
+              {t('migrationSaasCta')}
+              <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </span>
+          </div>
+        </div>
+      </motion.div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {offers.map((offer, index) => (
           <OfferCard

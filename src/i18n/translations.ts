@@ -57,6 +57,10 @@ export const translations = {
     ecommerceDesc: 'Sell products and services online with a secure checkout, payment gateway integrations, and real-time order tracking.',
     advisoryTitle: 'Business Advisory',
     advisoryDesc: 'We support startups and companies with technical advisory, software architecture, process optimization, and implementation roadmaps.',
+    migrationSaasTitle: 'Migration & Case Management SaaS',
+    migrationSaasDesc: 'Multi-tenant platform for migration consultancies and service businesses: case tracking, client portal, document management, and online payments.',
+    migrationSaasCta: 'See the Platform',
+    migrationSaasBadge: 'FLAGSHIP PRODUCT',
 
     // CTA
     learnMore: 'Learn More',
@@ -173,6 +177,10 @@ export const translations = {
     ecommerceDesc: 'Vende productos y servicios en línea con checkout seguro, integraciones de pasarelas de pago y seguimiento de pedidos en tiempo real.',
     advisoryTitle: 'Servicios de Asesoría',
     advisoryDesc: 'Acompañamos a startups y empresas con asesoría técnica, arquitectura de software, optimización de procesos y hojas de ruta de implementación.',
+    migrationSaasTitle: 'SaaS de Gestión Migratoria y de Casos',
+    migrationSaasDesc: 'Plataforma multitenancy para consultoras migratorias y negocios de servicios: seguimiento de casos, portal de clientes, gestión documental y pagos online.',
+    migrationSaasCta: 'Ver la Plataforma',
+    migrationSaasBadge: 'PRODUCTO ESTRELLA',
 
     // CTA
     learnMore: 'Más Información',

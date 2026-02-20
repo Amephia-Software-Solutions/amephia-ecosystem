@@ -70,16 +70,23 @@ const TermsContent = () => (
     <section>
       <h3 className="text-xl font-semibold text-white mb-3">1. Aceptación de los Términos</h3>
       <p>
-        Al acceder y utilizar la plataforma Amephia Migration SaaS (en adelante, "el Servicio"), operada por
-        Amephia Systems Inc. (en adelante, "Amephia", "nosotros"), usted acepta quedar vinculado por estos
-        Términos de Servicio. Si no está de acuerdo con alguno de estos términos, no utilice el Servicio.
+        Al acceder, registrarse o utilizar de cualquier forma la plataforma Amephia Migration SaaS (en adelante, &quot;el Servicio&quot;),
+        operada por Amephia Systems Inc. (en adelante, &quot;Amephia&quot;, &quot;nosotros&quot;, &quot;la Plataforma&quot;), usted (en adelante, &quot;el Usuario&quot;)
+        declara que ha leído, comprendido y acepta quedar vinculado íntegra e incondicionalmente por estos Términos de
+        Servicio, la Política de Privacidad y cualquier política complementaria publicada en la Plataforma.
+      </p>
+      <p className="mt-2">
+        Si usted accede al Servicio en nombre de una organización, empresa o consultora, declara que tiene la autoridad legal
+        para vincular a dicha entidad a estos Términos. El uso continuado del Servicio constituye aceptación renovada de los
+        Términos vigentes en cada momento.
       </p>
     </section>
 
     <section>
-      <h3 className="text-xl font-semibold text-white mb-3">2. Descripción del Servicio</h3>
+      <h3 className="text-xl font-semibold text-white mb-3">2. Naturaleza del Servicio</h3>
       <p>
-        Amephia Migration SaaS es una plataforma de gestión integral para facilitadores migratorios que permite:
+        Amephia Migration SaaS es una plataforma tecnológica de gestión (Software as a Service) que proporciona herramientas
+        para la administración de casos migratorios. El Servicio incluye:
       </p>
       <ul className="list-disc pl-6 space-y-1 mt-2">
         <li>Gestión de casos y trámites migratorios</li>
@@ -89,102 +96,240 @@ const TermsContent = () => (
         <li>Comunicación facilitador-cliente</li>
         <li>Reportes y analítica del negocio</li>
       </ul>
+      <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 mt-3">
+        <p className="text-blue-400 font-semibold text-sm">
+          IMPORTANTE — Amephia es exclusivamente un proveedor de tecnología. La Plataforma NO constituye una firma de abogados,
+          una consultora migratoria, ni un despacho legal. Amephia NO presta servicios migratorios, asesoría legal, ni
+          representación ante autoridades migratorias de ningún país. Cualquier decisión migratoria es responsabilidad
+          exclusiva del facilitador y/o del profesional legal correspondiente.
+        </p>
+      </div>
     </section>
 
     <section>
-      <h3 className="text-xl font-semibold text-white mb-3">3. Registro y Cuenta</h3>
+      <h3 className="text-xl font-semibold text-white mb-3">3. Registro, Cuenta y Responsabilidad del Usuario</h3>
       <p>
-        Para utilizar el Servicio, usted debe: (a) tener al menos 18 años de edad; (b) proporcionar información
-        veraz, completa y actualizada durante el registro; (c) mantener la confidencialidad de sus credenciales
-        de acceso; (d) notificarnos inmediatamente ante cualquier uso no autorizado de su cuenta.
+        Para utilizar el Servicio, usted debe: (a) tener al menos 18 años de edad; (b) contar con capacidad legal para
+        contratar; (c) proporcionar información veraz, completa y actualizada; (d) mantener la confidencialidad absoluta
+        de sus credenciales; (e) notificarnos inmediatamente ante cualquier uso no autorizado de su cuenta.
       </p>
       <p className="mt-2">
-        Usted es responsable de todas las actividades que ocurran bajo su cuenta. Amephia no será responsable
-        por pérdidas derivadas del uso no autorizado de su cuenta.
+        <strong className="text-white">Usted es el único y exclusivo responsable</strong> de: todas las actividades bajo su cuenta;
+        la veracidad y legalidad de los datos que ingrese; la obtención del consentimiento de sus clientes para cargar sus datos
+        personales y documentos; el cumplimiento de toda normativa migratoria, legal y tributaria aplicable a su actividad.
+      </p>
+      <p className="mt-2">
+        Amephia no verifica, valida ni garantiza la veracidad de la información ingresada por los usuarios. La Plataforma
+        actúa como un medio tecnológico y no como parte en la relación facilitador-cliente.
       </p>
     </section>
 
     <section>
-      <h3 className="text-xl font-semibold text-white mb-3">4. Planes y Facturación</h3>
+      <h3 className="text-xl font-semibold text-white mb-3">4. Planes, Facturación y Pagos</h3>
       <p>
-        El Servicio ofrece planes de suscripción mensual y anual. Los precios están expresados en dólares
-        estadounidenses (USD) y no incluyen impuestos aplicables según su jurisdicción.
+        El Servicio se ofrece bajo planes de suscripción mensual y anual. Los precios están en dólares estadounidenses (USD)
+        y no incluyen impuestos, tasas o contribuciones según la jurisdicción del Usuario.
       </p>
       <ul className="list-disc pl-6 space-y-1 mt-2">
-        <li><strong className="text-white">Período de prueba:</strong> 14 días gratuitos sin necesidad de tarjeta de crédito.</li>
-        <li><strong className="text-white">Renovación:</strong> Las suscripciones se renuevan automáticamente al finalizar cada período.</li>
-        <li><strong className="text-white">Cambios de precio:</strong> Notificaremos con 30 días de anticipación cualquier cambio de precios. Los suscriptores activos mantienen su precio durante el período contratado.</li>
-        <li><strong className="text-white">Cancelación:</strong> Puede cancelar en cualquier momento. Su acceso continuará hasta el final del período facturado.</li>
+        <li><strong className="text-white">Período de prueba:</strong> 14 días gratuitos sin tarjeta de crédito. Al finalizar, el acceso se suspende hasta contratar un plan.</li>
+        <li><strong className="text-white">Renovación automática:</strong> Las suscripciones se renuevan automáticamente. Es responsabilidad del Usuario cancelar antes de la renovación.</li>
+        <li><strong className="text-white">Cambios de precio:</strong> Amephia se reserva el derecho de modificar precios con 30 días de notificación previa. Suscriptores activos mantienen su tarifa durante el período contratado.</li>
+        <li><strong className="text-white">Impago:</strong> Amephia podrá suspender el acceso tras 7 días de notificación. Los datos se conservarán 60 días adicionales antes de su eliminación.</li>
+        <li><strong className="text-white">Cancelación:</strong> El Usuario puede cancelar en cualquier momento. El acceso continuará hasta el final del período facturado.</li>
       </ul>
     </section>
 
     <section>
-      <h3 className="text-xl font-semibold text-white mb-3">5. Uso Aceptable</h3>
-      <p>Usted se compromete a NO utilizar el Servicio para:</p>
+      <h3 className="text-xl font-semibold text-white mb-3">5. Uso Aceptable y Conducta del Usuario</h3>
+      <p>El Usuario se compromete a utilizar el Servicio de manera lícita, ética y conforme a estos Términos. Queda expresamente prohibido:</p>
       <ul className="list-disc pl-6 space-y-1 mt-2">
-        <li>Actividades ilegales o fraudulentas</li>
-        <li>Facilitar inmigración ilegal o tráfico de personas</li>
-        <li>Almacenar contenido malicioso, ilegal o que viole derechos de terceros</li>
-        <li>Intentar acceder a datos de otros usuarios o vulnerar la seguridad del sistema</li>
-        <li>Revender, sublicenciar o redistribuir el Servicio sin autorización escrita</li>
-        <li>Realizar ingeniería inversa o descompilar el software</li>
+        <li>Utilizar la Plataforma para actividades ilegales, fraudulentas o engañosas</li>
+        <li>Facilitar, promover o participar en inmigración ilegal, tráfico de personas o cualquier delito</li>
+        <li>Almacenar contenido malicioso, ilegal, difamatorio o que viole derechos de terceros</li>
+        <li>Intentar acceder a datos de otros usuarios, vulnerar la seguridad o interferir con el sistema</li>
+        <li>Revender, sublicenciar, redistribuir o compartir el acceso sin autorización escrita de Amephia</li>
+        <li>Realizar ingeniería inversa, descompilar o intentar obtener el código fuente de la Plataforma</li>
+        <li>Utilizar bots, scrapers o mecanismos automatizados no autorizados</li>
+        <li>Sobrecargar intencionalmente la infraestructura o realizar pruebas de penetración sin autorización</li>
       </ul>
+      <p className="mt-2">
+        La violación de cualquiera de estas disposiciones faculta a Amephia a suspender o terminar la cuenta
+        de forma inmediata, sin previo aviso y sin derecho a reembolso, sin perjuicio de las acciones legales que correspondan.
+      </p>
     </section>
 
     <section>
       <h3 className="text-xl font-semibold text-white mb-3">6. Propiedad Intelectual</h3>
       <p>
-        Todo el contenido, código, diseño, marcas y materiales del Servicio son propiedad exclusiva de
-        Amephia Systems Inc. y están protegidos por leyes de propiedad intelectual. Usted conserva la
-        propiedad de todos los datos que suba a la plataforma.
+        Todo el software, código fuente, algoritmos, diseño, interfaces, marcas registradas, logotipos, nombres comerciales,
+        documentación y materiales del Servicio son propiedad exclusiva de Amephia Systems Inc. y están protegidos por leyes
+        nacionales e internacionales de propiedad intelectual.
+      </p>
+      <p className="mt-2">
+        Se concede al Usuario una licencia limitada, no exclusiva, intransferible y revocable para utilizar el Servicio
+        exclusivamente para su propósito previsto durante la vigencia de su suscripción. Esta licencia no transfiere ningún
+        derecho de propiedad sobre la Plataforma.
+      </p>
+      <p className="mt-2">
+        El Usuario conserva la propiedad de sus datos. Sin embargo, otorga a Amephia una licencia limitada para procesar,
+        almacenar y transmitir dichos datos exclusivamente con el fin de proveer el Servicio.
       </p>
     </section>
 
     <section>
-      <h3 className="text-xl font-semibold text-white mb-3">7. Disponibilidad del Servicio</h3>
+      <h3 className="text-xl font-semibold text-white mb-3">7. Contenido del Usuario y Responsabilidad sobre Datos</h3>
       <p>
-        Nos esforzamos por mantener una disponibilidad del 99.9% (plan Enterprise con SLA). Sin embargo,
-        el Servicio puede experimentar interrupciones por mantenimiento programado (notificado con 48 horas
-        de anticipación), actualizaciones de seguridad críticas o causas de fuerza mayor.
+        El Usuario es el único responsable de todo el contenido, datos, documentos e información que cargue, almacene o
+        transmita a través de la Plataforma (&quot;Contenido del Usuario&quot;).
+      </p>
+      <p className="mt-2">
+        El Usuario declara y garantiza que: (a) tiene derecho legal a cargar dicho contenido; (b) ha obtenido todos los
+        consentimientos necesarios conforme a la LOPDP del Ecuador; (c) el contenido no infringe derechos de terceros ni
+        leyes aplicables; (d) asume total responsabilidad por la exactitud y veracidad de la información.
+      </p>
+      <p className="mt-2">
+        <strong className="text-white">Amephia no monitorea, revisa, edita ni controla el Contenido del Usuario</strong> y,
+        por lo tanto, no asume responsabilidad alguna por su veracidad, legalidad, integridad o idoneidad. El Usuario
+        indemnizará y mantendrá indemne a Amephia frente a cualquier reclamo derivado del Contenido del Usuario.
       </p>
     </section>
 
     <section>
-      <h3 className="text-xl font-semibold text-white mb-3">8. Limitación de Responsabilidad</h3>
+      <h3 className="text-xl font-semibold text-white mb-3">8. Disponibilidad del Servicio</h3>
       <p>
-        En la máxima medida permitida por la ley, Amephia no será responsable por: daños indirectos,
-        incidentales, especiales o consecuentes; pérdida de beneficios, datos o uso; interrupciones del
-        negocio. Nuestra responsabilidad total no excederá el monto pagado por usted en los últimos 12 meses.
+        Amephia realizará esfuerzos comercialmente razonables por mantener el Servicio disponible. No obstante, <strong className="text-white">el
+        Servicio se proporciona &quot;TAL CUAL&quot; (AS IS) y &quot;SEGÚN DISPONIBILIDAD&quot; (AS AVAILABLE)</strong>. Amephia no garantiza que
+        el Servicio será ininterrumpido, libre de errores, seguro o libre de virus en todo momento.
+      </p>
+      <p className="mt-2">
+        El Servicio puede experimentar interrupciones por: mantenimiento programado; actualizaciones de seguridad críticas;
+        fallas de proveedores de infraestructura (AWS, GCP, etc.); ataques cibernéticos o causas de fuerza mayor.
+        Amephia no será responsable por daños derivados de dichas interrupciones.
+      </p>
+      <p className="mt-2">
+        El compromiso de SLA (99.9% uptime) aplica exclusivamente para Usuarios del plan Enterprise con contrato SLA firmado.
       </p>
     </section>
 
     <section>
-      <h3 className="text-xl font-semibold text-white mb-3">9. Resolución de Disputas</h3>
+      <h3 className="text-xl font-semibold text-white mb-3">9. Exclusión de Garantías</h3>
       <p>
-        Cualquier disputa será resuelta mediante arbitraje vinculante de acuerdo con las reglas de arbitraje
-        comercial aplicables. Para usuarios en Ecuador, se respetarán los derechos establecidos en la Ley
-        Orgánica de Defensa del Consumidor y la normativa local vigente.
+        EN LA MÁXIMA MEDIDA PERMITIDA POR LA LEY APLICABLE, AMEPHIA RENUNCIA EXPRESAMENTE A TODA GARANTÍA, EXPRESA O
+        IMPLÍCITA, INCLUYENDO:
+      </p>
+      <ul className="list-disc pl-6 space-y-1 mt-2">
+        <li>Garantías de comerciabilidad o idoneidad para un fin particular</li>
+        <li>Garantías de que el Servicio cumplirá con los requisitos específicos del Usuario</li>
+        <li>Garantías de que los resultados obtenidos serán exactos, completos o confiables</li>
+        <li>Garantías de que el Servicio funcionará sin interrupciones o errores</li>
+        <li>Garantías sobre la aprobación o resultado de cualquier trámite migratorio gestionado a través de la Plataforma</li>
+      </ul>
+      <p className="mt-2">
+        La Plataforma es una herramienta de gestión administrativa. El éxito o fracaso de cualquier trámite migratorio
+        depende exclusivamente del facilitador, del profesional legal a cargo y de las autoridades migratorias competentes.
+        Amephia no tiene control ni responsabilidad alguna sobre el resultado de dichos trámites.
       </p>
     </section>
 
     <section>
-      <h3 className="text-xl font-semibold text-white mb-3">10. Modificaciones</h3>
+      <h3 className="text-xl font-semibold text-white mb-3">10. Limitación de Responsabilidad</h3>
+      <p>EN LA MÁXIMA MEDIDA PERMITIDA POR LA LEY APLICABLE:</p>
+      <ul className="list-disc pl-6 space-y-2 mt-2">
+        <li><strong className="text-white">Amephia no será responsable</strong> por daños indirectos, incidentales, especiales, consecuentes, punitivos o ejemplares, incluyendo: pérdida de beneficios, ingresos, datos, clientes, oportunidades de negocio o goodwill.</li>
+        <li><strong className="text-white">Amephia no será responsable</strong> por acciones, omisiones, errores o negligencia del Usuario en el uso de la Plataforma, ni por decisiones tomadas basándose en información procesada a través del Servicio.</li>
+        <li><strong className="text-white">Amephia no será responsable</strong> por la pérdida, denegación, retraso o cualquier resultado adverso de cualquier trámite migratorio, independientemente de que se haya utilizado la Plataforma.</li>
+        <li><strong className="text-white">Amephia no será responsable</strong> por disputas entre el facilitador y sus clientes, incluyendo reclamaciones por servicios profesionales, cobros, calidad o resultados de trámites.</li>
+        <li><strong className="text-white">La responsabilidad total y acumulada</strong> de Amephia no excederá en ningún caso el monto pagado por el Usuario durante los seis (6) meses anteriores al evento que originó el reclamo.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h3 className="text-xl font-semibold text-white mb-3">11. Indemnización</h3>
       <p>
-        Nos reservamos el derecho de modificar estos Términos con 30 días de notificación previa por email
-        y aviso en la plataforma. El uso continuado del Servicio después de dichas modificaciones constituye
-        su aceptación de los nuevos términos.
+        El Usuario acepta indemnizar, defender y mantener indemne a Amephia Systems Inc., sus directores, empleados,
+        agentes, afiliados y proveedores frente a cualquier reclamo, demanda, daño, pérdida, costo y gasto (incluyendo
+        honorarios de abogados) que surjan de:
+      </p>
+      <ul className="list-disc pl-6 space-y-1 mt-2">
+        <li>El uso del Servicio por parte del Usuario o cualquier persona que acceda a través de su cuenta</li>
+        <li>La violación de estos Términos por parte del Usuario</li>
+        <li>El Contenido del Usuario cargado a la Plataforma</li>
+        <li>La violación de leyes, regulaciones o derechos de terceros</li>
+        <li>Reclamaciones de clientes finales del facilitador por cualquier motivo</li>
+        <li>Actividades profesionales del facilitador, incluyendo asesoría migratoria</li>
+      </ul>
+    </section>
+
+    <section>
+      <h3 className="text-xl font-semibold text-white mb-3">12. Suspensión y Terminación</h3>
+      <p>
+        Amephia se reserva el derecho de suspender o terminar el acceso al Servicio, de forma inmediata y sin previo aviso, si:
+      </p>
+      <ul className="list-disc pl-6 space-y-1 mt-2">
+        <li>El Usuario viola estos Términos o cualquier política aplicable</li>
+        <li>El Usuario utiliza el Servicio para actividades ilegales o fraudulentas</li>
+        <li>Existe una orden judicial o requerimiento de autoridad competente</li>
+        <li>El Usuario no paga las tarifas adeudadas tras el período de gracia</li>
+        <li>El uso del Usuario pone en riesgo la seguridad o disponibilidad de la Plataforma</li>
+        <li>Amephia determina, a su exclusivo criterio, que la cuenta es utilizada de manera abusiva</li>
+      </ul>
+      <p className="mt-2">
+        En caso de terminación por violación de Términos, Amephia no estará obligada a reembolsar montos pagados. Cuando
+        la terminación no se deba a actividades ilegales, se permitirá la exportación de datos durante 30 días.
       </p>
     </section>
 
     <section>
-      <h3 className="text-xl font-semibold text-white mb-3">11. Contacto</h3>
+      <h3 className="text-xl font-semibold text-white mb-3">13. Fuerza Mayor</h3>
       <p>
-        Para consultas sobre estos Términos de Servicio, contáctenos en:
+        Amephia no será responsable por retrasos o incumplimientos derivados de causas fuera de su control razonable:
+        desastres naturales, pandemias, conflictos armados, actos de terrorismo, acciones gubernamentales, fallas de internet
+        o telecomunicaciones, ataques cibernéticos, fallas de proveedores cloud, cortes de energía, o cualquier evento de fuerza mayor.
       </p>
+    </section>
+
+    <section>
+      <h3 className="text-xl font-semibold text-white mb-3">14. Resolución de Disputas y Ley Aplicable</h3>
+      <p>Estos Términos se rigen por las leyes de la República del Ecuador. Cualquier disputa será resuelta mediante:</p>
+      <ol className="list-decimal pl-6 space-y-2 mt-2">
+        <li><strong className="text-white">Negociación directa:</strong> Las partes intentarán resolver la disputa de buena fe durante 30 días calendario.</li>
+        <li><strong className="text-white">Mediación:</strong> Si no prospera, se someterá a mediación en un centro autorizado de Quito, Ecuador.</li>
+        <li><strong className="text-white">Arbitraje:</strong> Si la mediación no resuelve la disputa en 60 días, se someterá a arbitraje vinculante conforme a la Ley de Arbitraje y Mediación del Ecuador, con sede en Quito.</li>
+      </ol>
+      <p className="mt-2">
+        El Usuario renuncia a iniciar o participar en demandas colectivas o acciones de clase contra Amephia.
+        Se respetarán los derechos irrenunciables del consumidor conforme a la Ley Orgánica de Defensa del Consumidor del Ecuador.
+      </p>
+    </section>
+
+    <section>
+      <h3 className="text-xl font-semibold text-white mb-3">15. Modificaciones de los Términos</h3>
+      <p>
+        Amephia se reserva el derecho de modificar estos Términos en cualquier momento con 30 días de notificación previa
+        por email y/o aviso en la Plataforma. El uso continuado del Servicio después de la entrada en vigor constituye
+        aceptación plena. Si no los acepta, deberá cancelar su suscripción antes de su entrada en vigor.
+      </p>
+    </section>
+
+    <section>
+      <h3 className="text-xl font-semibold text-white mb-3">16. Disposiciones Generales</h3>
+      <ul className="list-disc pl-6 space-y-2 mt-2">
+        <li><strong className="text-white">Acuerdo completo:</strong> Estos Términos, junto con la Política de Privacidad, constituyen el acuerdo completo entre el Usuario y Amephia, reemplazando cualquier acuerdo anterior.</li>
+        <li><strong className="text-white">Divisibilidad:</strong> Si alguna disposición se declara inválida, las demás permanecerán en pleno vigor.</li>
+        <li><strong className="text-white">No renuncia:</strong> La falta de ejercicio de un derecho por parte de Amephia no constituye renuncia al mismo.</li>
+        <li><strong className="text-white">Cesión:</strong> El Usuario no podrá ceder estos Términos sin consentimiento escrito de Amephia. Amephia podrá ceder libremente sus derechos a afiliadas o en caso de fusión/adquisición.</li>
+        <li><strong className="text-white">Supervivencia:</strong> Las cláusulas de propiedad intelectual, limitación de responsabilidad, indemnización, exclusión de garantías y resolución de disputas sobrevivirán a la terminación por cualquier causa.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h3 className="text-xl font-semibold text-white mb-3">17. Contacto</h3>
+      <p>Para consultas legales sobre estos Términos de Servicio:</p>
       <ul className="list-none space-y-1 mt-2">
-        <li><strong className="text-white">Email:</strong> legal@amephia.com</li>
+        <li><strong className="text-white">Email legal:</strong> legal@amephia.com</li>
         <li><strong className="text-white">WhatsApp:</strong> +593 98 605 9727</li>
         <li><strong className="text-white">Empresa:</strong> Amephia Systems Inc.</li>
+        <li><strong className="text-white">Jurisdicción:</strong> Quito, Ecuador</li>
       </ul>
     </section>
   </>
@@ -1582,6 +1727,104 @@ Quiero información sobre cómo empezar con los 14 días gratis. ¿Me pueden ayu
                 <p className="text-slate-400 text-sm">{guarantee.description}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* OTROS NEGOCIOS - No solo migración */}
+      <section className="py-24 px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/30 rounded-full px-4 py-2 mb-4">
+              <Zap className="w-4 h-4 text-blue-400" />
+              <span className="text-sm text-blue-400 font-bold">PLATAFORMA MULTIINDUSTRIA</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              No Solo Para Migración.
+              <br />
+              <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                Para Cualquier Negocio de Servicios.
+              </span>
+            </h2>
+            <p className="text-xl text-slate-300 max-w-3xl mx-auto">
+              La misma plataforma que usan consultoras migratorias se adapta a cualquier negocio
+              que gestione casos, clientes y documentos. Misma potencia, tu industria.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-6 mb-12">
+            {[
+              {
+                emoji: "⚖️",
+                title: "Bufetes de Abogados",
+                desc: "Gestión de casos legales, seguimiento de expedientes, portal para clientes y control de honorarios."
+              },
+              {
+                emoji: "📋",
+                title: "Consultoras de Visas y Trámites",
+                desc: "Visas de trabajo, turismo, estudiantiles. Cada tipo de visa como un caso con su propio flujo."
+              },
+              {
+                emoji: "🏗️",
+                title: "Agencias de Permisos y Licencias",
+                desc: "Permisos de construcción, licencias comerciales, trámites municipales con timeline de progreso."
+              },
+              {
+                emoji: "📊",
+                title: "Consultoras Contables y Tributarias",
+                desc: "Declaraciones, auditorías y trámites fiscales. Cada cliente con su carpeta de documentos organizada."
+              },
+              {
+                emoji: "🎓",
+                title: "Agencias de Estudios en el Exterior",
+                desc: "Aplicaciones a universidades, becas, documentos académicos y seguimiento de admisiones."
+              },
+              {
+                emoji: "🛡️",
+                title: "Agencias de Seguros",
+                desc: "Pólizas por cliente, renovaciones, documentos de siniestros y seguimiento de reclamos con timeline."
+              },
+              {
+                emoji: "🏠",
+                title: "Inmobiliarias y Corredores",
+                desc: "Seguimiento de propiedades, documentación de compraventa, portal para compradores y vendedores."
+              },
+              {
+                emoji: "💼",
+                title: "Freelancers y Agencias",
+                desc: "Gestión de proyectos por cliente, entregables, facturación y portal de seguimiento para cada proyecto."
+              }
+            ].map((industry, index) => (
+              <div
+                key={index}
+                className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-6 hover:border-blue-500/50 hover:bg-blue-500/5 transition-all group"
+              >
+                <div className="text-4xl mb-3">{industry.emoji}</div>
+                <h3 className="text-lg font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">
+                  {industry.title}
+                </h3>
+                <p className="text-slate-400 text-sm leading-relaxed">{industry.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-2 border-blue-500/30 rounded-2xl p-8 md:p-12 text-center">
+            <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
+              ¿Tu negocio gestiona clientes, casos o trámites?
+            </h3>
+            <p className="text-lg text-slate-300 mb-6 max-w-2xl mx-auto">
+              Entonces esta plataforma es para ti. Mismo portal 24/7, mismos pagos automáticos,
+              misma organización de documentos — adaptado a TU flujo de trabajo.
+            </p>
+            <a
+              href={getWhatsAppURL()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all shadow-xl shadow-blue-500/30 hover:scale-105"
+            >
+              Cuéntanos tu caso — Te asesoramos gratis
+              <ArrowRight className="w-5 h-5" />
+            </a>
           </div>
         </div>
       </section>

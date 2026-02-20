@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { CustomCursor } from './CustomCursor';
 
 interface ShellProps {
@@ -6,6 +6,13 @@ interface ShellProps {
 }
 
 export const Shell: React.FC<ShellProps> = ({ children }) => {
+    useEffect(() => {
+        document.body.classList.add('custom-cursor');
+        return () => {
+            document.body.classList.remove('custom-cursor');
+        };
+    }, []);
+
     return (
         <div className="relative min-h-screen bg-background text-white selection:bg-primary/30 font-sans">
             <CustomCursor />
