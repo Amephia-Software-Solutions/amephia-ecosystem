@@ -33,7 +33,7 @@ export const ModuleCard: React.FC<ModuleCardProps> = ({ className, title, subtit
             tabIndex={isInteractive ? 0 : undefined}
             aria-label={isInteractive ? `Open ${title} project` : undefined}
             className={twMerge(
-                "group relative bg-surface border border-white/5 hover:border-white/20 transition-colors duration-500 overflow-hidden flex flex-col justify-between p-8 min-h-[300px]",
+                "group relative bg-surface border border-white/5 hover:border-white/20 transition-colors duration-500 overflow-hidden flex flex-col justify-between p-5 min-h-0 rounded-lg",
                 isInteractive && "cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/40",
                 className
             )}
@@ -44,11 +44,11 @@ export const ModuleCard: React.FC<ModuleCardProps> = ({ className, title, subtit
             {/* Header */}
             <div className="relative z-10 flex justify-between items-start">
                 <div>
-                    <h3 className="text-2xl font-sans font-medium tracking-tight text-white mb-1 group-hover:text-primary transition-colors duration-300">
+                    <h3 className="text-base font-sans font-semibold tracking-tight text-white mb-0.5 group-hover:text-primary transition-colors duration-300">
                         {title}
                     </h3>
                     {subtitle && (
-                        <p className="font-mono text-xs text-mutedText uppercase tracking-wider">
+                        <p className="font-mono text-[10px] text-mutedText uppercase tracking-wider">
                             {subtitle}
                         </p>
                     )}
@@ -57,12 +57,12 @@ export const ModuleCard: React.FC<ModuleCardProps> = ({ className, title, subtit
             </div>
 
             {/* Content Visualization (Middle) */}
-            <div className="relative z-10 flex-grow py-8 flex items-center justify-center text-white/10 group-hover:text-white/20 transition-colors duration-500">
+            <div className="relative z-10 flex-grow py-4 flex items-center justify-center text-white/10 group-hover:text-white/20 transition-colors duration-500">
                 {children}
             </div>
 
             {/* Footer / Status */}
-            <div className="relative z-10 pt-4 border-t border-white/5 flex justify-between items-center text-[10px] font-mono text-mutedText uppercase">
+            <div className="relative z-10 pt-3 border-t border-white/5 flex justify-between items-center text-[9px] font-mono text-mutedText uppercase">
                 <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0 text-primary">Active</span>
                 <span className="tracking-widest">ID: {Math.floor(Math.random() * 9000) + 1000}</span>
             </div>

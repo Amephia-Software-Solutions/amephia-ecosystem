@@ -4,6 +4,7 @@ import { Shell } from './components/layout/Shell';
 import { Header } from './components/Header';
 import { BentoGrid } from './components/layout/BentoGrid';
 import { GymModule } from './components/modules/GymModule';
+import { EcommerceModule } from './components/modules/EcommerceModule';
 import { FacturacionModule } from './components/modules/FacturacionModule';
 import { MigrationModule } from './components/modules/MigrationModule';
 import { SatelliteModule } from './components/modules/SatelliteModule';
@@ -13,6 +14,7 @@ import GymLanding from './components/GymLanding';
 
 import { InfoSection } from './components/InfoSection';
 import { ProductsSection } from './components/ProductsSection';
+import { GymShowcaseSection } from './components/GymShowcaseSection';
 import { StatsSection } from './components/StatsSection';
 import { FaqSection } from './components/FaqSection';
 import { ContactSection } from './components/ContactSection';
@@ -182,14 +184,17 @@ function App() {
           <BentoGrid>
             <GymModule onOpenProject={openProject} />
             <FacturacionModule onOpenProject={openProject} />
+            <EcommerceModule onOpenProject={openProject} />
             <MigrationModule onOpenProject={openProject} />
-            <SatelliteModule title="POS" type="pos" delay={0.3} onOpenProject={openProject} />
+            <SatelliteModule title="POS" type="pos" delay={0.35} onOpenProject={openProject} />
             <SatelliteModule title="NUTRI" type="nutri" delay={0.4} onOpenProject={openProject} />
           </BentoGrid>
 
           <InfoSection />
 
           <ProductsSection onOpenProject={openProject} />
+
+          <GymShowcaseSection onOpenProject={openProject} />
 
           <StatsSection />
 

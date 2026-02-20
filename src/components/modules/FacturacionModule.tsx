@@ -17,10 +17,10 @@ export const FacturacionModule = ({ onOpenProject }: FacturacionModuleProps) => 
         };
 
         // Initial fill
-        setLines(Array.from({ length: 15 }, generateLine));
+        setLines(Array.from({ length: 8 }, generateLine));
 
         const interval = setInterval(() => {
-            setLines(prev => [generateLine(), ...prev.slice(0, 14)]);
+            setLines(prev => [generateLine(), ...prev.slice(0, 7)]);
         }, 800);
 
         return () => clearInterval(interval);
@@ -30,12 +30,12 @@ export const FacturacionModule = ({ onOpenProject }: FacturacionModuleProps) => 
         <ModuleCard
             title="FACTURACIÓN"
             subtitle="SRI / Automated Compliance"
-            className="col-span-1 md:col-span-8 overflow-hidden"
+            className="overflow-hidden"
             delay={0.2}
             onClick={() => onOpenProject?.('facturacion')}
         >
             <div className="w-full h-full flex items-center relative">
-                <div className="font-mono text-xs text-mutedText/30 space-y-2 w-full">
+                <div className="font-mono text-[10px] text-mutedText/30 space-y-1 w-full">
                     {lines.map((line, i) => (
                         <div
                             key={i}
@@ -52,12 +52,12 @@ export const FacturacionModule = ({ onOpenProject }: FacturacionModuleProps) => 
                 <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent pointer-events-none"></div>
 
                 {/* Decorative status on right */}
-                <div className="absolute top-0 right-0 h-full w-32 border-l border-white/5 p-4 flex flex-col justify-between text-[10px] font-mono text-mutedText/50">
+                <div className="absolute top-0 right-0 h-full w-24 border-l border-white/5 p-3 flex flex-col justify-between text-[9px] font-mono text-mutedText/50">
                     <div>
                         <p>QUEUE: 0</p>
-                        <p>LATENCY: 12ms</p>
+                        <p>12ms</p>
                     </div>
-                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse self-end mb-8"></div>
+                    <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse self-end mb-6"></div>
                 </div>
             </div>
         </ModuleCard>
