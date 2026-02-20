@@ -164,14 +164,14 @@ function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
+  if (activeProject === 'migration') {
+    return <MigrationSaasLanding />;
+  }
+
   return (
     <Shell>
       {activeProject ? (
-        activeProject === 'migration' ? (
-          <MigrationSaasLanding />
-        ) : (
-          <ProjectLanding projectId={activeProject} onBack={closeProject} />
-        )
+        <ProjectLanding projectId={activeProject} onBack={closeProject} />
       ) : (
         <>
           <Header />
