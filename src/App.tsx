@@ -26,41 +26,57 @@ const BASE_TITLE = 'AmePhia Systems | Empresa de Desarrollo de Software';
 const BASE_DESCRIPTION =
   'AmePhia Systems desarrolla software a medida: plataformas web, apps Android/iOS, ecommerce con pagos online, facturación electrónica, ERP y asesoría tecnológica.';
 
-const PROJECT_META: Record<ProjectId, { title: string; description: string }> = {
+interface ProjectSEO {
+  title: string;
+  description: string;
+  keywords?: string;
+  ogImage?: string;
+}
+
+const PROJECT_META: Record<ProjectId, ProjectSEO> = {
   gym: {
-    title: 'ERP para Gimnasios',
+    title: 'Software para Gimnasios Ecuador — ERP con Facturación SRI, POS e Inventario',
     description:
-      'Plataforma ERP para gimnasios y centros fitness con membresías, cobros, inventario, asistencia y reportes operativos.',
+      'AMEPHIA GYM: sistema de gestión para gimnasios y centros fitness en Ecuador. Membresías, facturación electrónica SRI, punto de venta, inventario, contabilidad NIIF y reportes. Desde $29/mes.',
+    keywords:
+      'software para gimnasios, ERP gimnasio Ecuador, facturación electrónica gimnasio SRI, sistema de gestión gym, membresías gimnasio, POS gimnasio, software fitness Ecuador, contabilidad NIIF gimnasio, control de asistencia gym',
+    ogImage: '/assets/screenshots/dashboard.png',
   },
   facturacion: {
-    title: 'Facturación Electrónica',
+    title: 'Facturación Electrónica SRI Ecuador — Sistema Automatizado',
     description:
-      'Sistema de facturación electrónica con cumplimiento fiscal, validaciones automáticas y trazabilidad de documentos.',
+      'Sistema de facturación electrónica con cumplimiento fiscal SRI, validaciones automáticas, retenciones, notas de crédito y trazabilidad completa de documentos tributarios.',
+    keywords: 'facturación electrónica SRI, facturación Ecuador, sistema facturación electrónica, comprobantes electrónicos SRI',
   },
   pos: {
-    title: 'POS y Operación Comercial',
+    title: 'Sistema POS para Negocios — Punto de Venta Rápido',
     description:
-      'POS rápido para ventas de mostrador con devoluciones, facturación instantánea y soporte para lectores de códigos e impresoras térmicas.',
+      'POS rápido para ventas de mostrador con devoluciones, facturación instantánea, soporte para lectores de códigos e impresoras térmicas.',
+    keywords: 'sistema POS Ecuador, punto de venta, software caja registradora, POS facturación electrónica',
   },
   nutri: {
-    title: 'App de Nutrición y Seguimiento',
+    title: 'App de Nutrición y Seguimiento — Planes Alimenticios',
     description:
-      'Aplicación para seguimiento nutricional con planes, metas y monitoreo de progreso para clientes y profesionales.',
+      'Aplicación para seguimiento nutricional con planes alimenticios, metas personalizadas y monitoreo de progreso para clientes y profesionales de la salud.',
+    keywords: 'app nutrición, seguimiento nutricional, planes alimenticios, software nutricionista',
   },
   ecommerce: {
-    title: 'Ecommerce con Pagos Online',
+    title: 'Ecommerce con Pagos Online — Tienda Virtual Ecuador',
     description:
-      'Plataforma ecommerce con catálogo, checkout seguro, pasarelas de pago e integración con operaciones comerciales.',
+      'Plataforma ecommerce con catálogo de productos, checkout seguro, pasarelas de pago y facturación electrónica integrada.',
+    keywords: 'ecommerce Ecuador, tienda virtual, pagos online, plataforma ecommerce',
   },
   advisory: {
-    title: 'Asesoría Tecnológica',
+    title: 'Asesoría Tecnológica para Startups y Empresas',
     description:
-      'Servicios de asesoría para startups y empresas: arquitectura, roadmap de producto y optimización de procesos.',
+      'Servicios de asesoría tecnológica: arquitectura de software, roadmap de producto, optimización de procesos y transformación digital.',
+    keywords: 'asesoría tecnológica, consultoría software, transformación digital, arquitectura software',
   },
   migration: {
-    title: 'SaaS de Gestión Migratoria',
+    title: 'Software de Gestión Migratoria — Plataforma SaaS',
     description:
-      'Plataforma multitenancy para facilitadores migratorios: gestión de casos, clientes, documentos, pagos y portal del cliente.',
+      'Plataforma SaaS multitenancy para facilitadores migratorios: gestión de casos, clientes, documentos, pagos y portal del cliente.',
+    keywords: 'software gestión migratoria, plataforma migración, SaaS migración, gestión casos migratorios',
   },
 };
 
@@ -120,22 +136,80 @@ function App() {
 
   useEffect(() => {
     const projectMeta = activeProject ? PROJECT_META[activeProject] : null;
-    const nextTitle = projectMeta ? `${projectMeta.title} | AmePhia Systems` : BASE_TITLE;
+    const nextTitle = projectMeta ? projectMeta.title : BASE_TITLE;
     const nextDescription = projectMeta ? projectMeta.description : BASE_DESCRIPTION;
     const nextCanonical = activeProject
       ? `https://amephia.com/proyecto/${activeProject}`
       : 'https://amephia.com/';
+    const nextImage = projectMeta?.ogImage
+      ? `https://amephia.com${projectMeta.ogImage}`
+      : 'https://amephia.com/og-image.jpg';
+
+    // Helper to set meta content
+    const setMeta = (selector: string, content: string) => {
+      const el = document.querySelector(selector);
+      if (el) el.setAttribute('content', content);
+    };
 
     document.title = nextTitle;
 
-    const titleMeta = document.querySelector('meta[name="title"]');
-    if (titleMeta) titleMeta.setAttribute('content', nextTitle);
+    // Primary meta
+    setMeta('meta[name="title"]', nextTitle);
+    setMeta('meta[name="description"]', nextDescription);
+    if (projectMeta?.keywords) {
+      setMeta('meta[name="keywords"]', projectMeta.keywords);
+    }
 
-    const descriptionMeta = document.querySelector('meta[name="description"]');
-    if (descriptionMeta) descriptionMeta.setAttribute('content', nextDescription);
-
+    // Canonical
     const canonicalLink = document.querySelector('link[rel="canonical"]');
     if (canonicalLink) canonicalLink.setAttribute('href', nextCanonical);
+
+    // Open Graph
+    setMeta('meta[property="og:title"]', nextTitle);
+    setMeta('meta[property="og:description"]', nextDescription);
+    setMeta('meta[property="og:url"]', nextCanonical);
+    setMeta('meta[property="og:image"]', nextImage);
+
+    // Twitter
+    setMeta('meta[property="twitter:title"]', nextTitle);
+    setMeta('meta[property="twitter:description"]', nextDescription);
+    setMeta('meta[property="twitter:url"]', nextCanonical);
+    setMeta('meta[property="twitter:image"]', nextImage);
+
+    // Inject/update JSON-LD for product pages
+    const existingLd = document.querySelector('script[data-seo="project"]');
+    if (activeProject === 'gym') {
+      const ld = {
+        '@context': 'https://schema.org',
+        '@type': 'SoftwareApplication',
+        name: 'AMEPHIA GYM',
+        applicationCategory: 'BusinessApplication',
+        operatingSystem: 'Web',
+        description: projectMeta?.description,
+        url: nextCanonical,
+        image: nextImage,
+        screenshot: 'https://amephia.com/assets/screenshots/dashboard.png',
+        offers: [
+          { '@type': 'Offer', name: 'Básico', price: '29', priceCurrency: 'USD', billingIncrement: 'P1M', url: nextCanonical },
+          { '@type': 'Offer', name: 'Profesional', price: '59', priceCurrency: 'USD', billingIncrement: 'P1M', url: nextCanonical },
+          { '@type': 'Offer', name: 'Enterprise', price: '99', priceCurrency: 'USD', billingIncrement: 'P1M', url: nextCanonical },
+        ],
+        aggregateRating: { '@type': 'AggregateRating', ratingValue: '4.9', reviewCount: '47', bestRating: '5' },
+        author: { '@type': 'Organization', name: 'AmePhia Systems Inc.', url: 'https://amephia.com' },
+        featureList: 'Membresías, Facturación electrónica SRI, POS, Inventario, Contabilidad NIIF, Control de asistencia, Reportes, Multi-rol',
+      };
+      if (existingLd) {
+        existingLd.textContent = JSON.stringify(ld);
+      } else {
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.setAttribute('data-seo', 'project');
+        script.textContent = JSON.stringify(ld);
+        document.head.appendChild(script);
+      }
+    } else if (existingLd) {
+      existingLd.remove();
+    }
 
     const currentPath = `${window.location.pathname}${window.location.search}`;
     trackPageView(currentPath, nextTitle);

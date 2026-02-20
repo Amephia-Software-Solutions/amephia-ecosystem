@@ -416,16 +416,16 @@ const GymLanding = () => {
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold leading-[1.05] tracking-tight mb-6">
-            Digitalice su gimnasio.
+            Software para Gimnasios
             <br />
             <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent">
-              Maximice sus ingresos.
+              con Facturación SRI
             </span>
           </h1>
 
           <p className="text-lg md:text-xl text-white/60 max-w-3xl mx-auto mb-10 leading-relaxed">
-            Un solo sistema para membresías, facturación electrónica SRI, punto de venta,
-            inventario, contabilidad NIIF y reportes en tiempo real.
+            ERP completo para gimnasios en Ecuador: membresías, facturación electrónica SRI,
+            punto de venta, inventario, contabilidad NIIF y reportes. Desde <strong className="text-white">$29/mes</strong>.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
@@ -545,7 +545,7 @@ const GymLanding = () => {
           <div className="text-center mb-16">
             <span className="text-xs font-bold uppercase tracking-widest text-blue-400">Ecosistema completo</span>
             <h2 className="text-3xl md:text-5xl font-extrabold mt-3 tracking-tight">
-              9 módulos. <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">Un solo sistema.</span>
+              9 módulos de gestión. <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">Un solo software.</span>
             </h2>
             <p className="text-white/50 mt-4 max-w-2xl mx-auto">
               Cada aspecto de su gimnasio, integrado en una plataforma web moderna accesible desde cualquier dispositivo.
@@ -834,9 +834,9 @@ const GymLanding = () => {
           <div className="text-center mb-16">
             <span className="text-xs font-bold uppercase tracking-widest text-blue-400">Planes & precios</span>
             <h2 className="text-3xl md:text-5xl font-extrabold mt-3 tracking-tight">
-              Elija el plan{' '}
+              Planes y precios{' '}
               <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                ideal para su gimnasio
+                para su gimnasio
               </span>
             </h2>
             <p className="text-white/50 mt-4 max-w-2xl mx-auto">
@@ -1062,7 +1062,7 @@ const GymLanding = () => {
           <div className="text-center mb-16">
             <span className="text-xs font-bold uppercase tracking-widest text-blue-400">Preguntas frecuentes</span>
             <h2 className="text-3xl md:text-4xl font-extrabold mt-3 tracking-tight">
-              Resolvemos sus dudas
+              Preguntas frecuentes sobre el software
             </h2>
           </div>
 
@@ -1106,7 +1106,7 @@ const GymLanding = () => {
             <Dumbbell className="w-8 h-8 text-blue-400" />
           </div>
           <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-6">
-            Transforme su gimnasio
+            Empiece a gestionar su gimnasio
             <br />
             <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent">
               en un negocio inteligente.
