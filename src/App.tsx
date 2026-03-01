@@ -7,10 +7,12 @@ import { GymModule } from './components/modules/GymModule';
 import { EcommerceModule } from './components/modules/EcommerceModule';
 import { FacturacionModule } from './components/modules/FacturacionModule';
 import { MigrationModule } from './components/modules/MigrationModule';
+import { BrokerSeguroModule } from './components/modules/BrokerSeguroModule';
 import { SatelliteModule } from './components/modules/SatelliteModule';
 import { ProjectLanding } from './components/ProjectLanding';
 import MigrationSaasLanding from './components/MigrationSaasLanding';
 import GymLanding from './components/GymLanding';
+import BrokerSeguroLanding from './components/BrokerSeguroLanding';
 
 import { InfoSection } from './components/InfoSection';
 import { ProductsSection } from './components/ProductsSection';
@@ -77,6 +79,13 @@ const PROJECT_META: Record<ProjectId, ProjectSEO> = {
     description:
       'Plataforma SaaS multitenancy para facilitadores migratorios: gestión de casos, clientes, documentos, pagos y portal del cliente.',
     keywords: 'software gestión migratoria, plataforma migración, SaaS migración, gestión casos migratorios',
+  },
+  'broker-seguro': {
+    title: 'Software para Brókers de Seguros — Plataforma SaaS Multi-Tenant',
+    description:
+      'BrokerSeguro: plataforma SaaS para brókers de seguros. Gestión de clientes, pólizas, reclamos con wizard, formularios dinámicos, portal del cliente y reportes.',
+    keywords:
+      'software broker seguros, plataforma broker seguros Ecuador, gestión pólizas, reclamos seguros, SaaS seguros, portal cliente seguros, formularios dinámicos seguros',
   },
 };
 
@@ -248,6 +257,10 @@ function App() {
     return <GymLanding />;
   }
 
+  if (activeProject === 'broker-seguro') {
+    return <BrokerSeguroLanding />;
+  }
+
   return (
     <Shell>
       {activeProject ? (
@@ -260,6 +273,7 @@ function App() {
             <FacturacionModule onOpenProject={openProject} />
             <EcommerceModule onOpenProject={openProject} />
             <MigrationModule onOpenProject={openProject} />
+            <BrokerSeguroModule onOpenProject={openProject} />
             <SatelliteModule title="POS" type="pos" delay={0.35} onOpenProject={openProject} />
             <SatelliteModule title="NUTRI" type="nutri" delay={0.4} onOpenProject={openProject} />
           </BentoGrid>
@@ -327,6 +341,13 @@ function App() {
                 onClick={(event) => handleProjectLinkClick(event, 'migration')}
               >
                 SaaS de Gestión Migratoria
+              </a>
+              <a
+                href="/proyecto/broker-seguro"
+                className="hover:text-primary transition-colors"
+                onClick={(event) => handleProjectLinkClick(event, 'broker-seguro')}
+              >
+                Software para Brókers de Seguros
               </a>
             </div>
           </section>
