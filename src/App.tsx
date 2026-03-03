@@ -81,11 +81,12 @@ const PROJECT_META: Record<ProjectId, ProjectSEO> = {
     keywords: 'software gestión migratoria, plataforma migración, SaaS migración, gestión casos migratorios',
   },
   'broker-seguro': {
-    title: 'Software para Brókers de Seguros — Plataforma SaaS Multi-Tenant',
+    title: 'Software para Corredores de Seguros Ecuador — Broker Seguro | Pólizas, Renovaciones y Comisiones',
     description:
-      'BrokerSeguro: plataforma SaaS para brókers de seguros. Gestión de clientes, pólizas, reclamos con wizard, formularios dinámicos, portal del cliente y reportes.',
+      'Broker Seguro: sistema para brókers y corredores de seguros. Controla pólizas, vencimientos, renovaciones, reclamos, comisiones y cartera de clientes. Desde $49/mes. Demo gratis.',
     keywords:
-      'software broker seguros, plataforma broker seguros Ecuador, gestión pólizas, reclamos seguros, SaaS seguros, portal cliente seguros, formularios dinámicos seguros',
+      'software para broker de seguros, sistema para corredores de seguros, software broker seguros Ecuador, gestión de pólizas, control de renovaciones, comisiones seguros, sistema correduría de seguros, software intermediario de seguros',
+    ogImage: '/assets/screenshots/broker/dashboard.png',
   },
 };
 
@@ -187,7 +188,35 @@ function App() {
 
     // Inject/update JSON-LD for product pages
     const existingLd = document.querySelector('script[data-seo="project"]');
-    if (activeProject === 'gym') {
+    if (activeProject === 'broker-seguro') {
+      const ld = {
+        '@context': 'https://schema.org',
+        '@type': 'SoftwareApplication',
+        name: 'Broker Seguro',
+        applicationCategory: 'BusinessApplication',
+        operatingSystem: 'Web',
+        description: projectMeta?.description,
+        url: nextCanonical,
+        image: nextImage,
+        screenshot: 'https://amephia.com/assets/screenshots/broker/dashboard.png',
+        offers: [
+          { '@type': 'Offer', name: 'Starter', price: '49', priceCurrency: 'USD', billingIncrement: 'P1M', url: nextCanonical },
+          { '@type': 'Offer', name: 'Profesional', price: '99', priceCurrency: 'USD', billingIncrement: 'P1M', url: nextCanonical },
+          { '@type': 'Offer', name: 'Enterprise', price: '199', priceCurrency: 'USD', billingIncrement: 'P1M', url: nextCanonical },
+        ],
+        author: { '@type': 'Organization', name: 'AmePhia Systems Inc.', url: 'https://amephia.com' },
+        featureList: 'Gestión de clientes, Pólizas y vencimientos, Alertas de renovación, Reclamos, Comisiones, Portal del cliente, Dashboard, Reportes, Formularios dinámicos, Roles y permisos',
+      };
+      if (existingLd) {
+        existingLd.textContent = JSON.stringify(ld);
+      } else {
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.setAttribute('data-seo', 'project');
+        script.textContent = JSON.stringify(ld);
+        document.head.appendChild(script);
+      }
+    } else if (activeProject === 'gym') {
       const ld = {
         '@context': 'https://schema.org',
         '@type': 'SoftwareApplication',
