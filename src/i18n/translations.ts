@@ -53,8 +53,8 @@ export const translations = {
 
     gymProductTitle: 'Gym ERP',
     gymProductDesc: 'Complete software platform for gym and fitness operations, from sales to member management.',
-    ecommerceTitle: 'Ecommerce & Online Payments',
-    ecommerceDesc: 'Sell products and services online with a secure checkout, payment gateway integrations, and real-time order tracking.',
+    ecommerceTitle: 'Ecommerce SaaS Platform',
+    ecommerceDesc: 'Full-featured online store with catalog, checkout, payment gateways (Nuvei, PayPhone, Kushki), Kardex inventory, SRI e-invoicing, RMA returns, loyalty program, and 22+ modules.',
     advisoryTitle: 'Business Advisory',
     advisoryDesc: 'We support startups and companies with technical advisory, software architecture, process optimization, and implementation roadmaps.',
     migrationSaasTitle: 'Migration & Case Management SaaS',
@@ -173,8 +173,8 @@ export const translations = {
 
     gymProductTitle: 'ERP para Gimnasios',
     gymProductDesc: 'Plataforma integral para la operación de gimnasios y centros fitness, desde ventas hasta gestión de miembros.',
-    ecommerceTitle: 'Ecommerce y Pagos Online',
-    ecommerceDesc: 'Vende productos y servicios en línea con checkout seguro, integraciones de pasarelas de pago y seguimiento de pedidos en tiempo real.',
+    ecommerceTitle: 'Plataforma Ecommerce SaaS',
+    ecommerceDesc: 'Tienda online completa con catálogo, checkout, pasarelas de pago (Nuvei, PayPhone, Kushki), inventario Kardex, facturación electrónica SRI, devoluciones RMA, lealtad y 22+ módulos.',
     advisoryTitle: 'Servicios de Asesoría',
     advisoryDesc: 'Acompañamos a startups y empresas con asesoría técnica, arquitectura de software, optimización de procesos y hojas de ruta de implementación.',
     migrationSaasTitle: 'SaaS de Gestión Migratoria y de Casos',

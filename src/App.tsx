@@ -13,6 +13,7 @@ import { ProjectLanding } from './components/ProjectLanding';
 import MigrationSaasLanding from './components/MigrationSaasLanding';
 import GymLanding from './components/GymLanding';
 import BrokerSeguroLanding from './components/BrokerSeguroLanding';
+import EcommerceLanding from './components/EcommerceLanding';
 
 import { InfoSection } from './components/InfoSection';
 import { ProductsSection } from './components/ProductsSection';
@@ -63,10 +64,12 @@ const PROJECT_META: Record<ProjectId, ProjectSEO> = {
     keywords: 'app nutrición, seguimiento nutricional, planes alimenticios, software nutricionista',
   },
   ecommerce: {
-    title: 'Ecommerce con Pagos Online — Tienda Virtual Ecuador',
+    title: 'Plataforma Ecommerce SaaS Ecuador — Tienda Online con Facturación SRI, Inventario Kardex y Pagos',
     description:
-      'Plataforma ecommerce con catálogo de productos, checkout seguro, pasarelas de pago y facturación electrónica integrada.',
-    keywords: 'ecommerce Ecuador, tienda virtual, pagos online, plataforma ecommerce',
+      'AMEPHIA ECOMMERCE: plataforma SaaS multi-tenant para tiendas online. Catálogo, checkout, pasarelas de pago (Nuvei, PayPhone, Kushki), inventario Kardex con WAC, facturación electrónica SRI, devoluciones RMA, programa de lealtad, email marketing y 22+ módulos. Desde $50/mes.',
+    keywords:
+      'ecommerce Ecuador, tienda virtual SaaS, plataforma ecommerce, pagos online Ecuador, facturación electrónica SRI ecommerce, inventario Kardex, software tienda online, ecommerce multi-tenant, pasarela de pago Ecuador, sistema de ventas online',
+    ogImage: '/assets/screenshots/ecommerce-dashboard.png',
   },
   advisory: {
     title: 'Asesoría Tecnológica para Startups y Empresas',
@@ -216,6 +219,33 @@ function App() {
         script.textContent = JSON.stringify(ld);
         document.head.appendChild(script);
       }
+    } else if (activeProject === 'ecommerce') {
+      const ld = {
+        '@context': 'https://schema.org',
+        '@type': 'SoftwareApplication',
+        name: 'AMEPHIA ECOMMERCE',
+        applicationCategory: 'BusinessApplication',
+        operatingSystem: 'Web',
+        description: projectMeta?.description,
+        url: nextCanonical,
+        image: nextImage,
+        offers: [
+          { '@type': 'Offer', name: 'Básico', price: '50', priceCurrency: 'USD', billingIncrement: 'P1M', url: nextCanonical },
+          { '@type': 'Offer', name: 'Profesional', price: '100', priceCurrency: 'USD', billingIncrement: 'P1M', url: nextCanonical },
+          { '@type': 'Offer', name: 'Enterprise', price: '150', priceCurrency: 'USD', billingIncrement: 'P1M', url: nextCanonical },
+        ],
+        author: { '@type': 'Organization', name: 'AmePhia Systems Inc.', url: 'https://amephia.com' },
+        featureList: 'Catálogo de productos, Checkout y pasarelas de pago, Inventario Kardex, Facturación electrónica SRI, Pedidos y envíos, Devoluciones RMA, Cupones y descuentos, Programa de lealtad, Email marketing, Reseñas, Cotizaciones B2B, Dashboard CEO, API REST, Webhooks, Constructor de homepage, Multi-idioma',
+      };
+      if (existingLd) {
+        existingLd.textContent = JSON.stringify(ld);
+      } else {
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.setAttribute('data-seo', 'project');
+        script.textContent = JSON.stringify(ld);
+        document.head.appendChild(script);
+      }
     } else if (activeProject === 'gym') {
       const ld = {
         '@context': 'https://schema.org',
@@ -288,6 +318,10 @@ function App() {
 
   if (activeProject === 'broker-seguro') {
     return <BrokerSeguroLanding />;
+  }
+
+  if (activeProject === 'ecommerce') {
+    return <EcommerceLanding />;
   }
 
   return (
