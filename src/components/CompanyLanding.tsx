@@ -25,6 +25,7 @@ import logo from '../assets/images/amelogo_v3_optimized.webp';
 ───────────────────────────────────────────────────── */
 
 const WA_NUMBER = '13347324056';
+type LegalPage = 'terms' | 'privacy' | null;
 
 const waURL = (ctx = 'hero') => {
   const msgs: Record<string, string> = {
@@ -40,6 +41,322 @@ const openWA = (ctx = 'hero') => {
   trackLeadGenerated('whatsapp', `company_${ctx}`);
   window.open(waURL(ctx), '_blank');
 };
+
+const LegalModal = ({ page, onClose }: { page: LegalPage; onClose: () => void }) => {
+  if (!page) return null;
+
+  const titles: Record<Exclude<LegalPage, null>, string> = {
+    terms: 'Términos de Uso',
+    privacy: 'Política de Privacidad',
+  };
+
+  return (
+    <div className="fixed inset-0 z-[120] flex items-start justify-center overflow-y-auto bg-black/80 backdrop-blur-sm" onClick={onClose}>
+      <div
+        className="relative w-full max-w-5xl mx-4 my-10 rounded-3xl border border-white/10 bg-[#0B1220] shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 w-10 h-10 rounded-full border border-white/10 bg-white/5 text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+          aria-label="Cerrar"
+        >
+          <X className="w-5 h-5 mx-auto" />
+        </button>
+
+        <div className="px-6 md:px-10 pt-10 pb-8 border-b border-white/10">
+          <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-2">{titles[page]}</h2>
+          <p className="text-sm text-slate-500">Última actualización: 3 de abril de 2026</p>
+        </div>
+
+        <div className="px-6 md:px-10 py-8 max-h-[70vh] overflow-y-auto prose prose-invert prose-slate max-w-none text-slate-300 leading-relaxed space-y-6 text-sm">
+          {page === 'terms' ? <CompanyTermsContent /> : <CompanyPrivacyContent />}
+        </div>
+
+        <div className="px-6 md:px-10 py-6 border-t border-white/10 flex justify-end">
+          <button
+            onClick={onClose}
+            className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] text-white font-semibold hover:shadow-lg hover:shadow-blue-500/25 transition-all"
+          >
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const CompanyTermsContent = () => (
+  <>
+    <section>
+      <h3 className="text-xl font-semibold text-white mb-3">1. Aceptación y alcance</h3>
+      <p>
+        Al acceder, navegar o utilizar este sitio web, formularios de contacto, demos, materiales comerciales, páginas de
+        producto o cualquier servicio digital operado por AmePhia Systems Inc. (&quot;Amephia&quot;), usted acepta estos Términos
+        de Uso y nuestra Política de Privacidad.
+      </p>
+      <p className="mt-2">
+        Si utiliza este sitio en representación de una empresa u organización, declara que cuenta con facultades suficientes
+        para obligarla frente a estos Términos. Si no está de acuerdo, no debe utilizar este sitio ni remitir información
+        a través de nuestros formularios o canales digitales.
+      </p>
+    </section>
+
+    <section>
+      <h3 className="text-xl font-semibold text-white mb-3">2. Naturaleza informativa del sitio</h3>
+      <p>
+        Salvo que exista un contrato escrito firmado por Amephia, este sitio tiene carácter exclusivamente informativo y
+        comercial. Las descripciones de servicios, precios referenciales, funcionalidades, integraciones, tiempos de entrega,
+        casos de uso, disponibilidad y resultados esperados no constituyen oferta vinculante, promesa de resultado, garantía
+        comercial ni obligación contractual exigible.
+      </p>
+      <p className="mt-2">
+        Cualquier propuesta, cotización, cronograma, alcance técnico, SLA, soporte, entregable o condición económica solo
+        será obligatorio cuando conste expresamente en una orden, contrato o acuerdo específico suscrito por las partes.
+      </p>
+    </section>
+
+    <section>
+      <h3 className="text-xl font-semibold text-white mb-3">3. Uso permitido</h3>
+      <p>Usted se compromete a utilizar el sitio de manera lícita, diligente y conforme a estos Términos. Queda prohibido:</p>
+      <ul className="list-disc pl-6 space-y-1 mt-2">
+        <li>Usar el sitio para fines ilícitos, engañosos, difamatorios o que infrinjan derechos de terceros</li>
+        <li>Intentar acceder sin autorización a sistemas, credenciales, cuentas, bases de datos o entornos de Amephia</li>
+        <li>Ejecutar scrapers, bots, crawlers, pruebas de carga o pentesting sin autorización escrita</li>
+        <li>Copiar, revender, sublicenciar, replicar o explotar comercialmente el contenido o software del sitio</li>
+        <li>Transmitir malware, código malicioso, spam o archivos que comprometan la seguridad del servicio</li>
+      </ul>
+      <p className="mt-2">
+        Amephia podrá bloquear accesos, filtrar tráfico, preservar evidencia y ejercer acciones legales o contractuales cuando
+        detecte uso abusivo, fraudulento o no autorizado.
+      </p>
+    </section>
+
+    <section>
+      <h3 className="text-xl font-semibold text-white mb-3">4. Propiedad intelectual</h3>
+      <p>
+        Todo el contenido del sitio, incluyendo software, diseño, interfaz, textos, estructura, marcas, logotipos, gráficos,
+        demos, capturas, material audiovisual, documentación y código, pertenece a Amephia o a sus licenciantes y está
+        protegido por la normativa aplicable de propiedad intelectual.
+      </p>
+      <p className="mt-2">
+        No se concede ninguna licencia ni cesión de derechos salvo la autorización limitada, revocable y no exclusiva de usar
+        el sitio para evaluar nuestros servicios. Cualquier uso distinto requerirá autorización previa y escrita de Amephia.
+      </p>
+    </section>
+
+    <section>
+      <h3 className="text-xl font-semibold text-white mb-3">5. Información enviada por el usuario</h3>
+      <p>
+        Usted es el único responsable de la legalidad, exactitud, pertinencia y actualidad de la información que envíe a
+        través de formularios, correo electrónico, WhatsApp, demos, reuniones o cualquier canal de contacto.
+      </p>
+      <p className="mt-2">
+        Salvo pacto expreso de confidencialidad o NDA firmado, la información que nos remita para evaluar un proyecto no se
+        considerará confidencial. Usted declara que cuenta con autorización suficiente para compartir cualquier dato de su
+        empresa, equipo, clientes, proveedores o terceros.
+      </p>
+      <p className="mt-2">
+        Usted se obliga a no enviar datos sensibles, credenciales productivas, secretos industriales, información sujeta a
+        reserva legal o datos personales de terceros que no sean estrictamente necesarios para la evaluación comercial inicial.
+      </p>
+    </section>
+
+    <section>
+      <h3 className="text-xl font-semibold text-white mb-3">6. Terceros, integraciones y enlaces externos</h3>
+      <p>
+        El sitio puede mencionar o enlazar servicios de terceros, incluidos proveedores cloud, pasarelas de pago, plataformas
+        de mensajería, analítica, IA, correo, hosting y otras herramientas. Amephia no controla ni garantiza la disponibilidad,
+        seguridad, exactitud o políticas de dichos terceros.
+      </p>
+      <p className="mt-2">
+        El uso de servicios externos se rige por los términos y políticas de sus respectivos proveedores. Amephia no será
+        responsable por caídas, errores, pérdidas, bloqueos, cargos, cambios de API ni incidentes originados por terceros.
+      </p>
+    </section>
+
+    <section>
+      <h3 className="text-xl font-semibold text-white mb-3">7. Exclusión de garantías</h3>
+      <p>
+        En la máxima medida permitida por la ley, el sitio, sus contenidos y cualquier material informativo se ofrecen
+        &quot;tal cual&quot; y &quot;según disponibilidad&quot;. Amephia no garantiza que el sitio estará libre de errores, interrupciones,
+        vulnerabilidades, omisiones o incompatibilidades, ni que el contenido será exacto, completo o apto para un propósito
+        particular.
+      </p>
+      <p className="mt-2">
+        Amephia no garantiza resultados de negocio, posicionamiento, ventas, conversiones, cumplimiento regulatorio, tiempos
+        de integración, aprobaciones de terceros, continuidad operativa ni ausencia de incidentes derivados del uso de software
+        o servicios recomendados, desarrollados o integrados.
+      </p>
+    </section>
+
+    <section>
+      <h3 className="text-xl font-semibold text-white mb-3">8. Limitación de responsabilidad</h3>
+      <p>
+        En ningún caso Amephia será responsable por daños indirectos, incidentales, especiales, punitivos o consecuenciales,
+        incluyendo lucro cesante, pérdida de datos, pérdida de clientes, pérdida de oportunidad, interrupción del negocio,
+        reputación o sanciones regulatorias derivadas del uso o imposibilidad de uso del sitio.
+      </p>
+      <p className="mt-2">
+        En cualquier evento, la responsabilidad total acumulada de Amephia vinculada exclusivamente al uso de este sitio no
+        excederá el valor efectivamente pagado por usted a Amephia durante los tres meses anteriores al hecho que origine el
+        reclamo, y si no existieron pagos, dicha responsabilidad será de USD 100 como máximo.
+      </p>
+    </section>
+
+    <section>
+      <h3 className="text-xl font-semibold text-white mb-3">9. Indemnidad</h3>
+      <p>
+        Usted acepta defender, indemnizar y mantener indemne a Amephia, sus directivos, empleados, contratistas y afiliadas
+        frente a cualquier reclamo, sanción, pérdida, costo, multa, daño o gasto, incluyendo honorarios legales razonables,
+        derivado de: su uso del sitio; la información que remita; la infracción de estos Términos; o la violación de derechos
+        de terceros o normas aplicables.
+      </p>
+    </section>
+
+    <section>
+      <h3 className="text-xl font-semibold text-white mb-3">10. Modificaciones y ley aplicable</h3>
+      <p>
+        Amephia podrá modificar estos Términos en cualquier momento. La versión vigente será la publicada en este sitio con
+        su fecha de actualización. El uso continuado del sitio después de dichos cambios constituirá aceptación de la versión
+        actualizada.
+      </p>
+      <p className="mt-2">
+        Estos Términos se rigen por las leyes de la República del Ecuador. Cualquier controversia se intentará resolver primero
+        de forma directa y de buena fe. Si ello no ocurre, las partes se someten a la jurisdicción competente de Ecuador,
+        salvo que un contrato específico firmado establezca otro mecanismo.
+      </p>
+    </section>
+  </>
+);
+
+const CompanyPrivacyContent = () => (
+  <>
+    <section>
+      <h3 className="text-xl font-semibold text-white mb-3">1. Responsable del tratamiento</h3>
+      <p>
+        AmePhia Systems Inc. es responsable del tratamiento de los datos personales recopilados a través de este sitio web,
+        formularios de contacto, solicitudes de demo, correo electrónico, WhatsApp y demás canales digitales asociados a
+        nuestros servicios comerciales.
+      </p>
+      <p className="mt-2">
+        Para consultas relacionadas con privacidad puede escribir a <span className="text-white">info@amephia.com</span>.
+      </p>
+    </section>
+
+    <section>
+      <h3 className="text-xl font-semibold text-white mb-3">2. Qué datos recopilamos</h3>
+      <p>Podemos recopilar las siguientes categorías de datos:</p>
+      <ul className="list-disc pl-6 space-y-1 mt-2">
+        <li>Datos de identificación y contacto, como nombre, empresa, email, teléfono y cargo</li>
+        <li>Información comercial, como necesidad del proyecto, presupuesto estimado, industria y tamaño del negocio</li>
+        <li>Datos técnicos, como IP, navegador, sistema operativo, idioma, dispositivo, páginas visitadas y eventos de navegación</li>
+        <li>Comunicaciones, mensajes, archivos o notas remitidas durante el contacto comercial o técnico</li>
+      </ul>
+      <p className="mt-2">
+        Le solicitamos no enviar datos sensibles ni información de terceros que no sea necesaria para la evaluación inicial.
+        Si decide compartirlos, usted declara que cuenta con base legal suficiente para ello.
+      </p>
+    </section>
+
+    <section>
+      <h3 className="text-xl font-semibold text-white mb-3">3. Finalidades del tratamiento</h3>
+      <p>Tratamos los datos personales para:</p>
+      <ul className="list-disc pl-6 space-y-1 mt-2">
+        <li>Responder consultas, agendar reuniones, entregar demos y preparar propuestas comerciales</li>
+        <li>Dar seguimiento a oportunidades comerciales, ventas, onboarding y soporte precontractual</li>
+        <li>Operar, asegurar y mejorar el sitio, incluyendo prevención de fraude, abuso y tráfico malicioso</li>
+        <li>Medir analítica, rendimiento de campañas, conversiones y efectividad de nuestros canales</li>
+        <li>Cumplir obligaciones legales, contables, tributarias o atender requerimientos de autoridad competente</li>
+      </ul>
+    </section>
+
+    <section>
+      <h3 className="text-xl font-semibold text-white mb-3">4. Base jurídica</h3>
+      <p>
+        Dependiendo del caso, Amephia tratará datos sobre la base de: su consentimiento; la ejecución de medidas precontractuales;
+        la relación contractual cuando exista; el cumplimiento de obligaciones legales; y nuestro interés legítimo en proteger
+        el sitio, gestionar oportunidades comerciales, mantener evidencias y prevenir fraude o uso abusivo.
+      </p>
+    </section>
+
+    <section>
+      <h3 className="text-xl font-semibold text-white mb-3">5. Compartición de datos</h3>
+      <p>
+        No vendemos datos personales. Podemos compartir información con proveedores que actúan como encargados del tratamiento,
+        tales como hosting, analítica, correo, CRM, automatización, mensajería, almacenamiento cloud o herramientas de soporte,
+        exclusivamente en la medida necesaria para operar nuestros procesos.
+      </p>
+      <p className="mt-2">
+        También podremos divulgar información cuando sea necesario para cumplir la ley, atender requerimientos válidos de
+        autoridad, hacer valer derechos, prevenir fraude, investigar incidentes de seguridad o en el contexto de una fusión,
+        adquisición, reorganización societaria o venta de activos.
+      </p>
+    </section>
+
+    <section>
+      <h3 className="text-xl font-semibold text-white mb-3">6. Cookies, analítica y tecnologías similares</h3>
+      <p>
+        Este sitio puede utilizar cookies, píxeles, almacenamiento local y herramientas de analítica para recordar preferencias,
+        medir tráfico, comprender interacciones y optimizar campañas o formularios. Algunas de estas tecnologías pueden ser
+        operadas por terceros.
+      </p>
+      <p className="mt-2">
+        Usted puede bloquear o eliminar cookies desde la configuración de su navegador; sin embargo, ciertas funcionalidades del
+        sitio podrían verse afectadas o dejar de operar correctamente.
+      </p>
+    </section>
+
+    <section>
+      <h3 className="text-xl font-semibold text-white mb-3">7. Conservación de datos</h3>
+      <p>
+        Conservaremos los datos durante el tiempo necesario para cumplir las finalidades descritas en esta política, mantener
+        historial comercial razonable, responder reclamos, hacer cumplir acuerdos y cumplir obligaciones legales o regulatorias.
+      </p>
+      <p className="mt-2">
+        Cuando los datos ya no sean necesarios, podremos eliminarlos, anonimizaros o conservarlos bloqueados durante los plazos
+        de prescripción aplicables. Amephia se reserva el derecho de conservar registros técnicos y evidencias cuando exista una
+        necesidad legítima de seguridad, auditoría o defensa jurídica.
+      </p>
+    </section>
+
+    <section>
+      <h3 className="text-xl font-semibold text-white mb-3">8. Seguridad y transferencias</h3>
+      <p>
+        Aplicamos medidas técnicas, organizativas y contractuales razonables para proteger la información. No obstante, ningún
+        sistema es absolutamente invulnerable y Amephia no puede garantizar seguridad absoluta frente a ataques sofisticados,
+        errores humanos, fallas de terceros o eventos de fuerza mayor.
+      </p>
+      <p className="mt-2">
+        Dado que utilizamos infraestructura y proveedores tecnológicos que pueden operar fuera de Ecuador, sus datos podrán ser
+        almacenados o tratados en otras jurisdicciones con los resguardos contractuales y operativos que resulten razonables
+        para la naturaleza del servicio.
+      </p>
+    </section>
+
+    <section>
+      <h3 className="text-xl font-semibold text-white mb-3">9. Derechos del titular</h3>
+      <p>
+        Cuando la ley aplicable lo permita, usted podrá solicitar acceso, actualización, rectificación, eliminación, oposición,
+        portabilidad o revocatoria del consentimiento respecto de sus datos personales, mediante solicitud razonable enviada a
+        nuestros canales de contacto.
+      </p>
+      <p className="mt-2">
+        Amephia podrá requerir información adicional para verificar identidad, rechazar solicitudes improcedentes o limitar la
+        atención cuando existan obligaciones legales, intereses legítimos prevalentes o impedimentos técnicos razonables.
+      </p>
+    </section>
+
+    <section>
+      <h3 className="text-xl font-semibold text-white mb-3">10. Cambios a esta política</h3>
+      <p>
+        Podemos actualizar esta Política de Privacidad en cualquier momento. La versión vigente será la publicada en este sitio
+        con su fecha de actualización. El uso continuado del sitio después de la publicación de cambios implica conocimiento y
+        aceptación de la versión actualizada en la medida permitida por la ley.
+      </p>
+    </section>
+  </>
+);
 
 /* ─── COUNTER ───────────────────────────────────────── */
 const Counter = ({ end, suffix = '' }: { end: number; suffix?: string }) => {
@@ -437,6 +754,7 @@ const techStack = [
   { name: 'GraphQL', color: '#e10098', cat: 'API' },
   { name: 'PostgreSQL', color: '#336791', cat: 'DB' },
   { name: 'MySQL', color: '#00758f', cat: 'DB' },
+  { name: 'Microsoft SQL Server', color: '#cc2927', cat: 'DB' },
   { name: 'MongoDB', color: '#47a248', cat: 'DB' },
   { name: 'AWS', color: '#f97316', cat: 'Cloud' },
   { name: 'Docker', color: '#2496ed', cat: 'DevOps' },
@@ -496,7 +814,7 @@ const TechSection = () => (
         {[
           { icon: <Globe className="w-5 h-5" />, label: 'Frontend', desc: 'React, Next.js, Angular, Astro y Tailwind CSS', color: '#3B82F6' },
           { icon: <Cpu className="w-5 h-5" />, label: 'Backend', desc: 'Node.js, NestJS, Laravel, Python y FastAPI', color: '#8B5CF6' },
-          { icon: <Database className="w-5 h-5" />, label: 'Datos', desc: 'PostgreSQL, MySQL, MongoDB, Redis y mensajería', color: '#10B981' },
+          { icon: <Database className="w-5 h-5" />, label: 'Datos', desc: 'PostgreSQL, MySQL, SQL Server, MongoDB, Redis y mensajería', color: '#10B981' },
           { icon: <Cloud className="w-5 h-5" />, label: 'Infraestructura', desc: 'AWS, Docker, Kubernetes, Linux y Nginx', color: '#F59E0B' },
           { icon: <Smartphone className="w-5 h-5" />, label: 'Mobile', desc: 'Flutter y React Native para iOS y Android', color: '#06B6D4' },
           { icon: <Sparkles className="w-5 h-5" />, label: 'AI', desc: 'OpenAI, Claude, Gemini y automatizaciones inteligentes', color: '#EC4899' },
@@ -962,7 +1280,13 @@ const ContactLanding = () => {
 };
 
 /* ─── FOOTER ────────────────────────────────────────── */
-const Footer = ({ onOpenProject }: { onOpenProject: (id: ProjectId) => void }) => {
+const Footer = ({
+  onOpenProject,
+  onOpenLegal,
+}: {
+  onOpenProject: (id: ProjectId) => void;
+  onOpenLegal: (page: Exclude<LegalPage, null>) => void;
+}) => {
   const go = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
 
   return (
@@ -1036,8 +1360,13 @@ const Footer = ({ onOpenProject }: { onOpenProject: (id: ProjectId) => void }) =
         <div className="border-t border-white/[0.06] pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-slate-600 text-xs font-mono">© 2026 AmePhia Systems Inc. Todos los derechos reservados.</p>
           <div className="flex gap-6">
-            {['Términos de uso', 'Privacidad'].map(l => (
-              <button key={l} className="text-slate-600 hover:text-slate-400 text-xs transition-colors">{l}</button>
+            {[
+              { label: 'Términos de uso', page: 'terms' as const },
+              { label: 'Privacidad', page: 'privacy' as const },
+            ].map(l => (
+              <button key={l.label} onClick={() => onOpenLegal(l.page)} className="text-slate-600 hover:text-slate-400 text-xs transition-colors">
+                {l.label}
+              </button>
             ))}
           </div>
         </div>
@@ -1052,6 +1381,8 @@ interface CompanyLandingProps {
 }
 
 export const CompanyLanding = ({ onOpenProject }: CompanyLandingProps) => {
+  const [legalPage, setLegalPage] = useState<LegalPage>(null);
+
   useEffect(() => {
     document.body.classList.add('custom-cursor');
     return () => document.body.classList.remove('custom-cursor');
@@ -1091,7 +1422,8 @@ export const CompanyLanding = ({ onOpenProject }: CompanyLandingProps) => {
       <ContactLanding />
 
       {/* Footer — muy oscuro, cierre premium */}
-      <Footer onOpenProject={onOpenProject} />
+      <Footer onOpenProject={onOpenProject} onOpenLegal={setLegalPage} />
+      <LegalModal page={legalPage} onClose={() => setLegalPage(null)} />
     </div>
   );
 };
