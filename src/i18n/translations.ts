@@ -204,7 +204,7 @@ export const translations = {
     contactEmailNow: 'Escríbenos por correo',
     contactNamePlaceholder: 'Juan Pérez',
     contactEmailPlaceholder: 'juan@ejemplo.com',
-    contactPhonePlaceholder: '+593 99 123 4567',
+    contactPhonePlaceholder: '+1 (334) 123 4567',
     contactMessagePlaceholder: 'Cuéntanos sobre tu proyecto o haz cualquier pregunta...',
 
     // Stats Section

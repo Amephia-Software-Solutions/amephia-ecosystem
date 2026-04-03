@@ -365,7 +365,7 @@ const PROJECT_COPY: Record<Language, Record<ProjectId, ProjectCopy>> = {
 export const ProjectLanding = ({ projectId, onBack }: ProjectLandingProps) => {
   const { language } = useLanguage();
   const copy = PROJECT_COPY[language][projectId];
-  const whatsappNumber = '593986059727';
+  const whatsappNumber = '13347324056';
   const packagistUrl = 'https://packagist.org/packages/amephia/sri-ec';
   // Email generated at runtime
   const introMessage =

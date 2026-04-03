@@ -49,7 +49,7 @@ const YOUTUBE_VIDEO_ID: string | null = null;
 /* ──────────────────────────────────────────────
    WHATSAPP HELPER
    ────────────────────────────────────────────── */
-const WA_NUMBER = '593986059727';
+const WA_NUMBER = '13347324056';
 
 const waURL = (ctx?: string) => {
   const msgs: Record<string, string> = {
@@ -993,7 +993,7 @@ const BrokerSeguroLanding = () => {
                       name="phone"
                       type="tel"
                       required
-                      placeholder="+593 9XX XXX XXX"
+                      placeholder="+1 (334) XXX-XXXX"
                       className="w-full bg-white/[0.04] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-indigo-500/50 transition"
                     />
                   </div>

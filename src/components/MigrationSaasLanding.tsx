@@ -327,7 +327,7 @@ const TermsContent = () => (
       <p>Para consultas legales sobre estos Términos de Servicio:</p>
       <ul className="list-none space-y-1 mt-2">
         <li><strong className="text-white">Email legal:</strong> legal@amephia.com</li>
-        <li><strong className="text-white">WhatsApp:</strong> +593 98 605 9727</li>
+        <li><strong className="text-white">WhatsApp:</strong> +1 (334) 732-4056</li>
         <li><strong className="text-white">Empresa:</strong> Amephia Systems Inc.</li>
         <li><strong className="text-white">Jurisdicción:</strong> Quito, Ecuador</li>
       </ul>
@@ -520,7 +520,7 @@ const PrivacyContent = () => (
       <h3 className="text-xl font-semibold text-white mb-3">13. Contacto del Delegado de Protección de Datos</h3>
       <ul className="list-none space-y-1">
         <li><strong className="text-white">Email:</strong> dpo@amephia.com</li>
-        <li><strong className="text-white">Teléfono:</strong> +593 98 605 9727</li>
+        <li><strong className="text-white">Teléfono:</strong> +1 (334) 732-4056</li>
         <li><strong className="text-white">Plazo de respuesta:</strong> Máximo 15 días (Art. 24 LOPDP)</li>
       </ul>
     </section>
@@ -708,7 +708,7 @@ const RefundsContent = () => (
       <h3 className="text-xl font-semibold text-white mb-3">8. Contacto</h3>
       <ul className="list-none space-y-1">
         <li><strong className="text-white">Email de facturación:</strong> billing@amephia.com</li>
-        <li><strong className="text-white">WhatsApp:</strong> +593 98 605 9727</li>
+        <li><strong className="text-white">WhatsApp:</strong> +1 (334) 732-4056</li>
         <li><strong className="text-white">Horario:</strong> Lunes a viernes, 9:00 - 18:00 (Ecuador, GMT-5)</li>
       </ul>
     </section>
@@ -721,7 +721,7 @@ const MigrationSaasLanding = () => {
   const [legalPage, setLegalPage] = useState<LegalPage>(null);
 
   // WhatsApp Configuration
-  const WHATSAPP_NUMBER = '593986059727'; // +593-98-605-9727
+  const WHATSAPP_NUMBER = '13347324056'; // +1-334-732-4056
 
   const getWhatsAppURL = (plan?: string) => {
     let message = '';

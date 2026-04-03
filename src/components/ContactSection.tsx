@@ -4,7 +4,7 @@ import { useLanguage } from '../i18n';
 import { trackContactClick, trackLeadGenerated } from '../lib/analytics';
 import { getContactEmail, openEmailClient } from '../lib/emailUtils';
 
-const WHATSAPP_NUMBER = '593986059727';
+const WHATSAPP_NUMBER = '13347324056';
 // Email is generated at runtime to avoid scraping
 const FORM_SUBMIT_ENDPOINT = `https://formsubmit.co/ajax/${getContactEmail()}`;
 
@@ -167,7 +167,7 @@ export const ContactSection = () => {
                     className="inline-flex items-center gap-2 px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg transition-colors"
                   >
                     <WhatsAppIcon />
-                    <span>+593 98 605 9727</span>
+                    <span>+1 (334) 732-4056</span>
                   </button>
                 </div>
               </div>
@@ -188,7 +188,7 @@ export const ContactSection = () => {
               </div>
               <div>
                 <p className="text-xs text-mutedText uppercase tracking-wider">Phone</p>
-                <p className="text-white font-medium">+593 98 605 9727</p>
+                <p className="text-white font-medium">+1 (334) 732-4056</p>
               </div>
             </div>
             <div className="bg-white/5 border border-white/10 rounded-xl p-4 flex items-center gap-4">

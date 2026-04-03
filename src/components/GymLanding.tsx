@@ -22,7 +22,7 @@ import {
 /* ──────────────────────────────────────────────
    WHATSAPP HELPER
    ────────────────────────────────────────────── */
-const WA_NUMBER = '593986059727';
+const WA_NUMBER = '13347324056';
 
 const waURL = (plan?: string) => {
   const msgs: Record<string, string> = {

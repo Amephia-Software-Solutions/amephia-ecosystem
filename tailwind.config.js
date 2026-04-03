@@ -21,12 +21,17 @@ export default {
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-out forwards',
+        shimmer: 'shimmer 4s linear infinite',
       },
       keyframes: {
         fadeIn: {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
           to: { opacity: '1' },
+        },
+        shimmer: {
+          '0%': { backgroundPosition: '0% center' },
+          '100%': { backgroundPosition: '200% center' },
         },
       },
     },

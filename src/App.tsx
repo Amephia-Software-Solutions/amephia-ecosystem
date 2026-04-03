@@ -1,26 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
-import type { MouseEvent } from 'react';
 import { Shell } from './components/layout/Shell';
-import { Header } from './components/Header';
-import { BentoGrid } from './components/layout/BentoGrid';
-import { GymModule } from './components/modules/GymModule';
-import { EcommerceModule } from './components/modules/EcommerceModule';
-import { FacturacionModule } from './components/modules/FacturacionModule';
-import { MigrationModule } from './components/modules/MigrationModule';
-import { BrokerSeguroModule } from './components/modules/BrokerSeguroModule';
-import { SatelliteModule } from './components/modules/SatelliteModule';
 import { ProjectLanding } from './components/ProjectLanding';
 import MigrationSaasLanding from './components/MigrationSaasLanding';
 import GymLanding from './components/GymLanding';
 import BrokerSeguroLanding from './components/BrokerSeguroLanding';
 import EcommerceLanding from './components/EcommerceLanding';
-
-import { InfoSection } from './components/InfoSection';
-import { ProductsSection } from './components/ProductsSection';
-import { GymShowcaseSection } from './components/GymShowcaseSection';
-import { StatsSection } from './components/StatsSection';
-import { FaqSection } from './components/FaqSection';
-import { ContactSection } from './components/ContactSection';
+import { CompanyLanding } from './components/CompanyLanding';
 import { isProjectId } from './projects';
 import type { ProjectId } from './projects';
 import { trackEvent, trackPageView } from './lib/analytics';
@@ -293,15 +278,6 @@ function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
-  const handleProjectLinkClick = useCallback(
-    (event: MouseEvent<HTMLAnchorElement>, projectId: ProjectId) => {
-      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
-      event.preventDefault();
-      openProject(projectId);
-    },
-    [openProject]
-  );
-
   const closeProject = useCallback(() => {
     window.history.pushState(null, '', `/${window.location.search}`);
     setActiveProject(null);
@@ -324,106 +300,15 @@ function App() {
     return <EcommerceLanding />;
   }
 
-  return (
-    <Shell>
-      {activeProject ? (
+  if (activeProject) {
+    return (
+      <Shell>
         <ProjectLanding projectId={activeProject} onBack={closeProject} />
-      ) : (
-        <>
-          <Header />
-          <BentoGrid>
-            <GymModule onOpenProject={openProject} />
-            <FacturacionModule onOpenProject={openProject} />
-            <EcommerceModule onOpenProject={openProject} />
-            <MigrationModule onOpenProject={openProject} />
-            <BrokerSeguroModule onOpenProject={openProject} />
-            <SatelliteModule title="POS" type="pos" delay={0.35} onOpenProject={openProject} />
-            <SatelliteModule title="NUTRI" type="nutri" delay={0.4} onOpenProject={openProject} />
-          </BentoGrid>
+      </Shell>
+    );
+  }
 
-          <InfoSection />
-
-          <ProductsSection onOpenProject={openProject} />
-
-          <GymShowcaseSection onOpenProject={openProject} />
-
-          <StatsSection />
-
-          <FaqSection />
-
-          <ContactSection />
-
-          <section className="mt-12">
-            <h2 className="text-sm uppercase tracking-widest text-mutedText/60 mb-3">Páginas de productos</h2>
-            <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-mutedText">
-              <a
-                href="/proyecto/gym"
-                className="hover:text-primary transition-colors"
-                onClick={(event) => handleProjectLinkClick(event, 'gym')}
-              >
-                ERP para Gimnasios
-              </a>
-              <a
-                href="/proyecto/ecommerce"
-                className="hover:text-primary transition-colors"
-                onClick={(event) => handleProjectLinkClick(event, 'ecommerce')}
-              >
-                Ecommerce y Pagos Online
-              </a>
-              <a
-                href="/proyecto/facturacion"
-                className="hover:text-primary transition-colors"
-                onClick={(event) => handleProjectLinkClick(event, 'facturacion')}
-              >
-                Facturación Electrónica
-              </a>
-              <a
-                href="/proyecto/pos"
-                className="hover:text-primary transition-colors"
-                onClick={(event) => handleProjectLinkClick(event, 'pos')}
-              >
-                Punto de Venta (POS)
-              </a>
-              <a
-                href="/proyecto/nutri"
-                className="hover:text-primary transition-colors"
-                onClick={(event) => handleProjectLinkClick(event, 'nutri')}
-              >
-                App de Nutrición
-              </a>
-              <a
-                href="/proyecto/advisory"
-                className="hover:text-primary transition-colors"
-                onClick={(event) => handleProjectLinkClick(event, 'advisory')}
-              >
-                Servicios de Asesoría
-              </a>
-              <a
-                href="/proyecto/migration"
-                className="hover:text-primary transition-colors"
-                onClick={(event) => handleProjectLinkClick(event, 'migration')}
-              >
-                SaaS de Gestión Migratoria
-              </a>
-              <a
-                href="/proyecto/broker-seguro"
-                className="hover:text-primary transition-colors"
-                onClick={(event) => handleProjectLinkClick(event, 'broker-seguro')}
-              >
-                Software para Brókers de Seguros
-              </a>
-            </div>
-          </section>
-        </>
-      )}
-
-      {/* Footer / Copyright */}
-      <footer className="mt-24 border-t border-white/5 pt-8 flex justify-between items-center text-[10px] text-mutedText/40 font-mono tracking-widest uppercase">
-        <span>AmePhia Systems Inc.</span>
-        <span>© 2026</span>
-      </footer>
-    </Shell>
-  );
+  return <CompanyLanding onOpenProject={openProject} />;
 }
 
 export default App;
