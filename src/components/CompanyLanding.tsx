@@ -4,7 +4,7 @@ import {
   ArrowRight, Code2, Globe, ShoppingCart, Zap, Cloud,
   BarChart3, Shield, Users, CheckCircle2, FileText,
   Settings, TrendingUp, Award, Clock, PhoneCall, Mail,
-  ChevronRight, Database, Cpu, Layers, Menu, X, Sparkles,
+  ChevronRight, Database, Cpu, Layers, Menu, X, Sparkles, Smartphone,
 } from 'lucide-react';
 import { CustomCursor } from './layout/CustomCursor';
 import { trackContactClick, trackLeadGenerated } from '../lib/analytics';
@@ -419,19 +419,36 @@ const ServicesSection = () => (
 /* ─── TECH — oscuro, autoridad técnica ──────────────── */
 const techStack = [
   { name: 'React', color: '#61dafb', cat: 'Frontend' },
+  { name: 'Next.js', color: '#E2E8F0', cat: 'Framework' },
+  { name: 'Angular', color: '#dd0031', cat: 'Frontend' },
+  { name: 'Astro', color: '#f97316', cat: 'Frontend' },
   { name: 'TypeScript', color: '#3178c6', cat: 'Lenguaje' },
+  { name: 'JavaScript', color: '#f7df1e', cat: 'Lenguaje' },
+  { name: 'Tailwind CSS', color: '#38bdf8', cat: 'Estilos' },
+  { name: 'Flutter', color: '#02569b', cat: 'Mobile' },
+  { name: 'React Native', color: '#61dafb', cat: 'Mobile' },
   { name: 'Node.js', color: '#8cc84b', cat: 'Backend' },
+  { name: 'NestJS', color: '#e0234e', cat: 'Backend' },
+  { name: 'Laravel', color: '#ff2d20', cat: 'Backend' },
+  { name: 'PHP', color: '#777bb4', cat: 'Lenguaje' },
   { name: 'Python', color: '#fbbf24', cat: 'Backend' },
+  { name: 'FastAPI', color: '#10b981', cat: 'API' },
+  { name: 'REST APIs', color: '#22c55e', cat: 'API' },
+  { name: 'GraphQL', color: '#e10098', cat: 'API' },
   { name: 'PostgreSQL', color: '#336791', cat: 'DB' },
+  { name: 'MySQL', color: '#00758f', cat: 'DB' },
   { name: 'MongoDB', color: '#47a248', cat: 'DB' },
   { name: 'AWS', color: '#f97316', cat: 'Cloud' },
   { name: 'Docker', color: '#2496ed', cat: 'DevOps' },
-  { name: 'Next.js', color: '#E2E8F0', cat: 'Framework' },
   { name: 'Vite', color: '#a78bfa', cat: 'Build' },
   { name: 'Redis', color: '#dc382d', cat: 'Cache' },
+  { name: 'Kubernetes', color: '#326ce5', cat: 'DevOps' },
+  { name: 'Linux', color: '#facc15', cat: 'Infra' },
   { name: 'Nginx', color: '#009639', cat: 'Servidor' },
-  { name: 'GraphQL', color: '#e10098', cat: 'API' },
-  { name: 'Tailwind CSS', color: '#38bdf8', cat: 'Estilos' },
+  { name: 'RabbitMQ', color: '#ff6600', cat: 'Mensajería' },
+  { name: 'OpenAI', color: '#10a37f', cat: 'AI' },
+  { name: 'Claude', color: '#d97706', cat: 'AI' },
+  { name: 'Gemini', color: '#8b5cf6', cat: 'AI' },
   { name: 'Stripe', color: '#635bff', cat: 'Pagos' },
   { name: 'GitHub Actions', color: '#2088ff', cat: 'CI/CD' },
 ];
@@ -475,12 +492,14 @@ const TechSection = () => (
 
       {/* Categorías */}
       <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }} className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        viewport={{ once: true }} className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4">
         {[
-          { icon: <Globe className="w-5 h-5" />, label: 'Frontend', desc: 'React, Next.js, TypeScript, Tailwind', color: '#3B82F6' },
-          { icon: <Cpu className="w-5 h-5" />, label: 'Backend', desc: 'Node.js, Python, GraphQL, REST APIs', color: '#8B5CF6' },
-          { icon: <Database className="w-5 h-5" />, label: 'Datos', desc: 'PostgreSQL, MongoDB, Redis, S3', color: '#10B981' },
-          { icon: <Cloud className="w-5 h-5" />, label: 'Infraestructura', desc: 'AWS, Docker, Nginx, GitHub Actions', color: '#F59E0B' },
+          { icon: <Globe className="w-5 h-5" />, label: 'Frontend', desc: 'React, Next.js, Angular, Astro y Tailwind CSS', color: '#3B82F6' },
+          { icon: <Cpu className="w-5 h-5" />, label: 'Backend', desc: 'Node.js, NestJS, Laravel, Python y FastAPI', color: '#8B5CF6' },
+          { icon: <Database className="w-5 h-5" />, label: 'Datos', desc: 'PostgreSQL, MySQL, MongoDB, Redis y mensajería', color: '#10B981' },
+          { icon: <Cloud className="w-5 h-5" />, label: 'Infraestructura', desc: 'AWS, Docker, Kubernetes, Linux y Nginx', color: '#F59E0B' },
+          { icon: <Smartphone className="w-5 h-5" />, label: 'Mobile', desc: 'Flutter y React Native para iOS y Android', color: '#06B6D4' },
+          { icon: <Sparkles className="w-5 h-5" />, label: 'AI', desc: 'OpenAI, Claude, Gemini y automatizaciones inteligentes', color: '#EC4899' },
         ].map(cat => (
           <div key={cat.label}
             className="p-6 bg-[#0C1220] border border-white/[0.07] hover:border-white/15 rounded-2xl flex flex-col gap-3 transition-colors">
