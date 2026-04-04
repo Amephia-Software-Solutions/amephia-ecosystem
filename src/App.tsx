@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Shell } from './components/layout/Shell';
 import { ProjectLanding } from './components/ProjectLanding';
 import MigrationSaasLanding from './components/MigrationSaasLanding';
 import GymLanding from './components/GymLanding';
@@ -301,11 +300,7 @@ function App() {
   }
 
   if (activeProject) {
-    return (
-      <Shell>
-        <ProjectLanding projectId={activeProject} onBack={closeProject} />
-      </Shell>
-    );
+    return <ProjectLanding projectId={activeProject} onBack={closeProject} />;
   }
 
   return <CompanyLanding onOpenProject={openProject} />;

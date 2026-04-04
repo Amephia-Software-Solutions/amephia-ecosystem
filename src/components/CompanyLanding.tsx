@@ -6,7 +6,6 @@ import {
   Settings, TrendingUp, Award, Clock, PhoneCall, Mail,
   ChevronRight, Database, Cpu, Layers, Menu, X, Sparkles, Smartphone,
 } from 'lucide-react';
-import { CustomCursor } from './layout/CustomCursor';
 import { trackContactClick, trackLeadGenerated } from '../lib/analytics';
 import { getContactEmail, openEmailClient } from '../lib/emailUtils';
 import type { ProjectId } from '../projects';
@@ -490,15 +489,6 @@ const HeroSection = () => {
 
           {/* COPY */}
           <div>
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#3B82F6]/30 bg-[#3B82F6]/10 mb-8">
-              <Sparkles className="w-3.5 h-3.5 text-[#60A5FA]" />
-              <span className="text-[#60A5FA] text-xs font-semibold tracking-widest uppercase">
-                Empresa ecuatoriana · Más de 10 años
-              </span>
-            </motion.div>
-
             <motion.h1 initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.1 }}
               className="text-5xl md:text-6xl lg:text-[4.5rem] font-bold leading-[1.04] tracking-tight text-white mb-7">
@@ -836,8 +826,8 @@ const TechSection = () => (
 
 /* ─── PRODUCTS — claro ──────────────────────────────── */
 const products = [
-  { id: 'gym' as ProjectId, name: 'AMEPHIA GYM', cat: 'ERP para Gimnasios', desc: 'Membresías, facturación SRI, POS, inventario y contabilidad NIIF en una sola plataforma.', color: '#EA580C', bg: '#FFF7ED', border: '#FED7AA', badge: 'Desde $29/mes' },
-  { id: 'broker-seguro' as ProjectId, name: 'BROKER SEGURO', cat: 'Gestión de Seguros', desc: 'Pólizas, vencimientos, renovaciones, reclamos, comisiones y cartera de clientes.', color: '#3B82F6', bg: '#EFF6FF', border: '#BFDBFE', badge: 'Desde $49/mes' },
+  { id: 'gym' as ProjectId, name: 'AMEPHIA GYM', cat: 'ERP para Gimnasios', desc: 'Membresías, facturación SRI, POS, inventario y contabilidad NIIF en una sola plataforma.', color: '#EA580C', bg: '#FFF7ED', border: '#FED7AA', badge: 'ERP Completo' },
+  { id: 'broker-seguro' as ProjectId, name: 'BROKER SEGURO', cat: 'Gestión de Seguros', desc: 'Pólizas, vencimientos, renovaciones, reclamos, comisiones y cartera de clientes.', color: '#3B82F6', bg: '#EFF6FF', border: '#BFDBFE', badge: 'SaaS Multi-tenant' },
   { id: 'migration' as ProjectId, name: 'MIGRALIA', cat: 'SaaS Migratorio', desc: 'Plataforma multitenancy para facilitadores: casos, documentos, pagos y portal del cliente.', color: '#8B5CF6', bg: '#F5F3FF', border: '#DDD6FE', badge: 'SaaS Multitenancy' },
   { id: 'ecommerce' as ProjectId, name: 'AMEPHIA STORE', cat: 'E-commerce', desc: 'Tienda virtual con checkout seguro, pasarelas de pago y facturación integrada.', color: '#7C3AED', bg: '#F5F3FF', border: '#C4B5FD', badge: 'Pagos online' },
   { id: 'facturacion' as ProjectId, name: 'FACTURA SRI', cat: 'Facturación Electrónica', desc: 'Facturas, retenciones, notas de crédito y guías de remisión con validación automática.', color: '#059669', bg: '#ECFDF5', border: '#A7F3D0', badge: '100% SRI' },
@@ -1383,14 +1373,8 @@ interface CompanyLandingProps {
 export const CompanyLanding = ({ onOpenProject }: CompanyLandingProps) => {
   const [legalPage, setLegalPage] = useState<LegalPage>(null);
 
-  useEffect(() => {
-    document.body.classList.add('custom-cursor');
-    return () => document.body.classList.remove('custom-cursor');
-  }, []);
-
   return (
     <div className="relative min-h-screen bg-[#080E1C] text-gray-900 selection:bg-blue-200 font-sans overflow-x-hidden">
-      <CustomCursor />
       <div className="noise-overlay" />
 
       <Navbar />

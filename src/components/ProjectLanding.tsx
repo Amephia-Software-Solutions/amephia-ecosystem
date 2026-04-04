@@ -1,10 +1,11 @@
 import { motion } from 'framer-motion';
+import { ArrowLeft, ArrowRight, CheckCircle2, PhoneCall, Mail } from 'lucide-react';
 import { useLanguage } from '../i18n';
 import type { Language } from '../i18n';
 import type { ProjectId } from '../projects';
 import { trackContactClick, trackEvent, trackLeadGenerated } from '../lib/analytics';
-
 import { openEmailClient } from '../lib/emailUtils';
+import logo from '../assets/images/amelogo_v3_optimized.webp';
 
 interface ProjectLandingProps {
   projectId: ProjectId;
@@ -360,14 +361,12 @@ const PROJECT_COPY: Record<Language, Record<ProjectId, ProjectCopy>> = {
 };
 
 
-// ... existing code ...
-
 export const ProjectLanding = ({ projectId, onBack }: ProjectLandingProps) => {
   const { language } = useLanguage();
   const copy = PROJECT_COPY[language][projectId];
-  const whatsappNumber = '13347324056';
+  const whatsappNumber = '593986059727';
   const packagistUrl = 'https://packagist.org/packages/amephia/sri-ec';
-  // Email generated at runtime
+
   const introMessage =
     language === 'es'
       ? `Hola, quiero información del proyecto ${copy.title}.`
@@ -378,131 +377,187 @@ export const ProjectLanding = ({ projectId, onBack }: ProjectLandingProps) => {
       ? `Agenda de proyecto: ${copy.title}`
       : `Project consultation: ${copy.title}`;
 
-  // For email, we use a button handler instead of mailto: link to avoid scraping
-  const secondaryUrl = projectId === 'facturacion' ? packagistUrl : '#';
-  const secondaryLabel =
-    projectId === 'facturacion'
-      ? language === 'es'
-        ? 'Ver Paquete en Packagist'
-        : 'View Package on Packagist'
-      : language === 'es'
-        ? 'Agendar Asesoría'
-        : 'Book Advisory Call';
-  const backLabel = language === 'es' ? 'Volver al Portafolio' : 'Back to Portfolio';
-  const ctaLabel = language === 'es' ? 'Solicitar este Proyecto' : 'Request this Project';
-  const responseNote =
-    language === 'es'
-      ? 'Respuesta por WhatsApp en minutos.'
-      : 'WhatsApp response in minutes.';
-  const handlePrimaryCtaClick = () => {
-    const context = `project_${projectId}_primary`;
+  const isPackagist = projectId === 'facturacion';
+  const ctaLabel = language === 'es' ? 'Solicitar este proyecto' : 'Request this project';
+  const secondaryLabel = isPackagist
+    ? language === 'es' ? 'Ver en Packagist' : 'View on Packagist'
+    : language === 'es' ? 'Agendar asesoría' : 'Book Advisory Call';
+  const backLabel = language === 'es' ? 'Volver al inicio' : 'Back to home';
+
+  const handlePrimaryClick = () => {
+    const ctx = `project_${projectId}_primary`;
     trackEvent('project_cta_click', { project_id: projectId, cta: 'whatsapp' });
-    trackContactClick('whatsapp', context);
-    trackLeadGenerated('whatsapp', context);
+    trackContactClick('whatsapp', ctx);
+    trackLeadGenerated('whatsapp', ctx);
   };
-  const handleSecondaryCtaClick = () => {
-    const ctaType = projectId === 'facturacion' ? 'packagist' : 'email';
+
+  const handleSecondaryClick = () => {
+    const ctaType = isPackagist ? 'packagist' : 'email';
     trackEvent('project_cta_click', { project_id: projectId, cta: ctaType });
-    if (ctaType === 'email') {
-      const context = `project_${projectId}_secondary`;
-      trackContactClick('email', context);
-      trackLeadGenerated('email', context);
-      // Trigger email client opening
+    if (!isPackagist) {
+      const ctx = `project_${projectId}_secondary`;
+      trackContactClick('email', ctx);
+      trackLeadGenerated('email', ctx);
       openEmailClient(emailSubject);
     }
   };
 
   return (
-    <section className="py-16 pb-28 md:pb-16">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45 }}
-        className="mb-10"
-      >
-        <button
-          onClick={onBack}
-          className="mb-8 px-4 py-2 text-xs font-mono uppercase tracking-wider bg-white/5 border border-white/10 rounded-lg hover:border-primary/40 hover:text-primary transition-colors"
-        >
-          {backLabel}
-        </button>
-        <span className="block text-xs font-mono uppercase tracking-wider text-primary mb-3">
-          {copy.badge}
-        </span>
-        <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white mb-4">{copy.title}</h1>
-        <p className="text-lg md:text-xl text-white/80 mb-4">{copy.subtitle}</p>
-        <p className="text-base text-mutedText max-w-4xl leading-relaxed">{copy.description}</p>
-      </motion.div>
+    <div className="min-h-screen bg-[#080E1C] text-white font-sans antialiased overflow-x-hidden">
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.05, duration: 0.4 }}
-          className="bg-white/5 border border-white/10 rounded-2xl p-6"
-        >
-          <h2 className="text-xl font-semibold text-white mb-4">{copy.highlightsTitle}</h2>
-          <ul className="space-y-3 text-sm text-mutedText">
-            {copy.highlights.map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="text-primary">•</span>
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </motion.div>
+      {/* ── Navbar ── */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-[#080E1C]/95 backdrop-blur-xl border-b border-white/[0.07]">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 h-18 md:h-20 flex items-center justify-between py-4">
+          <button onClick={onBack} className="flex items-center gap-3 group">
+            <img src={logo} alt="AmePhia" className="h-7 w-auto object-contain brightness-0 invert opacity-90 group-hover:opacity-100 transition-opacity" />
+          </button>
+          <button onClick={onBack}
+            className="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors font-medium">
+            <ArrowLeft className="w-4 h-4" />
+            {backLabel}
+          </button>
+        </div>
+      </header>
 
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1, duration: 0.4 }}
-          className="bg-white/5 border border-white/10 rounded-2xl p-6"
-        >
-          <h2 className="text-xl font-semibold text-white mb-4">{copy.deliverablesTitle}</h2>
-          <ul className="space-y-3 text-sm text-mutedText">
-            {copy.deliverables.map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="text-primary">•</span>
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </motion.div>
-      </div>
+      {/* ── Hero ── */}
+      <section className="relative min-h-[60vh] flex items-center overflow-hidden pt-20">
+        {/* Fondo */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-[-10%] left-[5%] w-[700px] h-[700px] rounded-full bg-[#3B82F6]/[0.07] blur-[130px]" />
+          <div className="absolute bottom-[-5%] right-[-5%] w-[600px] h-[600px] rounded-full bg-[#8B5CF6]/[0.06] blur-[110px]" />
+          <div className="absolute inset-0 opacity-[0.03]"
+            style={{ backgroundImage: 'linear-gradient(#94A3B8 1px, transparent 1px), linear-gradient(90deg, #94A3B8 1px, transparent 1px)', backgroundSize: '72px 72px' }} />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#080E1C]" />
+        </div>
 
-      <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-        <a
-          href={whatsappUrl}
-          target="_blank"
-          rel="noreferrer"
-          onClick={handlePrimaryCtaClick}
-          className="inline-flex items-center justify-center px-6 py-3 bg-primary text-background font-semibold rounded-lg hover:bg-primary/90 transition-colors"
-        >
-          {ctaLabel}
-        </a>
-        <a
-          href={secondaryUrl}
-          target={projectId === 'facturacion' ? '_blank' : undefined}
-          rel={projectId === 'facturacion' ? 'noreferrer' : undefined}
-          onClick={handleSecondaryCtaClick}
-          className="inline-flex items-center justify-center px-6 py-3 border border-white/20 text-white font-semibold rounded-lg hover:bg-white/5 transition-colors"
-        >
-          {secondaryLabel}
-        </a>
-        <span className="text-sm text-mutedText">{responseNote}</span>
-      </div>
+        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 w-full py-20">
+          <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+            <span className="inline-block px-4 py-1.5 bg-[#3B82F6]/15 border border-[#3B82F6]/25 rounded-full text-xs font-semibold text-[#60A5FA] uppercase tracking-widest mb-6">
+              {copy.badge}
+            </span>
+            <h1 className="text-4xl md:text-6xl lg:text-[4rem] font-bold leading-[1.06] tracking-tight text-white mb-6 max-w-4xl">
+              {copy.title}
+            </h1>
+            <p className="text-xl text-slate-400 leading-relaxed mb-4 max-w-3xl">
+              {copy.subtitle}
+            </p>
+            <p className="text-base text-slate-500 leading-relaxed max-w-3xl">
+              {copy.description}
+            </p>
 
+            <div className="flex flex-col sm:flex-row gap-4 mt-10">
+              <a href={whatsappUrl} target="_blank" rel="noreferrer" onClick={handlePrimaryClick}
+                className="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-[#3B82F6] to-[#6366f1] hover:from-[#2563eb] hover:to-[#4f46e5] text-white font-semibold rounded-xl transition-all duration-200 hover:shadow-2xl hover:shadow-blue-500/30 hover:-translate-y-0.5">
+                <PhoneCall className="w-5 h-5" />
+                {ctaLabel}
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </a>
+              <a
+                href={isPackagist ? packagistUrl : '#'}
+                target={isPackagist ? '_blank' : undefined}
+                rel={isPackagist ? 'noreferrer' : undefined}
+                onClick={handleSecondaryClick}
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-white/15 hover:border-white/30 text-slate-300 hover:text-white font-medium rounded-xl transition-all duration-200 hover:bg-white/[0.04]">
+                <Mail className="w-5 h-5" />
+                {secondaryLabel}
+              </a>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── Highlights + Deliverables ── */}
+      <section className="py-20 bg-[#080E1C]">
+        <div className="max-w-7xl mx-auto px-6 md:px-12">
+          <div className="grid md:grid-cols-2 gap-6">
+
+            {/* Highlights */}
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ duration: 0.5 }}
+              className="bg-[#0C1220] border border-white/[0.08] rounded-2xl p-8">
+              <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
+                <span className="w-8 h-8 rounded-lg bg-[#3B82F6]/15 border border-[#3B82F6]/25 flex items-center justify-center">
+                  <CheckCircle2 className="w-4 h-4 text-[#60A5FA]" />
+                </span>
+                {copy.highlightsTitle}
+              </h2>
+              <ul className="space-y-4">
+                {copy.highlights.map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-slate-400 text-sm leading-relaxed">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#3B82F6] mt-2 flex-shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+
+            {/* Deliverables */}
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }}
+              className="bg-[#0C1220] border border-white/[0.08] rounded-2xl p-8">
+              <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
+                <span className="w-8 h-8 rounded-lg bg-[#8B5CF6]/15 border border-[#8B5CF6]/25 flex items-center justify-center">
+                  <CheckCircle2 className="w-4 h-4 text-[#A78BFA]" />
+                </span>
+                {copy.deliverablesTitle}
+              </h2>
+              <ul className="space-y-4">
+                {copy.deliverables.map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-slate-400 text-sm leading-relaxed">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#8B5CF6] mt-2 flex-shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA final ── */}
+      <section className="py-16 px-6 md:px-12">
+        <div className="max-w-7xl mx-auto">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="relative overflow-hidden rounded-3xl p-12 md:p-16 text-center bg-gradient-to-br from-[#0F172A] via-[#1E1040] to-[#1E1B4B]">
+            <div className="absolute -top-20 -right-20 w-80 h-80 bg-[#3B82F6]/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-[#8B5CF6]/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute inset-0 opacity-[0.03]"
+              style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '48px 48px' }} />
+
+            <div className="relative z-10">
+              <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-4">
+                ¿Listo para empezar con{' '}
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#60A5FA] to-[#A78BFA]">
+                  {copy.title}
+                </span>
+                ?
+              </h2>
+              <p className="text-slate-400 text-lg mb-8 max-w-lg mx-auto leading-relaxed">
+                {language === 'es'
+                  ? 'Cuéntanos tu caso. Te respondemos en menos de 24 horas con una propuesta concreta.'
+                  : 'Tell us about your case. We respond within 24 hours with a concrete proposal.'}
+              </p>
+              <a href={whatsappUrl} target="_blank" rel="noreferrer" onClick={handlePrimaryClick}
+                className="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] text-white font-semibold rounded-xl hover:shadow-2xl hover:shadow-blue-500/30 hover:-translate-y-0.5 transition-all duration-200">
+                {ctaLabel}
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </a>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── Mobile sticky CTA ── */}
       <div className="md:hidden fixed bottom-4 inset-x-4 z-40">
-        <a
-          href={whatsappUrl}
-          target="_blank"
-          rel="noreferrer"
-          onClick={handlePrimaryCtaClick}
-          className="w-full inline-flex items-center justify-center px-6 py-3 bg-primary text-background font-semibold rounded-xl shadow-[0_8px_24px_rgba(143,168,118,0.35)]"
-        >
+        <a href={whatsappUrl} target="_blank" rel="noreferrer" onClick={handlePrimaryClick}
+          className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-[#3B82F6] to-[#6366f1] text-white font-semibold rounded-xl shadow-lg shadow-blue-500/30">
+          <PhoneCall className="w-5 h-5" />
           {ctaLabel}
         </a>
       </div>
-    </section>
+
+    </div>
   );
 };

@@ -12,10 +12,6 @@ body {
   @apply bg-background text-white font-sans antialiased overflow-x-hidden;
 }
 
-/* Hide cursor only when Shell custom cursor is active */
-body.custom-cursor {
-  cursor: none;
-}
 
 /* Noise Texture */
 .noise-overlay {
