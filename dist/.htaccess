@@ -36,10 +36,33 @@ RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
   Header set Referrer-Policy "strict-origin-when-cross-origin"
 </IfModule>
 
-# Custom 404 page
+# Custom 404 page (solo para rutas HTML, NO para assets)
 ErrorDocument 404 /404.html
 
-# SPA fallback — serve index.html for all non-file routes
+# MIME explícitos (evita respuestas ambiguas en algunos hosts)
+<IfModule mod_mime.c>
+  AddType text/css .css
+  AddType application/javascript .js .mjs
+</IfModule>
+
+# No cachear HTML: el index referencia assets con hash; si el HTML está viejo en caché
+# y el servidor ya desplegó otro build, el navegador pide .js/.css que ya no existen.
+<IfModule mod_headers.c>
+  <FilesMatch "^(index|404)\.html$">
+    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+  </FilesMatch>
+</IfModule>
+
+# Assets faltantes: devolver 404 sin HTML para evitar errores de MIME en el navegador.
+# Si Apache sirve /404.html para un .js o .css que no existe, el browser ve
+# Content-Type: text/html y lanza "MIME type mismatch". Con R=404 devuelve el
+# estado correcto sin cuerpo HTML — el browser no confunde el tipo.
+RewriteCond %{REQUEST_URI} ^/assets/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ - [R=404,L]
+
+# SPA fallback — solo rutas de app (no archivos estáticos ni /assets/)
+RewriteCond %{REQUEST_URI} !^/assets/
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ index.html [L]
