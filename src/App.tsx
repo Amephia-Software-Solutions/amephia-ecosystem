@@ -75,6 +75,13 @@ const PROJECT_META: Record<ProjectId, ProjectSEO> = {
       'software para broker de seguros, sistema para corredores de seguros, software broker seguros Ecuador, gestión de pólizas, control de renovaciones, comisiones seguros, sistema correduría de seguros, software intermediario de seguros',
     ogImage: '/assets/screenshots/broker/dashboard.png',
   },
+  contame: {
+    title: 'ContAme — Plataforma Contable en la Nube para Empresas y Contadores Ecuador',
+    description:
+      'ContAme: software contable NIIF para PYMES y despachos contables. Plan de cuentas, asientos automáticos, nómina, facturación SRI, conciliación bancaria y reportes financieros. Multi-empresa.',
+    keywords:
+      'software contable Ecuador, contabilidad NIIF PYMES, sistema contable en la nube, plataforma contabilidad empresas, software para contadores Ecuador, contabilidad multi-empresa, nómina Ecuador, facturación electrónica contabilidad',
+  },
 };
 
 const getProjectFromPathname = (pathname: string): ProjectId | null => {

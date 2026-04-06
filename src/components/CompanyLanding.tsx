@@ -834,6 +834,7 @@ const products = [
   { id: 'pos' as ProjectId, name: 'AMEPHIA POS', cat: 'Punto de Venta', desc: 'POS para mostrador: devoluciones, facturación instantánea y soporte de hardware.', color: '#D97706', bg: '#FFFBEB', border: '#FDE68A', badge: 'Tiempo real' },
   { id: 'nutri' as ProjectId, name: 'NUTRI APP', cat: 'Nutrición & Salud', desc: 'Seguimiento nutricional con planes alimenticios y monitoreo de progreso.', color: '#65A30D', bg: '#F7FEE7', border: '#BEF264', badge: 'iOS & Android' },
   { id: 'advisory' as ProjectId, name: 'TECH ADVISORY', cat: 'Consultoría', desc: 'Arquitectura de software, roadmap, optimización de procesos y mentoring técnico.', color: '#DB2777', bg: '#FDF2F8', border: '#FBCFE8', badge: 'CTO as a Service' },
+  { id: 'contame' as ProjectId, name: 'CONTAME', cat: 'Contabilidad en la Nube', desc: 'Plataforma contable para empresas y contadores: NIIF, nómina, SRI, conciliación y reportes financieros.', color: '#0D9488', bg: '#F0FDFA', border: '#99F6E4', badge: 'Multi-empresa' },
 ];
 
 const ProductsSection = ({ onOpenProject }: { onOpenProject: (id: ProjectId) => void }) => (
