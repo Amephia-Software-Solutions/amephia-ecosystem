@@ -55,8 +55,8 @@ ErrorDocument 404 /404.html
 
 # Assets faltantes: devolver 404 sin HTML para evitar errores de MIME en el navegador.
 # Si Apache sirve /404.html para un .js o .css que no existe, el browser ve
-# Content-Type: text/html y lanza "MIME type mismatch". Con R=404 devuelve el
-# estado correcto sin cuerpo HTML — el browser no confunde el tipo.
+# Content-Type: text/html y lanza "MIME type mismatch". Con [G] devuelve 410 Gone
+# pero sin cuerpo HTML — lo suficiente para que el browser no confunda el tipo.
 RewriteCond %{REQUEST_URI} ^/assets/
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ - [R=404,L]
