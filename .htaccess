@@ -1,0 +1,68 @@
+RewriteEngine On
+RewriteBase /
+
+# Force HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Remove www
+RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+
+# Cache static assets (1 year — filenames are hashed by Vite)
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css                 "access plus 1 year"
+  ExpiresByType application/javascript   "access plus 1 year"
+  ExpiresByType image/png                "access plus 1 year"
+  ExpiresByType image/jpeg               "access plus 1 year"
+  ExpiresByType image/webp               "access plus 1 year"
+  ExpiresByType image/svg+xml            "access plus 1 year"
+  ExpiresByType font/woff2               "access plus 1 year"
+  ExpiresByType application/pdf          "access plus 6 months"
+  # HTML — no cache (always fresh)
+  ExpiresByType text/html                "access plus 0 seconds"
+</IfModule>
+
+# Gzip compression
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml
+</IfModule>
+
+# Security headers
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Custom 404 page (solo para rutas HTML, NO para assets)
+ErrorDocument 404 /404.html
+
+# MIME explícitos (evita respuestas ambiguas en algunos hosts)
+<IfModule mod_mime.c>
+  AddType text/css .css
+  AddType application/javascript .js .mjs
+</IfModule>
+
+# No cachear HTML: el index referencia assets con hash; si el HTML está viejo en caché
+# y el servidor ya desplegó otro build, el navegador pide .js/.css que ya no existen.
+<IfModule mod_headers.c>
+  <FilesMatch "^(index|404)\.html$">
+    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+  </FilesMatch>
+</IfModule>
+
+# Assets faltantes: devolver 404 sin HTML para evitar errores de MIME en el navegador.
+# Si Apache sirve /404.html para un .js o .css que no existe, el browser ve
+# Content-Type: text/html y lanza "MIME type mismatch". Con [G] devuelve 410 Gone
+# pero sin cuerpo HTML — lo suficiente para que el browser no confunda el tipo.
+RewriteCond %{REQUEST_URI} ^/assets/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ - [R=404,L]
+
+# SPA fallback — solo rutas de app (no archivos estáticos ni /assets/)
+RewriteCond %{REQUEST_URI} !^/assets/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.html [L]

@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AMEPHIA GYM - Plataforma de Gestión Integral</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#0a0a0f;--surface:#12121a;--card:#1a1a2e;--border:#2a2a3e;
+--primary:#6366f1;--primary-light:#818cf8;--primary-glow:#6366f140;
+--accent:#06d6a0;--accent-light:#34d399;--accent-glow:#06d6a030;
+--orange:#f59e0b;--red:#ef4444;--cyan:#22d3ee;--pink:#ec4899;
+--text:#f1f5f9;--text-muted:#94a3b8;--text-dim:#64748b;
+}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif}
+
+/* ===== SLIDE ENGINE ===== */
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:60px 80px 110px;opacity:0;transform:translateX(60px);transition:all .6s cubic-bezier(.4,0,.2,1);pointer-events:none;z-index:0}
+.slide.active{opacity:1;transform:translateX(0);pointer-events:all;z-index:10}
+.slide.prev{opacity:0;transform:translateX(-60px)}
+
+/* ===== BACKGROUNDS ===== */
+.bg-gradient{background:radial-gradient(ellipse at 20% 50%,#6366f115 0%,transparent 50%),radial-gradient(ellipse at 80% 20%,#06d6a010 0%,transparent 50%),var(--bg)}
+.bg-dark{background:radial-gradient(ellipse at 50% 0%,#1e1b4b30 0%,var(--bg) 70%)}
+.bg-accent{background:radial-gradient(ellipse at 30% 70%,#06d6a012 0%,transparent 50%),radial-gradient(ellipse at 70% 30%,#6366f112 0%,transparent 50%),var(--bg)}
+.bg-warm{background:radial-gradient(ellipse at 50% 50%,#f59e0b08 0%,transparent 50%),var(--bg)}
+
+/* ===== GRID DECORATION ===== */
+.grid-bg{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;opacity:.08;pointer-events:none}
+.glow-orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.15;pointer-events:none;animation:float 8s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+
+/* ===== TYPOGRAPHY ===== */
+.font-display{font-family:'Space Grotesk','Inter',sans-serif}
+.hero-title{font-size:clamp(2.5rem,5vw,4.5rem);font-weight:800;line-height:1.05;letter-spacing:-0.03em}
+.section-title{font-size:clamp(2rem,3.5vw,3.2rem);font-weight:700;line-height:1.15;letter-spacing:-0.02em}
+.subtitle{font-size:clamp(1.1rem,1.8vw,1.4rem);font-weight:400;color:var(--text-muted);line-height:1.6;max-width:700px}
+.label{font-size:.75rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--primary-light)}
+.stat-number{font-size:clamp(2rem,4vw,3.5rem);font-weight:800;font-family:'Space Grotesk',sans-serif}
+
+/* ===== GRADIENTS TEXT ===== */
+.gradient-text{background:linear-gradient(135deg,var(--primary-light),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.gradient-orange{background:linear-gradient(135deg,var(--orange),#fb923c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.gradient-cyan{background:linear-gradient(135deg,var(--cyan),var(--primary-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.gradient-pink{background:linear-gradient(135deg,var(--pink),var(--primary-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* ===== CARDS ===== */
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:32px;position:relative;overflow:hidden;transition:all .3s}
+.card:hover{border-color:var(--primary);transform:translateY(-2px);box-shadow:0 8px 30px var(--primary-glow)}
+.card-glow{position:absolute;top:-1px;left:20%;right:20%;height:1px;background:linear-gradient(90deg,transparent,var(--primary-light),transparent)}
+
+/* ===== MODULE CARDS ===== */
+.module-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;width:100%;max-width:1100px}
+.module-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;text-align:left;transition:all .3s}
+.module-card:hover{border-color:var(--primary);box-shadow:0 4px 20px var(--primary-glow)}
+.module-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:16px}
+.module-card h3{font-size:1.05rem;font-weight:700;margin-bottom:8px}
+.module-card p{font-size:.85rem;color:var(--text-muted);line-height:1.5}
+
+/* ===== STATS ROW ===== */
+.stats-row{display:flex;gap:40px;justify-content:center;flex-wrap:wrap}
+.stat-item{text-align:center;min-width:140px}
+.stat-item .number{font-size:2.8rem;font-weight:800;font-family:'Space Grotesk',sans-serif;line-height:1}
+.stat-item .label-stat{font-size:.8rem;color:var(--text-muted);margin-top:8px;text-transform:uppercase;letter-spacing:.08em}
+
+/* ===== FEATURE LIST ===== */
+.feature-list{display:flex;flex-direction:column;gap:14px;max-width:600px}
+.feature-item{display:flex;align-items:flex-start;gap:14px;padding:10px 0}
+.feature-check{width:28px;height:28px;border-radius:8px;background:var(--accent-glow);border:1px solid var(--accent);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.9rem;color:var(--accent)}
+.feature-text{font-size:1rem;line-height:1.5}
+.feature-text strong{color:var(--text);font-weight:600}
+.feature-text span{color:var(--text-muted)}
+
+/* ===== TWO COLUMNS ===== */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:60px;width:100%;max-width:1100px;align-items:center}
+.two-col.gap-40{gap:40px}
+
+/* ===== TIMELINE ===== */
+.timeline{display:flex;flex-direction:column;gap:0;max-width:600px;position:relative}
+.timeline::before{content:'';position:absolute;left:19px;top:20px;bottom:20px;width:2px;background:linear-gradient(to bottom,var(--primary),var(--accent))}
+.timeline-item{display:flex;gap:20px;padding:16px 0}
+.timeline-dot{width:40px;height:40px;border-radius:50%;background:var(--card);border:2px solid var(--primary);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.85rem;font-weight:700;color:var(--primary-light);z-index:2}
+.timeline-content h4{font-size:1rem;font-weight:700;margin-bottom:4px}
+.timeline-content p{font-size:.85rem;color:var(--text-muted);line-height:1.5}
+
+/* ===== PRICING ===== */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:900px}
+.pricing-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:36px 28px;text-align:center;position:relative;transition:all .3s}
+.pricing-card.featured{border-color:var(--primary);box-shadow:0 0 40px var(--primary-glow)}
+.pricing-card.featured::before{content:'RECOMENDADO';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--primary),var(--accent));color:white;font-size:.65rem;font-weight:700;letter-spacing:.1em;padding:4px 16px;border-radius:20px}
+.pricing-card .price{font-size:2.5rem;font-weight:800;font-family:'Space Grotesk',sans-serif;margin:16px 0 8px}
+.pricing-card .period{font-size:.85rem;color:var(--text-muted)}
+.pricing-card .features{list-style:none;margin-top:20px;font-size:.85rem;color:var(--text-muted);text-align:left}
+.pricing-card .features li{padding:6px 0;border-bottom:1px solid var(--border)}
+.pricing-card .features li::before{content:'✓ ';color:var(--accent);font-weight:700}
+
+/* ===== NAVIGATION ===== */
+.nav-bar{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:10px 20px;z-index:100;backdrop-filter:blur(20px)}
+.nav-btn{width:40px;height:40px;border-radius:10px;background:var(--card);border:1px solid var(--border);color:var(--text-muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:all .2s}
+.nav-btn:hover{background:var(--primary);border-color:var(--primary);color:white}
+.nav-dots{display:flex;gap:6px}
+.nav-dot{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;transition:all .3s}
+.nav-dot.active{background:var(--primary);width:24px;border-radius:4px}
+.slide-counter{font-size:.75rem;color:var(--text-dim);font-weight:600;font-variant-numeric:tabular-nums;min-width:42px;text-align:center}
+
+/* ===== LOGO AREA ===== */
+.logo-mark{width:64px;height:64px;border-radius:16px;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:900;color:white;font-family:'Space Grotesk',sans-serif;box-shadow:0 8px 30px var(--primary-glow)}
+
+/* ===== ANIMATIONS ===== */
+.slide.active .anim-up{animation:slideUp .7s cubic-bezier(.4,0,.2,1) forwards}
+.slide.active .anim-up-d1{animation:slideUp .7s .1s cubic-bezier(.4,0,.2,1) forwards}
+.slide.active .anim-up-d2{animation:slideUp .7s .2s cubic-bezier(.4,0,.2,1) forwards}
+.slide.active .anim-up-d3{animation:slideUp .7s .3s cubic-bezier(.4,0,.2,1) forwards}
+.slide.active .anim-up-d4{animation:slideUp .7s .4s cubic-bezier(.4,0,.2,1) forwards}
+.slide.active .anim-up-d5{animation:slideUp .7s .5s cubic-bezier(.4,0,.2,1) forwards}
+.slide.active .anim-fade{animation:fadeIn .8s cubic-bezier(.4,0,.2,1) forwards}
+.anim-up,.anim-up-d1,.anim-up-d2,.anim-up-d3,.anim-up-d4,.anim-up-d5{opacity:0;transform:translateY(30px)}
+.anim-fade{opacity:0}
+@keyframes slideUp{to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{to{opacity:1}}
+@keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}}
+
+/* ===== COMPARISON TABLE ===== */
+.comparison-table{width:100%;max-width:900px;border-collapse:separate;border-spacing:0}
+.comparison-table th{padding:14px 20px;font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);text-align:left;border-bottom:1px solid var(--border)}
+.comparison-table th:last-child{text-align:center;color:var(--accent)}
+.comparison-table td{padding:14px 20px;font-size:.95rem;border-bottom:1px solid var(--border)}
+.comparison-table td:first-child{color:var(--text-muted);font-weight:500}
+.comparison-table td:nth-child(2){color:var(--red);text-align:center}
+.comparison-table td:last-child{text-align:center;color:var(--accent);font-weight:600}
+.comparison-table tr:last-child td{border-bottom:none}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:900px){
+.module-grid{grid-template-columns:repeat(2,1fr)}
+.two-col{grid-template-columns:1fr;gap:30px}
+.pricing-grid{grid-template-columns:1fr;max-width:340px}
+.slide{padding:30px 24px}
+}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+<!-- ============================================ -->
+<!-- SLIDE 0: COVER -->
+<!-- ============================================ -->
+<div class="slide bg-gradient active" data-slide="0">
+<div class="grid-bg"></div>
+<div class="glow-orb" style="width:400px;height:400px;background:var(--primary);top:-100px;right:-100px"></div>
+<div class="glow-orb" style="width:300px;height:300px;background:var(--accent);bottom:-50px;left:-50px;animation-delay:3s"></div>
+
+<div style="text-align:center;max-width:800px;position:relative;z-index:2">
+<div class="anim-up" style="display:flex;justify-content:center;margin-bottom:32px">
+<div class="logo-mark">A</div>
+</div>
+<div class="label anim-up-d1" style="margin-bottom:16px">Plataforma de Gestión Integral para Gimnasios</div>
+<h1 class="hero-title font-display anim-up-d2">
+Digitalice su gimnasio.<br>
+<span class="gradient-text">Maximice sus ingresos.</span>
+</h1>
+<p class="subtitle anim-up-d3" style="margin:24px auto 0">
+Un solo sistema para membresías, facturación electrónica SRI, punto de venta, inventario, contabilidad y reportes en tiempo real.
+</p>
+<div class="anim-up-d4" style="margin-top:40px;display:flex;gap:16px;justify-content:center">
+<div style="padding:12px 28px;background:linear-gradient(135deg,var(--primary),#4f46e5);border-radius:12px;font-weight:600;font-size:.95rem;box-shadow:0 4px 20px var(--primary-glow)">Ver Demostración &rarr;</div>
+<div style="padding:12px 28px;border:1px solid var(--border);border-radius:12px;font-weight:500;font-size:.95rem;color:var(--text-muted)">Presentación Abril 2026</div>
+</div>
+</div>
+</div>
+
+<!-- ============================================ -->
+<!-- SLIDE 1: EL PROBLEMA -->
+<!-- ============================================ -->
+<div class="slide bg-dark" data-slide="1">
+<div class="grid-bg"></div>
+<div style="text-align:center;max-width:900px">
+<div class="label anim-up" style="margin-bottom:12px;color:var(--red)">El Problema Actual</div>
+<h2 class="section-title font-display anim-up-d1">Sin un sistema integrado,<br>su negocio <span style="color:var(--red)">pierde dinero</span> cada día</h2>
+<p class="subtitle anim-up-d2" style="margin:20px auto 40px;text-align:center">Estos problemas afectan al 87% de gimnasios que usan procesos manuales o sistemas desconectados.</p>
+
+<div class="module-grid anim-up-d3" style="grid-template-columns:repeat(3,1fr)">
+<div class="card" style="text-align:left">
+<div style="font-size:2rem;margin-bottom:12px">📋</div>
+<h3 style="font-size:1rem;font-weight:700;margin-bottom:8px;color:var(--red)">Control Manual</h3>
+<p style="font-size:.85rem;color:var(--text-muted);line-height:1.5">Cuadernos, Excel y WhatsApp para gestionar miembros. Información dispersa y sin respaldo.</p>
+</div>
+<div class="card" style="text-align:left">
+<div style="font-size:2rem;margin-bottom:12px">💸</div>
+<h3 style="font-size:1rem;font-weight:700;margin-bottom:8px;color:var(--red)">Fugas de Dinero</h3>
+<p style="font-size:.85rem;color:var(--text-muted);line-height:1.5">Sin control de caja en tiempo real, ventas no registradas y cobros que se olvidan.</p>
+</div>
+<div class="card" style="text-align:left">
+<div style="font-size:2rem;margin-bottom:12px">🧾</div>
+<h3 style="font-size:1rem;font-weight:700;margin-bottom:8px;color:var(--red)">Facturación Manual</h3>
+<p style="font-size:.85rem;color:var(--text-muted);line-height:1.5">Facturas en papel, riesgo de multas del SRI, y pérdida de tiempo generando comprobantes.</p>
+</div>
+<div class="card" style="text-align:left">
+<div style="font-size:2rem;margin-bottom:12px">📦</div>
+<h3 style="font-size:1rem;font-weight:700;margin-bottom:8px;color:var(--red)">Inventario Invisible</h3>
+<p style="font-size:.85rem;color:var(--text-muted);line-height:1.5">No sabe cuántos productos tiene, cuánto ha vendido, ni cuándo debe reabastecer.</p>
+</div>
+<div class="card" style="text-align:left">
+<div style="font-size:2rem;margin-bottom:12px">📊</div>
+<h3 style="font-size:1rem;font-weight:700;margin-bottom:8px;color:var(--red)">Sin Reportes</h3>
+<p style="font-size:.85rem;color:var(--text-muted);line-height:1.5">Toma decisiones a ciegas. No sabe qué plan vende más, ni el horario pico del gym.</p>
+</div>
+<div class="card" style="text-align:left">
+<div style="font-size:2rem;margin-bottom:12px">⚖️</div>
+<h3 style="font-size:1rem;font-weight:700;margin-bottom:8px;color:var(--red)">Riesgo Legal</h3>
+<p style="font-size:.85rem;color:var(--text-muted);line-height:1.5">Sin contabilidad formal ni declaraciones al SRI. Multas y sanciones potenciales.</p>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ============================================ -->
+<!-- SLIDE 2: LA SOLUCIÓN -->
+<!-- ============================================ -->
+<div class="slide bg-gradient" data-slide="2">
+<div class="grid-bg"></div>
+<div class="glow-orb" style="width:350px;height:350px;background:var(--accent);top:20%;left:5%"></div>
+
+<div style="text-align:center;max-width:900px">
+<div class="label anim-up" style="margin-bottom:12px">La Solución</div>
+<h2 class="section-title font-display anim-up-d1">
+Un ecosistema completo.<br>
+<span class="gradient-text">Todo en un solo lugar.</span>
+</h2>
+<p class="subtitle anim-up-d2" style="margin:20px auto 50px;text-align:center">
+AMEPHIA GYM integra cada aspecto de su negocio en una plataforma web moderna, accesible desde cualquier dispositivo.
+</p>
+
+<div class="stats-row anim-up-d3">
+<div class="stat-item">
+<div class="number gradient-text">9</div>
+<div class="label-stat">Módulos Integrados</div>
+</div>
+<div class="stat-item">
+<div class="number gradient-orange">104</div>
+<div class="label-stat">Facturas Autorizadas SRI</div>
+</div>
+<div class="stat-item">
+<div class="number gradient-cyan">72</div>
+<div class="label-stat">Miembros Registrados</div>
+</div>
+<div class="stat-item">
+<div class="number gradient-pink">15</div>
+<div class="label-stat">Usuarios del Sistema</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ============================================ -->
+<!-- SLIDE 3: MÓDULOS PRINCIPALES -->
+<!-- ============================================ -->
+<div class="slide bg-dark" data-slide="3">
+<div class="grid-bg"></div>
+
+<div style="text-align:center;width:100%;max-width:1100px">
+<div class="label anim-up" style="margin-bottom:12px">Ecosistema Completo</div>
+<h2 class="section-title font-display anim-up-d1" style="margin-bottom:40px">Módulos del Sistema</h2>
+
+<div class="module-grid anim-up-d2">
+<div class="module-card">
+<div class="module-icon" style="background:linear-gradient(135deg,#6366f130,#6366f110)">
+<span style="color:var(--primary-light)">👥</span>
+</div>
+<h3>Gestión de Miembros</h3>
+<p>Registro completo, fotos, cédula, contacto de emergencia. Búsqueda instantánea. Historial de pagos y suscripciones.</p>
+</div>
+<div class="module-card">
+<div class="module-icon" style="background:linear-gradient(135deg,#06d6a030,#06d6a010)">
+<span style="color:var(--accent)">💳</span>
+</div>
+<h3>Suscripciones & Planes</h3>
+<p>Planes flexibles (diario, mensual, trimestral, anual). Control automático de vencimientos. Congelamiento de membresías.</p>
+</div>
+<div class="module-card">
+<div class="module-icon" style="background:linear-gradient(135deg,#f59e0b30,#f59e0b10)">
+<span style="color:var(--orange)">🧾</span>
+</div>
+<h3>Facturación SRI</h3>
+<p>Facturación electrónica 100% integrada. Firma digital, envío al SRI, RIDE PDF. Notas de crédito y retenciones.</p>
+</div>
+<div class="module-card">
+<div class="module-icon" style="background:linear-gradient(135deg,#ec489930,#ec489910)">
+<span style="color:var(--pink)">🛒</span>
+</div>
+<h3>Punto de Venta (POS)</h3>
+<p>Interfaz táctil para ventas rápidas. Bebidas, suplementos, accesorios. Lectura de códigos. Facturación automática.</p>
+</div>
+<div class="module-card">
+<div class="module-icon" style="background:linear-gradient(135deg,#22d3ee30,#22d3ee10)">
+<span style="color:var(--cyan)">📦</span>
+</div>
+<h3>Inventario</h3>
+<p>Control de stock en tiempo real. Alertas de stock bajo. Movimientos de entrada/salida. Ajustes y trazabilidad.</p>
+</div>
+<div class="module-card">
+<div class="module-icon" style="background:linear-gradient(135deg,#a78bfa30,#a78bfa10)">
+<span style="color:#a78bfa">💰</span>
+</div>
+<h3>Caja Registradora</h3>
+<p>Apertura/cierre de caja por turnos. Arqueo automático. Detección de diferencias. Historial completo de movimientos.</p>
+</div>
+<div class="module-card">
+<div class="module-icon" style="background:linear-gradient(135deg,#34d39930,#34d39910)">
+<span style="color:#34d399">📒</span>
+</div>
+<h3>Contabilidad NIIF</h3>
+<p>Plan de cuentas completo. Libro Diario, Mayor, Balance de Comprobación. Estados financieros para PYMES Ecuador.</p>
+</div>
+<div class="module-card">
+<div class="module-icon" style="background:linear-gradient(135deg,#fb923c30,#fb923c10)">
+<span style="color:#fb923c">📈</span>
+</div>
+<h3>Reportes & Dashboard</h3>
+<p>Dashboard en tiempo real. Ingresos, membresías activas, ventas del día, gastos. Exportación a PDF.</p>
+</div>
+<div class="module-card">
+<div class="module-icon" style="background:linear-gradient(135deg,#f4364430,#f4364410)">
+<span style="color:#f43644">🔐</span>
+</div>
+<h3>Seguridad & Roles</h3>
+<p>Admin, Cajero, Contador, Entrenador. Permisos granulares por módulo. Bitácora de auditoría completa.</p>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ============================================ -->
+<!-- SLIDE 4: FACTURACIÓN SRI -->
+<!-- ============================================ -->
+<div class="slide bg-accent" data-slide="4">
+<div class="grid-bg"></div>
+
+<div class="two-col">
+<div>
+<div class="label anim-up" style="margin-bottom:12px;color:var(--accent-light)">Cumplimiento Tributario</div>
+<h2 class="section-title font-display anim-up-d1" style="margin-bottom:20px">
+Facturación Electrónica <span class="gradient-text">100% SRI</span>
+</h2>
+<p class="subtitle anim-up-d2" style="margin-bottom:30px">
+Olvídese de facturas en papel. Cada venta genera automáticamente su factura electrónica válida ante el SRI.
+</p>
+<div class="feature-list anim-up-d3">
+<div class="feature-item">
+<div class="feature-check">&#10003;</div>
+<div class="feature-text"><strong>Firma Digital P12</strong> <span>- Certificado electrónico integrado con gestión de vencimiento</span></div>
+</div>
+<div class="feature-item">
+<div class="feature-check">&#10003;</div>
+<div class="feature-text"><strong>Envío Automático al SRI</strong> <span>- Firma, envía y recibe autorización en segundos</span></div>
+</div>
+<div class="feature-item">
+<div class="feature-check">&#10003;</div>
+<div class="feature-text"><strong>RIDE en PDF</strong> <span>- Documento oficial con código de barras para el cliente</span></div>
+</div>
+<div class="feature-item">
+<div class="feature-check">&#10003;</div>
+<div class="feature-text"><strong>Notas de Crédito</strong> <span>- Anulación parcial o total de facturas</span></div>
+</div>
+<div class="feature-item">
+<div class="feature-check">&#10003;</div>
+<div class="feature-text"><strong>Retenciones</strong> <span>- Comprobantes de retención para proveedores</span></div>
+</div>
+<div class="feature-item">
+<div class="feature-check">&#10003;</div>
+<div class="feature-text"><strong>IVA Configurable</strong> <span>- Adaptable cuando el gobierno cambie la tarifa</span></div>
+</div>
+</div>
+</div>
+<div class="anim-up-d2" style="text-align:center">
+<div class="card" style="padding:0;overflow:hidden;border-radius:20px">
+<div style="background:linear-gradient(135deg,var(--primary),#4338ca);padding:20px;text-align:center">
+<div style="font-size:.7rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:4px">Factura Electrónica</div>
+<div style="font-size:1.3rem;font-weight:800;font-family:'Space Grotesk',sans-serif">001-001-000000104</div>
+</div>
+<div style="padding:28px;text-align:left;font-size:.85rem">
+<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)"><span style="color:var(--text-muted)">Cliente:</span><span style="font-weight:600">Carlos Espinoza R.</span></div>
+<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)"><span style="color:var(--text-muted)">RUC/CI:</span><span>0923456781</span></div>
+<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)"><span style="color:var(--text-muted)">Concepto:</span><span>Membresía Trimestral</span></div>
+<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)"><span style="color:var(--text-muted)">Subtotal IVA 15%:</span><span>$45.00</span></div>
+<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)"><span style="color:var(--text-muted)">IVA 15%:</span><span>$6.75</span></div>
+<div style="display:flex;justify-content:space-between;padding:12px 0;font-size:1.1rem"><span style="font-weight:700">TOTAL:</span><span style="font-weight:800;color:var(--accent)">$51.75</span></div>
+<div style="text-align:center;margin-top:8px">
+<span style="display:inline-block;padding:4px 14px;background:var(--accent-glow);border:1px solid var(--accent);border-radius:20px;font-size:.75rem;font-weight:700;color:var(--accent)">AUTORIZADA SRI</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ============================================ -->
+<!-- SLIDE 5: DASHBOARD & REPORTES -->
+<!-- ============================================ -->
+<div class="slide bg-gradient" data-slide="5">
+<div class="grid-bg"></div>
+
+<div style="text-align:center;max-width:1100px;width:100%">
+<div class="label anim-up" style="margin-bottom:12px">Datos en Tiempo Real</div>
+<h2 class="section-title font-display anim-up-d1" style="margin-bottom:40px">
+Dashboard Ejecutivo <span class="gradient-text">en Vivo</span>
+</h2>
+
+<!-- Simulated Dashboard -->
+<div class="anim-up-d2" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px">
+<div class="card" style="padding:20px;text-align:left">
+<div style="font-size:.75rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Ingresos del Mes</div>
+<div style="font-size:1.8rem;font-weight:800;font-family:'Space Grotesk',sans-serif;color:var(--accent)">$4,004</div>
+<div style="font-size:.75rem;color:var(--accent);margin-top:4px">104 facturas SRI autorizadas</div>
+</div>
+<div class="card" style="padding:20px;text-align:left">
+<div style="font-size:.75rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Miembros Activos</div>
+<div style="font-size:1.8rem;font-weight:800;font-family:'Space Grotesk',sans-serif;color:var(--primary-light)">67</div>
+<div style="font-size:.75rem;color:var(--primary-light);margin-top:4px">+39 nuevos este mes</div>
+</div>
+<div class="card" style="padding:20px;text-align:left">
+<div style="font-size:.75rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Ventas POS (Mes)</div>
+<div style="font-size:1.8rem;font-weight:800;font-family:'Space Grotesk',sans-serif;color:var(--orange)">$4,397</div>
+<div style="font-size:.75rem;color:var(--text-muted);margin-top:4px">102 transacciones</div>
+</div>
+<div class="card" style="padding:20px;text-align:left">
+<div style="font-size:.75rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Suscripciones Activas</div>
+<div style="font-size:1.8rem;font-weight:800;font-family:'Space Grotesk',sans-serif;color:var(--cyan)">35</div>
+<div style="font-size:.75rem;color:var(--text-muted);margin-top:4px">8 planes disponibles</div>
+</div>
+</div>
+
+<div class="anim-up-d3" style="display:grid;grid-template-columns:2fr 1fr;gap:16px">
+<div class="card" style="padding:24px;text-align:left">
+<div style="font-size:.85rem;font-weight:700;margin-bottom:16px">Ingresos Últimos 7 Días</div>
+<div style="display:flex;align-items:flex-end;gap:8px;height:120px">
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+<div style="width:100%;background:linear-gradient(to top,var(--primary),var(--primary-light));border-radius:6px 6px 0 0;height:60%"></div>
+<span style="font-size:.65rem;color:var(--text-dim)">Lun</span>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+<div style="width:100%;background:linear-gradient(to top,var(--primary),var(--primary-light));border-radius:6px 6px 0 0;height:80%"></div>
+<span style="font-size:.65rem;color:var(--text-dim)">Mar</span>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+<div style="width:100%;background:linear-gradient(to top,var(--primary),var(--primary-light));border-radius:6px 6px 0 0;height:45%"></div>
+<span style="font-size:.65rem;color:var(--text-dim)">Mie</span>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+<div style="width:100%;background:linear-gradient(to top,var(--primary),var(--primary-light));border-radius:6px 6px 0 0;height:90%"></div>
+<span style="font-size:.65rem;color:var(--text-dim)">Jue</span>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+<div style="width:100%;background:linear-gradient(to top,var(--primary),var(--primary-light));border-radius:6px 6px 0 0;height:100%"></div>
+<span style="font-size:.65rem;color:var(--text-dim)">Vie</span>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+<div style="width:100%;background:linear-gradient(to top,var(--accent),var(--accent-light));border-radius:6px 6px 0 0;height:70%"></div>
+<span style="font-size:.65rem;color:var(--text-dim)">Sab</span>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+<div style="width:100%;background:linear-gradient(to top,var(--orange),#fbbf24);border-radius:6px 6px 0 0;height:35%"></div>
+<span style="font-size:.65rem;color:var(--text-dim)">Dom</span>
+</div>
+</div>
+</div>
+<div class="card" style="padding:24px;text-align:left">
+<div style="font-size:.85rem;font-weight:700;margin-bottom:16px">Distribución de Planes</div>
+<div style="display:flex;flex-direction:column;gap:12px">
+<div><div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:4px"><span>Mensual</span><span style="color:var(--primary-light)">23%</span></div><div style="height:6px;background:var(--border);border-radius:3px"><div style="height:100%;width:23%;background:var(--primary);border-radius:3px"></div></div></div>
+<div><div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:4px"><span>Trimestral</span><span style="color:var(--accent)">31%</span></div><div style="height:6px;background:var(--border);border-radius:3px"><div style="height:100%;width:31%;background:var(--accent);border-radius:3px"></div></div></div>
+<div><div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:4px"><span>Pase Diario</span><span style="color:var(--orange)">14%</span></div><div style="height:6px;background:var(--border);border-radius:3px"><div style="height:100%;width:14%;background:var(--orange);border-radius:3px"></div></div></div>
+<div><div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:4px"><span>Anual / VIP</span><span style="color:var(--pink)">23%</span></div><div style="height:6px;background:var(--border);border-radius:3px"><div style="height:100%;width:23%;background:var(--pink);border-radius:3px"></div></div></div>
+<div><div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:4px"><span>Semestral</span><span style="color:var(--cyan)">9%</span></div><div style="height:6px;background:var(--border);border-radius:3px"><div style="height:100%;width:9%;background:var(--cyan);border-radius:3px"></div></div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ============================================ -->
+<!-- SLIDE 6: ANTES vs DESPUÉS -->
+<!-- ============================================ -->
+<div class="slide bg-warm" data-slide="6">
+<div class="grid-bg"></div>
+
+<div style="text-align:center;max-width:900px;width:100%">
+<div class="label anim-up" style="margin-bottom:12px">Transformación Digital</div>
+<h2 class="section-title font-display anim-up-d1" style="margin-bottom:40px">
+Antes vs <span class="gradient-text">Después</span>
+</h2>
+
+<table class="comparison-table anim-up-d2">
+<thead>
+<tr>
+<th style="width:35%">Proceso</th>
+<th style="width:30%;text-align:center">Sin Sistema</th>
+<th style="width:35%">Con AMEPHIA GYM</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Registro de miembro</td>
+<td>15 min (papel)</td>
+<td>2 minutos</td>
+</tr>
+<tr>
+<td>Cobro + Factura</td>
+<td>10 min (manual SRI)</td>
+<td>30 segundos</td>
+</tr>
+<tr>
+<td>Cierre de caja</td>
+<td>45 min (contar + cuadrar)</td>
+<td>5 minutos</td>
+</tr>
+<tr>
+<td>Reporte mensual</td>
+<td>1-2 días (Excel)</td>
+<td>1 clic (tiempo real)</td>
+</tr>
+<tr>
+<td>Control de vencimientos</td>
+<td>Revisión manual diaria</td>
+<td>Alertas automáticas</td>
+</tr>
+<tr>
+<td>Declaración SRI</td>
+<td>Contador externo ($$$)</td>
+<td>Datos listos al instante</td>
+</tr>
+<tr>
+<td>Inventario de productos</td>
+<td>"Creo que quedan pocos..."</td>
+<td>Stock exacto + alertas</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- ============================================ -->
+<!-- SLIDE 7: SEGURIDAD & ROLES -->
+<!-- ============================================ -->
+<div class="slide bg-dark" data-slide="7">
+<div class="grid-bg"></div>
+<div class="glow-orb" style="width:300px;height:300px;background:var(--pink);top:10%;right:10%"></div>
+
+<div class="two-col">
+<div>
+<div class="label anim-up" style="margin-bottom:12px;color:var(--pink)">Seguridad Empresarial</div>
+<h2 class="section-title font-display anim-up-d1" style="margin-bottom:20px">
+Cada persona ve <span class="gradient-pink">solo lo que necesita</span>
+</h2>
+<p class="subtitle anim-up-d2" style="margin-bottom:30px">
+4 roles predefinidos con permisos granulares. Auditoría completa de cada acción en el sistema.
+</p>
+</div>
+<div>
+<div class="anim-up-d2" style="display:flex;flex-direction:column;gap:14px">
+<div class="card" style="padding:20px;display:flex;align-items:center;gap:16px">
+<div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#6366f1,#4338ca);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem">&#128081;</div>
+<div><div style="font-weight:700;font-size:.95rem">Administrador</div><div style="font-size:.8rem;color:var(--text-muted)">Acceso total: configuración, reportes, usuarios, contabilidad</div></div>
+</div>
+<div class="card" style="padding:20px;display:flex;align-items:center;gap:16px">
+<div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#059669);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem">&#128179;</div>
+<div><div style="font-weight:700;font-size:.95rem">Cajero / Recepcionista</div><div style="font-size:.8rem;color:var(--text-muted)">Miembros, cobros, POS, caja registradora</div></div>
+</div>
+<div class="card" style="padding:20px;display:flex;align-items:center;gap:16px">
+<div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--orange),#d97706);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem">&#128202;</div>
+<div><div style="font-weight:700;font-size:.95rem">Contador</div><div style="font-size:.8rem;color:var(--text-muted)">Facturación, compras, reportes financieros, contabilidad NIIF</div></div>
+</div>
+<div class="card" style="padding:20px;display:flex;align-items:center;gap:16px">
+<div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--cyan),#0891b2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem">&#127947;</div>
+<div><div style="font-weight:700;font-size:.95rem">Entrenador</div><div style="font-size:.8rem;color:var(--text-muted)">Lista de miembros, suscripciones activas</div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ============================================ -->
+<!-- SLIDE 8: CONTABILIDAD -->
+<!-- ============================================ -->
+<div class="slide bg-accent" data-slide="8">
+<div class="grid-bg"></div>
+
+<div class="two-col">
+<div>
+<div class="label anim-up" style="margin-bottom:12px">Contabilidad Automática</div>
+<h2 class="section-title font-display anim-up-d1" style="margin-bottom:20px">
+Contabilidad <span class="gradient-text">NIIF PYMES</span><br>integrada
+</h2>
+<p class="subtitle anim-up-d2" style="margin-bottom:30px">
+Cada factura, compra y gasto genera automáticamente sus asientos contables. Su contador tendrá todo listo.
+</p>
+<div class="feature-list anim-up-d3">
+<div class="feature-item">
+<div class="feature-check">&#10003;</div>
+<div class="feature-text"><strong>Plan de Cuentas NIIF</strong> <span>- Completo para PYMES Ecuador</span></div>
+</div>
+<div class="feature-item">
+<div class="feature-check">&#10003;</div>
+<div class="feature-text"><strong>Libro Diario</strong> <span>- Asientos automáticos por cada transacción</span></div>
+</div>
+<div class="feature-item">
+<div class="feature-check">&#10003;</div>
+<div class="feature-text"><strong>Libro Mayor</strong> <span>- Movimientos por cuenta contable</span></div>
+</div>
+<div class="feature-item">
+<div class="feature-check">&#10003;</div>
+<div class="feature-text"><strong>Balance de Comprobación</strong> <span>- Saldos iniciales, movimientos, saldos finales</span></div>
+</div>
+<div class="feature-item">
+<div class="feature-check">&#10003;</div>
+<div class="feature-text"><strong>Estado de Resultados</strong> <span>- Pérdidas y ganancias en tiempo real</span></div>
+</div>
+</div>
+</div>
+<div class="anim-up-d3" style="display:flex;flex-direction:column;gap:16px">
+<div class="card" style="padding:24px">
+<div style="font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:16px">Asiento Automático - Venta Membresía</div>
+<div style="font-family:monospace;font-size:.8rem;line-height:2">
+<div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding:4px 0"><span>1.1.1.01 Caja General</span><span style="color:var(--accent)">$51.75</span><span></span></div>
+<div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding:4px 0"><span style="padding-left:20px">4.1.1.01 Ingresos por Membresías</span><span></span><span style="color:var(--pink)">$45.00</span></div>
+<div style="display:flex;justify-content:space-between;padding:4px 0"><span style="padding-left:20px">2.1.3.01 IVA en Ventas (15%)</span><span></span><span style="color:var(--pink)">$6.75</span></div>
+</div>
+</div>
+<div class="card" style="padding:20px;text-align:center;background:linear-gradient(135deg,var(--primary-glow),var(--accent-glow));border-color:var(--primary)">
+<div style="font-size:.85rem;color:var(--text-muted);margin-bottom:4px">Generado automáticamente</div>
+<div style="font-size:1.1rem;font-weight:700">0 entrada manual requerida</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ============================================ -->
+<!-- SLIDE 9: ROI -->
+<!-- ============================================ -->
+<div class="slide bg-gradient" data-slide="9">
+<div class="grid-bg"></div>
+<div class="glow-orb" style="width:400px;height:400px;background:var(--accent);bottom:-100px;right:10%"></div>
+
+<div style="text-align:center;max-width:900px">
+<div class="label anim-up" style="margin-bottom:12px;color:var(--accent-light)">Retorno de Inversión</div>
+<h2 class="section-title font-display anim-up-d1" style="margin-bottom:16px">
+El sistema <span class="gradient-text">se paga solo</span>
+</h2>
+<p class="subtitle anim-up-d2" style="margin:0 auto 40px;text-align:center">Estimación conservadora basada en gimnasios similares en Ecuador.</p>
+
+<div class="anim-up-d3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:40px">
+<div class="card" style="text-align:center;padding:32px 20px">
+<div style="font-size:2.5rem;font-weight:800;font-family:'Space Grotesk',sans-serif;color:var(--accent)">$320</div>
+<div style="font-size:.85rem;color:var(--text-muted);margin-top:8px">Ahorro mensual en<br>tiempo administrativo</div>
+</div>
+<div class="card" style="text-align:center;padding:32px 20px">
+<div style="font-size:2.5rem;font-weight:800;font-family:'Space Grotesk',sans-serif;color:var(--orange)">$150</div>
+<div style="font-size:.85rem;color:var(--text-muted);margin-top:8px">Recuperación por<br>cobros no olvidados</div>
+</div>
+<div class="card" style="text-align:center;padding:32px 20px">
+<div style="font-size:2.5rem;font-weight:800;font-family:'Space Grotesk',sans-serif;color:var(--primary-light)">$200</div>
+<div style="font-size:.85rem;color:var(--text-muted);margin-top:8px">Ahorro en contador<br>externo para SRI</div>
+</div>
+</div>
+
+<div class="anim-up-d4" style="background:linear-gradient(135deg,var(--card),var(--surface));border:1px solid var(--accent);border-radius:20px;padding:32px;display:flex;align-items:center;justify-content:center;gap:40px">
+<div style="text-align:center">
+<div style="font-size:.8rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">Ahorro Mensual Total</div>
+<div style="font-size:3rem;font-weight:800;font-family:'Space Grotesk',sans-serif;color:var(--accent)">$670+</div>
+</div>
+<div style="width:1px;height:60px;background:var(--border)"></div>
+<div style="text-align:center">
+<div style="font-size:.8rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">Ahorro Anual</div>
+<div style="font-size:3rem;font-weight:800;font-family:'Space Grotesk',sans-serif;color:var(--orange)">$8,040+</div>
+</div>
+<div style="width:1px;height:60px;background:var(--border)"></div>
+<div style="text-align:center">
+<div style="font-size:.8rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">ROI Estimado</div>
+<div style="font-size:3rem;font-weight:800;font-family:'Space Grotesk',sans-serif;color:var(--primary-light)">10x</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ============================================ -->
+<!-- SLIDE 10: TECNOLOGÍA -->
+<!-- ============================================ -->
+<div class="slide bg-dark" data-slide="10">
+<div class="grid-bg"></div>
+
+<div class="two-col">
+<div>
+<div class="label anim-up" style="margin-bottom:12px;color:var(--cyan)">Base Tecnológica</div>
+<h2 class="section-title font-display anim-up-d1" style="margin-bottom:20px">
+Construido con <span class="gradient-cyan">tecnología moderna</span>
+</h2>
+<p class="subtitle anim-up-d2" style="margin-bottom:30px">
+Stack empresarial probado. Sin dependencias de terceros para facturación. Su data es 100% suya.
+</p>
+<div class="feature-list anim-up-d3">
+<div class="feature-item">
+<div class="feature-check" style="background:#ef444420;border-color:#ef4444;color:#ef4444">&#9830;</div>
+<div class="feature-text"><strong>Laravel 11</strong> <span>- Framework PHP #1 del mundo</span></div>
+</div>
+<div class="feature-item">
+<div class="feature-check" style="background:#3b82f620;border-color:#3b82f6;color:#3b82f6">&#9826;</div>
+<div class="feature-text"><strong>Tailwind CSS</strong> <span>- Interfaz moderna y responsiva</span></div>
+</div>
+<div class="feature-item">
+<div class="feature-check" style="background:#f59e0b20;border-color:#f59e0b;color:#f59e0b">&#9733;</div>
+<div class="feature-text"><strong>Alpine.js</strong> <span>- Interactividad fluida sin recargas</span></div>
+</div>
+<div class="feature-item">
+<div class="feature-check" style="background:#06d6a020;border-color:#06d6a0;color:#06d6a0">&#9679;</div>
+<div class="feature-text"><strong>MySQL</strong> <span>- Base de datos relacional robusta</span></div>
+</div>
+</div>
+</div>
+<div>
+<div class="anim-up-d2" style="display:flex;flex-direction:column;gap:14px">
+<div class="card" style="padding:20px">
+<div style="font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--cyan);margin-bottom:12px">Infraestructura</div>
+<div style="display:flex;flex-direction:column;gap:10px;font-size:.85rem">
+<div style="display:flex;justify-content:space-between"><span style="color:var(--text-muted)">Hosting:</span><span>VPS o Cloud (AWS/DO)</span></div>
+<div style="display:flex;justify-content:space-between"><span style="color:var(--text-muted)">SSL:</span><span style="color:var(--accent)">Certificado HTTPS incluido</span></div>
+<div style="display:flex;justify-content:space-between"><span style="color:var(--text-muted)">Backups:</span><span>Automáticos diarios</span></div>
+<div style="display:flex;justify-content:space-between"><span style="color:var(--text-muted)">Acceso:</span><span>Web (PC, Tablet, Celular)</span></div>
+</div>
+</div>
+<div class="card" style="padding:20px">
+<div style="font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);margin-bottom:12px">Seguridad</div>
+<div style="display:flex;flex-direction:column;gap:10px;font-size:.85rem">
+<div style="display:flex;justify-content:space-between"><span style="color:var(--text-muted)">Encriptación:</span><span>AES-256 (certificados)</span></div>
+<div style="display:flex;justify-content:space-between"><span style="color:var(--text-muted)">Autenticación:</span><span>Session + CSRF protection</span></div>
+<div style="display:flex;justify-content:space-between"><span style="color:var(--text-muted)">Permisos:</span><span>RBAC granular (Spatie)</span></div>
+<div style="display:flex;justify-content:space-between"><span style="color:var(--text-muted)">Auditoría:</span><span style="color:var(--accent)">Log de cada acción</span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ============================================ -->
+<!-- SLIDE 11: PRECIO TODO INCLUIDO -->
+<!-- ============================================ -->
+<div class="slide bg-accent" data-slide="11">
+<div class="grid-bg"></div>
+<div class="glow-orb" style="width:350px;height:350px;background:var(--primary);top:10%;left:5%"></div>
+
+<div style="text-align:center;max-width:1050px;width:100%">
+<div class="label anim-up" style="margin-bottom:12px;color:var(--accent-light)">Planes & Precios</div>
+<h2 class="section-title font-display anim-up-d1" style="margin-bottom:16px">
+Elija el plan <span class="gradient-text">ideal para su gimnasio</span>
+</h2>
+<p class="subtitle anim-up-d2" style="margin:0 auto 40px;text-align:center">Desde gimnasios pequeños hasta cadenas con múltiples sucursales. Sin contratos, cancele cuando quiera.</p>
+
+<div class="pricing-grid anim-up-d3" style="max-width:1050px">
+
+<!-- PLAN BÁSICO -->
+<div class="pricing-card">
+<div style="font-size:.85rem;font-weight:700;color:var(--text-muted);letter-spacing:.05em">BÁSICO</div>
+<div class="price" style="color:var(--cyan)">$29</div>
+<div class="period">/mes &mdash; hasta 100 miembros</div>
+<ul class="features">
+<li>Gestión de Miembros</li>
+<li>Suscripciones & Planes</li>
+<li>Facturación Electrónica SRI</li>
+<li>Punto de Venta (POS)</li>
+<li>Caja Registradora</li>
+<li>Dashboard & Reportes</li>
+<li>2 usuarios incluidos</li>
+<li style="color:var(--text-dim);text-decoration:line-through;opacity:.5">Inventario & Stock</li>
+<li style="color:var(--text-dim);text-decoration:line-through;opacity:.5">Contabilidad NIIF</li>
+<li style="color:var(--text-dim);text-decoration:line-through;opacity:.5">Soporte prioritario</li>
+</ul>
+<div style="margin-top:20px;font-size:.75rem;color:var(--text-dim)">Ideal para gimnasios nuevos</div>
+</div>
+
+<!-- PLAN PROFESIONAL (FEATURED) -->
+<div class="pricing-card featured">
+<div style="font-size:.85rem;font-weight:700;color:var(--primary-light);letter-spacing:.05em">PROFESIONAL</div>
+<div class="price" style="color:var(--text)">$59</div>
+<div class="period">/mes &mdash; hasta 300 miembros</div>
+<ul class="features">
+<li>Gestión de Miembros</li>
+<li>Suscripciones & Planes</li>
+<li>Facturación Electrónica SRI</li>
+<li>Punto de Venta (POS)</li>
+<li>Caja Registradora</li>
+<li>Dashboard & Reportes</li>
+<li><strong style="color:var(--accent)">Inventario & Stock</strong></li>
+<li><strong style="color:var(--accent)">Contabilidad NIIF PYMES</strong></li>
+<li><strong style="color:var(--accent)">4 Roles + Usuarios ilimitados</strong></li>
+<li>Soporte técnico incluido</li>
+</ul>
+<div style="margin-top:20px;font-size:.75rem;color:var(--accent)">$1.97/día &mdash; menos que un café</div>
+</div>
+
+<!-- PLAN ENTERPRISE -->
+<div class="pricing-card">
+<div style="font-size:.85rem;font-weight:700;color:var(--orange);letter-spacing:.05em">ENTERPRISE</div>
+<div class="price" style="color:var(--orange)">$99</div>
+<div class="period">/mes &mdash; miembros ilimitados</div>
+<ul class="features">
+<li>Todo lo del plan Profesional</li>
+<li><strong style="color:var(--orange)">Miembros ilimitados</strong></li>
+<li><strong style="color:var(--orange)">Multi-sucursal</strong></li>
+<li><strong style="color:var(--orange)">API de integración</strong></li>
+<li><strong style="color:var(--orange)">Soporte prioritario 24/7</strong></li>
+<li><strong style="color:var(--orange)">Reportes avanzados</strong></li>
+<li><strong style="color:var(--orange)">Backup dedicado</strong></li>
+<li><strong style="color:var(--orange)">Capacitación incluida</strong></li>
+<li><strong style="color:var(--orange)">Personalización de marca</strong></li>
+<li><strong style="color:var(--orange)">Servidor dedicado</strong></li>
+</ul>
+<div style="margin-top:20px;font-size:.75rem;color:var(--orange)">Para cadenas y franquicias</div>
+</div>
+
+</div>
+</div>
+</div>
+
+<!-- ============================================ -->
+<!-- SLIDE 12: COMPARATIVA DE MERCADO -->
+<!-- ============================================ -->
+<div class="slide bg-warm" data-slide="12">
+<div class="grid-bg"></div>
+
+<div style="text-align:center;max-width:1000px;width:100%">
+<div class="label anim-up" style="margin-bottom:12px;color:var(--orange)">Comparativa de Mercado</div>
+<h2 class="section-title font-display anim-up-d1" style="margin-bottom:16px">
+Otras herramientas <span class="gradient-orange">cuestan mucho más</span>
+</h2>
+<p class="subtitle anim-up-d2" style="margin:0 auto 40px;text-align:center">Y la mayoría no incluye facturación SRI ni contabilidad NIIF para Ecuador.</p>
+
+<table class="comparison-table anim-up-d3" style="max-width:1000px">
+<thead>
+<tr>
+<th style="width:22%">Plataforma</th>
+<th style="width:16%;text-align:center;color:var(--text-dim)">Precio/mes</th>
+<th style="width:12%;text-align:center;color:var(--text-dim)">SRI</th>
+<th style="width:12%;text-align:center;color:var(--text-dim)">Contab.</th>
+<th style="width:12%;text-align:center;color:var(--text-dim)">POS</th>
+<th style="width:12%;text-align:center;color:var(--text-dim)">Inventario</th>
+<th style="width:14%;text-align:center;color:var(--text-dim)">Origen</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="font-weight:600;color:var(--text)">GymMaster</td>
+<td style="text-align:center;color:var(--red);font-weight:600">$89 - $249</td>
+<td style="text-align:center;color:var(--red)">&#10007;</td>
+<td style="text-align:center;color:var(--red)">&#10007;</td>
+<td style="text-align:center;color:var(--accent)">&#10003;</td>
+<td style="text-align:center;color:var(--red)">&#10007;</td>
+<td style="text-align:center;color:var(--text-muted);font-size:.8rem">Nueva Zelanda</td>
+</tr>
+<tr>
+<td style="font-weight:600;color:var(--text)">Mindbody</td>
+<td style="text-align:center;color:var(--red);font-weight:600">$139 - $699</td>
+<td style="text-align:center;color:var(--red)">&#10007;</td>
+<td style="text-align:center;color:var(--red)">&#10007;</td>
+<td style="text-align:center;color:var(--accent)">&#10003;</td>
+<td style="text-align:center;color:var(--red)">&#10007;</td>
+<td style="text-align:center;color:var(--text-muted);font-size:.8rem">EE.UU.</td>
+</tr>
+<tr>
+<td style="font-weight:600;color:var(--text)">Glofox</td>
+<td style="text-align:center;color:var(--red);font-weight:600">$110 - $300</td>
+<td style="text-align:center;color:var(--red)">&#10007;</td>
+<td style="text-align:center;color:var(--red)">&#10007;</td>
+<td style="text-align:center;color:var(--accent)">&#10003;</td>
+<td style="text-align:center;color:var(--red)">&#10007;</td>
+<td style="text-align:center;color:var(--text-muted);font-size:.8rem">Irlanda</td>
+</tr>
+<tr>
+<td style="font-weight:600;color:var(--text)">Contifico</td>
+<td style="text-align:center;color:var(--orange);font-weight:600">$15 - $50</td>
+<td style="text-align:center;color:var(--accent)">&#10003;</td>
+<td style="text-align:center;color:var(--accent)">&#10003;</td>
+<td style="text-align:center;color:var(--red)">&#10007;</td>
+<td style="text-align:center;color:var(--orange)">~</td>
+<td style="text-align:center;color:var(--text-muted);font-size:.8rem">Ecuador</td>
+</tr>
+<tr>
+<td style="font-weight:600;color:var(--text)">GymPro EC</td>
+<td style="text-align:center;color:var(--orange);font-weight:600">$30 - $100</td>
+<td style="text-align:center;color:var(--red)">&#10007;</td>
+<td style="text-align:center;color:var(--red)">&#10007;</td>
+<td style="text-align:center;color:var(--orange)">~</td>
+<td style="text-align:center;color:var(--red)">&#10007;</td>
+<td style="text-align:center;color:var(--text-muted);font-size:.8rem">Ecuador</td>
+</tr>
+<tr style="background:linear-gradient(90deg,var(--primary-glow),var(--accent-glow))">
+<td style="font-weight:800;color:var(--accent);font-size:1.05rem">AMEPHIA GYM</td>
+<td style="text-align:center;color:var(--accent);font-weight:800;font-size:1.1rem">$59</td>
+<td style="text-align:center;color:var(--accent);font-weight:700">&#10003;</td>
+<td style="text-align:center;color:var(--accent);font-weight:700">&#10003;</td>
+<td style="text-align:center;color:var(--accent);font-weight:700">&#10003;</td>
+<td style="text-align:center;color:var(--accent);font-weight:700">&#10003;</td>
+<td style="text-align:center;color:var(--accent);font-weight:600;font-size:.8rem">Ecuador</td>
+</tr>
+</tbody>
+</table>
+
+<div class="anim-up-d4" style="margin-top:32px;display:flex;gap:24px;justify-content:center;flex-wrap:wrap">
+<div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 28px;text-align:center">
+<div style="font-size:.7rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">Ahorro vs GymMaster</div>
+<div style="font-size:1.6rem;font-weight:800;font-family:'Space Grotesk',sans-serif;color:var(--accent)">hasta 76%</div>
+</div>
+<div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 28px;text-align:center">
+<div style="font-size:.7rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">Ahorro vs Mindbody</div>
+<div style="font-size:1.6rem;font-weight:800;font-family:'Space Grotesk',sans-serif;color:var(--accent)">hasta 92%</div>
+</div>
+<div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 28px;text-align:center">
+<div style="font-size:.7rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">Unica con SRI + NIIF</div>
+<div style="font-size:1.6rem;font-weight:800;font-family:'Space Grotesk',sans-serif;color:var(--primary-light)">100%</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ============================================ -->
+<!-- SLIDE 13: CIERRE -->
+<!-- ============================================ -->
+<div class="slide bg-gradient" data-slide="13">
+<div class="grid-bg"></div>
+<div class="glow-orb" style="width:500px;height:500px;background:var(--primary);top:-150px;left:30%"></div>
+<div class="glow-orb" style="width:300px;height:300px;background:var(--accent);bottom:-50px;right:20%;animation-delay:4s"></div>
+
+<div style="text-align:center;max-width:800px;position:relative;z-index:2">
+<div class="anim-up" style="display:flex;justify-content:center;margin-bottom:24px">
+<div class="logo-mark" style="width:56px;height:56px;font-size:1.5rem">A</div>
+</div>
+<h2 class="hero-title font-display anim-up-d1" style="margin-bottom:20px">
+Transforme su gimnasio<br>
+<span class="gradient-text">en un negocio inteligente.</span>
+</h2>
+<p class="subtitle anim-up-d2" style="margin:0 auto 40px;text-align:center">
+AMEPHIA GYM no es solo un software. Es la plataforma que le permite enfocarse en lo que importa: <strong style="color:var(--text)">hacer crecer su negocio y sus clientes</strong>.
+</p>
+
+<div class="anim-up-d3" style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+<a href="https://gym.amephia.com/login" target="_blank" rel="noreferrer" style="display:inline-block;padding:16px 36px;background:linear-gradient(135deg,var(--primary),#4338ca);border-radius:14px;font-weight:700;font-size:1.05rem;box-shadow:0 8px 30px var(--primary-glow);cursor:pointer;color:white;text-decoration:none">
+Ver Demo en Vivo &rarr;
+</a>
+</div>
+
+<div class="anim-up-d4" style="margin-top:60px;display:flex;gap:40px;justify-content:center;flex-wrap:wrap">
+<div style="text-align:center">
+<div style="font-size:1.5rem;font-weight:800;font-family:'Space Grotesk',sans-serif;color:var(--text)">72</div>
+<div style="font-size:.7rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em">Miembros</div>
+</div>
+<div style="width:1px;background:var(--border)"></div>
+<div style="text-align:center">
+<div style="font-size:1.5rem;font-weight:800;font-family:'Space Grotesk',sans-serif;color:var(--text)">104</div>
+<div style="font-size:.7rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em">Facturas SRI</div>
+</div>
+<div style="width:1px;background:var(--border)"></div>
+<div style="text-align:center">
+<div style="font-size:1.5rem;font-weight:800;font-family:'Space Grotesk',sans-serif;color:var(--text)">NIIF</div>
+<div style="font-size:.7rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em">Contabilidad</div>
+</div>
+<div style="width:1px;background:var(--border)"></div>
+<div style="text-align:center">
+<div style="font-size:1.5rem;font-weight:800;font-family:'Space Grotesk',sans-serif;color:var(--text)">$11.8K</div>
+<div style="font-size:.7rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em">Ventas Totales</div>
+</div>
+</div>
+</div>
+</div>
+
+</div><!-- end deck -->
+
+<!-- NAVIGATION BAR -->
+<nav class="nav-bar">
+<button class="nav-btn" onclick="prevSlide()" title="Anterior (←)">&#8592;</button>
+<div class="nav-dots" id="navDots"></div>
+<button class="nav-btn" onclick="nextSlide()" title="Siguiente (→)">&#8594;</button>
+<div class="slide-counter" id="counter">1 / 14</div>
+</nav>
+
+<script>
+const deck=document.getElementById('deck');
+const slides=[...deck.querySelectorAll('.slide')];
+const dotsContainer=document.getElementById('navDots');
+const counter=document.getElementById('counter');
+let current=0;
+const total=slides.length;
+
+// Create dots
+slides.forEach((_,i)=>{
+const dot=document.createElement('div');
+dot.className='nav-dot'+(i===0?' active':'');
+dot.onclick=()=>goTo(i);
+dotsContainer.appendChild(dot);
+});
+
+function updateUI(){
+slides.forEach((s,i)=>{
+s.classList.remove('active','prev');
+if(i===current)s.classList.add('active');
+else if(i<current)s.classList.add('prev');
+});
+[...dotsContainer.children].forEach((d,i)=>{d.className='nav-dot'+(i===current?' active':'')});
+counter.textContent=`${current+1} / ${total}`;
+}
+
+function nextSlide(){if(current<total-1){current++;updateUI()}}
+function prevSlide(){if(current>0){current--;updateUI()}}
+function goTo(n){current=n;updateUI()}
+
+document.addEventListener('keydown',e=>{
+if(e.key==='ArrowRight'||e.key===' '||e.key==='Enter'){e.preventDefault();nextSlide()}
+if(e.key==='ArrowLeft'||e.key==='Backspace'){e.preventDefault();prevSlide()}
+if(e.key==='Home'){e.preventDefault();goTo(0)}
+if(e.key==='End'){e.preventDefault();goTo(total-1)}
+});
+
+// Touch swipe
+let touchStartX=0;
+deck.addEventListener('touchstart',e=>{touchStartX=e.changedTouches[0].screenX},{passive:true});
+deck.addEventListener('touchend',e=>{
+const diff=touchStartX-e.changedTouches[0].screenX;
+if(Math.abs(diff)>50){diff>0?nextSlide():prevSlide()}
+},{passive:true});
+</script>
+</body>
+</html>
