@@ -41,10 +41,14 @@ else
   git commit -m "$MSG"
 fi
 
-# 5. Push
+# 5. Push to main
 step "Pushing to origin/main..."
 git push origin main
 
+# 6. Sync deploy branch (Hostinger monitors this branch)
+step "Syncing deploy branch for Hostinger..."
+git push origin main:deploy
+
 echo -e "\n${GREEN}✔ Deploy complete!${NC}"
-echo -e "  Hostinger will pick up changes automatically."
+echo -e "  Hostinger detectará los cambios en la rama deploy automáticamente."
 echo -e "  Site: https://amephia.com\n"
