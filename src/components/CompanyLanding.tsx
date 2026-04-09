@@ -829,7 +829,7 @@ const products = [
   { id: 'gym' as ProjectId, name: 'AMEPHIA GYM', cat: 'ERP para Gimnasios', desc: 'Membresías, facturación SRI, POS, inventario y contabilidad NIIF en una sola plataforma.', color: '#EA580C', bg: '#FFF7ED', border: '#FED7AA', badge: 'ERP Completo' },
   { id: 'broker-seguro' as ProjectId, name: 'BROKER SEGURO', cat: 'Gestión de Seguros', desc: 'Pólizas, vencimientos, renovaciones, reclamos, comisiones y cartera de clientes.', color: '#3B82F6', bg: '#EFF6FF', border: '#BFDBFE', badge: 'SaaS Multi-tenant' },
   { id: 'migration' as ProjectId, name: 'MIGRALIA', cat: 'SaaS Migratorio', desc: 'Plataforma multitenancy para facilitadores: casos, documentos, pagos y portal del cliente.', color: '#8B5CF6', bg: '#F5F3FF', border: '#DDD6FE', badge: 'SaaS Multitenancy' },
-  { id: 'ecommerce' as ProjectId, name: 'AMEPHIA STORE', cat: 'E-commerce', desc: 'Tienda virtual con checkout seguro, pasarelas de pago y facturación integrada.', color: '#7C3AED', bg: '#F5F3FF', border: '#C4B5FD', badge: 'Pagos online' },
+  { id: 'ecommerce' as ProjectId, name: 'AMEPHIA STORE', cat: 'E-commerce', desc: 'Tienda virtual con checkout seguro, pasarelas de pago y facturación integrada.', color: '#7C3AED', bg: '#F5F3FF', border: '#C4B5FD', badge: 'Pagos online', url: 'https://ameshop.ec/' },
   { id: 'facturacion' as ProjectId, name: 'FACTURA SRI', cat: 'Facturación Electrónica', desc: 'Facturas, retenciones, notas de crédito y guías de remisión con validación automática.', color: '#059669', bg: '#ECFDF5', border: '#A7F3D0', badge: '100% SRI' },
   { id: 'pos' as ProjectId, name: 'AMEPHIA POS', cat: 'Punto de Venta', desc: 'POS para mostrador: devoluciones, facturación instantánea y soporte de hardware.', color: '#D97706', bg: '#FFFBEB', border: '#FDE68A', badge: 'Tiempo real' },
   { id: 'nutri' as ProjectId, name: 'NUTRI APP', cat: 'Nutrición & Salud', desc: 'Seguimiento nutricional con planes alimenticios y monitoreo de progreso.', color: '#65A30D', bg: '#F7FEE7', border: '#BEF264', badge: 'iOS & Android' },
@@ -863,7 +863,7 @@ const ProductsSection = ({ onOpenProject }: { onOpenProject: (id: ProjectId) => 
           <motion.button key={p.id} initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
             transition={{ delay: i * 0.06 }}
-            onClick={() => onOpenProject(p.id)}
+            onClick={() => 'url' in p && p.url ? window.open(p.url, '_blank') : onOpenProject(p.id)}
             className="group text-left bg-white border border-gray-100 hover:border-gray-200 rounded-2xl p-6 hover:shadow-xl hover:shadow-gray-200/80 transition-all duration-300 hover:-translate-y-1 flex flex-col gap-4">
             <div className="w-10 h-1.5 rounded-full group-hover:w-full transition-all duration-500" style={{ backgroundColor: p.color }} />
             <div className="inline-flex items-center self-start px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-widest border"
@@ -1319,11 +1319,11 @@ const Footer = ({
                 { label: 'ERP para Gimnasios', id: 'gym' as ProjectId },
                 { label: 'Broker Seguro', id: 'broker-seguro' as ProjectId },
                 { label: 'Gestión Migratoria', id: 'migration' as ProjectId },
-                { label: 'E-commerce', id: 'ecommerce' as ProjectId },
+                { label: 'E-commerce', id: 'ecommerce' as ProjectId, url: 'https://ameshop.ec/' },
                 { label: 'Facturación SRI', id: 'facturacion' as ProjectId },
                 { label: 'Punto de Venta', id: 'pos' as ProjectId },
               ].map(p => (
-                <li key={p.id}><button onClick={() => onOpenProject(p.id)} className="text-slate-500 hover:text-slate-200 text-sm transition-colors">{p.label}</button></li>
+                <li key={p.id}><button onClick={() => ('url' in p && p.url) ? window.open(p.url, '_blank') : onOpenProject(p.id)} className="text-slate-500 hover:text-slate-200 text-sm transition-colors">{p.label}</button></li>
               ))}
             </ul>
           </div>

@@ -52,7 +52,7 @@ const YOUTUBE_VIDEO_ID: string | null = null;
 /* ──────────────────────────────────────────────
    WHATSAPP HELPER
    ────────────────────────────────────────────── */
-const WA_NUMBER = '593986059727';
+const WA_NUMBER = '13347324056';
 
 const waURL = (ctx?: string) => {
   const msgs: Record<string, string> = {
