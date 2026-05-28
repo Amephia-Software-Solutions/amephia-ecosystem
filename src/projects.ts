@@ -8,6 +8,7 @@ export const PROJECT_IDS = [
   'migration',
   'broker-seguro',
   'contame',
+  'shielddata',
 ] as const;
 
 export type ProjectId = (typeof PROJECT_IDS)[number];

@@ -4,6 +4,7 @@ import MigrationSaasLanding from './components/MigrationSaasLanding';
 import GymLanding from './components/GymLanding';
 import BrokerSeguroLanding from './components/BrokerSeguroLanding';
 import EcommerceLanding from './components/EcommerceLanding';
+import ShieldDataLanding from './components/ShieldDataLanding';
 import { CompanyLanding } from './components/CompanyLanding';
 import { isProjectId } from './projects';
 import type { ProjectId } from './projects';
@@ -81,6 +82,14 @@ const PROJECT_META: Record<ProjectId, ProjectSEO> = {
       'ContAme: software contable NIIF para PYMES y despachos contables. Plan de cuentas, asientos automáticos, nómina, facturación SRI, conciliación bancaria y reportes financieros. Multi-empresa.',
     keywords:
       'software contable Ecuador, contabilidad NIIF PYMES, sistema contable en la nube, plataforma contabilidad empresas, software para contadores Ecuador, contabilidad multi-empresa, nómina Ecuador, facturación electrónica contabilidad',
+  },
+  shielddata: {
+    title: 'SHIELDDATA — Cumplimiento LOPDP Ecuador con IA | Plataforma Enterprise de Protección de Datos',
+    description:
+      'SHIELDDATA: plataforma enterprise de cumplimiento de la Ley de Protección de Datos del Ecuador. RAT generado con IA, EIPD, derechos ARCO, notificación de brechas a SPDP en <72h, modo inspección con expediente firmado PAdES y postura de ciberseguridad ISO 27001/NIST CSF. Demo gratis sin tarjeta.',
+    keywords:
+      'LOPDP Ecuador, cumplimiento protección de datos Ecuador, SPDP, RAT registro de tratamientos, EIPD evaluación de impacto, derechos ARCO, brechas datos personales, DPO Ecuador, software protección de datos, OneTrust Ecuador, software compliance LOPDP, plataforma cumplimiento SPDP, modo inspección SPDP, ciberseguridad ISO 27001 Ecuador',
+    ogImage: '/assets/screenshots/shielddata-dashboard.png',
   },
 };
 
@@ -266,6 +275,41 @@ function App() {
         script.textContent = JSON.stringify(ld);
         document.head.appendChild(script);
       }
+    } else if (activeProject === 'shielddata') {
+      const ld = {
+        '@context': 'https://schema.org',
+        '@type': 'SoftwareApplication',
+        name: 'SHIELDDATA',
+        applicationCategory: 'BusinessApplication',
+        applicationSubCategory: 'Compliance Management Software',
+        operatingSystem: 'Web',
+        description: projectMeta?.description,
+        url: nextCanonical,
+        image: nextImage,
+        screenshot: 'https://amephia.com/assets/screenshots/shielddata-dashboard.png',
+        offers: {
+          '@type': 'Offer',
+          name: 'Demo gratis',
+          price: '0',
+          priceCurrency: 'USD',
+          availability: 'https://schema.org/InStock',
+          url: 'https://shieldata.amephia.com/login',
+        },
+        author: { '@type': 'Organization', name: 'AmePhia Systems Inc.', url: 'https://amephia.com' },
+        countryOfOrigin: 'EC',
+        inLanguage: 'es-EC',
+        featureList:
+          'Registro de Actividades de Tratamiento (RAT) generado con IA, Evaluación de Impacto a la Protección de Datos (EIPD), Derechos ARCO con portal público, Notificación de brechas a SPDP en menos de 72h, Modo Inspección con expediente firmado PAdES, Postura de Ciberseguridad ISO 27001 / NIST CSF, Designación y gestión del DPO, Consentimientos digitales con evidencia, Transferencias internacionales de datos, Contratos de encargo (DPA), Audit log con hash chain Merkle, Multi-tenant con Row-Level Security, Firma electrónica ARCOTEL (PAdES/XAdES/CAdES), Playbooks sectoriales (Salud, Fintech, Retail, Educación, Sector Público), Soporte opcional GDPR y HIPAA',
+      };
+      if (existingLd) {
+        existingLd.textContent = JSON.stringify(ld);
+      } else {
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.setAttribute('data-seo', 'project');
+        script.textContent = JSON.stringify(ld);
+        document.head.appendChild(script);
+      }
     } else if (existingLd) {
       existingLd.remove();
     }
@@ -304,6 +348,10 @@ function App() {
 
   if (activeProject === 'ecommerce') {
     return <EcommerceLanding />;
+  }
+
+  if (activeProject === 'shielddata') {
+    return <ShieldDataLanding />;
   }
 
   if (activeProject) {

@@ -57,6 +57,12 @@ const AdvisoryIcon = () => (
   </svg>
 );
 
+const ShieldDataIcon = () => (
+  <svg className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+  </svg>
+);
+
 interface ProductsSectionProps {
   onOpenProject?: (projectId: ProjectId) => void;
 }
@@ -66,6 +72,7 @@ export const ProductsSection = ({ onOpenProject }: ProductsSectionProps) => {
   const packageUrl = 'https://packagist.org/packages/amephia/sri-ec';
 
   const offers = [
+    { projectId: 'shielddata' as const, titleKey: 'shielddataCardTitle' as const, descKey: 'shielddataCardDesc' as const, icon: <ShieldDataIcon /> },
     { projectId: 'gym' as const, titleKey: 'gymProductTitle' as const, descKey: 'gymProductDesc' as const, icon: <GymErpIcon /> },
     { projectId: 'ecommerce' as const, titleKey: 'ecommerceTitle' as const, descKey: 'ecommerceDesc' as const, icon: <EcommerceIcon /> },
     { projectId: 'advisory' as const, titleKey: 'advisoryTitle' as const, descKey: 'advisoryDesc' as const, icon: <AdvisoryIcon /> },
@@ -90,6 +97,58 @@ export const ProductsSection = ({ onOpenProject }: ProductsSectionProps) => {
           </p>
         </motion.div>
       </div>
+
+      {/* SHIELDDATA — Featured Product (NUEVO, máxima prioridad) */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        onClick={() => onOpenProject?.('shielddata')}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            onOpenProject?.('shielddata');
+          }
+        }}
+        role="button"
+        tabIndex={0}
+        className="group relative mb-6 bg-gradient-to-r from-blue-600/15 via-sky-500/5 to-amber-500/10 border border-blue-500/25 rounded-2xl p-6 md:p-8 hover:border-blue-400/50 transition-all duration-300 cursor-pointer overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-400/40"
+      >
+        <div className="absolute top-0 right-0 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-blue-500/20 transition-colors" />
+        <div className="absolute bottom-0 left-0 w-48 h-48 bg-amber-500/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+        <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+          <div className="flex-1">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="inline-block px-3 py-1 bg-blue-500/20 border border-blue-400/30 rounded-full text-[10px] font-mono text-sky-300 uppercase tracking-wider">
+                {t('shielddataBadge')}
+              </span>
+              <span className="inline-flex items-center gap-1 text-[10px] font-mono text-mutedText uppercase tracking-wider">
+                <svg viewBox="0 0 18 12" className="h-2.5 w-[14px]" aria-hidden>
+                  <rect width="18" height="6" fill="#FDD835" />
+                  <rect y="6" width="18" height="3" fill="#1E40AF" />
+                  <rect y="9" width="18" height="3" fill="#991B1B" />
+                </svg>
+                Hecho en Ecuador
+              </span>
+            </div>
+            <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 group-hover:text-sky-300 transition-colors">
+              {t('shielddataFeaturedTitle')}
+            </h3>
+            <p className="text-mutedText max-w-2xl leading-relaxed">
+              {t('shielddataFeaturedDesc')}
+            </p>
+          </div>
+          <div className="flex-shrink-0">
+            <span className="inline-flex items-center gap-2 px-6 py-3 bg-blue-500/20 border border-blue-400/30 text-sky-300 font-medium rounded-lg group-hover:bg-blue-500 group-hover:text-white transition-all whitespace-nowrap">
+              {t('shielddataFeaturedCta')}
+              <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </span>
+          </div>
+        </div>
+      </motion.div>
 
       {/* Migration SaaS — Featured Product */}
       <motion.div

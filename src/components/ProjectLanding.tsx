@@ -212,6 +212,31 @@ const PROJECT_COPY: Record<Language, Record<ProjectId, ProjectCopy>> = {
         'Multi-company dashboard for accounting firms',
       ],
     },
+    shielddata: {
+      // NOTE: shielddata renders <ShieldDataLanding /> directly from App.tsx.
+      // This fallback is only kept for the Record<ProjectId> exhaustiveness check
+      // and will not be displayed under normal routing.
+      badge: 'Enterprise Compliance SaaS',
+      title: 'SHIELDDATA – LOPDP Compliance Platform',
+      subtitle: 'AI-powered Ecuadorian data protection compliance',
+      description: 'Enterprise compliance platform built natively for Ecuador\'s data protection law (LOPDP). RAT generated with AI, SPDP breach notifications under 72h, public ARCO rights portal, PAdES-signed inspection dossier and ISO 27001 / NIST CSF cyber posture.',
+      highlightsTitle: 'Core Features',
+      highlights: [
+        'AI-assisted RAT and EIPD generation',
+        'Public ARCO rights portal',
+        'SPDP breach notification under 72h',
+        'PAdES-signed inspection mode',
+        'ISO 27001 / NIST CSF cyber posture',
+        'Multi-tenant with Row-Level Security',
+      ],
+      deliverablesTitle: 'What\'s Included',
+      deliverables: [
+        'Full compliance platform with admin panel',
+        'Public ARCO portal under your brand',
+        'Cron-based compliance monitoring and WhatsApp alerts',
+        'Forensic audit log with Merkle hash chain',
+      ],
+    },
   },
   es: {
     gym: {
@@ -399,6 +424,31 @@ const PROJECT_COPY: Record<Language, Record<ProjectId, ProjectCopy>> = {
         'Reportes financieros: P&G, balance, comprobación',
         'Módulos de nómina y cumplimiento tributario',
         'Dashboard multi-empresa para firmas contables',
+      ],
+    },
+    shielddata: {
+      // NOTA: shielddata renderiza <ShieldDataLanding /> directamente desde App.tsx.
+      // Este fallback es solo para la exhaustividad del Record<ProjectId> y no se
+      // muestra bajo el routing normal.
+      badge: 'SaaS Compliance Enterprise',
+      title: 'SHIELDDATA – Plataforma de Cumplimiento LOPDP',
+      subtitle: 'Cumplimiento ecuatoriano de protección de datos con IA',
+      description: 'Plataforma enterprise construida nativamente para la Ley de Protección de Datos del Ecuador (LOPDP). RAT generado con IA, notificación de brechas a la SPDP en menos de 72h, portal público para derechos ARCO, expediente de inspección firmado con PAdES y postura de ciberseguridad ISO 27001 / NIST CSF.',
+      highlightsTitle: 'Funcionalidades Principales',
+      highlights: [
+        'Generación asistida con IA del RAT y de las EIPDs',
+        'Portal público para derechos ARCO',
+        'Notificación de brechas a la SPDP en menos de 72h',
+        'Modo Inspección con expediente firmado PAdES',
+        'Postura de ciberseguridad ISO 27001 / NIST CSF',
+        'Arquitectura multi-tenant con Row-Level Security',
+      ],
+      deliverablesTitle: 'Qué Incluye',
+      deliverables: [
+        'Plataforma de cumplimiento completa con panel admin',
+        'Portal ARCO público bajo tu marca',
+        'Monitoreo cron de cumplimiento + alertas WhatsApp',
+        'Audit log forense con cadena de hashes Merkle',
       ],
     },
   },

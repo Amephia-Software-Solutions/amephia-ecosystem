@@ -62,6 +62,14 @@ export const translations = {
     migrationSaasCta: 'See the Platform',
     migrationSaasBadge: 'FLAGSHIP PRODUCT',
 
+    // SHIELDDATA — card en grid y featured banner
+    shielddataCardTitle: 'LOPDP Compliance Platform',
+    shielddataCardDesc: 'Enterprise platform for Ecuador data protection compliance: RAT, EIPD, ARCO, breaches, DPO, cyber posture and SPDP inspection mode — all in one product.',
+    shielddataBadge: 'NEW · ENTERPRISE COMPLIANCE',
+    shielddataFeaturedTitle: 'SHIELDDATA — Complete LOPDP Compliance in Minutes',
+    shielddataFeaturedDesc: 'The first enterprise compliance platform built natively for Ecuadorian law. AI-powered RAT, SPDP breach notifications under 72h, public ARCO portal, PAdES-signed inspection dossier and ISO 27001 cyber posture — production ready out of the box.',
+    shielddataFeaturedCta: 'Explore SHIELDDATA',
+
     // CTA
     learnMore: 'Learn More',
     contactUs: 'Contact Us',
@@ -181,6 +189,14 @@ export const translations = {
     migrationSaasDesc: 'Plataforma multitenancy para consultoras migratorias y negocios de servicios: seguimiento de casos, portal de clientes, gestión documental y pagos online.',
     migrationSaasCta: 'Ver la Plataforma',
     migrationSaasBadge: 'PRODUCTO ESTRELLA',
+
+    // SHIELDDATA — card en grid y featured banner
+    shielddataCardTitle: 'Plataforma de Cumplimiento LOPDP',
+    shielddataCardDesc: 'Plataforma enterprise para cumplimiento de la Ley de Protección de Datos del Ecuador: RAT, EIPD, ARCO, brechas, DPO, postura de ciberseguridad y modo inspección SPDP — todo en un producto.',
+    shielddataBadge: 'NUEVO · COMPLIANCE ENTERPRISE',
+    shielddataFeaturedTitle: 'SHIELDDATA — Cumplimiento LOPDP completo en minutos',
+    shielddataFeaturedDesc: 'La primera plataforma enterprise de cumplimiento construida nativamente para la ley ecuatoriana. RAT generado con IA, notificación de brechas a SPDP en menos de 72h, portal público ARCO, expediente de inspección firmado con PAdES y postura de ciberseguridad ISO 27001 — lista para producción desde el día uno.',
+    shielddataFeaturedCta: 'Explorar SHIELDDATA',
 
     // CTA
     learnMore: 'Más Información',

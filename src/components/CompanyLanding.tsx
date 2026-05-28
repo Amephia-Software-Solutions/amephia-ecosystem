@@ -826,6 +826,7 @@ const TechSection = () => (
 
 /* ─── PRODUCTS — claro ──────────────────────────────── */
 const products = [
+  { id: 'shielddata' as ProjectId, name: 'SHIELDDATA', cat: 'Cumplimiento LOPDP', desc: 'Plataforma enterprise con IA para LOPDP Ecuador: RAT, EIPD, ARCO, brechas SPDP y ciberseguridad ISO 27001.', color: '#1E40AF', bg: '#EFF6FF', border: '#BFDBFE', badge: 'Enterprise · Nuevo' },
   { id: 'gym' as ProjectId, name: 'AMEPHIA GYM', cat: 'ERP para Gimnasios', desc: 'Membresías, facturación SRI, POS, inventario y contabilidad NIIF en una sola plataforma.', color: '#EA580C', bg: '#FFF7ED', border: '#FED7AA', badge: 'ERP Completo' },
   { id: 'broker-seguro' as ProjectId, name: 'BROKER SEGURO', cat: 'Gestión de Seguros', desc: 'Pólizas, vencimientos, renovaciones, reclamos, comisiones y cartera de clientes.', color: '#3B82F6', bg: '#EFF6FF', border: '#BFDBFE', badge: 'SaaS Multi-tenant' },
   { id: 'migration' as ProjectId, name: 'MIGRALIA', cat: 'SaaS Migratorio', desc: 'Plataforma multitenancy para facilitadores: casos, documentos, pagos y portal del cliente.', color: '#8B5CF6', bg: '#F5F3FF', border: '#DDD6FE', badge: 'SaaS Multitenancy' },
@@ -847,7 +848,7 @@ const ProductsSection = ({ onOpenProject }: { onOpenProject: (id: ProjectId) => 
         </span>
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
           <h2 className="text-4xl md:text-5xl font-bold text-[#0F172A] tracking-tight max-w-2xl leading-[1.1]">
-            Ocho productos que ya están{' '}
+            Nueve productos que ya están{' '}
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6]">
               trabajando en el mercado
             </span>
