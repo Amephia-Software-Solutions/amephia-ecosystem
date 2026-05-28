@@ -29,6 +29,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Clean previous build
+        # IMPORTANTE: sin este paso, Vite/Rollup mezcla artefactos de dist/ del
+        # repo con la nueva build → index.html puede quedar referenciando bundles
+        # con hashes obsoletos. Limpiar dist/ asegura un build determinista.
+        run: rm -rf dist
+
       - name: Build site
         run: npm run build
 
