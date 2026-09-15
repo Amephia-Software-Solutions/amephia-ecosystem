@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import logoImg from '../assets/images/amelogo_v3_optimized.webp';
 
 export default function BrochurePage() {
   const [lang, setLang] = useState<'es' | 'en'>('es');
@@ -57,17 +58,11 @@ export default function BrochurePage() {
         {/* Brand */}
         <div className="flex items-center gap-4">
           <a href="/" className="flex items-center gap-3 group">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-400 flex items-center justify-center font-mono font-bold text-white text-sm shadow-lg shadow-blue-500/25 transition-transform group-hover:scale-105">
-              &lt;/&gt;
-            </div>
-            <div>
-              <span className="text-white font-black text-base tracking-tight block leading-none">
-                Ame<span className="bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">Phia</span>
-              </span>
-              <span className="text-[9px] font-mono tracking-widest text-slate-400 uppercase font-semibold">
-                Software Solutions
-              </span>
-            </div>
+            <img
+              src={logoImg}
+              alt="AmePhia Software Solutions Logo"
+              className="h-9 w-auto object-contain transition-transform group-hover:scale-105 filter drop-shadow-[0_2px_10px_rgba(37,99,235,0.35)]"
+            />
           </a>
           <span className="hidden xl:inline-block text-xs font-mono text-slate-400 pl-4 border-l border-white/10 tracking-wider">
             EXECUTIVE DIGITAL DOSSIER · 2026
@@ -334,14 +329,18 @@ export default function BrochurePage() {
                     </div>
                   </div>
 
-                  {/* Center Book Spine Fold Shadow */}
-                  <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-8 -translate-x-1/2 pointer-events-none bg-gradient-to-r from-black/30 via-black/10 to-black/30 z-20" />
-
                   {/* Right Page: Executive Closing & VIP Actions */}
                   <div className="flex-1 p-8 sm:p-12 flex flex-col justify-between bg-gradient-to-b from-[#081026] via-[#050A1A] to-[#02050E] text-white">
                     <div className="space-y-6">
-                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-mono font-bold uppercase tracking-wider">
-                        <span>AMEPHIA SOFTWARE SOLUTIONS</span>
+                      <div className="flex items-center justify-between">
+                        <img
+                          src={logoImg}
+                          alt="AmePhia Software Solutions"
+                          className="h-10 w-auto object-contain filter drop-shadow-[0_2px_8px_rgba(37,99,235,0.3)]"
+                        />
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-[10px] font-mono font-bold uppercase tracking-wider">
+                          <span>USA &amp; LATAM</span>
+                        </div>
                       </div>
 
                       <h3 className="text-2xl sm:text-3xl font-black text-white leading-tight">
