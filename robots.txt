@@ -1,20 +1,30 @@
-# robots.txt for AmePhia Ecosystem
-# https://amephia.com
+# robots.txt for AmePhia Systems Ecosystem
+# Website: https://amephia.com
+# Canonical LLMs Context: https://amephia.com/llms.txt
 
 User-agent: *
 Allow: /
 
-# Sitemap location
+# Sitemap Index
 Sitemap: https://amephia.com/sitemap.xml
 
-# AI Crawlers - Welcome!
+# LLM & Generative Search Bots (GEO Optimization)
 User-agent: GPTBot
 Allow: /
 
 User-agent: ChatGPT-User
 Allow: /
 
+User-agent: OAI-SearchBot
+Allow: /
+
 User-agent: Google-Extended
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: ClaudeBot
 Allow: /
 
 User-agent: Anthropic-AI
@@ -23,28 +33,36 @@ Allow: /
 User-agent: Claude-Web
 Allow: /
 
-User-agent: CCBot
-Allow: /
-
 User-agent: PerplexityBot
 Allow: /
 
-# LLMs context file
-# For AI assistants, see /llms.txt for detailed context about our company and products
+User-agent: Applebot
+Allow: /
 
-# Block common bot traps
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: bingbot
+Allow: /
+
+# Block Common Traps & Internal Endpoints
 Disallow: /wp-admin/
 Disallow: /admin/
 Disallow: /*.json$
 Disallow: /api/
 
-# Allow assets
+# Explicitly Allow Static Assets & Media
 Allow: /assets/
+Allow: /llms.txt
 Allow: /*.js$
 Allow: /*.css$
 Allow: /*.png$
 Allow: /*.jpg$
+Allow: /*.webp$
 Allow: /*.svg$
 
-# Crawl-delay for politeness
+# Crawl Delay
 Crawl-delay: 1
