@@ -356,8 +356,12 @@ function App({ onReady }: { onReady?: () => void }) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
-  // Brochure route
-  if (window.location.pathname === '/brochure') {
+  // Brochure route (support /brochure, /brochure/, #brochure)
+  if (
+    typeof window !== 'undefined' &&
+    (window.location.pathname.replace(/\/+$/, '') === '/brochure' ||
+      window.location.hash === '#brochure')
+  ) {
     return <BrochurePage />;
   }
 

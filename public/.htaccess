@@ -62,8 +62,8 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ - [R=404,L]
 
 # ── Standalone HTML pages (served WITHOUT .html extension) ──────
-# /brochure  →  /brochure.html
-RewriteCond %{REQUEST_URI} ^/brochure$
+# /brochure or /brochure/  →  /brochure.html
+RewriteCond %{REQUEST_URI} ^/brochure/?$ [NC]
 RewriteRule ^ /brochure.html [L]
 
 # SPA fallback — solo rutas de app (no archivos estáticos ni /assets/)
