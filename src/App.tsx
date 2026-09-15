@@ -32,10 +32,16 @@ const PROJECT_META: Record<ProjectId, ProjectSEO> = {
     ogImage: '/assets/screenshots/dashboard.png',
   },
   facturacion: {
-    title: 'Facturación Electrónica SRI Ecuador — Sistema Automatizado',
+    title: 'Facturón — Facturación Electrónica SRI Ecuador | Sin Comisión por Documento',
     description:
-      'Sistema de facturación electrónica con cumplimiento fiscal SRI, validaciones automáticas, retenciones, notas de crédito y trazabilidad completa de documentos tributarios.',
-    keywords: 'facturación electrónica SRI, facturación Ecuador, sistema facturación electrónica, comprobantes electrónicos SRI',
+      'Facturón: factura electrónicamente en Ecuador desde $2.99/mes, sin comisión por documento. Facturas, retenciones, guías autorizadas por el SRI en segundos, firma XAdES-BES, ATS, app móvil y API REST.',
+    keywords: 'Facturón, facturación electrónica SRI Ecuador, software facturación Ecuador, comprobantes electrónicos SRI, ATS SRI, API facturación electrónica Ecuador',
+  },
+  facturon: {
+    title: 'Facturón — Facturación Electrónica SRI Ecuador | Sin Comisión por Documento',
+    description:
+      'Facturón: factura electrónicamente en Ecuador desde $2.99/mes, sin comisión por documento. Facturas, retenciones, guías autorizadas por el SRI en segundos, firma XAdES-BES, ATS, app móvil y API REST.',
+    keywords: 'Facturón, facturación electrónica SRI Ecuador, software facturación Ecuador, comprobantes electrónicos SRI, ATS SRI, API facturación electrónica Ecuador',
   },
   pos: {
     title: 'Sistema POS para Negocios — Punto de Venta Rápido',
@@ -365,6 +371,11 @@ function App() {
 
   if (activeProject === 'education') {
     return <EducationLanding />;
+  }
+
+  if (activeProject === 'facturon') {
+    window.location.href = 'https://facturon.ec/';
+    return null;
   }
 
   if (activeProject) {

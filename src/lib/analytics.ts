@@ -7,7 +7,12 @@ declare global {
   }
 }
 
-const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID?.trim();
+const GA_MEASUREMENT_ID =
+  (import.meta.env.VITE_GA_MEASUREMENT_ID && import.meta.env.VITE_GA_MEASUREMENT_ID !== 'G-XXXXXXXXXX'
+    ? import.meta.env.VITE_GA_MEASUREMENT_ID
+    : 'G-4WE576WZJ8'
+  )?.trim();
+
 const ANALYTICS_ENABLED = Boolean(GA_MEASUREMENT_ID);
 
 let analyticsInitialized = false;

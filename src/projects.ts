@@ -1,6 +1,7 @@
 export const PROJECT_IDS = [
   'gym',
   'facturacion',
+  'facturon',
   'pos',
   'nutri',
   'ecommerce',
@@ -9,6 +10,7 @@ export const PROJECT_IDS = [
   'broker-seguro',
   'contame',
   'shielddata',
+  'education',
 ] as const;
 
 export type ProjectId = (typeof PROJECT_IDS)[number];

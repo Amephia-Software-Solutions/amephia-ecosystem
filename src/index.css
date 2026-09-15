@@ -5,11 +5,15 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  @apply bg-background text-white font-sans antialiased overflow-x-hidden;
+  @apply bg-white text-slate-900 font-sans antialiased overflow-x-hidden;
 }
 
 
