@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import logoImg from '../assets/images/amelogo_v3_optimized.webp';
+import logoImg from '../assets/images/amelogo_v3_white.png';
 
 export default function BrochurePage() {
   const [lang, setLang] = useState<'es' | 'en'>('es');
@@ -160,7 +160,7 @@ export default function BrochurePage() {
 
       {/* ── 1. MAIN INTERACTIVE 3D FLIPBOOK VIEW (DEFAULT) ───── */}
       {viewMode === 'book' && (
-        <main className="flex-1 flex flex-col items-center justify-center p-4 sm:p-8 relative min-h-[calc(100vh-8rem)]">
+        <main className="flex-1 flex flex-col items-center justify-center p-4 sm:p-8 relative min-h-[calc(100vh-8rem)] print:hidden">
           
           {/* Subtle Ambient Studio Lighting */}
           <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-b from-blue-600/15 via-indigo-600/10 to-transparent rounded-full blur-3xl pointer-events-none" />
@@ -466,7 +466,7 @@ export default function BrochurePage() {
 
       {/* ── 2. PANORAMIC 3-PANEL TRIFOLD VIEW ─────────────────── */}
       {viewMode === 'trifold' && (
-        <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-8 py-6">
+        <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-8 py-6 print:hidden">
           <div className="mb-4 flex items-center justify-between text-xs font-mono text-slate-400">
             <span className="uppercase tracking-wider">
               {lang === 'es' ? 'TRÍPTICO CORPORATIVO PANORÁMICO (3 PANELES)' : 'PANORAMIC CORPORATE TRIFOLD (3 PANELS)'}
@@ -510,7 +510,7 @@ export default function BrochurePage() {
 
       {/* ── 3. ULTRA-HD ORIGINAL GRAPHIC SHEET VIEWER ─────────── */}
       {viewMode === 'hd' && (
-        <main className="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-8 py-6 flex flex-col items-center">
+        <main className="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-8 py-6 flex flex-col items-center print:hidden">
           <div className="w-full mb-4 flex items-center justify-between text-xs font-mono text-slate-400">
             <span>{lang === 'es' ? 'LÁMINA GRÁFICA ORIGINAL EN ULTRA-ALTA DEFINICIÓN' : 'ORIGINAL ULTRA-HD GRAPHIC PRINT SHEET'}</span>
             <a
@@ -532,6 +532,33 @@ export default function BrochurePage() {
           </div>
         </main>
       )}
+
+      {/* ── DEDICATED PDF EXPORT (PRINT ONLY) ─────────────────── */}
+      <div className="hidden print:block w-full bg-[#030611]">
+        {/* PDF Page 1: The Beloved 3D Cover */}
+        <div
+          className="w-full h-screen flex items-center justify-center p-0 m-0 bg-[#030611]"
+          style={{ breakAfter: 'page', pageBreakAfter: 'always' }}
+        >
+          <img
+            src="/brochure-cover.jpg"
+            alt="AmePhia Systems 3D Official Cover"
+            className="w-full h-full object-contain"
+          />
+        </div>
+
+        {/* PDF Page 2: The Full Panoramic Trifold Spread */}
+        <div
+          className="w-full h-screen flex items-center justify-center p-0 m-0 bg-[#030611]"
+          style={{ breakAfter: 'page', pageBreakAfter: 'always' }}
+        >
+          <img
+            src={lang === 'es' ? '/brochure-es.jpg' : '/brochure-en.jpg'}
+            alt="AmePhia Trifold Spread"
+            className="w-full h-full object-contain"
+          />
+        </div>
+      </div>
 
       {/* ── FOOTER BAR ────────────────────────────────────────── */}
       <footer className="py-4 px-6 border-t border-white/[0.08] bg-[#030611] text-[11px] font-mono text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-2 print:hidden">
