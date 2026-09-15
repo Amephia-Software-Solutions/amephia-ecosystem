@@ -2074,6 +2074,11 @@ const AboutSection = () => {
       desc: 'We don\'t disappear upon delivery. Every release is backed by a formal warranty, 24/7 proactive cloud monitoring, and structured maintenance roadmaps.',
       icon: <Clock className="w-5 h-5 text-amber-400" />,
     },
+    {
+      title: 'Trustworthy Partner with Conscious & Fair Pricing',
+      desc: 'We pride ourselves on doing exceptional work with clean code and reliable deliveries. We charge fair, conscious rates aligned to actual project scope with zero hidden costs or inflated markups.',
+      icon: <CheckCircle2 className="w-5 h-5 text-emerald-500" />,
+    },
   ] : [
     {
       title: 'Trayectoria Comprobada en EE.UU., Ecuador y la Región',
@@ -2099,6 +2104,11 @@ const AboutSection = () => {
       title: 'Garantía y Acompañamiento Post-Lanzamiento',
       desc: 'No desaparecemos al entregar. Respaldamos cada despliegue con garantía técnica, monitoreo proactivo 24/7 y planes de evolución continua.',
       icon: <Clock className="w-5 h-5 text-amber-400" />,
+    },
+    {
+      title: 'Empresa Confiable con Tarifas Conscientes y Buen Trabajo',
+      desc: 'Hacemos un buen trabajo garantizado, con código limpio y entregas a tiempo. Cobramos tarifas justas y conscientes, ajustadas al alcance real sin sobrecostos artificiales ni sorpresas.',
+      icon: <CheckCircle2 className="w-5 h-5 text-emerald-600" />,
     },
   ];
 
