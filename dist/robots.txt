@@ -1,14 +1,52 @@
-# robots.txt for AmePhia Systems Ecosystem
+# robots.txt — AmePhia Systems Inc.
 # Website: https://amephia.com
-# Canonical LLMs Context: https://amephia.com/llms.txt
+# AI Context File: https://amephia.com/llms.txt
+# Sitemap: https://amephia.com/sitemap.xml
 
+# ── GENERAL CRAWLERS ────────────────────────────────────
 User-agent: *
 Allow: /
+Disallow: /wp-admin/
+Disallow: /admin/
+Disallow: /api/
+Crawl-delay: 1
 
-# Sitemap Index
-Sitemap: https://amephia.com/sitemap.xml
+# ── GOOGLE ──────────────────────────────────────────────
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
 
-# LLM & Generative Search Bots (GEO Optimization)
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Googlebot-Video
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: AdsBot-Google
+Allow: /
+
+# ── BING / MICROSOFT ────────────────────────────────────
+User-agent: bingbot
+Allow: /
+Crawl-delay: 0
+
+User-agent: BingPreview
+Allow: /
+
+User-agent: msnbot
+Allow: /
+
+# ── APPLE ───────────────────────────────────────────────
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# ── OPENAI / CHATGPT ────────────────────────────────────
 User-agent: GPTBot
 Allow: /
 
@@ -18,12 +56,7 @@ Allow: /
 User-agent: OAI-SearchBot
 Allow: /
 
-User-agent: Google-Extended
-Allow: /
-
-User-agent: Googlebot
-Allow: /
-
+# ── ANTHROPIC / CLAUDE ──────────────────────────────────
 User-agent: ClaudeBot
 Allow: /
 
@@ -33,28 +66,46 @@ Allow: /
 User-agent: Claude-Web
 Allow: /
 
+# ── PERPLEXITY ──────────────────────────────────────────
 User-agent: PerplexityBot
 Allow: /
 
-User-agent: Applebot
-Allow: /
-
-User-agent: Applebot-Extended
-Allow: /
-
+# ── META / FACEBOOK ─────────────────────────────────────
 User-agent: Meta-ExternalAgent
 Allow: /
 
-User-agent: bingbot
+User-agent: FacebookBot
 Allow: /
 
-# Block Common Traps & Internal Endpoints
-Disallow: /wp-admin/
-Disallow: /admin/
-Disallow: /*.json$
-Disallow: /api/
+# ── AMAZON / ALEXA ──────────────────────────────────────
+User-agent: Amazonbot
+Allow: /
 
-# Explicitly Allow Static Assets & Media
+# ── TWITTER / X ─────────────────────────────────────────
+User-agent: Twitterbot
+Allow: /
+
+# ── LINKEDIN ────────────────────────────────────────────
+User-agent: LinkedInBot
+Allow: /
+
+# ── OTHER AI / LLM BOTS ─────────────────────────────────
+User-agent: YouBot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: AI2Bot
+Allow: /
+
+User-agent: Diffbot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+# ── ALLOW ALL STATIC ASSETS ─────────────────────────────
 Allow: /assets/
 Allow: /llms.txt
 Allow: /*.js$
@@ -63,6 +114,9 @@ Allow: /*.png$
 Allow: /*.jpg$
 Allow: /*.webp$
 Allow: /*.svg$
+Allow: /sitemap.xml
+Allow: /manifest.json
+Allow: /og-image.jpg
 
-# Crawl Delay
-Crawl-delay: 1
+# ── SITEMAP ─────────────────────────────────────────────
+Sitemap: https://amephia.com/sitemap.xml
