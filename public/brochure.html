@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AmePhia Systems — Brochure Corporativo Interactivo (Libro Digital 2026)</title>
-  <meta name="description" content="Libro digital y brochure corporativo interactivo de AmePhia Systems Inc. Firma internacional de ingeniería de software en California, Newark NJ y Ecuador." />
+  <title>AmePhia Software Solutions — Brochure Corporativo Tríptico 2026</title>
+  <meta name="description" content="Brochure corporativo tríptico de AmePhia Software Solutions. Sitios web, aplicaciones a medida, marketing digital, redes sociales y visibilidad en IA." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://amephia.com/brochure" />
   <link rel="icon" href="/favicon.ico" />
@@ -15,16 +15,11 @@
 
   <style>
     :root {
-      --bg: #050811;
-      --card-bg: rgba(255, 255, 255, 0.03);
-      --border: rgba(255, 255, 255, 0.1);
+      --bg: #070B16;
       --blue: #2563EB;
-      --blue-light: #60A5FA;
-      --indigo: #4F46E5;
+      --blue-dark: #1D4ED8;
       --cyan: #06B6D4;
-      --emerald: #10B981;
-      --text: #F8FAFC;
-      --muted: #94A3B8;
+      --text-dark: #0F172A;
       --font: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
       --mono: 'JetBrains Mono', monospace;
     }
@@ -32,14 +27,13 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       background: var(--bg);
-      color: var(--text);
+      color: #F8FAFC;
       font-family: var(--font);
-      line-height: 1.55;
+      line-height: 1.5;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -51,64 +45,75 @@
     body.lang-en .es { display: none; } body.lang-en .en { display: block; }
     body.lang-en .s-es { display: none; } body.lang-en .s-en { display: inline; }
 
-    /* Top Nav */
-    .nav {
+    /* Header Nav */
+    header {
       position: sticky;
       top: 0;
       z-index: 50;
       background: rgba(7, 12, 24, 0.95);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       padding: 12px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
-    .nav-brand {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 800;
-      font-size: 18px;
-    }
-    .nav-brand span {
-      background: linear-gradient(135deg, var(--blue-light), var(--cyan));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .badge-doc {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--muted);
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border);
-      padding: 3px 8px;
-      border-radius: 6px;
-    }
-    .nav-actions {
+    .brand {
       display: flex;
       align-items: center;
       gap: 10px;
     }
-    .btn-lang {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border);
-      padding: 4px 10px;
+    .logo-box {
+      width: 34px;
+      height: 34px;
       border-radius: 8px;
-      color: var(--muted);
+      background: linear-gradient(135deg, #2563EB, #06B6D4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-weight: 800;
+      color: #fff;
+      font-size: 14px;
+    }
+    .brand-text {
+      font-weight: 800;
+      font-size: 18px;
+      line-height: 1;
+    }
+    .brand-text span { color: #60A5FA; }
+    .brand-sub {
+      font-family: var(--mono);
+      font-size: 9px;
+      color: #94A3B8;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-toggle {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #CBD5E1;
+      padding: 6px 12px;
+      border-radius: 8px;
       font-size: 12px;
       font-weight: 600;
       cursor: pointer;
       font-family: var(--font);
     }
-    .btn-lang.active {
+    .btn-toggle.active {
       background: var(--blue);
       border-color: var(--blue);
       color: #fff;
     }
-    .btn-pdf {
-      background: linear-gradient(135deg, var(--blue), var(--indigo));
+    .btn-print {
+      background: linear-gradient(135deg, #2563EB, #4F46E5);
       border: none;
       color: #fff;
       padding: 7px 16px;
@@ -119,208 +124,322 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      font-family: var(--font);
-      transition: opacity 0.2s, transform 0.2s;
     }
-    .btn-pdf:hover { opacity: 0.9; transform: translateY(-1px); }
 
-    /* Book Stage */
-    .stage {
-      flex: 1;
+    /* Hero Banner */
+    .hero-banner {
+      max-width: 1200px;
+      margin: 20px auto 10px;
+      padding: 24px 32px;
+      background: linear-gradient(135deg, rgba(30, 58, 138, 0.3), #0B132B, #070B16);
+      border: 1px solid rgba(59, 130, 246, 0.25);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .cover-thumb {
+      width: 220px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+      flex-shrink: 0;
+    }
+    .cover-thumb img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Trifold Grid */
+    .trifold-wrap {
+      max-width: 1200px;
+      margin: 16px auto 32px;
+      padding: 0 16px;
+      width: 100%;
+    }
+    .trifold {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: #fff;
+      color: var(--text-dark);
+    }
+
+    /* Panel 1 */
+    .panel-1 {
+      padding: 36px 32px;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 24px 16px;
-      position: relative;
+      justify-content: space-between;
+      background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 60%, #EFF6FF 100%);
+      border-right: 1px solid #E2E8F0;
     }
-    .book-container {
+    .tagline-top {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      color: #64748B;
+      text-align: right;
+      line-height: 1.25;
+      border-left: 2px solid var(--blue);
+      padding-left: 8px;
+    }
+    .headline-1 {
+      font-size: 26px;
+      font-weight: 800;
+      line-height: 1.15;
+      color: #020617;
+      margin: 20px 0 12px;
+    }
+    .headline-1 span { color: var(--blue); }
+    .desc-1 {
+      font-size: 13px;
+      color: #475569;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .btn-cta {
+      display: block;
       width: 100%;
-      max-width: 1100px;
-      aspect-ratio: 16 / 10;
-      max-height: 80vh;
-      border-radius: 20px;
-      background: linear-gradient(180deg, #0D1426 0%, #080D1A 100%);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0 30px 80px -20px rgba(0,0,0,0.9), 0 0 50px rgba(37, 99, 235, 0.15);
-      padding: 12px;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .spread {
-      display: none;
-      width: 100%;
-      height: 100%;
-      border-radius: 14px;
-      overflow: hidden;
-      background: #0A1022;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      position: relative;
-    }
-    .spread.active {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      animation: pageReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
-    }
-    @keyframes pageReveal {
-      from { opacity: 0.8; transform: scale(0.985); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    /* Cover specific spread */
-    #spread-0.active {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #000;
-      cursor: pointer;
-    }
-    .cover-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      transition: transform 0.6s ease;
-    }
-    #spread-0:hover .cover-img {
-      transform: scale(1.015);
-    }
-    .cover-open-btn {
-      position: absolute;
-      bottom: 24px;
-      right: 24px;
-      z-index: 20;
-      background: linear-gradient(135deg, #2563EB, #4F46E5, #06B6D4);
+      background: linear-gradient(135deg, #2563EB, #1D4ED8);
       color: #fff;
-      padding: 12px 28px;
-      border-radius: 99px;
+      padding: 14px 20px;
+      border-radius: 12px;
       font-weight: 700;
       font-size: 14px;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 10px 30px rgba(37, 99, 235, 0.5);
-      transition: all 0.2s;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+      margin-bottom: 20px;
     }
-    .cover-open-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 15px 40px rgba(37, 99, 235, 0.7);
+    .stats-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      text-align: center;
     }
+    .stat-box {
+      background: #F0F7FF;
+      border: 1px solid #DBEAFE;
+      border-radius: 10px;
+      padding: 10px 6px;
+    }
+    .stat-icon { font-size: 18px; margin-bottom: 4px; }
+    .stat-label {
+      font-size: 9.5px;
+      font-weight: 800;
+      color: #1E293B;
+      text-transform: uppercase;
+    }
+    .panel-1-footer {
+      margin-top: 24px;
+      background: #020617;
+      color: #fff;
+      padding: 14px 18px;
+      border-radius: 14px;
+    }
+    .p1-foot-text { font-size: 12px; font-weight: 700; }
+    .p1-foot-sub { font-size: 9.5px; color: #93C5FD; font-family: var(--mono); }
 
-    /* Book Spine in center */
-    .spine-shadow {
-      position: absolute;
-      top: 0; bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 32px;
-      background: linear-gradient(90deg, rgba(0,0,0,0.35), rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.35));
-      z-index: 10;
-      pointer-events: none;
-    }
-
-    /* Page styles */
-    .page {
-      padding: 36px 40px;
+    /* Panel 2 */
+    .panel-2 {
+      padding: 36px 32px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      overflow-y: auto;
+      background: #fff;
+      border-right: 1px solid #E2E8F0;
+    }
+    .p2-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid var(--blue);
+      padding-bottom: 12px;
+      margin-bottom: 18px;
+    }
+    .p2-title { font-size: 22px; font-weight: 800; color: #020617; }
+    .p2-sub {
+      font-size: 9px;
+      font-family: var(--mono);
+      font-weight: 700;
+      color: #64748B;
+      text-align: right;
+      max-width: 140px;
+      line-height: 1.25;
+    }
+    .svc-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .svc-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #DBEAFE;
+      color: #1D4ED8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .svc-name { font-size: 13px; font-weight: 700; color: #0F172A; }
+    .svc-desc { font-size: 11px; color: #64748B; line-height: 1.5; }
+
+    .ai-card {
+      padding: 14px;
+      border-radius: 12px;
+      border: 2px solid var(--blue);
+      background: linear-gradient(135deg, #EFF6FF, #EEF2FF);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .ai-badge {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background: var(--blue);
+      color: #fff;
+      font-family: var(--mono);
+      font-weight: 800;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .ai-title { font-size: 13px; font-weight: 800; color: #1E3A8A; }
+    .ai-desc { font-size: 11px; color: #475569; line-height: 1.5; margin-top: 2px; }
+
+    .trust-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      font-size: 10px;
+      color: #475569;
+      font-weight: 600;
+    }
+    .trust-item { display: flex; align-items: center; gap: 6px; }
+
+    .bottom-cta-banner {
+      margin-top: 18px;
+      background: #EFF6FF;
+      border: 1px solid #BFDBFE;
+      padding: 12px;
+      border-radius: 12px;
+      text-align: center;
+    }
+    .b-cta-title { font-size: 13px; font-weight: 800; color: #1D4ED8; }
+    .b-cta-sub { font-size: 10px; color: #64748B; margin-top: 2px; }
+
+    /* Panel 3 */
+    .panel-3 {
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: #040814;
+      color: #fff;
       position: relative;
     }
-    .page-left {
-      border-right: 1px solid rgba(255, 255, 255, 0.08);
+    .p3-glow {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 140px;
+      background: linear-gradient(180deg, rgba(37, 99, 235, 0.2), transparent);
+      pointer-events: none;
     }
-    .page-right {
-      background: #080D1C;
-    }
-    .page-folio {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--blue-light);
-      display: flex;
-      justify-content: space-between;
-      letter-spacing: 1px;
-      margin-bottom: 12px;
-    }
-    .page-title {
-      font-size: 22px;
+    .p3-title {
+      font-size: 26px;
       font-weight: 800;
-      color: #fff;
-      line-height: 1.2;
-      margin-bottom: 12px;
+      line-height: 1.15;
+      margin: 18px 0 10px;
     }
-    .page-body {
-      font-size: 13px;
+    .p3-title span { color: #60A5FA; }
+    .p3-desc {
+      font-size: 12px;
       color: #CBD5E1;
-      line-height: 1.65;
-      font-weight: 300;
+      line-height: 1.6;
+      margin-bottom: 20px;
     }
-    .page-footer {
-      padding-top: 14px;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      display: flex;
-      justify-content: space-between;
+    .p3-features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .p3-feat {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 12px 8px;
+      text-align: center;
+    }
+    .p3-feat-icon { font-size: 18px; margin-bottom: 4px; color: #60A5FA; }
+    .p3-feat-lbl {
+      font-size: 9.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #E2E8F0;
+    }
+    .contact-box {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 20px;
       font-family: var(--mono);
-      font-size: 10.5px;
-      color: #64748B;
+      font-size: 11.5px;
+      color: #CBD5E1;
+      line-height: 1.8;
+    }
+    .contact-line { display: flex; align-items: center; gap: 8px; }
+    .contact-line span { color: #60A5FA; }
+    .p3-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 18px;
+    }
+    .foot-script {
+      font-family: Georgia, serif;
+      font-style: italic;
+      color: #93C5FD;
+      font-size: 18px;
     }
 
-    /* Scrubber bar */
-    .controls-bar {
-      margin-top: 18px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
+    /* HD Viewer View */
+    .hd-view {
+      display: none;
+      max-width: 1100px;
+      margin: 16px auto 32px;
+      padding: 0 16px;
+      width: 100%;
     }
-    .btn-nav {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border);
-      color: #fff;
-      padding: 8px 16px;
-      border-radius: 10px;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s;
+    .hd-frame {
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+      background: #000;
     }
-    .btn-nav:hover:not(:disabled) {
-      background: rgba(255, 255, 255, 0.1);
-    }
-    .btn-nav:disabled {
-      opacity: 0.3;
-      cursor: not-allowed;
-    }
-    .dots-container {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(255, 255, 255, 0.03);
-      padding: 6px 12px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-    }
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 99px;
-      background: rgba(255, 255, 255, 0.2);
-      border: none;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .dot.active {
-      width: 28px;
-      background: var(--blue-light);
+    .hd-frame img {
+      width: 100%;
+      height: auto;
+      display: block;
     }
 
     /* Footer */
     footer {
-      padding: 14px 24px;
-      border-top: 1px solid var(--border);
+      padding: 16px 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
       background: #050811;
       font-family: var(--mono);
       font-size: 11px;
@@ -330,385 +449,349 @@
       align-items: center;
     }
 
-    @media (max-width: 800px) {
-      .book-container {
-        aspect-ratio: auto;
-        min-height: 75vh;
-        max-height: none;
-      }
-      .spread.active {
-        grid-template-columns: 1fr;
-      }
-      .spine-shadow { display: none; }
-      .page-left { border-right: none; border-bottom: 1px solid var(--border); }
+    @media (max-width: 960px) {
+      .trifold { grid-template-columns: 1fr; }
+      .panel-1, .panel-2 { border-right: none; border-bottom: 1px solid #E2E8F0; }
+      .hero-banner { flex-direction: column; text-align: center; }
+      .cover-thumb { width: 100%; max-width: 280px; }
+    }
+
+    @media print {
+      header, .hero-banner, footer, .btn-print { display: none !important; }
+      body { background: #fff !important; }
+      .trifold-wrap { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+      .trifold { border: none !important; box-shadow: none !important; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Sticky Top Navigation -->
-  <header class="nav">
-    <div class="nav-brand">
-      <a href="/">Ame<span>Phia</span></a>
-      <span class="badge-doc">BOOK DOSSIER 2026</span>
+  <!-- Top Navigation -->
+  <header>
+    <div class="brand">
+      <div class="logo-box">&lt;/&gt;</div>
+      <div>
+        <div class="brand-text">Ame<span>Phia</span></div>
+        <div class="brand-sub">Software Solutions</div>
+      </div>
     </div>
+
     <div class="nav-actions">
-      <button class="btn-lang active" id="btn-es" onclick="setLang('es')">ES</button>
-      <button class="btn-lang" id="btn-en" onclick="setLang('en')">EN</button>
-      <button class="btn-pdf" onclick="window.print()">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        <span class="es">Descargar PDF</span>
-        <span class="en">Download PDF</span>
+      <button class="btn-toggle active" id="tab-trifold" onclick="setTab('trifold')">
+        <span class="es">📖 Tríptico Interactivo</span>
+        <span class="en">📖 Interactive Trifold</span>
+      </button>
+      <button class="btn-toggle" id="tab-hd" onclick="setTab('hd')">
+        <span class="es">🔍 Lámina HD</span>
+        <span class="en">🔍 HD Sheet</span>
+      </button>
+      <button class="btn-toggle" id="btn-es" onclick="setLang('es')" style="font-weight: 800;">ES</button>
+      <button class="btn-toggle" id="btn-en" onclick="setLang('en')" style="font-weight: 800;">EN</button>
+      <button class="btn-print" onclick="window.print()">
+        <span class="es">Imprimir PDF</span>
+        <span class="en">Print PDF</span>
       </button>
     </div>
   </header>
 
-  <!-- Interactive Book Stage -->
-  <main class="stage">
-    <div class="book-container">
-      
-      <!-- SPREAD 0: FRONT COVER -->
-      <div class="spread active" id="spread-0" onclick="goSpread(1)">
-        <img src="/brochure-cover.jpg" alt="AmePhia Systems Brochure Cover" class="cover-img" />
-        <button class="cover-open-btn" onclick="event.stopPropagation(); goSpread(1);">
-          <span class="es">Abrir Brochure Corporativo →</span>
-          <span class="en">Open Corporate Brochure →</span>
-        </button>
+  <!-- Hero Banner with 3D Cover Thumbnail -->
+  <div class="hero-banner">
+    <div>
+      <div style="font-family: var(--mono); font-size: 11px; color: #60A5FA; margin-bottom: 8px; font-weight: 700;">
+        <span class="es">BROCHURE CORPORATIVO OFICIAL // VERSIÓN TRÍPTICO EJECUTIVO</span>
+        <span class="en">OFFICIAL CORPORATE BROCHURE // EXECUTIVE TRIFOLD VERSION</span>
       </div>
+      <h1 style="font-size: 26px; font-weight: 800; line-height: 1.2; margin-bottom: 10px;">
+        <span class="es">Lleva tu negocio al siguiente nivel con una <span style="color: #60A5FA;">solución digital a tu medida.</span></span>
+        <span class="en">Get a professional website or web application for <span style="color: #60A5FA;">your business today.</span></span>
+      </h1>
+      <p style="font-size: 13px; color: #CBD5E1; max-width: 600px; line-height: 1.6;">
+        <span class="es">Diseñado para directores de empresas, líderes tecnológicos y dueños de negocio que buscan ingeniería confiable, precios justos y resultados medibles en EE.UU. y Ecuador.</span>
+        <span class="en">Engineered for business owners and technology leaders demanding high-caliber software engineering, fair pricing, and measurable ROI across the US and LatAm.</span>
+      </p>
+    </div>
 
-      <!-- SPREAD 1: PAGES 1 & 2 -->
-      <div class="spread" id="spread-1">
-        <div class="spine-shadow"></div>
-        <div class="page page-left">
-          <div>
-            <div class="page-folio">
-              <span>PAG 01 // OVERVIEW</span>
-              <span>AMEPHIA SYSTEMS INC.</span>
-            </div>
-            <div class="page-title">
-              <span class="es">Ingeniería de Software de Alto Nivel</span>
-              <span class="en">Enterprise Software Engineering</span>
-            </div>
-            <div class="page-body">
-              <span class="es">AmePhia Systems Inc. es una firma de arquitectura y desarrollo de software con sede en California, oficinas en Newark (New Jersey) y centro de ingeniería en Ecuador. Construimos sistemas web empresariales, ERPs robustos, facturación electrónica SRI y modernización tecnológica con rigor y sin sobreprecios.</span>
-              <span class="en">AmePhia Systems Inc. is an enterprise software engineering firm incorporated in California, operating executive hubs in Newark, NJ and technical delivery centers in Ecuador. Delivering bespoke ERPs, web platforms, and API integrations with uncompromised engineering and zero vendor lock-in.</span>
-            </div>
+    <!-- 3D Cover Thumbnail -->
+    <div class="cover-thumb">
+      <img src="/brochure-cover.jpg" alt="AmePhia Systems 3D Cover Dossier" />
+    </div>
+  </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 18px; font-family: var(--mono); font-size: 11px;">
-              <div style="padding: 10px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px;">
-                <div style="font-size: 18px; font-weight: bold; color: var(--blue-light);">10+</div>
-                <div style="color: var(--muted);"><span class="es">Años Trayectoria</span><span class="en">Years Track</span></div>
-              </div>
-              <div style="padding: 10px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px;">
-                <div style="font-size: 18px; font-weight: bold; color: var(--indigo);">9</div>
-                <div style="color: var(--muted);"><span class="es">Sistemas Propios</span><span class="en">Proprietary Apps</span></div>
-              </div>
-              <div style="padding: 10px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px;">
-                <div style="font-size: 18px; font-weight: bold; color: var(--cyan);">99.99%</div>
-                <div style="color: var(--muted);">SLA Cloud AWS</div>
-              </div>
-              <div style="padding: 10px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px;">
-                <div style="font-size: 18px; font-weight: bold; color: var(--emerald);">100%</div>
-                <div style="color: var(--muted);"><span class="es">Código del Cliente</span><span class="en">IP Ownership</span></div>
-              </div>
+  <!-- Interactive Trifold Content -->
+  <div class="trifold-wrap" id="view-trifold">
+    <div class="trifold">
+
+      <!-- ═════════ PANEL 1 (LEFT): VALUE & TEAM ═════════ -->
+      <div class="panel-1">
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <div class="logo-box" style="width: 32px; height: 32px; font-size: 12px;">&lt;/&gt;</div>
+              <div style="font-weight: 800; font-size: 16px;">Ame<span style="color: var(--blue);">Phia</span></div>
+            </div>
+            <div class="tagline-top">
+              <span class="es">TECNOLOGÍA<br>PERSONAS<br>RESULTADOS</span>
+              <span class="en">TECHNOLOGY<br>PEOPLE<br>REAL RESULTS</span>
             </div>
           </div>
-          <div class="page-footer">
-            <span>CALIFORNIA · NJ · ECUADOR</span>
-            <span>01</span>
+
+          <h2 class="headline-1">
+            <span class="es">Lleva tu negocio al siguiente nivel con una <span>solución digital a tu medida.</span></span>
+            <span class="en">Get a professional website or web application for <span>your business today.</span></span>
+          </h2>
+
+          <p class="desc-1">
+            <span class="es">Sitios web, aplicaciones y marketing digital para que tu marca atraiga más clientes y aumente tus ventas.</span>
+            <span class="en">We create digital solutions that help you attract more customers, strengthen your brand and grow your business.</span>
+          </p>
+
+          <a href="https://wa.me/13347324056" target="_blank" rel="noopener" class="btn-cta">
+            <span class="es">Solicita una asesoría hoy →</span>
+            <span class="en">Get Started Today →</span>
+          </a>
+
+          <div class="stats-row">
+            <div class="stat-box">
+              <div class="stat-icon">📊</div>
+              <div class="stat-label"><span class="es">Más Clientes</span><span class="en">More Customers</span></div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-icon">👥</div>
+              <div class="stat-label"><span class="es">Más Ventas</span><span class="en">More Sales</span></div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-icon">📈</div>
+              <div class="stat-label"><span class="es">Más Oportunidades</span><span class="en">Real Growth</span></div>
+            </div>
           </div>
         </div>
 
-        <div class="page page-right">
-          <div>
-            <div class="page-folio">
-              <span>PAG 02 // GOVERNANCE</span>
-              <span>4 PRINCIPLES</span>
-            </div>
-            <div class="page-title">
-              <span class="es">Los 4 Pilares de Nuestra Firma</span>
-              <span class="en">The 4 Pillars of Our Practice</span>
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 12px; font-size: 12px;">
-              <div style="padding: 10px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 8px;">
-                <b style="color: var(--blue-light);">01. <span class="s-es">Rigor de Ingeniería</span><span class="s-en">Engineering Rigor</span></b>: TypeScript, microservicios, PostgreSQL Multi-AZ y Docker.
-              </div>
-              <div style="padding: 10px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 8px;">
-                <b style="color: var(--emerald);">02. <span class="s-es">Precios Conscientes</span><span class="s-en">Transparent Pricing</span></b>: Estimaciones honestas calculadas en horas reales sin comisiones infladas.
-              </div>
-              <div style="padding: 10px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 8px;">
-                <b style="color: var(--indigo);">03. <span class="s-es">Acceso Directo Senior</span><span class="s-en">Direct Senior Access</span></b>: Sin intermediarios comerciales. Trato directo con arquitectos senior.
-              </div>
-              <div style="padding: 10px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 8px;">
-                <b style="color: var(--cyan);">04. <span class="s-es">Propiedad 100% del Código</span><span class="s-en">True IP Ownership</span></b>: Repositorios GitHub, esquemas de datos y propiedad intelectual transferida.
-              </div>
-            </div>
+        <div class="panel-1-footer">
+          <div class="p1-foot-text">
+            <span class="es">Tu éxito también se construye con tecnología.</span>
+            <span class="en">Your ideas. Our technology. Real results.</span>
           </div>
-          <div class="page-footer">
-            <span>AMEPHIA BOOK 2026</span>
-            <span>02</span>
-          </div>
+          <div class="p1-foot-sub">AMEPHIA SOFTWARE SOLUTIONS</div>
         </div>
       </div>
 
-      <!-- SPREAD 2: PAGES 3 & 4 -->
-      <div class="spread" id="spread-2">
-        <div class="spine-shadow"></div>
-        <div class="page page-left">
-          <div>
-            <div class="page-folio">
-              <span>PAG 03 // SERVICES</span>
-              <span>ENGINEERING</span>
-            </div>
-            <div class="page-title">
-              <span class="es">Sistemas Web & ERPs a Medida</span>
-              <span class="en">Custom Web Systems & ERPs</span>
-            </div>
-            <div class="page-body">
-              <span class="es">Desarrollamos sistemas de gestión operativa, ERPs integrales, CRMs especializados y portales B2B/B2C que se adaptan exactamente a tus flujos únicos, eliminando hojas de cálculo dispersas y cuellos de botella.</span>
-              <span class="en">End-to-end custom operational platforms, ERPs, specialized CRMs, and B2B workflows configured precisely to your proprietary operational models with real-time auditability.</span>
-            </div>
-            <div style="margin-top: 16px; font-family: var(--mono); font-size: 11px; color: var(--muted); line-height: 1.8;">
-              <div>✓ React 19 / Next.js + TypeScript</div>
-              <div>✓ PostgreSQL Multi-AZ & Row-Level Security</div>
-              <div>✓ Contenedores Docker & Cloud AWS</div>
-              <div>✓ Sub-1s Core Web Vitals & Google PageSpeed 95+</div>
+      <!-- ═════════ PANEL 2 (CENTER): SERVICES & AI ═════════ -->
+      <div class="panel-2">
+        <div>
+          <div class="p2-head">
+            <h3 class="p2-title">
+              <span class="es">Nuestros Servicios</span>
+              <span class="en">Our Services</span>
+            </h3>
+            <div class="p2-sub">
+              <span class="es">SOLUCIONES DIGITALES PARA TU NEGOCIO</span>
+              <span class="en">DIGITAL SOLUTIONS FOR YOUR BUSINESS</span>
             </div>
           </div>
-          <div class="page-footer">
-            <span>ENTERPRISE ENGINEERING</span>
-            <span>03</span>
+
+          <!-- Services List -->
+          <div class="svc-item">
+            <div class="svc-icon">🌐</div>
+            <div>
+              <div class="svc-name"><span class="es">Desarrollo de Sitios Web</span><span class="en">Website Development</span></div>
+              <div class="svc-desc">
+                <span class="es">Sitios web modernos, seguros y optimizados para representar tu marca y convertir visitantes en clientes.</span>
+                <span class="en">Modern, fast and secure websites designed to represent your brand and turn visitors into customers.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="svc-item">
+            <div class="svc-icon" style="font-family: var(--mono); font-weight: bold;">&lt;/&gt;</div>
+            <div>
+              <div class="svc-name"><span class="es">Sistemas o Aplicaciones Web</span><span class="en">Web Systems or Applications</span></div>
+              <div class="svc-desc">
+                <span class="es">Desarrollamos soluciones web a la medida de tu negocio, desde plataformas de gestión hasta aplicaciones complejas.</span>
+                <span class="en">We develop custom web solutions for your business, from management platforms to complex applications.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="svc-item">
+            <div class="svc-icon">💻</div>
+            <div>
+              <div class="svc-name"><span class="es">Actualización de Sitios Web</span><span class="en">Website Updates</span></div>
+              <div class="svc-desc">
+                <span class="es">Renovamos tu sitio web para mejorar su diseño, rendimiento, seguridad y experiencia de usuario.</span>
+                <span class="en">We improve your website's design, performance, security and user experience.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="svc-item">
+            <div class="svc-icon">🔍</div>
+            <div>
+              <div class="svc-name"><span class="es">SEO y Posicionamiento Web</span><span class="en">SEO &amp; Web Positioning</span></div>
+              <div class="svc-desc">
+                <span class="es">Optimizamos tu sitio para que más personas te encuentren en Google y otros buscadores de forma orgánica.</span>
+                <span class="en">We optimize your website so more people find you on Google organically, attracting qualified leads.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="svc-item">
+            <div class="svc-icon">📢</div>
+            <div>
+              <div class="svc-name"><span class="es">Pauta Digital</span><span class="en">Digital Advertising</span></div>
+              <div class="svc-desc">
+                <span class="es">Creamos y gestionamos campañas en Google, Meta (Facebook e Instagram) para llegar a las personas correctas.</span>
+                <span class="en">We create and manage campaigns on Google and Meta to bring the right people to your business.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="svc-item">
+            <div class="svc-icon">📱</div>
+            <div>
+              <div class="svc-name"><span class="es">Administración de Redes Sociales</span><span class="en">Social Media Management</span></div>
+              <div class="svc-desc">
+                <span class="es">Gestionamos tus redes con contenido estratégico que fortalece tu marca, genera comunidad y aumenta ventas.</span>
+                <span class="en">We manage your social presence with strategic content that builds community and drives sales.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Highlight AI Card -->
+          <div class="ai-card">
+            <div class="ai-badge">AI</div>
+            <div>
+              <div class="ai-title">
+                <span class="es">Visibilidad en ChatGPT y otras IA</span>
+                <span class="en">Get Seen on ChatGPT &amp; AI Platforms</span>
+              </div>
+              <div class="ai-desc">
+                <span class="es">Optimizamos tu presencia en herramientas de inteligencia artificial como ChatGPT, Google Gemini y otras para que tu negocio aparezca cuando buscan tus servicios.</span>
+                <span class="en">We optimize your online presence so your business appears when people search for products or services in ChatGPT, Google Gemini and other AI tools.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Trust badges -->
+          <div class="trust-grid">
+            <div class="trust-item"><span>🛡️</span> <span class="es">Soluciones seguras</span><span class="en">Secure solutions</span></div>
+            <div class="trust-item"><span>👤</span> <span class="es">Atención personalizada</span><span class="en">Personalized care</span></div>
+            <div class="trust-item"><span>⏰</span> <span class="es">Entrega a tiempo</span><span class="en">On-time delivery</span></div>
+            <div class="trust-item"><span>📊</span> <span class="es">Resultados medibles</span><span class="en">Measurable results</span></div>
           </div>
         </div>
 
-        <div class="page page-right">
-          <div>
-            <div class="page-folio">
-              <span>PAG 04 // COMPLIANCE</span>
-              <span>SRI & LOPDP SECURITY</span>
+        <div class="bottom-cta-banner">
+          <a href="https://wa.me/13347324056" target="_blank" rel="noopener">
+            <div class="b-cta-title">
+              <span class="es">Cuéntanos tu proyecto →</span>
+              <span class="en">Let's talk about your project →</span>
             </div>
-            <div class="page-title">
-              <span class="es">Facturación SRI & Cumplimiento LOPDP</span>
-              <span class="en">SRI Tax & Data Privacy Compliance</span>
+            <div class="b-cta-sub">
+              <span class="es">Estamos listos para hacerlo realidad.</span>
+              <span class="en">We're ready to make it happen.</span>
             </div>
-            <div class="page-body">
-              <span class="es">Integración oficial con Web Services del SRI (Ecuador) para facturas, retenciones y guías con firma digital X.509, junto con la arquitectura técnica exigida por la LOPDP y GDPR.</span>
-              <span class="en">Direct integration with Ecuador SRI Web Services for tax receipts with X.509 digital certificates, paired with strict technical data privacy standards.</span>
-            </div>
-            <div style="margin-top: 16px; font-family: var(--mono); font-size: 11px; color: var(--muted); line-height: 1.8;">
-              <div>✓ Registro de Actividades de Tratamiento (RAT)</div>
-              <div>✓ Notificación de brechas a SPDP en &lt;72h</div>
-              <div>✓ Pista de auditoría con Hash Chain Merkle</div>
-              <div>✓ Embudo de Reseñas Google Business 5★</div>
-            </div>
-          </div>
-          <div class="page-footer">
-            <span>AUDITABLE & CERTIFIED</span>
-            <span>04</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- SPREAD 3: PAGES 5 & 6 -->
-      <div class="spread" id="spread-3">
-        <div class="spine-shadow"></div>
-        <div class="page page-left">
-          <div>
-            <div class="page-folio">
-              <span>PAG 05 // PRODUCT SUITE</span>
-              <span>SYSTEMS 01-05</span>
-            </div>
-            <div class="page-title" style="font-size: 18px;">
-              <span class="es">Nuestras Plataformas Propietarias</span>
-              <span class="en">Proprietary Platforms (Part 1)</span>
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 8px; font-size: 11px; margin-top: 8px;">
-              <div style="padding: 7px 10px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 6px;">
-                <b>01. FacturOn</b>: Facturación electrónica SRI ilimitada y firma digital X.509.
-              </div>
-              <div style="padding: 7px 10px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 6px;">
-                <b>02. ShieldData</b>: Cumplimiento LOPDP / GDPR, derechos ARCO y Merkle tree.
-              </div>
-              <div style="padding: 7px 10px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 6px;">
-                <b>03. ContAme</b>: ERP contable bajo NIIF, libro diario, balances y ATS.
-              </div>
-              <div style="padding: 7px 10px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 6px;">
-                <b>04. AmeEdu</b>: Gestión escolar, matrículas y cobro recurrente de pensiones.
-              </div>
-              <div style="padding: 7px 10px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 6px;">
-                <b>05. AmeCommerce</b>: E-commerce B2B/B2C sincronizado con ERP e inventarios.
-              </div>
-            </div>
-          </div>
-          <div class="page-footer">
-            <span>ENTERPRISE SUITE</span>
-            <span>05</span>
-          </div>
-        </div>
-
-        <div class="page page-right">
-          <div>
-            <div class="page-folio">
-              <span>PAG 06 // PRODUCT SUITE</span>
-              <span>SYSTEMS 06-09</span>
-            </div>
-            <div class="page-title" style="font-size: 18px;">
-              <span class="es">Plataformas Sectoriales</span>
-              <span class="en">Specialized Suites (Part 2)</span>
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 8px; font-size: 11px; margin-top: 8px;">
-              <div style="padding: 7px 10px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 6px;">
-                <b>06. GymAme</b>: Control de acceso biométrico, torniquetes y cobros de membresías.
-              </div>
-              <div style="padding: 7px 10px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 6px;">
-                <b>07. BrokerSeguro</b>: ERP para agencias de seguros, tracking de pólizas y comisiones.
-              </div>
-              <div style="padding: 7px 10px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 6px;">
-                <b>08. MigraFast</b>: Migración y reingeniería de sistemas legacy (FoxPro/Access).
-              </div>
-              <div style="padding: 7px 10px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 6px;">
-                <b>09. ReviewShield</b>: Embudo inteligente para canalizar reseñas 5 estrellas a Google.
-              </div>
-            </div>
-          </div>
-          <div class="page-footer">
-            <span>9 PRODUCTION APPS</span>
-            <span>06</span>
-          </div>
+          </a>
         </div>
       </div>
 
-      <!-- SPREAD 4: PAGES 7 & 8 -->
-      <div class="spread" id="spread-4">
-        <div class="spine-shadow"></div>
-        <div class="page page-left">
-          <div>
-            <div class="page-folio">
-              <span>PAG 07 // GLOBAL REACH</span>
-              <span>USA & ECUADOR</span>
+      <!-- ═════════ PANEL 3 (RIGHT): SKYLINE & CONTACT ═════════ -->
+      <div class="panel-3">
+        <div class="p3-glow"></div>
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <div class="logo-box" style="background: #2563EB;">&lt;/&gt;</div>
+              <div style="font-weight: 800; font-size: 16px;">Ame<span style="color: #60A5FA;">Phia</span></div>
             </div>
-            <div class="page-title">
-              <span class="es">Ventaja Binacional</span>
-              <span class="en">Binational Advantage</span>
-            </div>
-            <div class="page-body">
-              <div style="margin-bottom: 12px;">
-                <b>🇺🇸 United States</b>: Entidad legal en California y hub en Newark NJ. Contratos bajo ley de EE.UU., pagos ACH/Wire en USD y facturación W-9/EIN.
-              </div>
-              <div>
-                <b>🇪🇨 Ecuador</b>: Centro de desarrollo en Quito, Guayaquil y Cuenca. RUC formal para facturación tributaria con SRI y tarifas nearshore altamente competitivas.
-              </div>
-            </div>
-            <div style="margin-top: 16px; padding: 10px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 8px; font-family: var(--mono); font-size: 11px; color: var(--emerald);">
-              ✓ CERO DESFASE HORARIO (EST / PST)
+            <div style="font-family: var(--mono); font-size: 9px; color: #94A3B8; text-align: right; line-height: 1.3;">
+              MIAMI · NEW YORK<br>ORLANDO · LATAM
             </div>
           </div>
-          <div class="page-footer">
-            <span>GLOBAL INFRASTRUCTURE</span>
-            <span>07</span>
+
+          <h3 class="p3-title">
+            <span class="es">Soluciones digitales que <span>impulsan tu negocio.</span></span>
+            <span class="en">Your digital partner for <span>what's next.</span></span>
+          </h3>
+
+          <p class="p3-desc">
+            <span class="es">Sitios web, aplicaciones, marketing digital, redes sociales y presencia en IA para que tu marca siga creciendo.</span>
+            <span class="en">Websites, web applications, digital marketing, social media and AI visibility to take your business further.</span>
+          </p>
+
+          <div class="p3-features">
+            <div class="p3-feat">
+              <div class="p3-feat-icon">🚀</div>
+              <div class="p3-feat-lbl"><span class="es">Más Visibilidad</span><span class="en">More Visibility</span></div>
+            </div>
+            <div class="p3-feat">
+              <div class="p3-feat-icon">📊</div>
+              <div class="p3-feat-lbl"><span class="es">Más Clientes</span><span class="en">More Customers</span></div>
+            </div>
+            <div class="p3-feat">
+              <div class="p3-feat-icon">🛡️</div>
+              <div class="p3-feat-lbl"><span class="es">Más Confianza</span><span class="en">Stronger Brand</span></div>
+            </div>
+            <div class="p3-feat">
+              <div class="p3-feat-icon">📈</div>
+              <div class="p3-feat-lbl"><span class="es">Más Ventas</span><span class="en">Real Growth</span></div>
+            </div>
           </div>
         </div>
 
-        <div class="page page-right">
-          <div>
-            <div class="page-folio">
-              <span>PAG 08 // CLOSING</span>
-              <span>GUARANTEES & CONTACT</span>
-            </div>
-            <div class="page-title">
-              <span class="es">Garantías & Contacto Directo</span>
-              <span class="en">Guarantees & Direct Line</span>
-            </div>
-            <div style="font-family: var(--mono); font-size: 11px; color: var(--muted); line-height: 1.8;">
-              <div>✓ NDA Bilateral desde el día 1</div>
-              <div>✓ Entrega total de repositorios GitHub</div>
-              <div>✓ Garantía post-entrega de 90 días</div>
-              <div>✓ Sin comisiones ni licencias atadas</div>
-            </div>
-            <div style="margin-top: 16px; padding: 14px; background: rgba(37, 99, 235, 0.1); border: 1px solid rgba(37, 99, 235, 0.25); border-radius: 10px; font-family: var(--mono); font-size: 12px;">
-              <div style="font-weight: bold; color: #fff; margin-bottom: 6px;">Canal Directo de Ingeniería:</div>
-              <a href="https://wa.me/13347324056" target="_blank" rel="noopener" style="color: var(--emerald); display: block; margin-bottom: 4px;">📞 +1 (334) 732-4056 (WhatsApp)</a>
-              <div style="color: #CBD5E1;">✉️ info@amephia.com</div>
-              <div style="color: #CBD5E1;">🌐 https://amephia.com</div>
-            </div>
+        <div>
+          <div class="contact-box">
+            <div class="contact-line"><span>✉</span> <a href="mailto:hola@amephia.com">hola@amephia.com</a></div>
+            <div class="contact-line"><span>🌐</span> <a href="https://amephia.com">www.amephia.com</a></div>
+            <div class="contact-line"><span>📍</span> Miami, FL – USA | LatAm (Ecuador)</div>
           </div>
-          <div class="page-footer">
-            <span>© 2026 AMEPHIA SYSTEMS INC.</span>
-            <span>08</span>
+
+          <div class="p3-footer">
+            <div style="font-size: 9px; font-family: var(--mono); color: #64748B;">
+              TECNOLOGÍA<br>PERSONAS<br>RESULTADOS
+            </div>
+            <div class="foot-script">
+              <span class="es">Juntos, más lejos.</span>
+              <span class="en">Let's build what's next.</span>
+            </div>
           </div>
         </div>
       </div>
 
     </div>
+  </div>
 
-    <!-- Bottom Controls -->
-    <div class="controls-bar">
-      <button class="btn-nav" id="btn-prev" onclick="prevSpread()" disabled>
-        <span class="es">← Anterior</span>
-        <span class="en">← Previous</span>
-      </button>
-
-      <div class="dots-container">
-        <button class="dot active" onclick="goSpread(0)" title="Portada"></button>
-        <button class="dot" onclick="goSpread(1)" title="Páginas 1-2"></button>
-        <button class="dot" onclick="goSpread(2)" title="Páginas 3-4"></button>
-        <button class="dot" onclick="goSpread(3)" title="Páginas 5-6"></button>
-        <button class="dot" onclick="goSpread(4)" title="Páginas 7-8"></button>
-      </div>
-
-      <button class="btn-nav" id="btn-next" onclick="nextSpread()">
-        <span class="es">Siguiente →</span>
-        <span class="en">Next →</span>
-      </button>
+  <!-- HD Sheet View -->
+  <div class="hd-view" id="view-hd">
+    <div class="hd-frame">
+      <img src="/brochure-es.jpg" id="hd-img" alt="AmePhia Trifold Brochure HD Sheet" />
     </div>
-    <div style="font-family: var(--mono); font-size: 11px; color: #64748B; margin-top: 8px;">
-      <span class="es">Navega con las flechas del teclado (← / →) o toca para voltear</span>
-      <span class="en">Navigate using arrow keys (← / →) or tap to turn page</span>
-    </div>
-  </main>
+  </div>
 
   <!-- Footer -->
   <footer>
-    <div>© 2026 AmePhia Systems Inc. · California, USA · Newark NJ · Ecuador</div>
-    <div>CLASSIFICATION: PUBLIC EXECUTIVE DOSSIER</div>
+    <div>© 2026 AmePhia Software Solutions · Miami, FL - USA · Newark NJ · Ecuador</div>
+    <div>DIRECT LINE: +1 (334) 732-4056 · OFFICIAL TRI-FOLD BROCHURE</div>
   </footer>
 
   <script>
-    var current = 0;
-    var total = 5;
-
-    function goSpread(n) {
-      if (n < 0 || n >= total) return;
-      document.querySelectorAll('.spread').forEach(function(s, idx) {
-        s.classList.toggle('active', idx === n);
-      });
-      document.querySelectorAll('.dot').forEach(function(d, idx) {
-        d.classList.toggle('active', idx === n);
-      });
-      current = n;
-      document.getElementById('btn-prev').disabled = (current === 0);
-      document.getElementById('btn-next').disabled = (current === total - 1);
+    function setTab(tab) {
+      document.getElementById('view-trifold').style.display = (tab === 'trifold') ? 'block' : 'none';
+      document.getElementById('view-hd').style.display = (tab === 'hd') ? 'block' : 'none';
+      document.getElementById('tab-trifold').classList.toggle('active', tab === 'trifold');
+      document.getElementById('tab-hd').classList.toggle('active', tab === 'hd');
     }
-
-    function nextSpread() { goSpread(current + 1); }
-    function prevSpread() { goSpread(current - 1); }
-
-    window.addEventListener('keydown', function(e) {
-      if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
-        e.preventDefault();
-        nextSpread();
-      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
-        e.preventDefault();
-        prevSpread();
-      }
-    });
 
     function setLang(l) {
       document.body.classList.toggle('lang-en', l === 'en');
       document.getElementById('btn-es').classList.toggle('active', l === 'es');
       document.getElementById('btn-en').classList.toggle('active', l === 'en');
+      var img = document.getElementById('hd-img');
+      if (img) {
+        img.src = (l === 'en') ? '/brochure-en.jpg' : '/brochure-es.jpg';
+      }
       localStorage.setItem('amephia-brochure-lang', l);
     }
+
     (function() {
       var saved = localStorage.getItem('amephia-brochure-lang');
       var browser = navigator.language || 'es';
