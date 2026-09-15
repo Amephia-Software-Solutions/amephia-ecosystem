@@ -1,7 +1,23 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 
-// Crisp SVG Icons (Zero amateur emojis)
+// Icons
 const Icons = {
+  ChevronLeft: () => (
+    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="15 18 9 12 15 6" />
+    </svg>
+  ),
+  ChevronRight: () => (
+    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="9 18 15 12 9 6" />
+    </svg>
+  ),
+  BookOpen: () => (
+    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+    </svg>
+  ),
   Download: () => (
     <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -9,73 +25,18 @@ const Icons = {
       <line x1="12" y1="15" x2="12" y2="3" />
     </svg>
   ),
-  ShieldCheck: () => (
-    <svg className="w-5 h-5 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-      <path d="m9 12 2 2 4-4" />
+  Maximize: () => (
+    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
     </svg>
   ),
-  Cpu: () => (
-    <svg className="w-5 h-5 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="4" y="4" width="16" height="16" rx="2" />
-      <rect x="9" y="9" width="6" height="6" />
-      <line x1="9" y1="1" x2="9" y2="4" />
-      <line x1="15" y1="1" x2="15" y2="4" />
-      <line x1="9" y1="20" x2="9" y2="23" />
-      <line x1="15" y1="20" x2="15" y2="23" />
-      <line x1="20" y1="9" x2="23" y2="9" />
-      <line x1="20" y1="14" x2="23" y2="14" />
-      <line x1="1" y1="9" x2="4" y2="9" />
-      <line x1="1" y1="14" x2="4" y2="14" />
-    </svg>
-  ),
-  Server: () => (
-    <svg className="w-5 h-5 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="2" y="2" width="20" height="8" rx="2" ry="2" />
-      <rect x="2" y="14" width="20" height="8" rx="2" ry="2" />
-      <line x1="6" y1="6" x2="6.01" y2="6" />
-      <line x1="6" y1="18" x2="6.01" y2="18" />
-    </svg>
-  ),
-  Database: () => (
-    <svg className="w-5 h-5 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-      <ellipse cx="12" cy="5" rx="9" ry="3" />
-      <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
-      <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
-    </svg>
-  ),
-  Scale: () => (
-    <svg className="w-5 h-5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-      <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" />
-      <path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" />
-      <path d="M7 21h10" />
-      <path d="M12 3v18" />
-      <path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2" />
-    </svg>
-  ),
-  Terminal: () => (
-    <svg className="w-5 h-5 text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="4 17 10 11 4 5" />
-      <line x1="12" y1="19" x2="20" y2="19" />
-    </svg>
-  ),
-  Globe: () => (
-    <svg className="w-5 h-5 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="10" />
-      <line x1="2" y1="12" x2="22" y2="12" />
-      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-    </svg>
-  ),
-  FileCode: () => (
-    <svg className="w-5 h-5 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-      <polyline points="14 2 14 8 20 8" />
-      <polyline points="10 13 8 15 10 17" />
-      <polyline points="14 13 16 15 14 17" />
+  Phone: () => (
+    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
     </svg>
   ),
   Check: () => (
-    <svg className="w-4 h-4 text-emerald-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
       <polyline points="20 6 9 17 4 12" />
     </svg>
   ),
@@ -85,843 +46,678 @@ const Icons = {
       <polyline points="7 7 17 7 17 17" />
     </svg>
   ),
-  Building: () => (
-    <svg className="w-5 h-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="4" y="2" width="16" height="20" rx="2" ry="2" />
-      <line x1="9" y1="22" x2="9" y2="22.01" />
-      <line x1="15" y1="22" x2="15" y2="22.01" />
-      <line x1="9" y1="6" x2="9.01" y2="6" />
-      <line x1="15" y1="6" x2="15.01" y2="6" />
-      <line x1="9" y1="10" x2="9.01" y2="10" />
-      <line x1="15" y1="10" x2="15.01" y2="10" />
-      <line x1="9" y1="14" x2="9.01" y2="14" />
-      <line x1="15" y1="14" x2="15.01" y2="14" />
-      <line x1="9" y1="18" x2="9.01" y2="18" />
-      <line x1="15" y1="18" x2="15.01" y2="18" />
-    </svg>
-  ),
-  Phone: () => (
-    <svg className="w-4 h-4 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-    </svg>
-  ),
-  Mail: () => (
-    <svg className="w-4 h-4 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-      <polyline points="22,6 12,13 2,6" />
-    </svg>
-  ),
 };
 
 export default function BrochurePage() {
   const [lang, setLang] = useState<'es' | 'en'>('es');
+  const [currentSpread, setCurrentSpread] = useState<number>(0); // 0 = Cover, 1 = Pages 1-2, 2 = Pages 3-4, 3 = Pages 5-6, 4 = Pages 7-8
+  const [viewMode, setViewMode] = useState<'book' | 'scroll'>('book');
+  const containerRef = useRef<HTMLDivElement>(null);
+  const totalSpreads = 5;
+
+  // Key navigation
+  const nextSpread = useCallback(() => {
+    setCurrentSpread((prev) => Math.min(prev + 1, totalSpreads - 1));
+  }, [totalSpreads]);
+
+  const prevSpread = useCallback(() => {
+    setCurrentSpread((prev) => Math.max(prev - 1, 0));
+  }, []);
 
   useEffect(() => {
     document.title = lang === 'es'
-      ? 'AmePhia Systems — Brochure Corporativo & Portafolio de Ingeniería 2026'
-      : 'AmePhia Systems — Corporate Capabilities Statement & Portfolio 2026';
-  }, [lang]);
+      ? 'AmePhia Systems — Brochure Corporativo Interactivo (Libro Digital 2026)'
+      : 'AmePhia Systems — Interactive Corporate Capabilities Book 2026';
 
-  const handlePrint = () => {
-    window.print();
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (viewMode !== 'book') return;
+      if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+        e.preventDefault();
+        nextSpread();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSpread();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [lang, viewMode, nextSpread, prevSpread]);
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      containerRef.current?.requestFullscreen().catch(() => {});
+    } else {
+      document.exitFullscreen().catch(() => {});
+    }
   };
 
   return (
-    <div className="min-h-screen bg-[#060A14] text-slate-100 font-sans antialiased selection:bg-blue-600 selection:text-white">
-      {/* ── TOP EXECUTIVE BAR (Sticky) ────────────────────────── */}
-      <header className="sticky top-0 z-50 bg-[#060A14]/90 backdrop-blur-xl border-b border-white/[0.08] print:hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <a href="/" className="flex items-center gap-2 group">
-              <span className="text-white font-extrabold text-lg tracking-tight">
-                Ame<span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-cyan-400 bg-clip-text text-transparent">Phia</span>
-              </span>
-              <span className="text-[10px] font-mono uppercase tracking-widest text-slate-400 px-2 py-0.5 rounded bg-white/[0.06] border border-white/[0.08]">
-                Systems Inc.
-              </span>
-            </a>
-            <div className="hidden md:flex items-center gap-2 pl-4 border-l border-white/[0.08] text-xs font-mono text-slate-400">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>REF: APS-CORP-2026-V4</span>
-            </div>
+    <div ref={containerRef} className="min-h-screen bg-[#050811] text-slate-100 font-sans antialiased selection:bg-blue-600 selection:text-white flex flex-col justify-between">
+      {/* ── TOP NAV BAR (Sticky) ────────────────────────── */}
+      <header className="sticky top-0 z-50 bg-[#070C18]/95 backdrop-blur-xl border-b border-white/[0.08] px-4 sm:px-6 h-16 flex items-center justify-between print:hidden">
+        <div className="flex items-center gap-4">
+          <a href="/" className="flex items-center gap-2 group">
+            <span className="text-white font-extrabold text-lg tracking-tight">
+              Ame<span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">Phia</span>
+            </span>
+            <span className="text-[10px] font-mono uppercase tracking-widest text-slate-400 px-2 py-0.5 rounded bg-white/[0.06] border border-white/[0.08]">
+              Book Edition
+            </span>
+          </a>
+          <div className="hidden lg:flex items-center gap-2 text-xs font-mono text-slate-400 pl-4 border-l border-white/[0.08]">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span>DOC-ID: APS-BOOK-2026</span>
           </div>
+        </div>
 
-          <div className="flex items-center gap-3">
-            {/* Language switch */}
-            <div className="inline-flex rounded-lg bg-white/[0.05] p-1 border border-white/[0.08]">
-              <button
-                onClick={() => setLang('es')}
-                className={`px-3 py-1 rounded text-xs font-semibold transition-all ${
-                  lang === 'es' ? 'bg-blue-600 text-white shadow' : 'text-slate-400 hover:text-white'
-                }`}
-              >
-                🇪🇸 Español
-              </button>
-              <button
-                onClick={() => setLang('en')}
-                className={`px-3 py-1 rounded text-xs font-semibold transition-all ${
-                  lang === 'en' ? 'bg-blue-600 text-white shadow' : 'text-slate-400 hover:text-white'
-                }`}
-              >
-                🇺🇸 English
-              </button>
-            </div>
-
-            {/* Print / PDF Button */}
+        {/* Center Reader Controls (Book mode) */}
+        {viewMode === 'book' && (
+          <div className="hidden sm:flex items-center gap-2 bg-white/[0.04] p-1.5 rounded-xl border border-white/[0.08] text-xs font-mono">
             <button
-              onClick={handlePrint}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-bold shadow-lg shadow-blue-600/20 transition-all active:scale-95"
+              onClick={prevSpread}
+              disabled={currentSpread === 0}
+              className="px-2.5 py-1 rounded-lg hover:bg-white/[0.08] disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              title="Página Anterior (←)"
             >
-              <Icons.Download />
-              <span className="hidden sm:inline">{lang === 'es' ? 'Descargar Dossier PDF' : 'Download PDF Dossier'}</span>
-              <span className="sm:hidden">PDF</span>
+              <Icons.ChevronLeft />
             </button>
-
-            <a
-              href="/"
-              className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white hover:bg-white/[0.06] border border-white/[0.08] transition-all"
+            <span className="px-3 text-slate-300 font-medium">
+              {currentSpread === 0
+                ? (lang === 'es' ? 'Portada' : 'Front Cover')
+                : `${lang === 'es' ? 'Páginas' : 'Pages'} ${currentSpread * 2 - 1} - ${currentSpread * 2} / 8`}
+            </span>
+            <button
+              onClick={nextSpread}
+              disabled={currentSpread === totalSpreads - 1}
+              className="px-2.5 py-1 rounded-lg hover:bg-white/[0.08] disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              title="Página Siguiente (→)"
             >
-              <span>{lang === 'es' ? 'Volver al Sitio' : 'Back to Website'}</span>
-              <Icons.ArrowUpRight />
-            </a>
+              <Icons.ChevronRight />
+            </button>
           </div>
+        )}
+
+        {/* Right Actions */}
+        <div className="flex items-center gap-2.5">
+          {/* View Mode Switcher */}
+          <div className="hidden md:inline-flex rounded-lg bg-white/[0.05] p-1 border border-white/[0.08] text-xs">
+            <button
+              onClick={() => setViewMode('book')}
+              className={`px-3 py-1 rounded font-semibold transition-all flex items-center gap-1.5 ${
+                viewMode === 'book' ? 'bg-blue-600 text-white shadow' : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              <Icons.BookOpen />
+              <span>{lang === 'es' ? 'Modo Libro' : 'Book View'}</span>
+            </button>
+            <button
+              onClick={() => setViewMode('scroll')}
+              className={`px-3 py-1 rounded font-semibold transition-all flex items-center gap-1.5 ${
+                viewMode === 'scroll' ? 'bg-blue-600 text-white shadow' : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              <span>{lang === 'es' ? 'Continuo' : 'Continuous'}</span>
+            </button>
+          </div>
+
+          {/* Lang toggle */}
+          <div className="inline-flex rounded-lg bg-white/[0.05] p-1 border border-white/[0.08] text-xs">
+            <button
+              onClick={() => setLang('es')}
+              className={`px-2.5 py-1 rounded font-bold transition-all ${
+                lang === 'es' ? 'bg-blue-600 text-white shadow' : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              ES
+            </button>
+            <button
+              onClick={() => setLang('en')}
+              className={`px-2.5 py-1 rounded font-bold transition-all ${
+                lang === 'en' ? 'bg-blue-600 text-white shadow' : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              EN
+            </button>
+          </div>
+
+          {/* Fullscreen Button */}
+          <button
+            onClick={toggleFullscreen}
+            className="hidden sm:inline-flex p-2 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] text-slate-300 border border-white/[0.08] transition-all"
+            title="Pantalla Completa"
+          >
+            <Icons.Maximize />
+          </button>
+
+          {/* Print / PDF */}
+          <button
+            onClick={() => window.print()}
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:opacity-90 text-white text-xs font-bold shadow-md transition-all active:scale-95"
+          >
+            <Icons.Download />
+            <span className="hidden sm:inline">{lang === 'es' ? 'Descargar PDF' : 'Download PDF'}</span>
+          </button>
         </div>
       </header>
 
-      {/* ── COVER DOSSIER HERO ─────────────────────────────────── */}
-      <section className="relative pt-12 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-white/[0.08] overflow-hidden">
+      {/* ── MAIN CONTENT AREA ─────────────────────────────────── */}
+      <main className="flex-1 flex flex-col items-center justify-center p-3 sm:p-6 lg:p-10 relative overflow-hidden">
         {/* Ambient atmospheric glows */}
-        <div className="absolute -top-24 -left-24 w-96 h-96 bg-blue-600/20 rounded-full blur-[128px] pointer-events-none" />
-        <div className="absolute top-1/2 -right-24 w-96 h-96 bg-purple-600/15 rounded-full blur-[128px] pointer-events-none" />
+        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[140px] pointer-events-none" />
 
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          {/* Left Column: Dossier Metadata & Value Prop */}
-          <div className="lg:col-span-6 space-y-6">
-            <div className="inline-flex items-center gap-2.5 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold tracking-wide uppercase">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-ping" />
-              <span>{lang === 'es' ? 'Brochure Corporativo Oficial 2026' : 'Official Corporate Capabilities Deck 2026'}</span>
-            </div>
+        {/* ═══════════ VIEW MODE: BOOK READER (FLIPBOOK STYLE) ═══════════ */}
+        {viewMode === 'book' ? (
+          <div className="w-full max-w-6xl mx-auto flex flex-col items-center">
+            {/* BOOK STAGE CONTAINER */}
+            <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] max-h-[82vh] rounded-2xl p-2 sm:p-4 bg-gradient-to-b from-[#0D1426] to-[#080D1A] border border-white/[0.12] shadow-2xl shadow-black/90 flex items-center justify-center">
+              
+              {/* SPREAD 0: FRONT COVER (CERRADO / PORTADA REAL) */}
+              {currentSpread === 0 && (
+                <div className="relative w-full h-full max-w-4xl rounded-xl overflow-hidden shadow-2xl shadow-black border border-white/20 flex flex-col items-center justify-center group cursor-pointer" onClick={nextSpread}>
+                  <img
+                    src="/brochure-cover.jpg"
+                    alt="AmePhia Systems Corporate Capabilities Cover"
+                    className="w-full h-full object-cover object-center transform transition-transform duration-700 group-hover:scale-[1.01]"
+                  />
+                  {/* Spine effect */}
+                  <div className="absolute top-0 bottom-0 left-0 w-8 bg-gradient-to-r from-black/70 via-black/30 to-transparent pointer-events-none" />
+                  
+                  {/* Floating Open Action Button */}
+                  <div className="absolute bottom-6 right-6 z-20">
+                    <button
+                      onClick={(e) => { e.stopPropagation(); nextSpread(); }}
+                      className="px-6 py-3 rounded-full bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 hover:opacity-95 text-white text-sm font-bold shadow-2xl shadow-blue-600/50 flex items-center gap-3 transform group-hover:scale-105 transition-all"
+                    >
+                      <Icons.BookOpen />
+                      <span>{lang === 'es' ? 'Abrir Brochure Corporativo →' : 'Open Corporate Brochure →'}</span>
+                    </button>
+                  </div>
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-[1.12]">
-              {lang === 'es' ? (
-                <>
-                  Ingeniería de Software de Alto Nivel.{' '}
-                  <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-cyan-400 bg-clip-text text-transparent">
-                    Precios Justos. Código 100% Tuyo.
-                  </span>
-                </>
-              ) : (
-                <>
-                  Engineering the Future of Your Business.{' '}
-                  <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-cyan-400 bg-clip-text text-transparent">
-                    True Code Ownership.
-                  </span>
-                </>
+                  {/* Corner Ribbon */}
+                  <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/15 text-[11px] font-mono text-slate-300">
+                    EDICIÓN EJECUTIVA 2026
+                  </div>
+                </div>
               )}
-            </h1>
 
-            <p className="text-base sm:text-lg text-slate-300 leading-relaxed font-light">
-              {lang === 'es'
-                ? 'AmePhia Systems Inc. es una firma de ingeniería y arquitectura de software con sede corporativa en California, oficinas en Newark (New Jersey) y centro de ingeniería en Ecuador. Construimos sistemas web empresariales, ERPs robustos, facturación electrónica SRI y modernización tecnológica con rigor técnico y sin sobreprecios.'
-                : 'AmePhia Systems Inc. is an enterprise software engineering and cloud architecture firm registered in California, with executive presence in Newark, NJ and technical delivery hubs in Ecuador. We deliver custom business software, ERPs, API integrations, and modern web platforms with uncompromising technical excellence and zero vendor lock-in.'}
-            </p>
+              {/* SPREAD 1: PAGES 1 & 2 (CARTA EJECUTIVA + ÍNDICE & PRINCIPIOS) */}
+              {currentSpread === 1 && (
+                <div className="relative w-full h-full rounded-xl overflow-hidden bg-[#0A1022] border border-white/10 shadow-2xl grid grid-cols-1 md:grid-cols-2">
+                  {/* Book Spine Shadow in Center */}
+                  <div className="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-8 bg-gradient-to-r from-black/40 via-black/70 to-black/40 z-20 pointer-events-none" />
 
-            {/* Credential Tags */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-              <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.08]">
-                <div className="text-xl font-bold font-mono text-white">10+</div>
-                <div className="text-[11px] text-slate-400 uppercase tracking-wider font-medium">
-                  {lang === 'es' ? 'Años Trayectoria' : 'Years Track Record'}
+                  {/* Left Page (Page 1): Executive Letter & Overview */}
+                  <div className="p-6 sm:p-10 flex flex-col justify-between border-b md:border-b-0 md:border-r border-white/[0.08] overflow-y-auto">
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between text-[11px] font-mono text-blue-400">
+                        <span>PAG 01 // OVERVIEW</span>
+                        <span>AMEPHIA SYSTEMS INC.</span>
+                      </div>
+                      <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight leading-tight">
+                        {lang === 'es' ? 'Ingeniería de Software de Alto Nivel para Empresas' : 'Enterprise Software Engineering Statement'}
+                      </h2>
+                      <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-light">
+                        {lang === 'es'
+                          ? 'Fundamos AmePhia Systems con una misión clara: devolverle a las empresas el control tecnológico total sobre sus sistemas, sin comisiones infladas, sin comerciales intermediarios y con código 100% propio entregado con rigor técnico.'
+                          : 'AmePhia Systems was established with an unambiguous purpose: restoring sovereign technology control to enterprise leadership without inflated agency overhead, intermediaries, or hostage code.'}
+                      </p>
+
+                      {/* Stats Box */}
+                      <div className="grid grid-cols-2 gap-3 pt-2">
+                        <div className="p-3 rounded-lg bg-white/[0.03] border border-white/[0.06]">
+                          <div className="text-xl font-bold font-mono text-blue-400">10+</div>
+                          <div className="text-[10px] uppercase text-slate-400">{lang === 'es' ? 'Años Trayectoria' : 'Years Experience'}</div>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white/[0.03] border border-white/[0.06]">
+                          <div className="text-xl font-bold font-mono text-indigo-400">9</div>
+                          <div className="text-[10px] uppercase text-slate-400">{lang === 'es' ? 'Sistemas Propios' : 'Proprietary Apps'}</div>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white/[0.03] border border-white/[0.06]">
+                          <div className="text-xl font-bold font-mono text-cyan-400">99.99%</div>
+                          <div className="text-[10px] uppercase text-slate-400">SLA Cloud AWS</div>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white/[0.03] border border-white/[0.06]">
+                          <div className="text-xl font-bold font-mono text-emerald-400">100%</div>
+                          <div className="text-[10px] uppercase text-slate-400">{lang === 'es' ? 'Código Tuyo' : 'Code Ownership'}</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="pt-4 border-t border-white/[0.06] flex items-center justify-between text-[11px] font-mono text-slate-500">
+                      <span>CALIFORNIA · NEWARK NJ · ECUADOR</span>
+                      <span>01</span>
+                    </div>
+                  </div>
+
+                  {/* Right Page (Page 2): The 4 Commitments & Governance */}
+                  <div className="p-6 sm:p-10 flex flex-col justify-between bg-[#080D1C] overflow-y-auto">
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between text-[11px] font-mono text-indigo-400">
+                        <span>PAG 02 // GOVERNANCE</span>
+                        <span>4 COMMITMENTS</span>
+                      </div>
+                      <h3 className="text-lg sm:text-xl font-bold text-white">
+                        {lang === 'es' ? 'Los 4 Pilares de Nuestra Firma' : 'The 4 Pillars of Our Practice'}
+                      </h3>
+
+                      <div className="space-y-3 pt-1">
+                        <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06]">
+                          <div className="text-xs font-bold text-blue-400 mb-1">01. {lang === 'es' ? 'Rigor de Ingeniería' : 'Engineering Rigor'}</div>
+                          <div className="text-[11px] text-slate-300">TypeScript, microservicios, bases de datos PostgreSQL Multi-AZ y Docker.</div>
+                        </div>
+                        <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06]">
+                          <div className="text-xs font-bold text-emerald-400 mb-1">02. {lang === 'es' ? 'Precios Conscientes' : 'Transparent Pricing'}</div>
+                          <div className="text-[11px] text-slate-300">Estimaciones basadas en horas técnicas reales. Sin sobreprecios inflados.</div>
+                        </div>
+                        <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06]">
+                          <div className="text-xs font-bold text-purple-400 mb-1">03. {lang === 'es' ? 'Acceso Directo Senior' : 'Direct Senior Access'}</div>
+                          <div className="text-[11px] text-slate-300">Hablas directamente con arquitectos de software con 10+ años de experiencia.</div>
+                        </div>
+                        <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06]">
+                          <div className="text-xs font-bold text-cyan-400 mb-1">04. {lang === 'es' ? 'Propiedad 100% del Código' : 'True IP Ownership'}</div>
+                          <div className="text-[11px] text-slate-300">Repositorios GitHub, esquemas de bases de datos y propiedad formal transferida.</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="pt-4 border-t border-white/[0.06] flex items-center justify-between text-[11px] font-mono text-slate-500">
+                      <span>AMEPHIA BOOK 2026</span>
+                      <span>02</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.08]">
-                <div className="text-xl font-bold font-mono text-blue-400">9</div>
-                <div className="text-[11px] text-slate-400 uppercase tracking-wider font-medium">
-                  {lang === 'es' ? 'Sistemas Propios' : 'Proprietary Platforms'}
+              )}
+
+              {/* SPREAD 2: PAGES 3 & 4 (CAPABILITIES & COMPLIANCE) */}
+              {currentSpread === 2 && (
+                <div className="relative w-full h-full rounded-xl overflow-hidden bg-[#0A1022] border border-white/10 shadow-2xl grid grid-cols-1 md:grid-cols-2">
+                  <div className="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-8 bg-gradient-to-r from-black/40 via-black/70 to-black/40 z-20 pointer-events-none" />
+
+                  {/* Left Page (Page 3): Core Capabilities */}
+                  <div className="p-6 sm:p-10 flex flex-col justify-between border-b md:border-b-0 md:border-r border-white/[0.08] overflow-y-auto">
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between text-[11px] font-mono text-blue-400">
+                        <span>PAG 03 // SERVICES</span>
+                        <span>CUSTOM ENGINEERING</span>
+                      </div>
+                      <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight leading-tight">
+                        {lang === 'es' ? 'Sistemas Web & ERPs a Medida' : 'Custom Web Systems & ERPs'}
+                      </h2>
+
+                      <div className="space-y-3 text-xs sm:text-sm text-slate-300 leading-relaxed font-light">
+                        <p>
+                          {lang === 'es'
+                            ? 'Arquitectura modular para operaciones complejas: inventarios multi-bodega, conciliación financiera, portales B2B y automatización de procesos sin software genérico.'
+                            : 'Architected for complex enterprise operations: multi-branch inventory, financial reconciliation, and B2B workflows configured to your exact operations.'}
+                        </p>
+                      </div>
+
+                      <div className="p-4 rounded-xl bg-white/[0.03] border border-white/[0.08] space-y-2">
+                        <div className="text-xs font-bold text-white uppercase tracking-wider">{lang === 'es' ? 'Especificaciones Técnicas' : 'Technical Specifications'}</div>
+                        <ul className="space-y-1 text-xs text-slate-400 font-mono">
+                          <li className="flex items-center gap-2"><Icons.Check /> React 19 / Next.js + TypeScript</li>
+                          <li className="flex items-center gap-2"><Icons.Check /> PostgreSQL Multi-AZ & Row-Level Security</li>
+                          <li className="flex items-center gap-2"><Icons.Check /> Contenedores Docker & Cloud AWS</li>
+                          <li className="flex items-center gap-2"><Icons.Check /> Sub-1s Core Web Vitals & Google PageSpeed 95+</li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div className="pt-4 border-t border-white/[0.06] flex items-center justify-between text-[11px] font-mono text-slate-500">
+                      <span>ENTERPRISE ENGINEERING</span>
+                      <span>03</span>
+                    </div>
+                  </div>
+
+                  {/* Right Page (Page 4): Compliance & SRI */}
+                  <div className="p-6 sm:p-10 flex flex-col justify-between bg-[#080D1C] overflow-y-auto">
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between text-[11px] font-mono text-indigo-400">
+                        <span>PAG 04 // COMPLIANCE</span>
+                        <span>SRI & LOPDP SECURITY</span>
+                      </div>
+                      <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight leading-tight">
+                        {lang === 'es' ? 'Facturación SRI & Cumplimiento LOPDP' : 'SRI Tax & Data Privacy Compliance'}
+                      </h3>
+
+                      <div className="space-y-3 text-xs sm:text-sm text-slate-300 leading-relaxed font-light">
+                        <p>
+                          {lang === 'es'
+                            ? 'Integración oficial con Web Services del SRI (Ecuador) para facturas, retenciones y guías con firma digital X.509, junto con la arquitectura técnica exigida por la LOPDP.'
+                            : 'Direct integration with Ecuador SRI Web Services for tax receipts with X.509 digital certificates, paired with strict technical data privacy standards.'}
+                        </p>
+                      </div>
+
+                      <div className="p-4 rounded-xl bg-white/[0.03] border border-white/[0.08] space-y-2">
+                        <div className="text-xs font-bold text-white uppercase tracking-wider">{lang === 'es' ? 'Garantías Normativas' : 'Regulatory Assurances'}</div>
+                        <ul className="space-y-1 text-xs text-slate-400 font-mono">
+                          <li className="flex items-center gap-2"><Icons.Check /> Registro de Actividades de Tratamiento (RAT)</li>
+                          <li className="flex items-center gap-2"><Icons.Check /> Notificación de brechas a SPDP en &lt;72h</li>
+                          <li className="flex items-center gap-2"><Icons.Check /> Pista de auditoría con Hash Chain Merkle</li>
+                          <li className="flex items-center gap-2"><Icons.Check /> Embudo de Reseñas Google Business 5★</li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div className="pt-4 border-t border-white/[0.06] flex items-center justify-between text-[11px] font-mono text-slate-500">
+                      <span>AUDITABLE & CERTIFIED</span>
+                      <span>04</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.08]">
-                <div className="text-xl font-bold font-mono text-indigo-400">99.99%</div>
-                <div className="text-[11px] text-slate-400 uppercase tracking-wider font-medium">
-                  {lang === 'es' ? 'SLA Cloud AWS' : 'AWS Cloud SLA'}
+              )}
+
+              {/* SPREAD 3: PAGES 5 & 6 (PROPRIETARY SUITE 9 PRODUCTS) */}
+              {currentSpread === 3 && (
+                <div className="relative w-full h-full rounded-xl overflow-hidden bg-[#0A1022] border border-white/10 shadow-2xl grid grid-cols-1 md:grid-cols-2">
+                  <div className="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-8 bg-gradient-to-r from-black/40 via-black/70 to-black/40 z-20 pointer-events-none" />
+
+                  {/* Left Page (Page 5): Products Part 1 */}
+                  <div className="p-6 sm:p-10 flex flex-col justify-between border-b md:border-b-0 md:border-r border-white/[0.08] overflow-y-auto">
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between text-[11px] font-mono text-cyan-400">
+                        <span>PAG 05 // PRODUCT SUITE</span>
+                        <span>SYSTEMS 01-05</span>
+                      </div>
+                      <h2 className="text-lg sm:text-xl font-bold text-white">
+                        {lang === 'es' ? 'Nuestras Plataformas Propietarias' : 'Proprietary Platforms (Part 1)'}
+                      </h2>
+
+                      <div className="space-y-2.5 pt-1">
+                        <div className="p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.06]">
+                          <div className="flex justify-between items-center text-xs font-bold text-white">
+                            <span>01. FacturOn</span>
+                            <span className="text-[10px] font-mono text-blue-400">SRI BILLING</span>
+                          </div>
+                          <div className="text-[11px] text-slate-400">Facturación electrónica ilimitada, retenciones y firma digital X.509.</div>
+                        </div>
+
+                        <div className="p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.06]">
+                          <div className="flex justify-between items-center text-xs font-bold text-white">
+                            <span>02. ShieldData</span>
+                            <span className="text-[10px] font-mono text-indigo-400">LOPDP COMPLIANCE</span>
+                          </div>
+                          <div className="text-[11px] text-slate-400">Cumplimiento LOPDP / GDPR, derechos ARCO y auditoría con Merkle tree.</div>
+                        </div>
+
+                        <div className="p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.06]">
+                          <div className="flex justify-between items-center text-xs font-bold text-white">
+                            <span>03. ContAme</span>
+                            <span className="text-[10px] font-mono text-cyan-400">NIIF ERP</span>
+                          </div>
+                          <div className="text-[11px] text-slate-400">ERP contable bajo NIIF, libro diario, balances y anexos ATS.</div>
+                        </div>
+
+                        <div className="p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.06]">
+                          <div className="flex justify-between items-center text-xs font-bold text-white">
+                            <span>04. AmeEdu</span>
+                            <span className="text-[10px] font-mono text-emerald-400">ACADEMIC ERP</span>
+                          </div>
+                          <div className="text-[11px] text-slate-400">Gestión escolar, matrículas en línea y cobro automatizado de pensiones.</div>
+                        </div>
+
+                        <div className="p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.06]">
+                          <div className="flex justify-between items-center text-xs font-bold text-white">
+                            <span>05. AmeCommerce</span>
+                            <span className="text-[10px] font-mono text-purple-400">E-COMMERCE</span>
+                          </div>
+                          <div className="text-[11px] text-slate-400">E-commerce de alto rendimiento conectado a inventario ERP y pagos.</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="pt-3 border-t border-white/[0.06] flex items-center justify-between text-[11px] font-mono text-slate-500">
+                      <span>ENTERPRISE SUITE</span>
+                      <span>05</span>
+                    </div>
+                  </div>
+
+                  {/* Right Page (Page 6): Products Part 2 */}
+                  <div className="p-6 sm:p-10 flex flex-col justify-between bg-[#080D1C] overflow-y-auto">
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between text-[11px] font-mono text-cyan-400">
+                        <span>PAG 06 // PRODUCT SUITE</span>
+                        <span>SYSTEMS 06-09</span>
+                      </div>
+                      <h3 className="text-lg sm:text-xl font-bold text-white">
+                        {lang === 'es' ? 'Plataformas Sectoriales Especializadas' : 'Specialized Sector Suites (Part 2)'}
+                      </h3>
+
+                      <div className="space-y-2.5 pt-1">
+                        <div className="p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.06]">
+                          <div className="flex justify-between items-center text-xs font-bold text-white">
+                            <span>06. GymAme</span>
+                            <span className="text-[10px] font-mono text-purple-400">IOT / ACCESS</span>
+                          </div>
+                          <div className="text-[11px] text-slate-400">Control de acceso biométrico, torniquetes y cobros recurrentes de gimnasios.</div>
+                        </div>
+
+                        <div className="p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.06]">
+                          <div className="flex justify-between items-center text-xs font-bold text-white">
+                            <span>07. BrokerSeguro</span>
+                            <span className="text-[10px] font-mono text-amber-400">INSURTECH CRM</span>
+                          </div>
+                          <div className="text-[11px] text-slate-400">ERP para agencias de seguros, tracking de pólizas y cálculo de comisiones.</div>
+                        </div>
+
+                        <div className="p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.06]">
+                          <div className="flex justify-between items-center text-xs font-bold text-white">
+                            <span>08. MigraFast</span>
+                            <span className="text-[10px] font-mono text-blue-400">DATA MIGRATION</span>
+                          </div>
+                          <div className="text-[11px] text-slate-400">Reingeniería y migración de sistemas legacy (FoxPro/Access) a PostgreSQL.</div>
+                        </div>
+
+                        <div className="p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.06]">
+                          <div className="flex justify-between items-center text-xs font-bold text-white">
+                            <span>09. ReviewShield</span>
+                            <span className="text-[10px] font-mono text-emerald-400">GOOGLE BUSINESS</span>
+                          </div>
+                          <div className="text-[11px] text-slate-400">Embudo inteligente para canalizar reseñas 5 estrellas a Google Maps.</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="pt-3 border-t border-white/[0.06] flex items-center justify-between text-[11px] font-mono text-slate-500">
+                      <span>9 PRODUCTION APPS</span>
+                      <span>06</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.08]">
-                <div className="text-xl font-bold font-mono text-emerald-400">100%</div>
-                <div className="text-[11px] text-slate-400 uppercase tracking-wider font-medium">
-                  {lang === 'es' ? 'Código Propio' : 'IP Ownership'}
+              )}
+
+              {/* SPREAD 4: PAGES 7 & 8 (BINATIONAL ADVANTAGE & BACK COVER) */}
+              {currentSpread === 4 && (
+                <div className="relative w-full h-full rounded-xl overflow-hidden bg-[#0A1022] border border-white/10 shadow-2xl grid grid-cols-1 md:grid-cols-2">
+                  <div className="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-8 bg-gradient-to-r from-black/40 via-black/70 to-black/40 z-20 pointer-events-none" />
+
+                  {/* Left Page (Page 7): Binational Presence */}
+                  <div className="p-6 sm:p-10 flex flex-col justify-between border-b md:border-b-0 md:border-r border-white/[0.08] overflow-y-auto">
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between text-[11px] font-mono text-blue-400">
+                        <span>PAG 07 // GLOBAL REACH</span>
+                        <span>USA & ECUADOR</span>
+                      </div>
+                      <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight leading-tight">
+                        {lang === 'es' ? 'Ventaja Binacional & Jurisdicción Dual' : 'Binational Legal & Engineering Edge'}
+                      </h2>
+
+                      <div className="space-y-3 pt-1">
+                        <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.08]">
+                          <div className="flex items-center gap-2 font-bold text-white text-xs mb-1">
+                            <span>🇺🇸</span> <span>United States Entity</span>
+                          </div>
+                          <div className="text-[11px] text-slate-300 leading-relaxed font-light">
+                            Contratos corporativos bajo ley de EE.UU. (California), pagos ACH / Wire en USD y facturación con W-9 / EIN oficial.
+                          </div>
+                        </div>
+
+                        <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.08]">
+                          <div className="flex items-center gap-2 font-bold text-white text-xs mb-1">
+                            <span>🇪🇨</span> <span>Ecuador Engineering Hub</span>
+                          </div>
+                          <div className="text-[11px] text-slate-300 leading-relaxed font-light">
+                            Centro de ingeniería en Quito, Guayaquil y Cuenca con RUC formal para emisión de facturas electrónicas con validez tributaria.
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono">
+                        ✓ CERO DESFASE HORARIO (EST / PST)
+                      </div>
+                    </div>
+
+                    <div className="pt-4 border-t border-white/[0.06] flex items-center justify-between text-[11px] font-mono text-slate-500">
+                      <span>GLOBAL INFRASTRUCTURE</span>
+                      <span>07</span>
+                    </div>
+                  </div>
+
+                  {/* Right Page (Page 8): Guarantees & Back Cover Contact */}
+                  <div className="p-6 sm:p-10 flex flex-col justify-between bg-[#070B18] overflow-y-auto">
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between text-[11px] font-mono text-emerald-400">
+                        <span>PAG 08 // CLOSING</span>
+                        <span>GUARANTEES & DIRECT LINE</span>
+                      </div>
+                      <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight leading-tight">
+                        {lang === 'es' ? 'Garantías & Contacto Directo' : 'Direct Line & Guarantees'}
+                      </h3>
+
+                      <div className="space-y-2 text-xs text-slate-300 font-mono pt-1">
+                        <div className="flex items-center gap-2"><Icons.Check /> NDA Bilateral desde el día 1</div>
+                        <div className="flex items-center gap-2"><Icons.Check /> Entrega total de repositorios GitHub</div>
+                        <div className="flex items-center gap-2"><Icons.Check /> Garantía post-entrega de 90 días</div>
+                        <div className="flex items-center gap-2"><Icons.Check /> Sin comisiones ni licencias atadas</div>
+                      </div>
+
+                      {/* Official Contact Box */}
+                      <div className="p-4 rounded-xl bg-blue-600/10 border border-blue-500/20 space-y-2">
+                        <div className="text-xs font-bold text-white uppercase tracking-wider">{lang === 'es' ? 'Canal Directo Inmediato' : 'Direct Executive Contact'}</div>
+                        <a
+                          href="https://wa.me/13347324056"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 text-emerald-400 hover:underline font-mono text-xs font-semibold"
+                        >
+                          <Icons.Phone /> +1 (334) 732-4056 (WhatsApp / Llamada)
+                        </a>
+                        <div className="font-mono text-[11px] text-slate-300">Email: info@amephia.com</div>
+                        <div className="font-mono text-[11px] text-slate-300">Web: https://amephia.com</div>
+                      </div>
+                    </div>
+
+                    <div className="pt-4 border-t border-white/[0.06] flex items-center justify-between text-[11px] font-mono text-slate-500">
+                      <span>© 2026 AMEPHIA SYSTEMS INC.</span>
+                      <span>08</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
-            {/* Quick Actions */}
-            <div className="flex flex-wrap items-center gap-3 pt-4 print:hidden">
+            {/* Bottom Book Navigation Bar */}
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
               <button
-                onClick={handlePrint}
-                className="inline-flex items-center gap-2.5 px-5 py-3 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:opacity-90 text-white text-sm font-semibold shadow-xl shadow-blue-600/25 transition-all"
+                onClick={prevSpread}
+                disabled={currentSpread === 0}
+                className="px-4 py-2 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] disabled:opacity-30 disabled:cursor-not-allowed text-xs font-bold text-white border border-white/[0.08] transition-all flex items-center gap-2"
               >
-                <Icons.Download />
-                <span>{lang === 'es' ? 'Imprimir / Guardar como PDF' : 'Print / Save as PDF'}</span>
+                <Icons.ChevronLeft />
+                <span>{lang === 'es' ? 'Anterior' : 'Previous'}</span>
               </button>
 
+              {/* Thumbdots */}
+              <div className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/[0.03] border border-white/[0.08]">
+                {Array.from({ length: totalSpreads }).map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setCurrentSpread(i)}
+                    className={`h-2.5 rounded-full transition-all ${
+                      currentSpread === i ? 'w-8 bg-blue-500' : 'w-2.5 bg-white/20 hover:bg-white/40'
+                    }`}
+                    title={`Página ${i === 0 ? 'Portada' : `${i * 2 - 1}-${i * 2}`}`}
+                  />
+                ))}
+              </div>
+
+              <button
+                onClick={nextSpread}
+                disabled={currentSpread === totalSpreads - 1}
+                className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-30 disabled:cursor-not-allowed text-xs font-bold text-white shadow-lg transition-all flex items-center gap-2"
+              >
+                <span>{lang === 'es' ? 'Siguiente' : 'Next'}</span>
+                <Icons.ChevronRight />
+              </button>
+            </div>
+            <div className="text-[11px] font-mono text-slate-500 mt-2 text-center">
+              {lang === 'es' ? 'Usa las flechas del teclado (← / →) o toca para pasar página' : 'Use arrow keys (← / →) or tap to flip pages'}
+            </div>
+          </div>
+        ) : (
+          /* ═══════════ VIEW MODE: SCROLL CONTINUO / EDITORIAL ═══════════ */
+          <div className="w-full max-w-4xl mx-auto space-y-12">
+            {/* Cover display in continuous mode */}
+            <div className="rounded-2xl overflow-hidden border border-white/15 shadow-2xl">
+              <img src="/brochure-cover.jpg" alt="AmePhia Systems Brochure Cover" className="w-full h-auto object-cover" />
+            </div>
+
+            <div className="p-8 sm:p-12 rounded-2xl bg-[#0A1022] border border-white/10 space-y-6">
+              <span className="text-xs font-mono text-blue-400 uppercase tracking-widest">SEC 01 // OVERVIEW</span>
+              <h2 className="text-3xl font-extrabold text-white">Ingeniería de Software de Alto Nivel</h2>
+              <p className="text-slate-300 text-sm leading-relaxed">
+                AmePhia Systems Inc. ofrece ingeniería de software sin sobreprecios, con contratos bajo ley de EE.UU. o facturación tributaria formal para Ecuador. 10+ años de trayectoria y 9 sistemas en producción.
+              </p>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 font-mono">
+                <div className="p-3 bg-white/[0.03] rounded-lg border border-white/10"><div className="text-xl text-blue-400 font-bold">10+</div><div className="text-[10px] text-slate-400">Años</div></div>
+                <div className="p-3 bg-white/[0.03] rounded-lg border border-white/10"><div className="text-xl text-indigo-400 font-bold">9</div><div className="text-[10px] text-slate-400">Sistemas</div></div>
+                <div className="p-3 bg-white/[0.03] rounded-lg border border-white/10"><div className="text-xl text-cyan-400 font-bold">99.99%</div><div className="text-[10px] text-slate-400">SLA AWS</div></div>
+                <div className="p-3 bg-white/[0.03] rounded-lg border border-white/10"><div className="text-xl text-emerald-400 font-bold">100%</div><div className="text-[10px] text-slate-400">Código Tuyo</div></div>
+              </div>
+            </div>
+
+            <div className="p-8 sm:p-12 rounded-2xl bg-[#080D1C] border border-white/10 space-y-6">
+              <span className="text-xs font-mono text-indigo-400 uppercase tracking-widest">SEC 02 // CAPABILITIES</span>
+              <h3 className="text-2xl font-bold text-white">Servicios de Ingeniería & 9 Plataformas</h3>
+              <div className="grid sm:grid-cols-2 gap-4 text-xs text-slate-300 font-mono">
+                <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06]">• FacturOn: Facturación SRI ilimitada</div>
+                <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06]">• ShieldData: Compliance LOPDP / GDPR</div>
+                <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06]">• ContAme: ERP Financiero NIIF</div>
+                <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06]">• AmeEdu: Gestión Escolar y Pensiones</div>
+                <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06]">• GymAme: Gimnasios y Control IoT</div>
+                <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06]">• BrokerSeguro: ERP para Brokers</div>
+                <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06]">• MigraFast: Migración FoxPro/Access</div>
+                <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06]">• ReviewShield: Reseñas Google 5★</div>
+              </div>
+            </div>
+
+            <div className="p-8 sm:p-12 rounded-2xl bg-gradient-to-r from-blue-950/40 to-indigo-950/40 border border-white/15 text-center space-y-4">
+              <h3 className="text-2xl font-bold text-white">Contacto Ejecutivo Inmediato</h3>
+              <p className="text-slate-300 text-xs sm:text-sm font-mono">+1 (334) 732-4056 · info@amephia.com · https://amephia.com</p>
               <a
-                href="https://wa.me/13347324056?text=Hola%20AmePhia,%20le%C3%AD%20su%20Brochure%20Corporativo%20y%20quisiera%20conversar%20sobre%20un%20proyecto."
+                href="https://wa.me/13347324056"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-sm font-semibold transition-all"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-sm shadow-xl transition-all"
               >
-                <Icons.Phone />
-                <span>{lang === 'es' ? 'Hablar con un Ingeniero Senior' : 'Direct Line to Senior Engineer'}</span>
+                <Icons.Phone /> <span>Chatear por WhatsApp con Ingeniero Senior</span>
               </a>
             </div>
           </div>
+        )}
+      </main>
 
-          {/* Right Column: 3D Luxury Dossier Book Showcase (Featuring the user's cover image) */}
-          <div className="lg:col-span-6 flex justify-center lg:justify-end">
-            <div className="relative group max-w-lg w-full">
-              {/* Outer halo / aura */}
-              <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 opacity-30 blur-2xl group-hover:opacity-45 transition duration-700" />
-
-              {/* The Dossier Frame */}
-              <div className="relative rounded-2xl overflow-hidden bg-[#0A1020] border border-white/[0.15] shadow-2xl shadow-black/80">
-                {/* Document Spine Bar */}
-                <div className="h-9 px-4 bg-gradient-to-r from-slate-900 to-[#0A1020] border-b border-white/[0.08] flex items-center justify-between text-[11px] font-mono text-slate-400">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
-                    <span className="ml-2 font-medium text-slate-300">AMEPHIA_CAPABILITIES_2026.pdf</span>
-                  </div>
-                  <span className="text-slate-500 hidden sm:inline">OFFICIAL EDITION</span>
-                </div>
-
-                {/* Cover Image Presentation */}
-                <div className="relative overflow-hidden bg-black aspect-[16/10] sm:aspect-[16/9]">
-                  <img
-                    src="/brochure-cover.jpg"
-                    alt="AmePhia Systems - Corporate Brochure Cover: Engineering the Future of Your Business"
-                    className="w-full h-full object-cover object-center transform transition-transform duration-700 group-hover:scale-[1.02]"
-                    loading="eager"
-                  />
-                  {/* Subtle vignette gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#060A14] via-transparent to-transparent opacity-60" />
-                  
-                  {/* Floating Badge */}
-                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-slate-300 bg-black/60 backdrop-blur-md px-3 py-2 rounded-lg border border-white/10 font-mono">
-                    <span>USA (CA & NJ) · ECUADOR</span>
-                    <span className="text-emerald-400">100% VERIFIED FIRM</span>
-                  </div>
-                </div>
-
-                {/* Dossier Caption */}
-                <div className="p-4 bg-[#0A1122] flex items-center justify-between text-xs text-slate-400">
-                  <div className="flex items-center gap-2">
-                    <Icons.Check />
-                    <span>{lang === 'es' ? 'Documento Institucional Certificado' : 'Certified Institutional Capabilities'}</span>
-                  </div>
-                  <span className="font-mono text-slate-500">ID: APS-2026</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── SECTION 01: THE 4 CORE COMMITMENTS ─────────────────── */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-white/[0.08]">
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <span className="text-xs font-mono text-blue-400 uppercase tracking-widest block mb-2">
-            SEC 01 // PRINCIPLES & GOVERNANCE
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-            {lang === 'es' ? 'Nuestros 4 Compromisos Innegociables' : 'Our 4 Non-Negotiable Commitments'}
-          </h2>
-          <p className="mt-3 text-slate-400 text-sm sm:text-base">
-            {lang === 'es'
-              ? 'Fundamos AmePhia sobre una premisa transparente: entregar excelencia técnica corporativa sin prácticas abusivas de la industria tradicional.'
-              : 'Built on a clear premise: enterprise-grade engineering excellence with zero abusive practices, hidden costs, or hostage code.'}
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {/* Card 1 */}
-          <div className="p-6 rounded-2xl bg-white/[0.02] hover:bg-white/[0.04] border border-white/[0.08] transition-all">
-            <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-5">
-              <Icons.Cpu />
-            </div>
-            <h3 className="text-lg font-bold text-white mb-2">
-              {lang === 'es' ? 'Rigor de Ingeniería' : 'Engineering Rigor'}
-            </h3>
-            <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
-              {lang === 'es'
-                ? 'Arquitecturas limpias basadas en TypeScript, microservicios modulares, PostgreSQL Multi-AZ y contenedores Docker para garantizar escalabilidad real y mínimo mantenimiento.'
-                : 'Clean, modern stacks built on TypeScript, decoupled microservices, PostgreSQL Multi-AZ, and Docker containers designed for zero-drama scale.'}
-            </p>
-          </div>
-
-          {/* Card 2 */}
-          <div className="p-6 rounded-2xl bg-white/[0.02] hover:bg-white/[0.04] border border-white/[0.08] transition-all">
-            <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-5">
-              <Icons.Scale />
-            </div>
-            <h3 className="text-lg font-bold text-white mb-2">
-              {lang === 'es' ? 'Precios Conscientes' : 'Transparent Pricing'}
-            </h3>
-            <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
-              {lang === 'es'
-                ? 'Tarifas éticas calculadas con base en horas de desarrollo y arquitectura real. Sin comisiones infladas, sin sorpresas de última hora y sin licencias cautivas.'
-                : 'Fair, conscious project pricing based on verifiable scope and senior engineer hours. No inflated agency margins, no sudden hidden fees.'}
-            </p>
-          </div>
-
-          {/* Card 3 */}
-          <div className="p-6 rounded-2xl bg-white/[0.02] hover:bg-white/[0.04] border border-white/[0.08] transition-all">
-            <div className="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center mb-5">
-              <Icons.Terminal />
-            </div>
-            <h3 className="text-lg font-bold text-white mb-2">
-              {lang === 'es' ? 'Contacto Directo Senior' : 'Direct Senior Access'}
-            </h3>
-            <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
-              {lang === 'es'
-                ? 'Trato directo de líder a líder. Tu proyecto es liderado por arquitectos de software con más de 10 años en producción, no por intermediarios comerciales.'
-                : 'Zero sales intermediaries. You discuss technical requirements directly with senior software architects holding a decade in production.'}
-            </p>
-          </div>
-
-          {/* Card 4 */}
-          <div className="p-6 rounded-2xl bg-white/[0.02] hover:bg-white/[0.04] border border-white/[0.08] transition-all">
-            <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-5">
-              <Icons.FileCode />
-            </div>
-            <h3 className="text-lg font-bold text-white mb-2">
-              {lang === 'es' ? 'Código 100% Tuyo' : '100% Code Ownership'}
-            </h3>
-            <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
-              {lang === 'es'
-                ? 'El 100% del código fuente, repositorios GitHub, esquemas de bases de datos y propiedad intelectual se transfiere formalmente a tu nombre al finalizar.'
-                : 'Complete source code, GitHub repos, database schemas, and intellectual property rights are formally transferred to you with full documentation.'}
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ── SECTION 02: CORE SERVICES ─────────────────────────── */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-white/[0.08]">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
-          <div>
-            <span className="text-xs font-mono text-indigo-400 uppercase tracking-widest block mb-2">
-              SEC 02 // CAPABILITIES & SERVICES
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-              {lang === 'es' ? 'Servicios de Ingeniería de Software' : 'Enterprise Engineering Capabilities'}
-            </h2>
-          </div>
-          <p className="text-slate-400 text-sm max-w-md">
-            {lang === 'es'
-              ? 'Soluciones tecnológicas a medida diseñadas para transformar operaciones corporativas complejas.'
-              : 'Bespoke software solutions architected for high-performance business environments.'}
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-8">
-          {/* Service 1 */}
-          <div className="p-7 rounded-2xl bg-gradient-to-br from-white/[0.04] to-transparent border border-white/[0.1] space-y-4">
-            <div className="w-10 h-10 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center">
-              <Icons.Database />
-            </div>
-            <h3 className="text-xl font-bold text-white">
-              {lang === 'es' ? 'Sistemas Web Empresariales & ERP a Medida' : 'Custom Web Systems & Enterprise ERPs'}
-            </h3>
-            <p className="text-slate-300 text-sm leading-relaxed">
-              {lang === 'es'
-                ? 'Desarrollamos sistemas de gestión operativa, ERPs integrales, CRMs especializados y portales B2B/B2C que se adaptan exactamente a tus flujos de trabajo únicos, eliminando cuellos de botella manuales y reportes dispersos.'
-                : 'End-to-end custom operational platforms, ERPs, specialized CRMs, and B2B workflows configured precisely to your proprietary operational models, replacing fragmented spreadsheets with real-time auditability.'}
-            </p>
-            <ul className="space-y-2 pt-2 text-xs text-slate-300 font-mono">
-              <li className="flex items-center gap-2">
-                <Icons.Check /> {lang === 'es' ? 'Multi-tenant con Row-Level Security' : 'Multi-tenant with Row-Level Security'}
-              </li>
-              <li className="flex items-center gap-2">
-                <Icons.Check /> {lang === 'es' ? 'Reportes en tiempo real y exportación contable' : 'Real-time financial analytics & audit logs'}
-              </li>
-              <li className="flex items-center gap-2">
-                <Icons.Check /> {lang === 'es' ? 'Roles, permisos jerárquicos y trazabilidad' : 'Role-based access control & full traceability'}
-              </li>
-            </ul>
-          </div>
-
-          {/* Service 2 */}
-          <div className="p-7 rounded-2xl bg-gradient-to-br from-white/[0.04] to-transparent border border-white/[0.1] space-y-4">
-            <div className="w-10 h-10 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center">
-              <Icons.Server />
-            </div>
-            <h3 className="text-xl font-bold text-white">
-              {lang === 'es' ? 'Modernización Web & Reingeniería de Sistemas' : 'Website Modernization & System Replatforming'}
-            </h3>
-            <p className="text-slate-300 text-sm leading-relaxed">
-              {lang === 'es'
-                ? 'Transformamos sitios lentos o sistemas obsoletos (Visual FoxPro, PHP antiguo, Access) hacia plataformas modernas basadas en React, Next.js y TypeScript con Core Web Vitals sub-1s, SEO orgánico de vanguardia y arquitectura responsive móvil.'
-                : 'Replatforming legacy monolithic codebases (PHP 5, FoxPro, Access) into blazing-fast React and Next.js platforms optimized for sub-1s Core Web Vitals, organic search dominance, and responsive mobile parity.'}
-            </p>
-            <ul className="space-y-2 pt-2 text-xs text-slate-300 font-mono">
-              <li className="flex items-center gap-2">
-                <Icons.Check /> {lang === 'es' ? 'Puntaje 95+ en Google PageSpeed Insights' : 'Google PageSpeed 95+ performance scores'}
-              </li>
-              <li className="flex items-center gap-2">
-                <Icons.Check /> {lang === 'es' ? 'Migración de datos histórica sin pérdida' : 'Zero-downtime historical database migration'}
-              </li>
-              <li className="flex items-center gap-2">
-                <Icons.Check /> {lang === 'es' ? 'SEO orgánico estructurado con Schema.org' : 'Schema.org JSON-LD Rich Snippets & AI SEO'}
-              </li>
-            </ul>
-          </div>
-
-          {/* Service 3 */}
-          <div className="p-7 rounded-2xl bg-gradient-to-br from-white/[0.04] to-transparent border border-white/[0.1] space-y-4">
-            <div className="w-10 h-10 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center">
-              <Icons.ShieldCheck />
-            </div>
-            <h3 className="text-xl font-bold text-white">
-              {lang === 'es' ? 'Facturación SRI & Cumplimiento Normativo LOPDP' : 'SRI Invoicing & Regulatory Compliance (LOPDP)'}
-            </h3>
-            <p className="text-slate-300 text-sm leading-relaxed">
-              {lang === 'es'
-                ? 'Integración llave en mano de facturación electrónica con el SRI (Ecuador) y adaptación técnica estricta a la Ley Orgánica de Protección de Datos Personales (LOPDP), incluyendo registro de actividades (RAT) y auditorías con hash chain Merkle.'
-                : 'Turnkey electronic tax invoicing compliant with Ecuador SRI web services, paired with compliance architecture for Personal Data Protection acts (LOPDP / GDPR), featuring automated RAT generation and tamper-proof audit trails.'}
-            </p>
-            <ul className="space-y-2 pt-2 text-xs text-slate-300 font-mono">
-              <li className="flex items-center gap-2">
-                <Icons.Check /> {lang === 'es' ? 'Firma electrónica X.509 y comprobantes XML/RIDE' : 'X.509 digital signature & XML/RIDE dispatch'}
-              </li>
-              <li className="flex items-center gap-2">
-                <Icons.Check /> {lang === 'es' ? 'Sincronización en contingencia y modo offline' : 'Contingency queue & offline store-and-forward'}
-              </li>
-              <li className="flex items-center gap-2">
-                <Icons.Check /> {lang === 'es' ? 'Cumplimiento normativo auditado para fiscalizaciones' : 'Inspection-ready regulatory audit logs'}
-              </li>
-            </ul>
-          </div>
-
-          {/* Service 4 */}
-          <div className="p-7 rounded-2xl bg-gradient-to-br from-white/[0.04] to-transparent border border-white/[0.1] space-y-4">
-            <div className="w-10 h-10 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
-              <Icons.Globe />
-            </div>
-            <h3 className="text-xl font-bold text-white">
-              {lang === 'es' ? 'Embudo de Reputación Google Business & Reseñas' : 'Google Business Review Shield Funnel'}
-            </h3>
-            <p className="text-slate-300 text-sm leading-relaxed">
-              {lang === 'es'
-                ? 'Sistema automatizado para proteger la reputación digital de tu empresa: canaliza clientes satisfechos (4 y 5 estrellas) directamente a tu perfil de Google Business, mientras que las quejas se derivan a soporte interno privado para resolución inmediata.'
-                : 'Intelligent review gating funnel safeguarding brand reputation: directs satisfied clients (4-5 stars) straight to your public Google Business profile while privately intercepting complaints for executive dispute resolution.'}
-            </p>
-            <ul className="space-y-2 pt-2 text-xs text-slate-300 font-mono">
-              <li className="flex items-center gap-2">
-                <Icons.Check /> {lang === 'es' ? 'Blindaje preventivo contra reseñas públicas negativas' : 'Pre-emptive filtering of negative public reviews'}
-              </li>
-              <li className="flex items-center gap-2">
-                <Icons.Check /> {lang === 'es' ? 'Aumento comprobado del ranking local en Google Maps' : 'Proven boost in Google Maps Local Pack ranking'}
-              </li>
-              <li className="flex items-center gap-2">
-                <Icons.Check /> {lang === 'es' ? 'Automatización de envío vía WhatsApp y Email' : 'Automated WhatsApp & Email customer triggers'}
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* ── SECTION 03: THE 9 PROPRIETARY PLATFORMS ────────────── */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-white/[0.08]">
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <span className="text-xs font-mono text-cyan-400 uppercase tracking-widest block mb-2">
-            SEC 03 // PRODUCT SUITE
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-            {lang === 'es' ? 'Nuestras 9 Plataformas Propietarias en Producción' : 'Our 9 Proprietary Enterprise Platforms'}
-          </h2>
-          <p className="mt-3 text-slate-400 text-sm sm:text-base">
-            {lang === 'es'
-              ? 'Software robusto, probado en empresas reales en Estados Unidos y Ecuador. Desplegables de inmediato o adaptables a tus flujos.'
-              : 'Production-tested enterprise solutions ready for deployment or custom adaptation across the Americas.'}
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-6">
-          {/* Prod 1 */}
-          <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] hover:border-blue-500/40 transition-all flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-mono text-blue-400 font-semibold uppercase">01 // BILLING</span>
-                <span className="text-[10px] font-mono text-slate-400 bg-white/[0.06] px-2 py-0.5 rounded">SRI CERTIFIED</span>
-              </div>
-              <h3 className="text-lg font-bold text-white mb-2">FacturOn</h3>
-              <p className="text-slate-400 text-xs leading-relaxed">
-                {lang === 'es'
-                  ? 'Sistema completo de facturación electrónica para Ecuador. Emisión ilimitada, retenciones, guías de remisión, notas de crédito, firma digital X.509 y envío automático a clientes.'
-                  : 'Full-stack electronic tax billing suite for Ecuador. Unlimited invoice authoring, credit notes, X.509 digital certificates, and instant client dispatch.'}
-              </p>
-            </div>
-            <div className="mt-4 pt-3 border-t border-white/[0.06] text-[11px] font-mono text-slate-400">
-              Tech: React · Node.js · SOAP SRI · PostgreSQL
-            </div>
-          </div>
-
-          {/* Prod 2 */}
-          <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] hover:border-indigo-500/40 transition-all flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-mono text-indigo-400 font-semibold uppercase">02 // COMPLIANCE</span>
-                <span className="text-[10px] font-mono text-slate-400 bg-white/[0.06] px-2 py-0.5 rounded">LEGAL TECH</span>
-              </div>
-              <h3 className="text-lg font-bold text-white mb-2">ShieldData</h3>
-              <p className="text-slate-400 text-xs leading-relaxed">
-                {lang === 'es'
-                  ? 'Plataforma integral de cumplimiento LOPDP Ecuador y GDPR. Registro de actividades (RAT) asistido por IA, gestión de derechos ARCO, notificación de brechas SPDP y modo inspección formal.'
-                  : 'Data privacy & regulatory compliance software. AI-assisted RAT registers, ARCO subject rights portal, SPDP breach alert pipeline, and auditor inspection rooms.'}
-              </p>
-            </div>
-            <div className="mt-4 pt-3 border-t border-white/[0.06] text-[11px] font-mono text-slate-400">
-              Tech: Next.js · Merkle Tree · PAdES · Cloud AWS
-            </div>
-          </div>
-
-          {/* Prod 3 */}
-          <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] hover:border-cyan-500/40 transition-all flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-mono text-cyan-400 font-semibold uppercase">03 // FINANCE</span>
-                <span className="text-[10px] font-mono text-slate-400 bg-white/[0.06] px-2 py-0.5 rounded">NIIF / GAAP</span>
-              </div>
-              <h3 className="text-lg font-bold text-white mb-2">ContAme</h3>
-              <p className="text-slate-400 text-xs leading-relaxed">
-                {lang === 'es'
-                  ? 'ERP contable, financiero y administrativo bajo estándares NIIF. Libro diario automático, balance general, estado de pérdidas y ganancias, anexos transaccionales ATS y gestión de inventario multi-bodega.'
-                  : 'NIIF/IFRS corporate financial accounting ERP. Automated daily ledgers, P&L statements, multi-warehouse stock control, and fiscal transaction filings.'}
-              </p>
-            </div>
-            <div className="mt-4 pt-3 border-t border-white/[0.06] text-[11px] font-mono text-slate-400">
-              Tech: TypeScript · PostgreSQL Multi-AZ · Docker
-            </div>
-          </div>
-
-          {/* Prod 4 */}
-          <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] hover:border-emerald-500/40 transition-all flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-mono text-emerald-400 font-semibold uppercase">04 // EDTECH</span>
-                <span className="text-[10px] font-mono text-slate-400 bg-white/[0.06] px-2 py-0.5 rounded">MINEDUC READY</span>
-              </div>
-              <h3 className="text-lg font-bold text-white mb-2">AmeEdu</h3>
-              <p className="text-slate-400 text-xs leading-relaxed">
-                {lang === 'es'
-                  ? 'Sistema de gestión escolar para colegios y academias. Matrículas digitales, calificaciones trimestrales, portal para padres, control de asistencia y cobro automatizado de pensiones.'
-                  : 'Academic management ERP for schools and institutes. Online enrollment, grading books, parental portals, attendance records, and recurring tuition billing.'}
-              </p>
-            </div>
-            <div className="mt-4 pt-3 border-t border-white/[0.06] text-[11px] font-mono text-slate-400">
-              Tech: React · Express · Stripe/PayPhone · Postgres
-            </div>
-          </div>
-
-          {/* Prod 5 */}
-          <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] hover:border-purple-500/40 transition-all flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-mono text-purple-400 font-semibold uppercase">05 // WELLNESS</span>
-                <span className="text-[10px] font-mono text-slate-400 bg-white/[0.06] px-2 py-0.5 rounded">IOT ACCESS</span>
-              </div>
-              <h3 className="text-lg font-bold text-white mb-2">GymAme</h3>
-              <p className="text-slate-400 text-xs leading-relaxed">
-                {lang === 'es'
-                  ? 'Software de gestión para gimnasios y centros deportivos. Membresías recurrentes, integración con torniquetes y cerraduras electrónicas por QR/biometría, y app web de rutinas.'
-                  : 'Gym & fitness facility management software. Automated membership billing, hardware integration for turnstiles via QR/RFID, and member booking web app.'}
-              </p>
-            </div>
-            <div className="mt-4 pt-3 border-t border-white/[0.06] text-[11px] font-mono text-slate-400">
-              Tech: IoT Gateway · WebSockets · React · Stripe
-            </div>
-          </div>
-
-          {/* Prod 6 */}
-          <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] hover:border-amber-500/40 transition-all flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-mono text-amber-400 font-semibold uppercase">06 // INSURTECH</span>
-                <span className="text-[10px] font-mono text-slate-400 bg-white/[0.06] px-2 py-0.5 rounded">BROKER CRM</span>
-              </div>
-              <h3 className="text-lg font-bold text-white mb-2">BrokerSeguro</h3>
-              <p className="text-slate-400 text-xs leading-relaxed">
-                {lang === 'es'
-                  ? 'ERP para agencias y brokers de seguros. Gestión de pólizas multiaeguradora, alertas tempranas de vencimiento, cálculo de comisiones, tracking de reclamos y portal del asegurado.'
-                  : 'Multi-carrier insurance broker ERP. Policy lifecycle tracking, automated renewal reminders, agent commission calculators, and policyholder claims portal.'}
-              </p>
-            </div>
-            <div className="mt-4 pt-3 border-t border-white/[0.06] text-[11px] font-mono text-slate-400">
-              Tech: React · Node.js · Cloud Architecture · AWS
-            </div>
-          </div>
-
-          {/* Prod 7 */}
-          <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] hover:border-blue-500/40 transition-all flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-mono text-blue-400 font-semibold uppercase">07 // DATA MIGRATION</span>
-                <span className="text-[10px] font-mono text-slate-400 bg-white/[0.06] px-2 py-0.5 rounded">ZERO DATA LOSS</span>
-              </div>
-              <h3 className="text-lg font-bold text-white mb-2">MigraFast</h3>
-              <p className="text-slate-400 text-xs leading-relaxed">
-                {lang === 'es'
-                  ? 'Herramienta de migración y modernización de bases de datos. Extracción, limpieza y carga de sistemas legados (FoxPro, Access, SQL Server antiguo) hacia arquitecturas cloud modernas.'
-                  : 'Legacy database migration and ETL platform. Automated schema mapping and sanitized data ingestion from old FoxPro, DBF, or Access into cloud PostgreSQL.'}
-              </p>
-            </div>
-            <div className="mt-4 pt-3 border-t border-white/[0.06] text-[11px] font-mono text-slate-400">
-              Tech: Go / Python ETL · Docker · PostgreSQL
-            </div>
-          </div>
-
-          {/* Prod 8 */}
-          <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] hover:border-emerald-500/40 transition-all flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-mono text-emerald-400 font-semibold uppercase">08 // REPUTATION</span>
-                <span className="text-[10px] font-mono text-slate-400 bg-white/[0.06] px-2 py-0.5 rounded">GOOGLE BUSINESS</span>
-              </div>
-              <h3 className="text-lg font-bold text-white mb-2">ReviewShield</h3>
-              <p className="text-slate-400 text-xs leading-relaxed">
-                {lang === 'es'
-                  ? 'Embudo inteligente de reseñas para Google Business. Filtra insatisfacciones antes de que lleguen a Google y canaliza a clientes felices para disparar tus calificaciones 5 estrellas.'
-                  : 'Customer sentiment filter and review funnel. Proactively diverts unhappy client feedback to management while boosting 5-star Google Business reviews.'}
-              </p>
-            </div>
-            <div className="mt-4 pt-3 border-t border-white/[0.06] text-[11px] font-mono text-slate-400">
-              Tech: WhatsApp API · Next.js · Google Places API
-            </div>
-          </div>
-
-          {/* Prod 9 */}
-          <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] hover:border-cyan-500/40 transition-all flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-mono text-cyan-400 font-semibold uppercase">09 // COMMERCE</span>
-                <span className="text-[10px] font-mono text-slate-400 bg-white/[0.06] px-2 py-0.5 rounded">HIGH TRAFFIC</span>
-              </div>
-              <h3 className="text-lg font-bold text-white mb-2">AmeCommerce</h3>
-              <p className="text-slate-400 text-xs leading-relaxed">
-                {lang === 'es'
-                  ? 'Plataforma e-commerce B2B y B2C de alta velocidad. Conexión nativa con inventarios ERP, pasarelas de pago (Stripe, PayPhone, Datafast) y sincronización con facturación SRI.'
-                  : 'Enterprise B2B/B2C headless commerce engine. Native ERP inventory sync, real-time credit card processing, and instantaneous tax receipt emission.'}
-              </p>
-            </div>
-            <div className="mt-4 pt-3 border-t border-white/[0.06] text-[11px] font-mono text-slate-400">
-              Tech: React · Node.js · Stripe · PayPhone · Postgres
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── SECTION 04: DUAL PRESENCE (USA & ECUADOR) ──────────── */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-white/[0.08]">
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <span className="text-xs font-mono text-indigo-400 uppercase tracking-widest block mb-2">
-            SEC 04 // GLOBAL FOOTPRINT
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-            {lang === 'es' ? 'Presencia Binacional: Estados Unidos & Ecuador' : 'Binational Advantage: United States & Ecuador'}
-          </h2>
-          <p className="mt-3 text-slate-400 text-sm sm:text-base">
-            {lang === 'es'
-              ? 'La solidez legal y financiera de una corporación estadounidense combinada con la agilidad y ventaja de costos del talento de ingeniería de Ecuador.'
-              : 'US corporate and contractual safeguards paired with high-caliber nearshore engineering delivery and zero timezone friction.'}
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-8">
-          {/* USA Box */}
-          <div className="p-8 rounded-2xl bg-white/[0.02] border border-white/[0.08] relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/10 rounded-full blur-2xl pointer-events-none" />
-            <div className="flex items-center gap-3 mb-4">
-              <span className="text-2xl">🇺🇸</span>
-              <div>
-                <h3 className="text-lg font-bold text-white">United States Operations</h3>
-                <span className="text-xs font-mono text-slate-400">California & Newark, New Jersey</span>
-              </div>
-            </div>
-
-            <p className="text-slate-300 text-sm leading-relaxed mb-6">
-              {lang === 'es'
-                ? 'Constitución corporativa formal en EE.UU. Permite a clientes norteamericanos e internacionales celebrar contratos comerciales regidos por ley estadounidense, pagos directos vía ACH / Wire en USD, y facturación con W-9/EIN oficial.'
-                : 'Formally incorporated US corporate entity. US and global enterprise clients execute enforceable service agreements under US jurisdiction, with direct domestic ACH/Wire transfers and official W-9/EIN compliance.'}
-            </p>
-
-            <ul className="space-y-2.5 text-xs text-slate-300 font-mono">
-              <li className="flex items-center gap-2">
-                <Icons.Check /> {lang === 'es' ? 'Contratos con marco legal de EE.UU. (California Law)' : 'US Law Contracts & Enforceable Master Service Agreements'}
-              </li>
-              <li className="flex items-center gap-2">
-                <Icons.Check /> {lang === 'es' ? 'Pagos ACH, Wire Transfer y tarjetas en USD' : 'Direct US Banking: ACH, Domestic Wire & Card Processing'}
-              </li>
-              <li className="flex items-center gap-2">
-                <Icons.Check /> {lang === 'es' ? 'Zona horaria EST y PST para comunicación continua' : 'Aligned Time Zones (EST & PST) with zero turnaround lag'}
-              </li>
-            </ul>
-          </div>
-
-          {/* Ecuador Box */}
-          <div className="p-8 rounded-2xl bg-white/[0.02] border border-white/[0.08] relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-600/10 rounded-full blur-2xl pointer-events-none" />
-            <div className="flex items-center gap-3 mb-4">
-              <span className="text-2xl">🇪🇨</span>
-              <div>
-                <h3 className="text-lg font-bold text-white">Ecuador Engineering Hub</h3>
-                <span className="text-xs font-mono text-slate-400">Quito, Guayaquil & Cuenca</span>
-              </div>
-            </div>
-
-            <p className="text-slate-300 text-sm leading-relaxed mb-6">
-              {lang === 'es'
-                ? 'Centro principal de desarrollo e innovación tecnológica. RUC formal para emisión de facturas electrónicas con validez tributaria para empresas ecuatorianas, cumplimiento estricto con SRI y marco LOPDP.'
-                : 'Primary software engineering and technical innovation hub. Direct domestic invoicing for Ecuadorian enterprises with complete SRI tax accreditation and local engineering support.'}
-            </p>
-
-            <ul className="space-y-2.5 text-xs text-slate-300 font-mono">
-              <li className="flex items-center gap-2">
-                <Icons.Check /> {lang === 'es' ? 'Facturación electrónica autorizada por el SRI con RUC' : 'Official SRI Tax-Deductible Invoicing (RUC Registered)'}
-              </li>
-              <li className="flex items-center gap-2">
-                <Icons.Check /> {lang === 'es' ? 'Cumplimiento normativo y auditoría de LOPDP' : 'Audited Compliance with Data Protection Authorities'}
-              </li>
-              <li className="flex items-center gap-2">
-                <Icons.Check /> {lang === 'es' ? 'Costos de ingeniería altamente competitivos' : 'Tier-1 nearshore cost efficiency without quality sacrifice'}
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* ── SECTION 05: CONTRACTUAL GUARANTEES ─────────────────── */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-white/[0.08]">
-        <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-blue-900/20 via-indigo-900/20 to-transparent border border-white/[0.12] space-y-6">
-          <span className="text-xs font-mono text-emerald-400 uppercase tracking-widest block">
-            SEC 05 // CONTRACTUAL PROTECTIONS
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-            {lang === 'es' ? 'Garantías Formales en Cada Proyecto' : 'Contractual Protections on Every Engagement'}
-          </h2>
-
-          <div className="grid sm:grid-cols-3 gap-6 pt-4">
-            <div className="space-y-2">
-              <div className="text-white font-bold text-base flex items-center gap-2">
-                <Icons.ShieldCheck />
-                <span>{lang === 'es' ? 'NDA & Confidencialidad' : 'Enforceable NDA'}</span>
-              </div>
-              <p className="text-slate-300 text-xs leading-relaxed">
-                {lang === 'es'
-                  ? 'Firmamos acuerdos de estricta confidencialidad antes de revisar cualquier especificación o base de datos de tu empresa.'
-                  : 'Bilateral confidentiality agreements executed before inspecting proprietary specs, databases, or trade secrets.'}
-              </p>
-            </div>
-
-            <div className="space-y-2">
-              <div className="text-white font-bold text-base flex items-center gap-2">
-                <Icons.FileCode />
-                <span>{lang === 'es' ? 'Entrega de Repositorio' : 'Full Repository Handover'}</span>
-              </div>
-              <p className="text-slate-300 text-xs leading-relaxed">
-                {lang === 'es'
-                  ? 'Transfiriendo la titularidad en GitHub, credenciales cloud y documentación técnica completa. Cero códigos retenidos.'
-                  : 'Complete GitHub repository transfer, cloud credentials ownership, and exhaustive architecture documentation.'}
-              </p>
-            </div>
-
-            <div className="space-y-2">
-              <div className="text-white font-bold text-base flex items-center gap-2">
-                <Icons.Check />
-                <span>{lang === 'es' ? 'Garantía Técnica 90 Días' : '90-Day Post-Launch Warranty'}</span>
-              </div>
-              <p className="text-slate-300 text-xs leading-relaxed">
-                {lang === 'es'
-                  ? 'Corrección garantizada sin costo de cualquier inconsistencia o bug técnico posterior al despliegue en producción.'
-                  : 'Guaranteed remediation of any production bug or specification divergence for 90 days at zero extra cost.'}
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── SECTION 06: OFFICIAL CONTACT & VERIFICATION ────────── */}
-      <footer className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-12 gap-8 items-start mb-12">
-          <div className="md:col-span-5 space-y-4">
-            <div className="flex items-center gap-2">
-              <span className="text-white font-extrabold text-2xl tracking-tight">
-                Ame<span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">Phia</span>
-              </span>
-              <span className="text-xs font-mono uppercase tracking-wider text-slate-400 px-2 py-0.5 rounded bg-white/[0.06]">
-                Systems Inc.
-              </span>
-            </div>
-            <p className="text-slate-400 text-xs sm:text-sm leading-relaxed max-w-sm">
-              {lang === 'es'
-                ? 'Firma internacional de ingeniería de software y soluciones tecnológicas corporativas. Presencia en California, Newark NJ y Ecuador.'
-                : 'International software engineering and enterprise technology solutions firm. Operating across California, Newark NJ, and Ecuador.'}
-            </p>
-            <div className="text-xs font-mono text-slate-500 pt-2">
-              TAX ID / EIN: REGISTERED CORP · REG. SRI ECUADOR
-            </div>
-          </div>
-
-          <div className="md:col-span-7 grid sm:grid-cols-2 gap-6 text-xs text-slate-300">
-            <div className="p-5 rounded-xl bg-white/[0.02] border border-white/[0.08] space-y-3">
-              <div className="font-bold text-white text-sm flex items-center gap-2">
-                <Icons.Building />
-                <span>{lang === 'es' ? 'Canales Directos' : 'Executive Inquiries'}</span>
-              </div>
-              <div className="space-y-2">
-                <a
-                  href="https://wa.me/13347324056"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-slate-300 hover:text-emerald-400 transition-colors"
-                >
-                  <Icons.Phone />
-                  <span className="font-mono">+1 (334) 732-4056 (WhatsApp / Call)</span>
-                </a>
-                <a
-                  href="mailto:info@amephia.com"
-                  className="flex items-center gap-2 text-slate-300 hover:text-blue-400 transition-colors"
-                >
-                  <Icons.Mail />
-                  <span className="font-mono">info@amephia.com</span>
-                </a>
-                <a
-                  href="https://amephia.com"
-                  className="flex items-center gap-2 text-slate-300 hover:text-cyan-400 transition-colors"
-                >
-                  <Icons.Globe />
-                  <span className="font-mono">https://amephia.com</span>
-                </a>
-              </div>
-            </div>
-
-            <div className="p-5 rounded-xl bg-white/[0.02] border border-white/[0.08] space-y-3">
-              <div className="font-bold text-white text-sm flex items-center gap-2">
-                <Icons.Globe />
-                <span>{lang === 'es' ? 'Sedes Corporativas' : 'Office Locations'}</span>
-              </div>
-              <div className="space-y-2 text-slate-400 leading-relaxed font-mono">
-                <div>• California, United States</div>
-                <div>• Newark, New Jersey, United States</div>
-                <div>• Quito & Guayaquil, Ecuador</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="pt-8 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between text-xs font-mono text-slate-500 gap-4">
-          <div>© 2026 AmePhia Systems Inc. All rights reserved.</div>
-          <div>DOCUMENT CLASSIFICATION: PUBLIC CORPORATE DOSSIER</div>
+      {/* ── FOOTER BAR ────────────────────────────────────────── */}
+      <footer className="py-4 px-6 border-t border-white/[0.06] bg-[#050811] text-[11px] font-mono text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-2 print:hidden">
+        <div>© 2026 AmePhia Systems Inc. · California, USA · Newark NJ · Ecuador</div>
+        <div className="flex items-center gap-4">
+          <a href="/" className="hover:text-slate-300 transition-colors">Sitio Principal</a>
+          <span>·</span>
+          <a href="mailto:info@amephia.com" className="hover:text-slate-300 transition-colors">info@amephia.com</a>
+          <span>·</span>
+          <a href="https://wa.me/13347324056" target="_blank" rel="noopener" className="text-emerald-400 hover:underline">+1 (334) 732-4056</a>
         </div>
       </footer>
     </div>
