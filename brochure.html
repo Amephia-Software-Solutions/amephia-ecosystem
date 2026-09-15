@@ -3,23 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AmePhia Software Solutions — Brochure Corporativo Tríptico 2026</title>
-  <meta name="description" content="Brochure corporativo tríptico de AmePhia Software Solutions. Sitios web, aplicaciones a medida, marketing digital, redes sociales y visibilidad en IA." />
+  <title>AmePhia Software Solutions — Brochure Corporativo Tríptico Oficial 2026</title>
+  <meta name="description" content="Brochure corporativo tríptico oficial de AmePhia Software Solutions. Sitios web, aplicaciones a medida, modernización, SEO orgánico y visibilidad en IA." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://amephia.com/brochure" />
   <link rel="icon" href="/favicon.ico" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
     :root {
-      --bg: #070B16;
+      --bg: #040712;
       --blue: #2563EB;
       --blue-dark: #1D4ED8;
       --cyan: #06B6D4;
-      --text-dark: #0F172A;
       --font: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
       --mono: 'JetBrains Mono', monospace;
     }
@@ -34,6 +33,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -50,9 +50,9 @@
       position: sticky;
       top: 0;
       z-index: 50;
-      background: rgba(7, 12, 24, 0.95);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      background: rgba(6, 10, 24, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       padding: 12px 24px;
       display: flex;
@@ -65,10 +65,10 @@
       gap: 10px;
     }
     .logo-box {
-      width: 34px;
-      height: 34px;
-      border-radius: 8px;
-      background: linear-gradient(135deg, #2563EB, #06B6D4);
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #2563EB, #4F46E5, #06B6D4);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -76,9 +76,10 @@
       font-weight: 800;
       color: #fff;
       font-size: 14px;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
     }
     .brand-text {
-      font-weight: 800;
+      font-weight: 900;
       font-size: 18px;
       line-height: 1;
     }
@@ -89,6 +90,7 @@
       color: #94A3B8;
       letter-spacing: 1.5px;
       text-transform: uppercase;
+      font-weight: 600;
     }
 
     .nav-actions {
@@ -101,51 +103,62 @@
       border: 1px solid rgba(255, 255, 255, 0.1);
       color: #CBD5E1;
       padding: 6px 12px;
-      border-radius: 8px;
+      border-radius: 10px;
       font-size: 12px;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
       font-family: var(--font);
+      transition: all 0.2s;
     }
     .btn-toggle.active {
       background: var(--blue);
       border-color: var(--blue);
       color: #fff;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
     }
     .btn-print {
       background: linear-gradient(135deg, #2563EB, #4F46E5);
       border: none;
       color: #fff;
       padding: 7px 16px;
-      border-radius: 8px;
+      border-radius: 10px;
       font-size: 12px;
-      font-weight: 700;
+      font-weight: 800;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 6px;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
     }
 
     /* Hero Banner */
     .hero-banner {
-      max-width: 1200px;
+      max-width: 1280px;
       margin: 20px auto 10px;
-      padding: 24px 32px;
-      background: linear-gradient(135deg, rgba(30, 58, 138, 0.3), #0B132B, #070B16);
+      padding: 28px 36px;
+      background: linear-gradient(135deg, #0C152B, #091024 60%, #050814);
       border: 1px solid rgba(59, 130, 246, 0.25);
-      border-radius: 18px;
+      border-radius: 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 24px;
+      gap: 32px;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8);
+      position: relative;
+      overflow: hidden;
     }
     .cover-thumb {
-      width: 220px;
-      border-radius: 12px;
+      width: 250px;
+      border-radius: 16px;
       overflow: hidden;
       border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85);
       flex-shrink: 0;
+      transition: transform 0.4s ease;
+      cursor: pointer;
+    }
+    .cover-thumb:hover {
+      transform: scale(1.04) rotate(1deg);
     }
     .cover-thumb img {
       width: 100%;
@@ -155,7 +168,7 @@
 
     /* Trifold Grid */
     .trifold-wrap {
-      max-width: 1200px;
+      max-width: 1280px;
       margin: 16px auto 32px;
       padding: 0 16px;
       width: 100%;
@@ -163,17 +176,17 @@
     .trifold {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      border-radius: 20px;
+      border-radius: 24px;
       overflow: hidden;
-      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9);
+      box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.95);
       border: 1px solid rgba(255, 255, 255, 0.15);
       background: #fff;
-      color: var(--text-dark);
+      color: #0F172A;
     }
 
     /* Panel 1 */
     .panel-1 {
-      padding: 36px 32px;
+      padding: 38px 32px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -186,13 +199,13 @@
       font-weight: 700;
       color: #64748B;
       text-align: right;
-      line-height: 1.25;
+      line-height: 1.3;
       border-left: 2px solid var(--blue);
-      padding-left: 8px;
+      padding-left: 10px;
     }
     .headline-1 {
       font-size: 26px;
-      font-weight: 800;
+      font-weight: 900;
       line-height: 1.15;
       color: #020617;
       margin: 20px 0 12px;
@@ -211,12 +224,14 @@
       color: #fff;
       padding: 14px 20px;
       border-radius: 12px;
-      font-weight: 700;
+      font-weight: 800;
       font-size: 14px;
       text-align: center;
-      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.35);
       margin-bottom: 20px;
+      transition: transform 0.2s;
     }
+    .btn-cta:hover { transform: translateY(-1px); }
     .stats-row {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
@@ -226,29 +241,41 @@
     .stat-box {
       background: #F0F7FF;
       border: 1px solid #DBEAFE;
-      border-radius: 10px;
+      border-radius: 12px;
       padding: 10px 6px;
     }
-    .stat-icon { font-size: 18px; margin-bottom: 4px; }
+    .stat-icon { font-size: 20px; margin-bottom: 4px; }
     .stat-label {
       font-size: 9.5px;
       font-weight: 800;
       color: #1E293B;
       text-transform: uppercase;
     }
-    .panel-1-footer {
+    .team-card {
       margin-top: 24px;
+      border-radius: 16px;
+      overflow: hidden;
       background: #020617;
       color: #fff;
-      padding: 14px 18px;
-      border-radius: 14px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
     }
-    .p1-foot-text { font-size: 12px; font-weight: 700; }
-    .p1-foot-sub { font-size: 9.5px; color: #93C5FD; font-family: var(--mono); }
+    .team-img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+    .team-badge {
+      padding: 12px 16px;
+      background: linear-gradient(90deg, #1E3A8A, #020617);
+      border-top: 1px solid rgba(59, 130, 246, 0.3);
+    }
+    .team-badge-txt { font-size: 12px; font-weight: 800; }
+    .team-badge-sub { font-size: 9px; color: #93C5FD; font-family: var(--mono); text-transform: uppercase; }
 
     /* Panel 2 */
     .panel-2 {
-      padding: 36px 32px;
+      padding: 38px 32px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -263,7 +290,7 @@
       padding-bottom: 12px;
       margin-bottom: 18px;
     }
-    .p2-title { font-size: 22px; font-weight: 800; color: #020617; }
+    .p2-title { font-size: 22px; font-weight: 900; color: #020617; }
     .p2-sub {
       font-size: 9px;
       font-family: var(--mono);
@@ -271,7 +298,7 @@
       color: #64748B;
       text-align: right;
       max-width: 140px;
-      line-height: 1.25;
+      line-height: 1.3;
     }
     .svc-item {
       display: flex;
@@ -280,45 +307,48 @@
       margin-bottom: 14px;
     }
     .svc-icon {
-      width: 32px;
-      height: 32px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       background: #DBEAFE;
       color: #1D4ED8;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
+      font-size: 15px;
       flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.15);
     }
-    .svc-name { font-size: 13px; font-weight: 700; color: #0F172A; }
+    .svc-name { font-size: 13px; font-weight: 800; color: #0F172A; }
     .svc-desc { font-size: 11px; color: #64748B; line-height: 1.5; }
 
     .ai-card {
       padding: 14px;
-      border-radius: 12px;
+      border-radius: 14px;
       border: 2px solid var(--blue);
       background: linear-gradient(135deg, #EFF6FF, #EEF2FF);
       display: flex;
       align-items: flex-start;
       gap: 12px;
       margin: 16px 0;
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.12);
     }
     .ai-badge {
-      width: 34px;
-      height: 34px;
-      border-radius: 8px;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
       background: var(--blue);
       color: #fff;
       font-family: var(--mono);
-      font-weight: 800;
-      font-size: 11px;
+      font-weight: 900;
+      font-size: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
     }
-    .ai-title { font-size: 13px; font-weight: 800; color: #1E3A8A; }
+    .ai-title { font-size: 13px; font-weight: 900; color: #1E3A8A; }
     .ai-desc { font-size: 11px; color: #475569; line-height: 1.5; margin-top: 2px; }
 
     .trust-grid {
@@ -327,7 +357,7 @@
       gap: 8px;
       font-size: 10px;
       color: #475569;
-      font-weight: 600;
+      font-weight: 700;
     }
     .trust-item { display: flex; align-items: center; gap: 6px; }
 
@@ -335,39 +365,48 @@
       margin-top: 18px;
       background: #EFF6FF;
       border: 1px solid #BFDBFE;
-      padding: 12px;
-      border-radius: 12px;
+      padding: 14px;
+      border-radius: 14px;
       text-align: center;
+      transition: background 0.2s;
     }
-    .b-cta-title { font-size: 13px; font-weight: 800; color: #1D4ED8; }
-    .b-cta-sub { font-size: 10px; color: #64748B; margin-top: 2px; }
+    .bottom-cta-banner:hover { background: #DBEAFE; }
+    .b-cta-title { font-size: 13px; font-weight: 900; color: #1D4ED8; }
+    .b-cta-sub { font-size: 10px; color: #64748B; margin-top: 2px; font-weight: 500; }
 
     /* Panel 3 */
     .panel-3 {
-      padding: 36px 32px;
+      padding: 38px 32px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       background: #040814;
       color: #fff;
       position: relative;
+      overflow: hidden;
     }
-    .p3-glow {
+    .p3-skyline {
       position: absolute;
       top: 0; left: 0; right: 0;
-      height: 140px;
-      background: linear-gradient(180deg, rgba(37, 99, 235, 0.2), transparent);
+      height: 160px;
+      overflow: hidden;
+      opacity: 0.38;
       pointer-events: none;
+    }
+    .p3-skyline img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
     .p3-title {
       font-size: 26px;
-      font-weight: 800;
+      font-weight: 900;
       line-height: 1.15;
       margin: 18px 0 10px;
     }
     .p3-title span { color: #60A5FA; }
     .p3-desc {
-      font-size: 12px;
+      font-size: 12.5px;
       color: #CBD5E1;
       line-height: 1.6;
       margin-bottom: 20px;
@@ -381,14 +420,14 @@
     .p3-feat {
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
+      border-radius: 14px;
       padding: 12px 8px;
       text-align: center;
     }
     .p3-feat-icon { font-size: 18px; margin-bottom: 4px; color: #60A5FA; }
     .p3-feat-lbl {
       font-size: 9.5px;
-      font-weight: 700;
+      font-weight: 800;
       text-transform: uppercase;
       color: #E2E8F0;
     }
@@ -412,19 +451,19 @@
       font-family: Georgia, serif;
       font-style: italic;
       color: #93C5FD;
-      font-size: 18px;
+      font-size: 19px;
     }
 
     /* HD Viewer View */
     .hd-view {
       display: none;
-      max-width: 1100px;
+      max-width: 1200px;
       margin: 16px auto 32px;
       padding: 0 16px;
       width: 100%;
     }
     .hd-frame {
-      border-radius: 18px;
+      border-radius: 20px;
       overflow: hidden;
       border: 1px solid rgba(255, 255, 255, 0.15);
       box-shadow: 0 25px 60px rgba(0,0,0,0.8);
@@ -436,11 +475,87 @@
       display: block;
     }
 
+    /* 3D Cover View */
+    .cover-view {
+      display: none;
+      max-width: 1280px;
+      margin: 16px auto 32px;
+      padding: 0 16px;
+      width: 100%;
+    }
+    .cover-card-container {
+      background: linear-gradient(135deg, #080E21, #050917 60%, #02050E);
+      border: 1px solid rgba(59, 130, 246, 0.25);
+      border-radius: 24px;
+      padding: 40px;
+      display: grid;
+      grid-template-columns: 5fr 7fr;
+      gap: 48px;
+      align-items: center;
+      box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.95);
+      position: relative;
+      overflow: hidden;
+    }
+    .book-3d-stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      perspective: 1500px;
+    }
+    .book-3d {
+      width: 100%;
+      max-width: 360px;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 25px 60px -10px rgba(0,0,0,0.95), 0 0 35px rgba(37, 99, 235, 0.3);
+      cursor: pointer;
+      transition: transform 0.6s ease;
+    }
+    .book-3d:hover {
+      transform: scale(1.03) rotateY(-4deg);
+    }
+    .book-3d img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .cover-pillars {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 20px 0;
+    }
+    .pillar-box {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 14px;
+      transition: border-color 0.2s;
+    }
+    .pillar-box:hover {
+      border-color: rgba(59, 130, 246, 0.4);
+    }
+    .pillar-title {
+      font-weight: 800;
+      font-size: 13px;
+      color: #93C5FD;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .pillar-desc {
+      font-size: 11.5px;
+      color: #94A3B8;
+      line-height: 1.5;
+    }
+
     /* Footer */
     footer {
       padding: 16px 24px;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
-      background: #050811;
+      background: #040712;
       font-family: var(--mono);
       font-size: 11px;
       color: #64748B;
@@ -454,12 +569,14 @@
       .panel-1, .panel-2 { border-right: none; border-bottom: 1px solid #E2E8F0; }
       .hero-banner { flex-direction: column; text-align: center; }
       .cover-thumb { width: 100%; max-width: 280px; }
+      .cover-card-container { grid-template-columns: 1fr; gap: 32px; padding: 24px; }
+      .cover-pillars { grid-template-columns: 1fr; }
     }
 
     @media print {
-      header, .hero-banner, footer, .btn-print { display: none !important; }
+      header, .hero-banner, footer, .btn-print, .cover-view { display: none !important; }
       body { background: #fff !important; }
-      .trifold-wrap { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+      .trifold-wrap { max-width: 100% !important; padding: 0 !important; margin: 0 !important; display: block !important; }
       .trifold { border: none !important; box-shadow: none !important; }
     }
   </style>
@@ -477,9 +594,13 @@
     </div>
 
     <div class="nav-actions">
+      <button class="btn-toggle" id="tab-cover" onclick="setTab('cover')">
+        <span class="es">📕 Portada 3D</span>
+        <span class="en">📕 3D Cover</span>
+      </button>
       <button class="btn-toggle active" id="tab-trifold" onclick="setTab('trifold')">
-        <span class="es">📖 Tríptico Interactivo</span>
-        <span class="en">📖 Interactive Trifold</span>
+        <span class="es">📖 Tríptico Desplegado</span>
+        <span class="en">📖 Unfolded Trifold</span>
       </button>
       <button class="btn-toggle" id="tab-hd" onclick="setTab('hd')">
         <span class="es">🔍 Lámina HD</span>
@@ -501,19 +622,92 @@
         <span class="es">BROCHURE CORPORATIVO OFICIAL // VERSIÓN TRÍPTICO EJECUTIVO</span>
         <span class="en">OFFICIAL CORPORATE BROCHURE // EXECUTIVE TRIFOLD VERSION</span>
       </div>
-      <h1 style="font-size: 26px; font-weight: 800; line-height: 1.2; margin-bottom: 10px;">
+      <h1 style="font-size: 28px; font-weight: 900; line-height: 1.2; margin-bottom: 10px;">
         <span class="es">Lleva tu negocio al siguiente nivel con una <span style="color: #60A5FA;">solución digital a tu medida.</span></span>
         <span class="en">Get a professional website or web application for <span style="color: #60A5FA;">your business today.</span></span>
       </h1>
-      <p style="font-size: 13px; color: #CBD5E1; max-width: 600px; line-height: 1.6;">
+      <p style="font-size: 13.5px; color: #CBD5E1; max-width: 620px; line-height: 1.6;">
         <span class="es">Diseñado para directores de empresas, líderes tecnológicos y dueños de negocio que buscan ingeniería confiable, precios justos y resultados medibles en EE.UU. y Ecuador.</span>
         <span class="en">Engineered for business owners and technology leaders demanding high-caliber software engineering, fair pricing, and measurable ROI across the US and LatAm.</span>
       </p>
+      <div style="margin-top: 16px; display: flex; gap: 10px; flex-wrap: wrap;">
+        <a href="https://wa.me/13347324056?text=Hola%20AmePhia,%20vi%20su%20brochure%20corporativo%20tr%C3%ADptico%20y%20deseo%20una%20asesor%C3%ADa." target="_blank" style="background: linear-gradient(135deg, #2563EB, #1D4ED8); color: #fff; padding: 10px 18px; border-radius: 12px; font-weight: 800; font-size: 12px; box-shadow: 0 4px 14px rgba(37,99,235,0.4);">
+          <span class="es">Solicitar Asesoría por WhatsApp →</span>
+          <span class="en">Request Consultation on WhatsApp →</span>
+        </a>
+        <button onclick="setTab('cover')" class="btn-toggle" style="background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); color: #fff; padding: 10px 18px; border-radius: 12px; font-weight: 700; font-size: 12px;">
+          <span class="es">📕 Ver Portada 3D</span>
+          <span class="en">📕 View 3D Cover</span>
+        </button>
+      </div>
     </div>
 
     <!-- 3D Cover Thumbnail -->
-    <div class="cover-thumb">
+    <div class="cover-thumb" onclick="setTab('cover')">
       <img src="/brochure-cover.jpg" alt="AmePhia Systems 3D Cover Dossier" />
+    </div>
+  </div>
+
+  <!-- 3D Cover Executive Dossier View -->
+  <div class="cover-view" id="view-cover">
+    <div class="cover-card-container">
+      <div class="book-3d-stage">
+        <div class="book-3d" onclick="setTab('trifold')">
+          <img src="/brochure-cover.jpg" alt="AmePhia Official 3D Cover" />
+        </div>
+        <div style="margin-top: 20px; display: flex; gap: 10px; width: 100%; max-width: 360px;">
+          <button onclick="setTab('trifold')" style="flex: 1; padding: 12px; background: var(--blue); color: #fff; border: none; border-radius: 12px; font-weight: 800; font-size: 12px; cursor: pointer; box-shadow: 0 4px 14px rgba(37,99,235,0.35);">
+            <span class="es">📖 Desplegar Tríptico</span>
+            <span class="en">📖 Unfold Trifold</span>
+          </button>
+          <button onclick="setTab('hd')" style="padding: 12px 16px; background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; font-weight: 700; font-size: 12px; cursor: pointer;">
+            <span>🔍 HD</span>
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-family: var(--mono); font-size: 11px; color: #60A5FA; font-weight: 700; text-transform: uppercase; margin-bottom: 8px;">
+          AMEPHIA SOFTWARE SOLUTIONS · USA &amp; LATAM
+        </div>
+        <h2 style="font-size: 32px; font-weight: 900; line-height: 1.15; color: #fff; margin-bottom: 12px;">
+          Engineering the Future of <span style="color: #60A5FA;">Your Business.</span>
+        </h2>
+        <p style="font-size: 13.5px; color: #CBD5E1; line-height: 1.6;">
+          <span class="es">Desarrollamos ingeniería de software y soluciones web corporativas de nivel mundial: sistemas a medida, plataformas web de alto tráfico, optimización en motores de IA (ChatGPT, Google Gemini) y posicionamiento SEO estratégico.</span>
+          <span class="en">We engineer world-class software and corporate web solutions: custom systems, high-traffic web platforms, AI engine optimization (ChatGPT, Google Gemini), and strategic SEO positioning.</span>
+        </p>
+
+        <div class="cover-pillars">
+          <div class="pillar-box">
+            <div class="pillar-title"><span>🌐</span> <span class="es">Desarrollo Web Moderno</span><span class="en">Modern Web Engineering</span></div>
+            <div class="pillar-desc"><span class="es">Sitios de alto impacto visual y conversión de clientes.</span><span class="en">High-impact websites optimized for customer conversion.</span></div>
+          </div>
+          <div class="pillar-box">
+            <div class="pillar-title"><span>⚡</span> <span class="es">Sistemas &amp; ERP a Medida</span><span class="en">Custom Systems &amp; ERP</span></div>
+            <div class="pillar-desc"><span class="es">Automatización y control integral de operaciones empresariales.</span><span class="en">Comprehensive automation of business workflows.</span></div>
+          </div>
+          <div class="pillar-box">
+            <div class="pillar-title"><span>🤖</span> <span class="es">Visibilidad en IA (ChatGPT)</span><span class="en">AI &amp; ChatGPT Visibility</span></div>
+            <div class="pillar-desc"><span class="es">Optimización GEO para destacar en búsquedas de IA.</span><span class="en">GEO optimization to rank in AI search queries.</span></div>
+          </div>
+          <div class="pillar-box">
+            <div class="pillar-title"><span>📈</span> <span class="es">Crecimiento y Conversión</span><span class="en">Growth &amp; Scalability</span></div>
+            <div class="pillar-desc"><span class="es">SEO técnico, pauta digital y escalabilidad cloud.</span><span class="en">Technical SEO, digital ads, and cloud scalability.</span></div>
+          </div>
+        </div>
+
+        <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+          <div style="font-family: var(--mono); font-size: 11px; color: #94A3B8;">
+            <div>📍 Miami FL (USA) · Newark NJ · Ecuador</div>
+            <div>✉️ hola@amephia.com · 🌐 www.amephia.com</div>
+          </div>
+          <a href="https://wa.me/13347324056?text=Hola%20AmePhia,%20vi%20su%20brochure%20corporativo%20tr%C3%ADptico%20y%20deseo%20una%20asesor%C3%ADa." target="_blank" style="background: linear-gradient(135deg, #2563EB, #4F46E5); color: #fff; padding: 12px 20px; border-radius: 12px; font-weight: 800; font-size: 12px; box-shadow: 0 4px 14px rgba(37,99,235,0.4);">
+            <span class="es">Consultar por WhatsApp →</span>
+            <span class="en">WhatsApp Consultation →</span>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -527,7 +721,7 @@
           <div style="display: flex; justify-content: space-between; align-items: flex-start;">
             <div style="display: flex; align-items: center; gap: 8px;">
               <div class="logo-box" style="width: 32px; height: 32px; font-size: 12px;">&lt;/&gt;</div>
-              <div style="font-weight: 800; font-size: 16px;">Ame<span style="color: var(--blue);">Phia</span></div>
+              <div style="font-weight: 900; font-size: 16px;">Ame<span style="color: var(--blue);">Phia</span></div>
             </div>
             <div class="tagline-top">
               <span class="es">TECNOLOGÍA<br>PERSONAS<br>RESULTADOS</span>
@@ -566,12 +760,15 @@
           </div>
         </div>
 
-        <div class="panel-1-footer">
-          <div class="p1-foot-text">
-            <span class="es">Tu éxito también se construye con tecnología.</span>
-            <span class="en">Your ideas. Our technology. Real results.</span>
+        <div class="team-card">
+          <img src="/assets/brochure/team.jpg" alt="Equipo Profesional AmePhia" class="team-img" />
+          <div class="team-badge">
+            <div class="team-badge-txt">
+              <span class="es">Tu éxito también se construye con tecnología.</span>
+              <span class="en">Your ideas. Our technology. Real results.</span>
+            </div>
+            <div class="team-badge-sub">AMEPHIA SOFTWARE SOLUTIONS</div>
           </div>
-          <div class="p1-foot-sub">AMEPHIA SOFTWARE SOLUTIONS</div>
         </div>
       </div>
 
@@ -673,7 +870,7 @@
 
           <!-- Trust badges -->
           <div class="trust-grid">
-            <div class="trust-item"><span>🛡️</span> <span class="es">Soluciones seguras</span><span class="en">Secure solutions</span></div>
+            <div class="trust-item"><span>🛡️</span> <span class="es">Soluciones seguras y confiables</span><span class="en">Secure solutions</span></div>
             <div class="trust-item"><span>👤</span> <span class="es">Atención personalizada</span><span class="en">Personalized care</span></div>
             <div class="trust-item"><span>⏰</span> <span class="es">Entrega a tiempo</span><span class="en">On-time delivery</span></div>
             <div class="trust-item"><span>📊</span> <span class="es">Resultados medibles</span><span class="en">Measurable results</span></div>
@@ -696,29 +893,32 @@
 
       <!-- ═════════ PANEL 3 (RIGHT): SKYLINE & CONTACT ═════════ -->
       <div class="panel-3">
-        <div class="p3-glow"></div>
+        <div class="p3-skyline">
+          <img src="/assets/brochure/skyline.jpg" alt="City Skyline" />
+        </div>
+
         <div>
-          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; position: relative; z-index: 10;">
             <div style="display: flex; align-items: center; gap: 8px;">
-              <div class="logo-box" style="background: #2563EB;">&lt;/&gt;</div>
-              <div style="font-weight: 800; font-size: 16px;">Ame<span style="color: #60A5FA;">Phia</span></div>
+              <div class="logo-box" style="background: #2563EB; width: 30px; height: 30px; font-size: 11px;">&lt;/&gt;</div>
+              <div style="font-weight: 900; font-size: 16px;">Ame<span style="color: #60A5FA;">Phia</span></div>
             </div>
             <div style="font-family: var(--mono); font-size: 9px; color: #94A3B8; text-align: right; line-height: 1.3;">
               MIAMI · NEW YORK<br>ORLANDO · LATAM
             </div>
           </div>
 
-          <h3 class="p3-title">
+          <h3 class="p3-title" style="position: relative; z-index: 10;">
             <span class="es">Soluciones digitales que <span>impulsan tu negocio.</span></span>
             <span class="en">Your digital partner for <span>what's next.</span></span>
           </h3>
 
-          <p class="p3-desc">
+          <p class="p3-desc" style="position: relative; z-index: 10;">
             <span class="es">Sitios web, aplicaciones, marketing digital, redes sociales y presencia en IA para que tu marca siga creciendo.</span>
             <span class="en">Websites, web applications, digital marketing, social media and AI visibility to take your business further.</span>
           </p>
 
-          <div class="p3-features">
+          <div class="p3-features" style="position: relative; z-index: 10;">
             <div class="p3-feat">
               <div class="p3-feat-icon">🚀</div>
               <div class="p3-feat-lbl"><span class="es">Más Visibilidad</span><span class="en">More Visibility</span></div>
@@ -738,7 +938,7 @@
           </div>
         </div>
 
-        <div>
+        <div style="position: relative; z-index: 10;">
           <div class="contact-box">
             <div class="contact-line"><span>✉</span> <a href="mailto:hola@amephia.com">hola@amephia.com</a></div>
             <div class="contact-line"><span>🌐</span> <a href="https://amephia.com">www.amephia.com</a></div>
@@ -775,10 +975,13 @@
 
   <script>
     function setTab(tab) {
+      document.getElementById('view-cover').style.display = (tab === 'cover') ? 'block' : 'none';
       document.getElementById('view-trifold').style.display = (tab === 'trifold') ? 'block' : 'none';
       document.getElementById('view-hd').style.display = (tab === 'hd') ? 'block' : 'none';
+      document.getElementById('tab-cover').classList.toggle('active', tab === 'cover');
       document.getElementById('tab-trifold').classList.toggle('active', tab === 'trifold');
       document.getElementById('tab-hd').classList.toggle('active', tab === 'hd');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function setLang(l) {
