@@ -7,6 +7,7 @@ import EcommerceLanding from './components/EcommerceLanding';
 import ShieldDataLanding from './components/ShieldDataLanding';
 import EducationLanding from './components/EducationLanding';
 import { CompanyLanding } from './components/CompanyLanding';
+import BrochurePage from './components/BrochurePage';
 import { isProjectId } from './projects';
 import type { ProjectId } from './projects';
 import { trackEvent, trackPageView } from './lib/analytics';
@@ -354,6 +355,11 @@ function App({ onReady }: { onReady?: () => void }) {
     setActiveProject(null);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
+
+  // Brochure route
+  if (window.location.pathname === '/brochure') {
+    return <BrochurePage />;
+  }
 
   if (activeProject === 'migration') {
     return <MigrationSaasLanding />;
