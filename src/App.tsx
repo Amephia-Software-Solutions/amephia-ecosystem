@@ -136,18 +136,12 @@ const getProjectFromHash = (hash: string): ProjectId | null => {
 const getProjectFromLocation = (pathname: string, hash: string): ProjectId | null =>
   getProjectFromPathname(pathname) ?? getProjectFromHash(hash);
 
-function App({ onReady }: { onReady?: () => void }) {
+function App() {
   const [activeProject, setActiveProject] = useState<ProjectId | null>(() =>
     typeof window === 'undefined'
       ? null
       : getProjectFromLocation(window.location.pathname, window.location.hash)
   );
-
-  // Dismiss splash screen on first render
-  useEffect(() => {
-    onReady?.();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     const syncProjectFromUrl = () => {
