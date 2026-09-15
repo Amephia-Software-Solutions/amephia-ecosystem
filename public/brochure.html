@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AmePhia Software Solutions — Brochure Corporativo Tríptico Oficial 2026</title>
-  <meta name="description" content="Brochure corporativo tríptico oficial de AmePhia Software Solutions. Sitios web, aplicaciones a medida, modernización, SEO orgánico y visibilidad en IA." />
+  <title>AmePhia Software Solutions — Brochure Tríptico Ejecutivo 2026</title>
+  <meta name="description" content="Brochure corporativo oficial de AmePhia Software Solutions en formato libro interactivo 3D. Soluciones web, sistemas a medida, SEO orgánico y visibilidad en IA." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://amephia.com/brochure" />
   <link rel="icon" href="/favicon.ico" />
@@ -15,10 +15,9 @@
 
   <style>
     :root {
-      --bg: #040712;
+      --bg: #030611;
       --blue: #2563EB;
-      --blue-dark: #1D4ED8;
-      --cyan: #06B6D4;
+      --blue-glow: rgba(37, 99, 235, 0.35);
       --font: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
       --mono: 'JetBrains Mono', monospace;
     }
@@ -50,10 +49,10 @@
       position: sticky;
       top: 0;
       z-index: 50;
-      background: rgba(6, 10, 24, 0.95);
+      background: rgba(4, 8, 22, 0.92);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       padding: 12px 24px;
       display: flex;
       align-items: center;
@@ -62,7 +61,7 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
     .logo-box {
       width: 36px;
@@ -99,10 +98,10 @@
       gap: 8px;
     }
     .btn-toggle {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(255, 255, 255, 0.1);
       color: #CBD5E1;
-      padding: 6px 12px;
+      padding: 6px 14px;
       border-radius: 10px;
       font-size: 12px;
       font-weight: 700;
@@ -117,445 +116,291 @@
       box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
     }
     .btn-print {
-      background: linear-gradient(135deg, #2563EB, #4F46E5);
-      border: none;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       color: #fff;
-      padding: 7px 16px;
+      padding: 6px 14px;
       border-radius: 10px;
       font-size: 12px;
-      font-weight: 800;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
-    }
-
-    /* Hero Banner */
-    .hero-banner {
-      max-width: 1280px;
-      margin: 20px auto 10px;
-      padding: 28px 36px;
-      background: linear-gradient(135deg, #0C152B, #091024 60%, #050814);
-      border: 1px solid rgba(59, 130, 246, 0.25);
-      border-radius: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 32px;
-      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8);
-      position: relative;
-      overflow: hidden;
-    }
-    .cover-thumb {
-      width: 250px;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85);
-      flex-shrink: 0;
-      transition: transform 0.4s ease;
+      font-weight: 700;
       cursor: pointer;
     }
-    .cover-thumb:hover {
-      transform: scale(1.04) rotate(1deg);
-    }
-    .cover-thumb img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
 
-    /* Trifold Grid */
-    .trifold-wrap {
-      max-width: 1280px;
-      margin: 16px auto 32px;
-      padding: 0 16px;
-      width: 100%;
-    }
-    .trifold {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      border-radius: 24px;
-      overflow: hidden;
-      box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.95);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      background: #fff;
-      color: #0F172A;
-    }
-
-    /* Panel 1 */
-    .panel-1 {
-      padding: 38px 32px;
+    /* Main Container */
+    main {
+      flex: 1;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 60%, #EFF6FF 100%);
-      border-right: 1px solid #E2E8F0;
-    }
-    .tagline-top {
-      font-family: var(--mono);
-      font-size: 10px;
-      font-weight: 700;
-      color: #64748B;
-      text-align: right;
-      line-height: 1.3;
-      border-left: 2px solid var(--blue);
-      padding-left: 10px;
-    }
-    .headline-1 {
-      font-size: 26px;
-      font-weight: 900;
-      line-height: 1.15;
-      color: #020617;
-      margin: 20px 0 12px;
-    }
-    .headline-1 span { color: var(--blue); }
-    .desc-1 {
-      font-size: 13px;
-      color: #475569;
-      line-height: 1.6;
-      margin-bottom: 20px;
-    }
-    .btn-cta {
-      display: block;
-      width: 100%;
-      background: linear-gradient(135deg, #2563EB, #1D4ED8);
-      color: #fff;
-      padding: 14px 20px;
-      border-radius: 12px;
-      font-weight: 800;
-      font-size: 14px;
-      text-align: center;
-      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.35);
-      margin-bottom: 20px;
-      transition: transform 0.2s;
-    }
-    .btn-cta:hover { transform: translateY(-1px); }
-    .stats-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 8px;
-      text-align: center;
-    }
-    .stat-box {
-      background: #F0F7FF;
-      border: 1px solid #DBEAFE;
-      border-radius: 12px;
-      padding: 10px 6px;
-    }
-    .stat-icon { font-size: 20px; margin-bottom: 4px; }
-    .stat-label {
-      font-size: 9.5px;
-      font-weight: 800;
-      color: #1E293B;
-      text-transform: uppercase;
-    }
-    .team-card {
-      margin-top: 24px;
-      border-radius: 16px;
-      overflow: hidden;
-      background: #020617;
-      color: #fff;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-    }
-    .team-img {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      object-fit: cover;
-      display: block;
-    }
-    .team-badge {
-      padding: 12px 16px;
-      background: linear-gradient(90deg, #1E3A8A, #020617);
-      border-top: 1px solid rgba(59, 130, 246, 0.3);
-    }
-    .team-badge-txt { font-size: 12px; font-weight: 800; }
-    .team-badge-sub { font-size: 9px; color: #93C5FD; font-family: var(--mono); text-transform: uppercase; }
-
-    /* Panel 2 */
-    .panel-2 {
-      padding: 38px 32px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      background: #fff;
-      border-right: 1px solid #E2E8F0;
-    }
-    .p2-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 2px solid var(--blue);
-      padding-bottom: 12px;
-      margin-bottom: 18px;
-    }
-    .p2-title { font-size: 22px; font-weight: 900; color: #020617; }
-    .p2-sub {
-      font-size: 9px;
-      font-family: var(--mono);
-      font-weight: 700;
-      color: #64748B;
-      text-align: right;
-      max-width: 140px;
-      line-height: 1.3;
-    }
-    .svc-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-    .svc-icon {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: #DBEAFE;
-      color: #1D4ED8;
-      display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 15px;
-      flex-shrink: 0;
-      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.15);
-    }
-    .svc-name { font-size: 13px; font-weight: 800; color: #0F172A; }
-    .svc-desc { font-size: 11px; color: #64748B; line-height: 1.5; }
-
-    .ai-card {
-      padding: 14px;
-      border-radius: 14px;
-      border: 2px solid var(--blue);
-      background: linear-gradient(135deg, #EFF6FF, #EEF2FF);
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      margin: 16px 0;
-      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.12);
-    }
-    .ai-badge {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      background: var(--blue);
-      color: #fff;
-      font-family: var(--mono);
-      font-weight: 900;
-      font-size: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
-    }
-    .ai-title { font-size: 13px; font-weight: 900; color: #1E3A8A; }
-    .ai-desc { font-size: 11px; color: #475569; line-height: 1.5; margin-top: 2px; }
-
-    .trust-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      font-size: 10px;
-      color: #475569;
-      font-weight: 700;
-    }
-    .trust-item { display: flex; align-items: center; gap: 6px; }
-
-    .bottom-cta-banner {
-      margin-top: 18px;
-      background: #EFF6FF;
-      border: 1px solid #BFDBFE;
-      padding: 14px;
-      border-radius: 14px;
-      text-align: center;
-      transition: background 0.2s;
-    }
-    .bottom-cta-banner:hover { background: #DBEAFE; }
-    .b-cta-title { font-size: 13px; font-weight: 900; color: #1D4ED8; }
-    .b-cta-sub { font-size: 10px; color: #64748B; margin-top: 2px; font-weight: 500; }
-
-    /* Panel 3 */
-    .panel-3 {
-      padding: 38px 32px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      background: #040814;
-      color: #fff;
+      padding: 30px 16px;
       position: relative;
-      overflow: hidden;
     }
-    .p3-skyline {
+
+    /* Studio Ambient Lighting */
+    .studio-glow {
       position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 160px;
-      overflow: hidden;
-      opacity: 0.38;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 700px;
+      height: 350px;
+      background: radial-gradient(circle, rgba(37, 99, 235, 0.15) 0%, rgba(79, 70, 229, 0.08) 50%, transparent 70%);
+      border-radius: 50%;
+      filter: blur(60px);
       pointer-events: none;
     }
-    .p3-skyline img {
+
+    /* 3D Book Stage */
+    .book-stage {
+      width: 100%;
+      max-width: 1040px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Page 0: Closed Hardcover 3D Book */
+    .cover-book-wrapper {
+      perspective: 1800px;
+      cursor: pointer;
+      transition: transform 0.5s ease;
+    }
+    .cover-book-wrapper:hover {
+      transform: scale(1.02);
+    }
+    .cover-book-body {
+      width: min(440px, 86vw);
+      aspect-ratio: 505 / 658;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 30px 70px -10px rgba(0, 0, 0, 0.95), 0 10px 25px rgba(37, 99, 235, 0.25);
+      position: relative;
+      background: #000;
+    }
+    .cover-book-body img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-    }
-    .p3-title {
-      font-size: 26px;
-      font-weight: 900;
-      line-height: 1.15;
-      margin: 18px 0 10px;
-    }
-    .p3-title span { color: #60A5FA; }
-    .p3-desc {
-      font-size: 12.5px;
-      color: #CBD5E1;
-      line-height: 1.6;
-      margin-bottom: 20px;
-    }
-    .p3-features {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 24px;
-    }
-    .p3-feat {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 14px;
-      padding: 12px 8px;
-      text-align: center;
-    }
-    .p3-feat-icon { font-size: 18px; margin-bottom: 4px; color: #60A5FA; }
-    .p3-feat-lbl {
-      font-size: 9.5px;
-      font-weight: 800;
-      text-transform: uppercase;
-      color: #E2E8F0;
-    }
-    .contact-box {
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      padding-top: 20px;
-      font-family: var(--mono);
-      font-size: 11.5px;
-      color: #CBD5E1;
-      line-height: 1.8;
-    }
-    .contact-line { display: flex; align-items: center; gap: 8px; }
-    .contact-line span { color: #60A5FA; }
-    .p3-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 18px;
-    }
-    .foot-script {
-      font-family: Georgia, serif;
-      font-style: italic;
-      color: #93C5FD;
-      font-size: 19px;
-    }
-
-    /* HD Viewer View */
-    .hd-view {
-      display: none;
-      max-width: 1200px;
-      margin: 16px auto 32px;
-      padding: 0 16px;
-      width: 100%;
-    }
-    .hd-frame {
-      border-radius: 20px;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 25px 60px rgba(0,0,0,0.8);
-      background: #000;
-    }
-    .hd-frame img {
-      width: 100%;
-      height: auto;
       display: block;
     }
+    .spine-edge {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 14px;
+      background: linear-gradient(to right, rgba(255,255,255,0.2), rgba(255,255,255,0.05), transparent);
+      pointer-events: none;
+    }
+    .page-thickness-right {
+      position: absolute;
+      top: 8px;
+      bottom: 8px;
+      right: -10px;
+      width: 10px;
+      border-radius: 0 4px 4px 0;
+      background: linear-gradient(to right, #CBD5E1, #F1F5F9, #94A3B8);
+      box-shadow: 2px 5px 15px rgba(0,0,0,0.8);
+      pointer-events: none;
+    }
 
-    /* 3D Cover View */
-    .cover-view {
-      display: none;
-      max-width: 1280px;
-      margin: 16px auto 32px;
-      padding: 0 16px;
+    /* Page 1 & 2: Open 2-Page Spread */
+    .spread-container {
       width: 100%;
-    }
-    .cover-card-container {
-      background: linear-gradient(135deg, #080E21, #050917 60%, #02050E);
-      border: 1px solid rgba(59, 130, 246, 0.25);
+      max-width: 980px;
       border-radius: 24px;
-      padding: 40px;
-      display: grid;
-      grid-template-columns: 5fr 7fr;
-      gap: 48px;
-      align-items: center;
-      box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.95);
-      position: relative;
-      overflow: hidden;
-    }
-    .book-3d-stage {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      perspective: 1500px;
-    }
-    .book-3d {
-      width: 100%;
-      max-width: 360px;
-      border-radius: 18px;
       overflow: hidden;
       border: 2px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 25px 60px -10px rgba(0,0,0,0.95), 0 0 35px rgba(37, 99, 235, 0.3);
+      box-shadow: 0 30px 80px -15px rgba(0, 0, 0, 0.95), 0 0 40px rgba(37, 99, 235, 0.15);
+      background: #fff;
+      display: flex;
+      position: relative;
+    }
+    .page-half {
+      flex: 1;
+      position: relative;
       cursor: pointer;
-      transition: transform 0.6s ease;
+      overflow: hidden;
     }
-    .book-3d:hover {
-      transform: scale(1.03) rotateY(-4deg);
-    }
-    .book-3d img {
+    .page-half img {
       width: 100%;
       height: auto;
       display: block;
     }
-    .cover-pillars {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin: 20px 0;
+    .page-tag {
+      position: absolute;
+      top: 14px;
+      padding: 4px 10px;
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      font-size: 11px;
+      font-family: var(--mono);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      transition: background 0.2s;
     }
-    .pillar-box {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 14px;
-      padding: 14px;
-      transition: border-color 0.2s;
+    .page-tag:hover { background: var(--blue); }
+    .page-tag.left { left: 14px; }
+    .page-tag.right { right: 14px; }
+
+    .center-spine-shadow {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 32px;
+      transform: translateX(-50%);
+      background: linear-gradient(to right, rgba(0,0,0,0.22), rgba(0,0,0,0.04), rgba(0,0,0,0.22));
+      pointer-events: none;
+      z-index: 20;
     }
-    .pillar-box:hover {
-      border-color: rgba(59, 130, 246, 0.4);
+
+    /* Page 2: Skyline + VIP Executive Actions */
+    .executive-card-right {
+      flex: 1;
+      padding: 40px 36px;
+      background: linear-gradient(180deg, #081026 0%, #050A1A 60%, #02050E 100%);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
-    .pillar-title {
-      font-weight: 800;
-      font-size: 13px;
-      color: #93C5FD;
-      margin-bottom: 4px;
+    .exec-pill {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 12px;
+      font-family: var(--mono);
+      color: #CBD5E1;
+      margin-bottom: 8px;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
-    .pillar-desc {
-      font-size: 11.5px;
+    .btn-wa-exec {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 15px 20px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #10B981, #0D9488);
+      color: #fff;
+      font-weight: 800;
+      font-size: 13.5px;
+      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .btn-wa-exec:hover { transform: translateY(-1px); }
+
+    /* Reader Controls */
+    .reader-controls {
+      margin-top: 32px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(5, 9, 24, 0.9);
+      backdrop-filter: blur(16px);
+      padding: 10px 20px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+      z-index: 20;
+    }
+    .reader-btn {
+      background: transparent;
+      border: none;
+      color: #CBD5E1;
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+      padding: 6px 12px;
+      border-radius: 8px;
+      transition: all 0.2s;
+      font-family: var(--font);
+    }
+    .reader-btn:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+    .reader-btn:disabled {
+      color: #475569;
+      cursor: not-allowed;
+    }
+    .page-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
       color: #94A3B8;
-      line-height: 1.5;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .page-dot.active {
+      background: var(--blue);
+      color: #fff;
+    }
+
+    /* Views: Panoramic Trifold & HD */
+    .view-container {
+      display: none;
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      z-index: 10;
+    }
+    .panoramic-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 30px 80px -15px rgba(0, 0, 0, 0.95);
+      background: #fff;
+    }
+    .panoramic-grid img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .panoramic-grid > div {
+      border-right: 1px solid #E2E8F0;
+    }
+    .panoramic-grid > div:last-child {
+      border-right: none;
+    }
+
+    .hd-box {
+      width: 100%;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      background: #000;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9);
+    }
+    .hd-box img {
+      width: 100%;
+      height: auto;
+      display: block;
     }
 
     /* Footer */
     footer {
       padding: 16px 24px;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      background: #040712;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      background: #030611;
       font-family: var(--mono);
       font-size: 11px;
       color: #64748B;
@@ -564,442 +409,261 @@
       align-items: center;
     }
 
-    @media (max-width: 960px) {
-      .trifold { grid-template-columns: 1fr; }
-      .panel-1, .panel-2 { border-right: none; border-bottom: 1px solid #E2E8F0; }
-      .hero-banner { flex-direction: column; text-align: center; }
-      .cover-thumb { width: 100%; max-width: 280px; }
-      .cover-card-container { grid-template-columns: 1fr; gap: 32px; padding: 24px; }
-      .cover-pillars { grid-template-columns: 1fr; }
+    @media (max-width: 860px) {
+      .spread-container { flex-direction: column; }
+      .center-spine-shadow { display: none; }
+      .panoramic-grid { grid-template-columns: 1fr; }
+      .panoramic-grid > div { border-right: none; border-bottom: 1px solid #E2E8F0; }
     }
 
     @media print {
-      header, .hero-banner, footer, .btn-print, .cover-view { display: none !important; }
+      header, .reader-controls, footer, .btn-print { display: none !important; }
       body { background: #fff !important; }
-      .trifold-wrap { max-width: 100% !important; padding: 0 !important; margin: 0 !important; display: block !important; }
-      .trifold { border: none !important; box-shadow: none !important; }
+      .view-container { display: block !important; }
+      #view-book { display: none !important; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Top Navigation -->
+  <!-- Top Luxury Header -->
   <header>
     <div class="brand">
-      <div class="logo-box">&lt;/&gt;</div>
-      <div>
-        <div class="brand-text">Ame<span>Phia</span></div>
-        <div class="brand-sub">Software Solutions</div>
-      </div>
+      <a href="/" style="display: flex; align-items: center; gap: 10px;">
+        <div class="logo-box">&lt;/&gt;</div>
+        <div>
+          <div class="brand-text">Ame<span>Phia</span></div>
+          <div class="brand-sub">Software Solutions</div>
+        </div>
+      </a>
     </div>
 
     <div class="nav-actions">
-      <button class="btn-toggle" id="tab-cover" onclick="setTab('cover')">
-        <span class="es">📕 Portada 3D</span>
-        <span class="en">📕 3D Cover</span>
+      <button class="btn-toggle active" id="tab-book" onclick="switchView('book')">
+        <span class="es">📖 Libro Digital 3D</span>
+        <span class="en">📖 3D Digital Book</span>
       </button>
-      <button class="btn-toggle active" id="tab-trifold" onclick="setTab('trifold')">
-        <span class="es">📖 Tríptico Desplegado</span>
-        <span class="en">📖 Unfolded Trifold</span>
+      <button class="btn-toggle" id="tab-trifold" onclick="switchView('trifold')">
+        <span class="es">📑 Tríptico Panorámico</span>
+        <span class="en">📑 Panoramic Trifold</span>
       </button>
-      <button class="btn-toggle" id="tab-hd" onclick="setTab('hd')">
+      <button class="btn-toggle" id="tab-hd" onclick="switchView('hd')">
         <span class="es">🔍 Lámina HD</span>
         <span class="en">🔍 HD Sheet</span>
       </button>
-      <button class="btn-toggle" id="btn-es" onclick="setLang('es')" style="font-weight: 800;">ES</button>
-      <button class="btn-toggle" id="btn-en" onclick="setLang('en')" style="font-weight: 800;">EN</button>
-      <button class="btn-print" onclick="window.print()">
-        <span class="es">Imprimir PDF</span>
-        <span class="en">Print PDF</span>
-      </button>
+      <button class="btn-toggle" id="btn-es" onclick="switchLang('es')" style="font-weight: 800;">ES</button>
+      <button class="btn-toggle" id="btn-en" onclick="switchLang('en')" style="font-weight: 800;">EN</button>
+      <button class="btn-print" onclick="window.print()">PDF</button>
     </div>
   </header>
 
-  <!-- Hero Banner with 3D Cover Thumbnail -->
-  <div class="hero-banner">
-    <div>
-      <div style="font-family: var(--mono); font-size: 11px; color: #60A5FA; margin-bottom: 8px; font-weight: 700;">
-        <span class="es">BROCHURE CORPORATIVO OFICIAL // VERSIÓN TRÍPTICO EJECUTIVO</span>
-        <span class="en">OFFICIAL CORPORATE BROCHURE // EXECUTIVE TRIFOLD VERSION</span>
+  <!-- Main Content -->
+  <main>
+    <div class="studio-glow"></div>
+
+    <!-- 1. 3D DIGITAL FLIPBOOK VIEW (DEFAULT) -->
+    <div class="book-stage" id="view-book">
+      
+      <!-- PAGE 0: CLOSED 3D HARDCOVER BOOK -->
+      <div id="book-page-0" class="cover-book-wrapper" onclick="goToPage(1)">
+        <div class="cover-book-body">
+          <img src="/assets/brochure/book-cover-vertical.jpg" alt="AmePhia Systems Official 3D Cover" />
+          <div class="spine-edge"></div>
+          <div class="page-thickness-right"></div>
+        </div>
+        <div style="margin-top: 24px; text-align: center;">
+          <div style="font-family: var(--mono); font-size: 11px; color: #94A3B8; text-transform: uppercase; margin-bottom: 8px;">
+            <span class="es">EDICIÓN EJECUTIVA 2026 · FORMATO LIBRO</span>
+            <span class="en">OFFICIAL 2026 EDITION · BOOK FORMAT</span>
+          </div>
+          <button style="padding: 12px 24px; border-radius: 14px; background: linear-gradient(135deg, #2563EB, #4F46E5); color: #fff; font-weight: 800; font-size: 13px; border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);">
+            <span class="es">📖 Abrir y Explorar Dossier →</span>
+            <span class="en">📖 Open and Explore Dossier →</span>
+          </button>
+        </div>
       </div>
-      <h1 style="font-size: 28px; font-weight: 900; line-height: 1.2; margin-bottom: 10px;">
-        <span class="es">Lleva tu negocio al siguiente nivel con una <span style="color: #60A5FA;">solución digital a tu medida.</span></span>
-        <span class="en">Get a professional website or web application for <span style="color: #60A5FA;">your business today.</span></span>
-      </h1>
-      <p style="font-size: 13.5px; color: #CBD5E1; max-width: 620px; line-height: 1.6;">
-        <span class="es">Diseñado para directores de empresas, líderes tecnológicos y dueños de negocio que buscan ingeniería confiable, precios justos y resultados medibles en EE.UU. y Ecuador.</span>
-        <span class="en">Engineered for business owners and technology leaders demanding high-caliber software engineering, fair pricing, and measurable ROI across the US and LatAm.</span>
-      </p>
-      <div style="margin-top: 16px; display: flex; gap: 10px; flex-wrap: wrap;">
-        <a href="https://wa.me/13347324056?text=Hola%20AmePhia,%20vi%20su%20brochure%20corporativo%20tr%C3%ADptico%20y%20deseo%20una%20asesor%C3%ADa." target="_blank" style="background: linear-gradient(135deg, #2563EB, #1D4ED8); color: #fff; padding: 10px 18px; border-radius: 12px; font-weight: 800; font-size: 12px; box-shadow: 0 4px 14px rgba(37,99,235,0.4);">
-          <span class="es">Solicitar Asesoría por WhatsApp →</span>
-          <span class="en">Request Consultation on WhatsApp →</span>
-        </a>
-        <button onclick="setTab('cover')" class="btn-toggle" style="background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); color: #fff; padding: 10px 18px; border-radius: 12px; font-weight: 700; font-size: 12px;">
-          <span class="es">📕 Ver Portada 3D</span>
-          <span class="en">📕 View 3D Cover</span>
+
+      <!-- PAGE 1: OPEN 2-PAGE SPREAD (PANEL 1 + PANEL 2) -->
+      <div id="book-page-1" class="spread-container" style="display: none;">
+        <!-- Left: Panel 1 -->
+        <div class="page-half" onclick="goToPage(0)">
+          <img src="/assets/brochure/page-es-1.jpg" id="img-p1" alt="Panel 1" />
+          <div class="page-tag left">← <span class="es">Portada</span><span class="en">Cover</span></div>
+        </div>
+        <!-- Spine fold -->
+        <div class="center-spine-shadow"></div>
+        <!-- Right: Panel 2 -->
+        <div class="page-half" onclick="goToPage(2)">
+          <img src="/assets/brochure/page-es-2.jpg" id="img-p2" alt="Panel 2" />
+          <div class="page-tag right"><span class="es">Siguiente</span><span class="en">Next</span> →</div>
+        </div>
+      </div>
+
+      <!-- PAGE 2: SPREAD (PANEL 3 + EXECUTIVE VIP ACTIONS) -->
+      <div id="book-page-2" class="spread-container" style="display: none; background: #040816;">
+        <!-- Left: Panel 3 (Skyline) -->
+        <div class="page-half" onclick="goToPage(1)" style="border-right: 1px solid rgba(255,255,255,0.1);">
+          <img src="/assets/brochure/page-es-3.jpg" id="img-p3" alt="Panel 3" />
+          <div class="page-tag left">← <span class="es">Páginas Anteriores</span><span class="en">Previous</span></div>
+        </div>
+        <!-- Spine fold -->
+        <div class="center-spine-shadow"></div>
+        <!-- Right: Executive Action Center -->
+        <div class="executive-card-right">
+          <div>
+            <div style="font-family: var(--mono); font-size: 10px; color: #60A5FA; font-weight: 700; text-transform: uppercase; margin-bottom: 8px;">
+              AMEPHIA SOFTWARE SOLUTIONS
+            </div>
+            <h3 style="font-size: 26px; font-weight: 900; line-height: 1.2; margin-bottom: 12px; color: #fff;">
+              <span class="es">Ingeniería de software de nivel superior para <span style="color: #60A5FA;">tu negocio.</span></span>
+              <span class="en">Next-level software engineering for <span style="color: #60A5FA;">your business.</span></span>
+            </h3>
+            <p style="font-size: 13px; color: #CBD5E1; line-height: 1.6; margin-bottom: 20px;">
+              <span class="es">Acompañamos a líderes empresariales en EE.UU. y Ecuador a construir plataformas web y sistemas a medida que impulsan ventas y visibilidad estratégica en la era de la IA.</span>
+              <span class="en">We empower business leaders across the US and LatAm to engineer custom web platforms that drive revenue and strategic AI search visibility.</span>
+            </p>
+
+            <div class="exec-pill">
+              <span style="color: #60A5FA; font-weight: 800;">✓</span>
+              <span class="es">Atención directa por ingenieros seniors</span>
+              <span class="en">Direct consultation with senior engineers</span>
+            </div>
+            <div class="exec-pill">
+              <span style="color: #60A5FA; font-weight: 800;">✓</span>
+              <span class="es">Optimización de presencia en ChatGPT &amp; Gemini</span>
+              <span class="en">AI &amp; ChatGPT visibility optimization</span>
+            </div>
+            <div class="exec-pill">
+              <span style="color: #60A5FA; font-weight: 800;">✓</span>
+              <span class="es">Presupuestos transparentes y entregas a tiempo</span>
+              <span class="en">Transparent pricing &amp; on-time delivery</span>
+            </div>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <a href="https://wa.me/13347324056?text=Hola%20AmePhia,%20vi%20su%20brochure%20ejecutivo%20y%20deseo%20una%20asesor%C3%ADa." target="_blank" class="btn-wa-exec">
+              <span>💬</span>
+              <span class="es">Iniciar Consulta por WhatsApp (+1 334 732 4056)</span>
+              <span class="en">Start WhatsApp Consultation (+1 334 732 4056)</span>
+            </a>
+            <button onclick="goToPage(0)" class="reader-btn" style="width: 100%; margin-top: 10px; background: rgba(255,255,255,0.06); padding: 10px; border-radius: 12px; color: #94A3B8;">
+              <span class="es">↺ Volver a la Portada del Libro</span>
+              <span class="en">↺ Return to Book Cover</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOTTOM READER CONTROLS -->
+      <div class="reader-controls">
+        <button class="reader-btn" id="btn-prev" onclick="prevPage()" disabled>
+          <span>◀</span> <span class="es">Anterior</span><span class="en">Previous</span>
+        </button>
+
+        <div style="display: flex; gap: 6px; padding: 0 12px; border-left: 1px solid rgba(255,255,255,0.1); border-right: 1px solid rgba(255,255,255,0.1);">
+          <button class="page-dot active" id="dot-0" onclick="goToPage(0)">1</button>
+          <button class="page-dot" id="dot-1" onclick="goToPage(1)">2</button>
+          <button class="page-dot" id="dot-2" onclick="goToPage(2)">3</button>
+        </div>
+
+        <button class="reader-btn" id="btn-next" onclick="nextPage()">
+          <span class="es">Siguiente</span><span class="en">Next</span> <span>▶</span>
         </button>
       </div>
-    </div>
-
-    <!-- 3D Cover Thumbnail -->
-    <div class="cover-thumb" onclick="setTab('cover')">
-      <img src="/brochure-cover.jpg" alt="AmePhia Systems 3D Cover Dossier" />
-    </div>
-  </div>
-
-  <!-- 3D Cover Executive Dossier View -->
-  <div class="cover-view" id="view-cover">
-    <div class="cover-card-container">
-      <div class="book-3d-stage">
-        <div class="book-3d" onclick="setTab('trifold')">
-          <img src="/brochure-cover.jpg" alt="AmePhia Official 3D Cover" />
-        </div>
-        <div style="margin-top: 20px; display: flex; gap: 10px; width: 100%; max-width: 360px;">
-          <button onclick="setTab('trifold')" style="flex: 1; padding: 12px; background: var(--blue); color: #fff; border: none; border-radius: 12px; font-weight: 800; font-size: 12px; cursor: pointer; box-shadow: 0 4px 14px rgba(37,99,235,0.35);">
-            <span class="es">📖 Desplegar Tríptico</span>
-            <span class="en">📖 Unfold Trifold</span>
-          </button>
-          <button onclick="setTab('hd')" style="padding: 12px 16px; background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; font-weight: 700; font-size: 12px; cursor: pointer;">
-            <span>🔍 HD</span>
-          </button>
-        </div>
-      </div>
-
-      <div>
-        <div style="font-family: var(--mono); font-size: 11px; color: #60A5FA; font-weight: 700; text-transform: uppercase; margin-bottom: 8px;">
-          AMEPHIA SOFTWARE SOLUTIONS · USA &amp; LATAM
-        </div>
-        <h2 style="font-size: 32px; font-weight: 900; line-height: 1.15; color: #fff; margin-bottom: 12px;">
-          Engineering the Future of <span style="color: #60A5FA;">Your Business.</span>
-        </h2>
-        <p style="font-size: 13.5px; color: #CBD5E1; line-height: 1.6;">
-          <span class="es">Desarrollamos ingeniería de software y soluciones web corporativas de nivel mundial: sistemas a medida, plataformas web de alto tráfico, optimización en motores de IA (ChatGPT, Google Gemini) y posicionamiento SEO estratégico.</span>
-          <span class="en">We engineer world-class software and corporate web solutions: custom systems, high-traffic web platforms, AI engine optimization (ChatGPT, Google Gemini), and strategic SEO positioning.</span>
-        </p>
-
-        <div class="cover-pillars">
-          <div class="pillar-box">
-            <div class="pillar-title"><span>🌐</span> <span class="es">Desarrollo Web Moderno</span><span class="en">Modern Web Engineering</span></div>
-            <div class="pillar-desc"><span class="es">Sitios de alto impacto visual y conversión de clientes.</span><span class="en">High-impact websites optimized for customer conversion.</span></div>
-          </div>
-          <div class="pillar-box">
-            <div class="pillar-title"><span>⚡</span> <span class="es">Sistemas &amp; ERP a Medida</span><span class="en">Custom Systems &amp; ERP</span></div>
-            <div class="pillar-desc"><span class="es">Automatización y control integral de operaciones empresariales.</span><span class="en">Comprehensive automation of business workflows.</span></div>
-          </div>
-          <div class="pillar-box">
-            <div class="pillar-title"><span>🤖</span> <span class="es">Visibilidad en IA (ChatGPT)</span><span class="en">AI &amp; ChatGPT Visibility</span></div>
-            <div class="pillar-desc"><span class="es">Optimización GEO para destacar en búsquedas de IA.</span><span class="en">GEO optimization to rank in AI search queries.</span></div>
-          </div>
-          <div class="pillar-box">
-            <div class="pillar-title"><span>📈</span> <span class="es">Crecimiento y Conversión</span><span class="en">Growth &amp; Scalability</span></div>
-            <div class="pillar-desc"><span class="es">SEO técnico, pauta digital y escalabilidad cloud.</span><span class="en">Technical SEO, digital ads, and cloud scalability.</span></div>
-          </div>
-        </div>
-
-        <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
-          <div style="font-family: var(--mono); font-size: 11px; color: #94A3B8;">
-            <div>📍 Miami FL (USA) · Newark NJ · Ecuador</div>
-            <div>✉️ hola@amephia.com · 🌐 www.amephia.com</div>
-          </div>
-          <a href="https://wa.me/13347324056?text=Hola%20AmePhia,%20vi%20su%20brochure%20corporativo%20tr%C3%ADptico%20y%20deseo%20una%20asesor%C3%ADa." target="_blank" style="background: linear-gradient(135deg, #2563EB, #4F46E5); color: #fff; padding: 12px 20px; border-radius: 12px; font-weight: 800; font-size: 12px; box-shadow: 0 4px 14px rgba(37,99,235,0.4);">
-            <span class="es">Consultar por WhatsApp →</span>
-            <span class="en">WhatsApp Consultation →</span>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Interactive Trifold Content -->
-  <div class="trifold-wrap" id="view-trifold">
-    <div class="trifold">
-
-      <!-- ═════════ PANEL 1 (LEFT): VALUE & TEAM ═════════ -->
-      <div class="panel-1">
-        <div>
-          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <div class="logo-box" style="width: 32px; height: 32px; font-size: 12px;">&lt;/&gt;</div>
-              <div style="font-weight: 900; font-size: 16px;">Ame<span style="color: var(--blue);">Phia</span></div>
-            </div>
-            <div class="tagline-top">
-              <span class="es">TECNOLOGÍA<br>PERSONAS<br>RESULTADOS</span>
-              <span class="en">TECHNOLOGY<br>PEOPLE<br>REAL RESULTS</span>
-            </div>
-          </div>
-
-          <h2 class="headline-1">
-            <span class="es">Lleva tu negocio al siguiente nivel con una <span>solución digital a tu medida.</span></span>
-            <span class="en">Get a professional website or web application for <span>your business today.</span></span>
-          </h2>
-
-          <p class="desc-1">
-            <span class="es">Sitios web, aplicaciones y marketing digital para que tu marca atraiga más clientes y aumente tus ventas.</span>
-            <span class="en">We create digital solutions that help you attract more customers, strengthen your brand and grow your business.</span>
-          </p>
-
-          <a href="https://wa.me/13347324056" target="_blank" rel="noopener" class="btn-cta">
-            <span class="es">Solicita una asesoría hoy →</span>
-            <span class="en">Get Started Today →</span>
-          </a>
-
-          <div class="stats-row">
-            <div class="stat-box">
-              <div class="stat-icon">📊</div>
-              <div class="stat-label"><span class="es">Más Clientes</span><span class="en">More Customers</span></div>
-            </div>
-            <div class="stat-box">
-              <div class="stat-icon">👥</div>
-              <div class="stat-label"><span class="es">Más Ventas</span><span class="en">More Sales</span></div>
-            </div>
-            <div class="stat-box">
-              <div class="stat-icon">📈</div>
-              <div class="stat-label"><span class="es">Más Oportunidades</span><span class="en">Real Growth</span></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="team-card">
-          <img src="/assets/brochure/team.jpg" alt="Equipo Profesional AmePhia" class="team-img" />
-          <div class="team-badge">
-            <div class="team-badge-txt">
-              <span class="es">Tu éxito también se construye con tecnología.</span>
-              <span class="en">Your ideas. Our technology. Real results.</span>
-            </div>
-            <div class="team-badge-sub">AMEPHIA SOFTWARE SOLUTIONS</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ═════════ PANEL 2 (CENTER): SERVICES & AI ═════════ -->
-      <div class="panel-2">
-        <div>
-          <div class="p2-head">
-            <h3 class="p2-title">
-              <span class="es">Nuestros Servicios</span>
-              <span class="en">Our Services</span>
-            </h3>
-            <div class="p2-sub">
-              <span class="es">SOLUCIONES DIGITALES PARA TU NEGOCIO</span>
-              <span class="en">DIGITAL SOLUTIONS FOR YOUR BUSINESS</span>
-            </div>
-          </div>
-
-          <!-- Services List -->
-          <div class="svc-item">
-            <div class="svc-icon">🌐</div>
-            <div>
-              <div class="svc-name"><span class="es">Desarrollo de Sitios Web</span><span class="en">Website Development</span></div>
-              <div class="svc-desc">
-                <span class="es">Sitios web modernos, seguros y optimizados para representar tu marca y convertir visitantes en clientes.</span>
-                <span class="en">Modern, fast and secure websites designed to represent your brand and turn visitors into customers.</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="svc-item">
-            <div class="svc-icon" style="font-family: var(--mono); font-weight: bold;">&lt;/&gt;</div>
-            <div>
-              <div class="svc-name"><span class="es">Sistemas o Aplicaciones Web</span><span class="en">Web Systems or Applications</span></div>
-              <div class="svc-desc">
-                <span class="es">Desarrollamos soluciones web a la medida de tu negocio, desde plataformas de gestión hasta aplicaciones complejas.</span>
-                <span class="en">We develop custom web solutions for your business, from management platforms to complex applications.</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="svc-item">
-            <div class="svc-icon">💻</div>
-            <div>
-              <div class="svc-name"><span class="es">Actualización de Sitios Web</span><span class="en">Website Updates</span></div>
-              <div class="svc-desc">
-                <span class="es">Renovamos tu sitio web para mejorar su diseño, rendimiento, seguridad y experiencia de usuario.</span>
-                <span class="en">We improve your website's design, performance, security and user experience.</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="svc-item">
-            <div class="svc-icon">🔍</div>
-            <div>
-              <div class="svc-name"><span class="es">SEO y Posicionamiento Web</span><span class="en">SEO &amp; Web Positioning</span></div>
-              <div class="svc-desc">
-                <span class="es">Optimizamos tu sitio para que más personas te encuentren en Google y otros buscadores de forma orgánica.</span>
-                <span class="en">We optimize your website so more people find you on Google organically, attracting qualified leads.</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="svc-item">
-            <div class="svc-icon">📢</div>
-            <div>
-              <div class="svc-name"><span class="es">Pauta Digital</span><span class="en">Digital Advertising</span></div>
-              <div class="svc-desc">
-                <span class="es">Creamos y gestionamos campañas en Google, Meta (Facebook e Instagram) para llegar a las personas correctas.</span>
-                <span class="en">We create and manage campaigns on Google and Meta to bring the right people to your business.</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="svc-item">
-            <div class="svc-icon">📱</div>
-            <div>
-              <div class="svc-name"><span class="es">Administración de Redes Sociales</span><span class="en">Social Media Management</span></div>
-              <div class="svc-desc">
-                <span class="es">Gestionamos tus redes con contenido estratégico que fortalece tu marca, genera comunidad y aumenta ventas.</span>
-                <span class="en">We manage your social presence with strategic content that builds community and drives sales.</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Highlight AI Card -->
-          <div class="ai-card">
-            <div class="ai-badge">AI</div>
-            <div>
-              <div class="ai-title">
-                <span class="es">Visibilidad en ChatGPT y otras IA</span>
-                <span class="en">Get Seen on ChatGPT &amp; AI Platforms</span>
-              </div>
-              <div class="ai-desc">
-                <span class="es">Optimizamos tu presencia en herramientas de inteligencia artificial como ChatGPT, Google Gemini y otras para que tu negocio aparezca cuando buscan tus servicios.</span>
-                <span class="en">We optimize your online presence so your business appears when people search for products or services in ChatGPT, Google Gemini and other AI tools.</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Trust badges -->
-          <div class="trust-grid">
-            <div class="trust-item"><span>🛡️</span> <span class="es">Soluciones seguras y confiables</span><span class="en">Secure solutions</span></div>
-            <div class="trust-item"><span>👤</span> <span class="es">Atención personalizada</span><span class="en">Personalized care</span></div>
-            <div class="trust-item"><span>⏰</span> <span class="es">Entrega a tiempo</span><span class="en">On-time delivery</span></div>
-            <div class="trust-item"><span>📊</span> <span class="es">Resultados medibles</span><span class="en">Measurable results</span></div>
-          </div>
-        </div>
-
-        <div class="bottom-cta-banner">
-          <a href="https://wa.me/13347324056" target="_blank" rel="noopener">
-            <div class="b-cta-title">
-              <span class="es">Cuéntanos tu proyecto →</span>
-              <span class="en">Let's talk about your project →</span>
-            </div>
-            <div class="b-cta-sub">
-              <span class="es">Estamos listos para hacerlo realidad.</span>
-              <span class="en">We're ready to make it happen.</span>
-            </div>
-          </a>
-        </div>
-      </div>
-
-      <!-- ═════════ PANEL 3 (RIGHT): SKYLINE & CONTACT ═════════ -->
-      <div class="panel-3">
-        <div class="p3-skyline">
-          <img src="/assets/brochure/skyline.jpg" alt="City Skyline" />
-        </div>
-
-        <div>
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; position: relative; z-index: 10;">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <div class="logo-box" style="background: #2563EB; width: 30px; height: 30px; font-size: 11px;">&lt;/&gt;</div>
-              <div style="font-weight: 900; font-size: 16px;">Ame<span style="color: #60A5FA;">Phia</span></div>
-            </div>
-            <div style="font-family: var(--mono); font-size: 9px; color: #94A3B8; text-align: right; line-height: 1.3;">
-              MIAMI · NEW YORK<br>ORLANDO · LATAM
-            </div>
-          </div>
-
-          <h3 class="p3-title" style="position: relative; z-index: 10;">
-            <span class="es">Soluciones digitales que <span>impulsan tu negocio.</span></span>
-            <span class="en">Your digital partner for <span>what's next.</span></span>
-          </h3>
-
-          <p class="p3-desc" style="position: relative; z-index: 10;">
-            <span class="es">Sitios web, aplicaciones, marketing digital, redes sociales y presencia en IA para que tu marca siga creciendo.</span>
-            <span class="en">Websites, web applications, digital marketing, social media and AI visibility to take your business further.</span>
-          </p>
-
-          <div class="p3-features" style="position: relative; z-index: 10;">
-            <div class="p3-feat">
-              <div class="p3-feat-icon">🚀</div>
-              <div class="p3-feat-lbl"><span class="es">Más Visibilidad</span><span class="en">More Visibility</span></div>
-            </div>
-            <div class="p3-feat">
-              <div class="p3-feat-icon">📊</div>
-              <div class="p3-feat-lbl"><span class="es">Más Clientes</span><span class="en">More Customers</span></div>
-            </div>
-            <div class="p3-feat">
-              <div class="p3-feat-icon">🛡️</div>
-              <div class="p3-feat-lbl"><span class="es">Más Confianza</span><span class="en">Stronger Brand</span></div>
-            </div>
-            <div class="p3-feat">
-              <div class="p3-feat-icon">📈</div>
-              <div class="p3-feat-lbl"><span class="es">Más Ventas</span><span class="en">Real Growth</span></div>
-            </div>
-          </div>
-        </div>
-
-        <div style="position: relative; z-index: 10;">
-          <div class="contact-box">
-            <div class="contact-line"><span>✉</span> <a href="mailto:hola@amephia.com">hola@amephia.com</a></div>
-            <div class="contact-line"><span>🌐</span> <a href="https://amephia.com">www.amephia.com</a></div>
-            <div class="contact-line"><span>📍</span> Miami, FL – USA | LatAm (Ecuador)</div>
-          </div>
-
-          <div class="p3-footer">
-            <div style="font-size: 9px; font-family: var(--mono); color: #64748B;">
-              TECNOLOGÍA<br>PERSONAS<br>RESULTADOS
-            </div>
-            <div class="foot-script">
-              <span class="es">Juntos, más lejos.</span>
-              <span class="en">Let's build what's next.</span>
-            </div>
-          </div>
-        </div>
-      </div>
 
     </div>
-  </div>
 
-  <!-- HD Sheet View -->
-  <div class="hd-view" id="view-hd">
-    <div class="hd-frame">
-      <img src="/brochure-es.jpg" id="hd-img" alt="AmePhia Trifold Brochure HD Sheet" />
+    <!-- 2. PANORAMIC 3-PANEL TRIFOLD VIEW -->
+    <div class="view-container" id="view-trifold">
+      <div class="panoramic-grid">
+        <div><img src="/assets/brochure/page-es-1.jpg" id="pano-p1" alt="Panel 1" /></div>
+        <div><img src="/assets/brochure/page-es-2.jpg" id="pano-p2" alt="Panel 2" /></div>
+        <div><img src="/assets/brochure/page-es-3.jpg" id="pano-p3" alt="Panel 3" /></div>
+      </div>
     </div>
-  </div>
+
+    <!-- 3. ULTRA-HD GRAPHIC PRINT SHEET VIEW -->
+    <div class="view-container" id="view-hd">
+      <div class="hd-box">
+        <img src="/brochure-es.jpg" id="hd-img" alt="AmePhia Brochure HD Sheet" />
+      </div>
+    </div>
+
+  </main>
 
   <!-- Footer -->
   <footer>
     <div>© 2026 AmePhia Software Solutions · Miami, FL - USA · Newark NJ · Ecuador</div>
-    <div>DIRECT LINE: +1 (334) 732-4056 · OFFICIAL TRI-FOLD BROCHURE</div>
+    <div>
+      <a href="/" style="color: #94A3B8; margin-right: 12px;">Sitio Principal</a>
+      <a href="https://wa.me/13347324056" target="_blank" style="color: #34D399;">+1 (334) 732-4056</a>
+    </div>
   </footer>
 
   <script>
-    function setTab(tab) {
-      document.getElementById('view-cover').style.display = (tab === 'cover') ? 'block' : 'none';
-      document.getElementById('view-trifold').style.display = (tab === 'trifold') ? 'block' : 'none';
-      document.getElementById('view-hd').style.display = (tab === 'hd') ? 'block' : 'none';
-      document.getElementById('tab-cover').classList.toggle('active', tab === 'cover');
-      document.getElementById('tab-trifold').classList.toggle('active', tab === 'trifold');
-      document.getElementById('tab-hd').classList.toggle('active', tab === 'hd');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    var curPage = 0;
+    var curLang = 'es';
+
+    function goToPage(p) {
+      if (p < 0 || p > 2) return;
+      curPage = p;
+      document.getElementById('book-page-0').style.display = (p === 0) ? 'block' : 'none';
+      document.getElementById('book-page-1').style.display = (p === 1) ? 'flex' : 'none';
+      document.getElementById('book-page-2').style.display = (p === 2) ? 'flex' : 'none';
+
+      document.getElementById('btn-prev').disabled = (p === 0);
+      document.getElementById('btn-next').disabled = (p === 2);
+
+      for (var i = 0; i < 3; i++) {
+        document.getElementById('dot-' + i).classList.toggle('active', i === p);
+      }
     }
 
-    function setLang(l) {
+    function nextPage() { if (curPage < 2) goToPage(curPage + 1); }
+    function prevPage() { if (curPage > 0) goToPage(curPage - 1); }
+
+    function switchView(mode) {
+      document.getElementById('view-book').style.display = (mode === 'book') ? 'flex' : 'none';
+      document.getElementById('view-trifold').style.display = (mode === 'trifold') ? 'block' : 'none';
+      document.getElementById('view-hd').style.display = (mode === 'hd') ? 'block' : 'none';
+
+      document.getElementById('tab-book').classList.toggle('active', mode === 'book');
+      document.getElementById('tab-trifold').classList.toggle('active', mode === 'trifold');
+      document.getElementById('tab-hd').classList.toggle('active', mode === 'hd');
+    }
+
+    function switchLang(l) {
+      curLang = l;
       document.body.classList.toggle('lang-en', l === 'en');
       document.getElementById('btn-es').classList.toggle('active', l === 'es');
       document.getElementById('btn-en').classList.toggle('active', l === 'en');
-      var img = document.getElementById('hd-img');
-      if (img) {
-        img.src = (l === 'en') ? '/brochure-en.jpg' : '/brochure-es.jpg';
-      }
-      localStorage.setItem('amephia-brochure-lang', l);
+
+      var prefix = (l === 'en') ? '/assets/brochure/page-en-' : '/assets/brochure/page-es-';
+      document.getElementById('img-p1').src = prefix + '1.jpg';
+      document.getElementById('img-p2').src = prefix + '2.jpg';
+      document.getElementById('img-p3').src = prefix + '3.jpg';
+
+      document.getElementById('pano-p1').src = prefix + '1.jpg';
+      document.getElementById('pano-p2').src = prefix + '2.jpg';
+      document.getElementById('pano-p3').src = prefix + '3.jpg';
+
+      document.getElementById('hd-img').src = (l === 'en') ? '/brochure-en.jpg' : '/brochure-es.jpg';
+      localStorage.setItem('amephia-lang', l);
     }
 
+    // Keyboard support
+    window.addEventListener('keydown', function(e) {
+      if (document.getElementById('view-book').style.display !== 'none') {
+        if (e.key === 'ArrowRight' || e.key === ' ') nextPage();
+        if (e.key === 'ArrowLeft') prevPage();
+      }
+    });
+
+    // Auto-detect lang
     (function() {
-      var saved = localStorage.getItem('amephia-brochure-lang');
-      var browser = navigator.language || 'es';
-      var pref = saved || (browser.startsWith('en') ? 'en' : 'es');
-      if (pref === 'en') setLang('en');
+      var saved = localStorage.getItem('amephia-lang');
+      var pref = saved || ((navigator.language || 'es').startsWith('en') ? 'en' : 'es');
+      if (pref === 'en') switchLang('en');
     })();
   </script>
 </body>
