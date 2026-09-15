@@ -45,10 +45,9 @@ fi
 step "Pushing to origin/main..."
 git push origin main
 
-# 6. Sync deploy branch (Hostinger monitors this branch)
-step "Syncing deploy branch for Hostinger..."
-git push origin main:deploy
+# 6. Hostinger deployment via GitHub Actions
+step "GitHub Actions will automatically build & sync the deploy branch for Hostinger."
 
 echo -e "\n${GREEN}✔ Deploy complete!${NC}"
-echo -e "  Hostinger detectará los cambios en la rama deploy automáticamente."
+echo -e "  GitHub Actions compilará y actualizará la rama deploy automáticamente."
 echo -e "  Site: https://amephia.com\n"
