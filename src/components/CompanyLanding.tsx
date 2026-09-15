@@ -650,7 +650,7 @@ const HeroSection = () => {
               className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 bg-white/[0.04] border border-blue-500/20 rounded-2xl sm:rounded-full mb-7 backdrop-blur-md max-w-full"
             >
               <span className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-semibold text-slate-200 tracking-wide">
-                <span>🇺🇸 California, USA</span>
+                <span>🇺🇸 California & NJ, USA</span>
                 <span className="text-slate-500">&middot;</span>
                 <span>🇪🇨 Ecuador</span>
                 <span className="text-slate-500">&middot;</span>
@@ -694,13 +694,13 @@ const HeroSection = () => {
             >
               {language === 'en' ? (
                 <>
-                  Software engineering firm with corporate presence in <strong className="text-white font-semibold">California (USA)</strong> and <strong className="text-white font-semibold">Ecuador</strong>, with a <strong className="text-white font-semibold">proven track record executing projects in the United States</strong> and Latin America.
+                  Software engineering firm with corporate presence in <strong className="text-white font-semibold">California & Newark, NJ (USA)</strong> and <strong className="text-white font-semibold">Ecuador</strong>, with a <strong className="text-white font-semibold">proven track record executing projects across the United States</strong> and Latin America.
                   Over <strong className="text-white font-semibold">ten years</strong> developing custom ERPs, SaaS platforms,
                   high-concurrency mobile apps, and cloud systems with US contracting, nearshore delivery, and direct senior engineering.
                 </>
               ) : (
                 <>
-                  Firma de ingeniería con presencia en <strong className="text-white font-semibold">California (EE.UU.)</strong> y <strong className="text-white font-semibold">Ecuador</strong>, con <strong className="text-white font-semibold">experiencia y proyectos ejecutados exitosamente en Estados Unidos</strong> y Latinoamérica.
+                  Firma de ingeniería con presencia en <strong className="text-white font-semibold">California y Newark, NJ (EE.UU.)</strong> y <strong className="text-white font-semibold">Ecuador</strong>, con <strong className="text-white font-semibold">experiencia y proyectos ejecutados exitosamente en múltiples estados de Estados Unidos</strong> y Latinoamérica.
                   Más de <strong className="text-white font-semibold">diez años</strong> creando ERPs a medida, plataformas SaaS,
                   apps móviles de alto rendimiento y arquitecturas cloud con contratación formal en EE.UU., código que escala y entrega sin intermediarios.
                 </>
@@ -994,7 +994,7 @@ const IntegrationMarquee = () => {
           <Shield className="w-3.5 h-3.5 text-blue-400" />
           {language === 'en' ? 'Connected Ecosystem & Regulatory Compliance' : 'Ecosistema Conectado & Cumplimiento Normativo'}
         </span>
-        <span className="text-[11px] font-mono text-blue-400">USA (California) &middot; Ecuador &middot; Global</span>
+        <span className="text-[11px] font-mono text-blue-400">USA (CA · NJ) &middot; Ecuador &middot; Global</span>
       </div>
 
       <div className="relative flex overflow-x-hidden">
@@ -1027,14 +1027,14 @@ const StatsStrip = () => {
     { value: 9, suffix: '', label: 'Proprietary Products', sub: 'Enterprise suite' },
     { value: 100000, suffix: '+', label: 'Fiscal Transactions', sub: 'Processed without failure' },
     { value: 99.9, suffix: '%', label: 'Cloud Uptime', sub: 'High availability SLA' },
-    { value: 2, suffix: '', label: 'Offices: USA & EC', sub: 'California & Ecuador' },
+    { value: 3, suffix: '', label: 'US Offices', sub: 'CA · NJ · Nationwide' },
   ] : [
     { value: 10, suffix: '+', label: 'Años de Trayectoria', sub: 'Experiencia real' },
     { value: 150, suffix: '+', label: 'Clientes y Empresas', sub: 'En producción' },
     { value: 9, suffix: '', label: 'Productos Propios', sub: 'Suite empresarial' },
     { value: 100000, suffix: '+', label: 'Transacciones Fiscales', sub: 'Procesadas sin fallos' },
     { value: 99.9, suffix: '%', label: 'Uptime Cloud', sub: 'Alta disponibilidad' },
-    { value: 2, suffix: '', label: 'Sedes: EE.UU. & EC', sub: 'California y Ecuador' },
+    { value: 3, suffix: '', label: 'Sedes en EE.UU.', sub: 'CA · NJ · Todo el país' },
   ];
 
   return (
@@ -2140,8 +2140,8 @@ const AboutSection = () => {
             </h2>
             <p className="text-slate-700 text-base leading-relaxed mb-6">
               {language === 'en'
-                ? 'AmePhia operates with an international footprint: corporate offices in California, USA and specialized engineering operations in Ecuador. With a proven track record delivering software projects for US companies, fast-scaling ventures, and established enterprises in Latin America, our dual structure delivers Silicon Valley engineering standards, 100% time-zone overlap (PST/EST), fluent English/Spanish communication, and flexible US corporate contracting (W-8/W-9, ACH/Wire).'
-                : 'AmePhia opera con presencia internacional: oficinas corporativas en California (Estados Unidos) y centro de ingeniería especializada en Ecuador. Con una sólida trayectoria desarrollando proyectos de software para empresas en Estados Unidos, startups y corporaciones en Latinoamérica, nuestra estructura binacional brinda estándares de Silicon Valley, coincidencia horaria completa (PST/EST), comunicación bilingüe fluida (inglés/español) y contratación formal bajo legislación estadounidense (W-8/W-9, ACH/Wire).'}
+                ? 'AmePhia operates with an international footprint: corporate offices in California and Newark, New Jersey (USA) with presence across multiple US states, and specialized engineering operations in Ecuador. With a proven track record delivering software projects for US companies in California, New Jersey, and nationwide, our multi-state structure delivers Silicon Valley engineering standards, 100% time-zone overlap (PST/EST/CST), fluent English/Spanish communication, and flexible US corporate contracting (W-8/W-9, ACH/Wire).'
+                : 'AmePhia opera con presencia internacional: oficinas corporativas en California y Newark, New Jersey (Estados Unidos) con presencia en múltiples estados, y centro de ingeniería especializada en Ecuador. Con una sólida trayectoria desarrollando proyectos de software para empresas en California, New Jersey y todo Estados Unidos, nuestra estructura multi-estado brinda estándares de Silicon Valley, coincidencia horaria completa (PST/EST/CST), comunicación bilingüe fluida (inglés/español) y contratación formal bajo legislación estadounidense (W-8/W-9, ACH/Wire).'}}
             </p>
             <p className="text-slate-600 text-sm leading-relaxed mb-8">
               {language === 'en'
@@ -2275,7 +2275,7 @@ const FAQSection = () => {
     },
     {
       q: '¿Pueden desarrollar proyectos para empresas en Estados Unidos y tienen experiencia previa allá?',
-      a: 'Sí, absolutamente. Contamos con un sólido historial ejecutando proyectos de software y plataformas en la nube para empresas en Estados Unidos. Gracias a nuestra presencia en California y a nuestro equipo de ingenieros senior, operamos bajo modalidad nearshore con total coincidencia de zona horaria (Costa Este y Oeste / PST y EST), contratos comerciales bajo legislación estadounidense (cumplimiento fiscal W-8/W-9, transferencias ACH y Wire) y estándares de arquitectura de Silicon Valley.',
+      a: 'Sí, absolutamente. Contamos con un sólido historial ejecutando proyectos de software y plataformas en la nube para empresas en Estados Unidos. Gracias a nuestra presencia en California, Newark (New Jersey) y múltiples estados, y a nuestro equipo de ingenieros senior, operamos bajo modalidad nearshore con total coincidencia de zona horaria (PST, EST y CST), contratos comerciales bajo legislación estadounidense (cumplimiento fiscal W-8/W-9, transferencias ACH y Wire) y estándares de arquitectura de Silicon Valley.',
     },
     {
       q: '¿En qué consiste el servicio de Modernización Web y el Sistema de Reseñas de Google Business?',
@@ -2310,7 +2310,7 @@ const FAQSection = () => {
     },
     {
       q: 'Can you deliver software projects for US companies and do you have experience in the US?',
-      a: 'Yes, absolutely. We have a proven track record developing mission-critical software systems and cloud platforms for companies across the United States. Through our California corporate presence and our senior engineering team, we provide seamless nearshore execution with 100% time zone alignment (PST & EST), US legal agreements (W-8/W-9 compliance, ACH and Wire settlements), and Silicon Valley architectural standards.',
+      a: 'Yes, absolutely. We have a proven track record developing mission-critical software systems and cloud platforms for companies across the United States. Through our California and Newark, New Jersey corporate presence — plus activity across multiple US states — and our senior engineering team, we provide seamless nearshore execution with 100% time zone alignment (PST, EST & CST), US legal agreements (W-8/W-9 compliance, ACH and Wire settlements), and Silicon Valley architectural standards.',
     },
     {
       q: 'How does your Website Modernization & Google Business Review Shield work?',
@@ -2553,7 +2553,7 @@ const ContactSection = () => {
                   {language === 'en' ? 'Offices & Client Coverage' : 'Oficinas & Cobertura'}
                 </div>
                 <div className="text-slate-900 font-bold text-sm">
-                  🇺🇸 California, USA &middot; 🇪🇨 Ecuador
+                  🇺🇸 California · Newark, NJ &middot; 🇪🇨 Ecuador
                 </div>
                 <p className="text-slate-600 text-xs leading-relaxed">
                   {language === 'en'
@@ -2826,7 +2826,7 @@ const Footer = ({
               {language === 'en' ? 'Headquarters & Compliance' : 'Sede & Cumplimiento'}
             </h4>
             <div className="space-y-2.5 leading-relaxed">
-              <p>📍 🇺🇸 California, United States &middot; 🇪🇨 Ecuador</p>
+              <p>📍 🇺🇸 California · Newark, NJ (USA) &middot; 🇪🇨 Ecuador</p>
               <p>🌐 {language === 'en' ? 'US & LATAM client execution · Contracts under US & international law' : 'Proyectos en EE.UU. & LATAM · Contratos bajo legislación de EE.UU. e internacional'}</p>
               <p>🔒 Full LOPDP compliance and ISO 27001 / NIST cybersecurity posture</p>
               <p>⚡ 99.9% Monitored infrastructure availability</p>
