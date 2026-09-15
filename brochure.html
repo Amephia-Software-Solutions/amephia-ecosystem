@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AmePhia Systems — Brochure Corporativo | Corporate Brochure</title>
+  <meta name="description" content="Brochure corporativo de AmePhia Systems. Empresa confiable de desarrollo de software en California, Newark NJ y Ecuador. Software a medida, ERP, modernización web, facturación SRI." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://amephia.com/brochure" />
+  <link rel="icon" href="/favicon.ico" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ═══════════════════════════════════════════════
+       TOKENS & RESET
+    ═══════════════════════════════════════════════ */
+    :root {
+      --bg:       #060B16;
+      --bg2:      #0a1628;
+      --bg3:      #0f1f3d;
+      --blue:     #3b82f6;
+      --purple:   #8b5cf6;
+      --cyan:     #06b6d4;
+      --green:    #10b981;
+      --white:    #ffffff;
+      --slate:    #94a3b8;
+      --slate2:   #64748b;
+      --border:   rgba(255,255,255,0.08);
+      --grad:     linear-gradient(135deg, var(--blue), var(--purple), var(--cyan));
+      --grad-h:   linear-gradient(90deg, var(--blue), var(--purple));
+      --r:        14px;
+      --r-sm:     8px;
+      --shadow:   0 8px 32px rgba(0,0,0,0.4);
+      --font:     'Inter', system-ui, sans-serif;
+      --font2:    'Space Grotesk', system-ui, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ═══════════════════════════════════════════════
+       LANGUAGE TOGGLE
+    ═══════════════════════════════════════════════ */
+    .lang-bar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 999;
+      background: rgba(6,11,22,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 24px;
+      gap: 12px;
+    }
+    .lang-brand {
+      font-family: var(--font2);
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--white);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .lang-brand span {
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .lang-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .lang-btn {
+      padding: 6px 16px;
+      border-radius: 99px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--slate);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+      font-family: var(--font);
+    }
+    .lang-btn.active {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+    }
+    .lang-btn:hover:not(.active) {
+      border-color: rgba(255,255,255,0.2);
+      color: var(--white);
+    }
+    .pdf-btn {
+      padding: 7px 18px;
+      border-radius: 99px;
+      border: none;
+      background: var(--grad);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity .2s, transform .2s;
+      font-family: var(--font);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .pdf-btn:hover { opacity: .88; transform: scale(1.03); }
+
+    /* Language visibility */
+    .es { display: block; }
+    .en { display: none; }
+    body.lang-en .es { display: none; }
+    body.lang-en .en { display: block; }
+    /* For inline elements */
+    span.es, a.es { display: inline; }
+    span.en, a.en { display: none; }
+    body.lang-en span.es, body.lang-en a.es { display: none; }
+    body.lang-en span.en, body.lang-en a.en { display: inline; }
+
+    /* ═══════════════════════════════════════════════
+       LAYOUT
+    ═══════════════════════════════════════════════ */
+    .page { padding-top: 60px; }
+    .section {
+      padding: 80px 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .section-full {
+      padding: 80px 24px;
+    }
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 14px;
+      border-radius: 99px;
+      border: 1px solid rgba(59,130,246,0.3);
+      background: rgba(59,130,246,0.08);
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    h1, h2, h3 { font-family: var(--font2); }
+    .section-title {
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+    .section-sub {
+      font-size: clamp(15px, 2vw, 17px);
+      color: var(--slate);
+      max-width: 640px;
+      margin-bottom: 48px;
+      line-height: 1.7;
+    }
+    .grad-text {
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0;
+    }
+
+    /* ═══════════════════════════════════════════════
+       HERO / COVER
+    ═══════════════════════════════════════════════ */
+    .hero {
+      min-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 24px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% -20%, rgba(59,130,246,0.15) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 80% 60%, rgba(139,92,246,0.1) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 20% 80%, rgba(6,182,212,0.08) 0%, transparent 60%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+    }
+    /* Animated grid */
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(59,130,246,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59,130,246,0.04) 1px, transparent 1px);
+      background-size: 50px 50px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 80%);
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 880px; }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 99px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.04);
+      font-size: 12px;
+      color: var(--slate);
+      margin-bottom: 28px;
+      font-weight: 500;
+      letter-spacing: .3px;
+    }
+    .hero-badge span { color: rgba(255,255,255,0.7); }
+    .hero h1 {
+      font-size: clamp(36px, 6.5vw, 72px);
+      font-weight: 900;
+      line-height: 1.05;
+      margin-bottom: 20px;
+      letter-spacing: -1.5px;
+    }
+    .hero-sub {
+      font-size: clamp(15px, 2vw, 19px);
+      color: var(--slate);
+      max-width: 600px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 48px;
+    }
+    .btn-primary {
+      padding: 13px 28px;
+      border-radius: 99px;
+      background: var(--grad);
+      color: #fff;
+      font-weight: 700;
+      font-size: 15px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: opacity .2s, transform .2s, box-shadow .2s;
+      box-shadow: 0 4px 20px rgba(59,130,246,0.3);
+    }
+    .btn-primary:hover { opacity: .9; transform: translateY(-2px); box-shadow: 0 8px 32px rgba(59,130,246,0.4); }
+    .btn-secondary {
+      padding: 12px 26px;
+      border-radius: 99px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.04);
+      color: var(--white);
+      font-weight: 600;
+      font-size: 15px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: border-color .2s, background .2s;
+    }
+    .btn-secondary:hover { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.08); }
+    .hero-locations {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+    .hero-loc {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 14px;
+      border-radius: 99px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.03);
+      font-size: 12.5px;
+      color: var(--slate);
+    }
+
+    /* ═══════════════════════════════════════════════
+       STATS STRIP
+    ═══════════════════════════════════════════════ */
+    .stats-strip {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 36px 24px;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    @media (min-width: 600px) { .stats-grid { grid-template-columns: repeat(4, 1fr); } }
+    .stat-item {
+      text-align: center;
+    }
+    .stat-num {
+      font-family: var(--font2);
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 800;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-label {
+      font-size: 13px;
+      color: var(--slate);
+      font-weight: 500;
+    }
+
+    /* ═══════════════════════════════════════════════
+       ABOUT
+    ═══════════════════════════════════════════════ */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    @media (min-width: 700px) { .about-grid { grid-template-columns: repeat(3, 1fr); } }
+    .about-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 28px 24px;
+      transition: border-color .25s, transform .25s;
+    }
+    .about-card:hover {
+      border-color: rgba(59,130,246,0.3);
+      transform: translateY(-3px);
+    }
+    .about-icon {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      background: rgba(59,130,246,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 14px;
+    }
+    .about-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--white);
+    }
+    .about-card p {
+      font-size: 14px;
+      color: var(--slate);
+      line-height: 1.65;
+    }
+
+    /* ═══════════════════════════════════════════════
+       SERVICES
+    ═══════════════════════════════════════════════ */
+    .services-bg { background: var(--bg2); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    @media (min-width: 600px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
+    .service-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .25s, transform .25s;
+    }
+    .service-card:hover {
+      border-color: rgba(139,92,246,0.35);
+      transform: translateY(-3px);
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--grad);
+      opacity: 0;
+      transition: opacity .25s;
+    }
+    .service-card:hover::before { opacity: 1; }
+    .service-icon {
+      font-size: 30px;
+      margin-bottom: 14px;
+    }
+    .service-card h3 {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .service-card p {
+      font-size: 14px;
+      color: var(--slate);
+      line-height: 1.65;
+    }
+    .service-tag {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 3px 10px;
+      border-radius: 99px;
+      font-size: 11px;
+      font-weight: 600;
+      background: rgba(59,130,246,0.12);
+      color: var(--blue);
+      border: 1px solid rgba(59,130,246,0.2);
+    }
+
+    /* ═══════════════════════════════════════════════
+       PRODUCTS
+    ═══════════════════════════════════════════════ */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    @media (min-width: 700px) { .products-grid { grid-template-columns: repeat(3, 1fr); } }
+    .product-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 22px 20px;
+      text-align: center;
+      transition: border-color .25s, transform .2s, box-shadow .2s;
+      cursor: default;
+    }
+    .product-card:hover {
+      border-color: rgba(6,182,212,0.35);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(6,182,212,0.08);
+    }
+    .product-emoji { font-size: 28px; margin-bottom: 10px; }
+    .product-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+    .product-desc {
+      font-size: 12px;
+      color: var(--slate);
+      line-height: 1.55;
+    }
+
+    /* ═══════════════════════════════════════════════
+       WHY AMEPHIA
+    ═══════════════════════════════════════════════ */
+    .why-bg { background: linear-gradient(135deg, rgba(59,130,246,0.05) 0%, rgba(139,92,246,0.05) 100%); }
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    @media (min-width: 600px) { .why-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 900px) { .why-grid { grid-template-columns: repeat(3, 1fr); } }
+    .why-card {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 22px;
+      transition: border-color .25s;
+    }
+    .why-card:hover { border-color: rgba(59,130,246,0.3); }
+    .why-num {
+      flex-shrink: 0;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--grad);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 800;
+      color: #fff;
+      margin-top: 2px;
+    }
+    .why-text h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+    .why-text p {
+      font-size: 13px;
+      color: var(--slate);
+      line-height: 1.6;
+    }
+
+    /* ═══════════════════════════════════════════════
+       COVERAGE
+    ═══════════════════════════════════════════════ */
+    .coverage-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    @media (min-width: 700px) { .coverage-grid { grid-template-columns: repeat(2, 1fr); } }
+    .coverage-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 28px;
+    }
+    .coverage-flag {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+    .coverage-card h3 {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: var(--white);
+    }
+    .coverage-card p {
+      font-size: 14px;
+      color: var(--slate);
+      margin-bottom: 16px;
+      line-height: 1.65;
+    }
+    .city-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .city-pill {
+      padding: 4px 12px;
+      border-radius: 99px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--slate);
+      font-weight: 500;
+    }
+
+    /* ═══════════════════════════════════════════════
+       CONTACT / CTA
+    ═══════════════════════════════════════════════ */
+    .contact-section {
+      background: linear-gradient(135deg, var(--bg2), #0f1a2e);
+      border-top: 1px solid var(--border);
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    @media (min-width: 700px) { .contact-grid { grid-template-columns: 1fr 1fr; } }
+    .contact-cta h2 {
+      font-size: clamp(24px, 3.5vw, 36px);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+    .contact-cta p {
+      font-size: 15px;
+      color: var(--slate);
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+    .contact-items {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      text-decoration: none;
+      color: var(--white);
+      transition: border-color .2s, background .2s;
+    }
+    .contact-item:hover {
+      border-color: rgba(59,130,246,0.4);
+      background: rgba(59,130,246,0.08);
+    }
+    .contact-item-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .ci-green { background: rgba(16,185,129,0.15); }
+    .ci-blue  { background: rgba(59,130,246,0.15); }
+    .ci-purple{ background: rgba(139,92,246,0.15); }
+    .contact-item-text strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+    .contact-item-text span {
+      font-size: 13px;
+      color: var(--slate);
+    }
+
+    /* QR placeholder */
+    .qr-box {
+      background: #fff;
+      border-radius: var(--r);
+      padding: 20px;
+      text-align: center;
+      max-width: 220px;
+    }
+    .qr-box img { width: 160px; height: 160px; display: block; margin: 0 auto 10px; }
+    .qr-box p { font-size: 12px; color: #334155; font-weight: 600; }
+
+    /* ═══════════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════════ */
+    .footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 28px 24px;
+      text-align: center;
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .footer-logo {
+      font-family: var(--font2);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--white);
+    }
+    .footer-logo span {
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .footer-copy {
+      font-size: 12.5px;
+      color: var(--slate2);
+    }
+    .footer-link {
+      font-size: 13px;
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .footer-link:hover { text-decoration: underline; }
+
+    /* ═══════════════════════════════════════════════
+       PRINT STYLES
+    ═══════════════════════════════════════════════ */
+    @media print {
+      .lang-bar, .pdf-btn { display: none !important; }
+      body { background: white !important; color: #000 !important; }
+      .hero { min-height: auto; background: #060B16 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .section { break-inside: avoid; }
+      .about-card, .service-card, .product-card, .why-card, .coverage-card { break-inside: avoid; }
+      .hero-bg, .hero-grid { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .anim { animation: fadeUp .6s ease both; }
+    .anim-d1 { animation-delay: .1s; }
+    .anim-d2 { animation-delay: .2s; }
+    .anim-d3 { animation-delay: .3s; }
+    .anim-d4 { animation-delay: .4s; }
+
+    @media (max-width: 480px) {
+      .section { padding: 52px 16px; }
+      .section-full { padding: 52px 16px; }
+      .hero { padding: 70px 16px 48px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── TOP NAV BAR ──────────────────────────────────────── -->
+<nav class="lang-bar">
+  <a href="https://amephia.com" class="lang-brand" target="_blank" rel="noopener">
+    Ame<span>Phia</span>
+  </a>
+  <div class="lang-controls">
+    <button class="lang-btn active" id="btn-es" onclick="setLang('es')">🇪🇨 ES</button>
+    <button class="lang-btn" id="btn-en" onclick="setLang('en')">🇺🇸 EN</button>
+    <button class="pdf-btn" onclick="window.print()">
+      ⬇ <span class="es">Descargar PDF</span><span class="en">Download PDF</span>
+    </button>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- ── HERO ──────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="hero-badge anim">
+        <span>⭐ 4.9 / 5 · 150+ <span class="es">Clientes</span><span class="en">Clients</span></span>
+        &nbsp;·&nbsp;
+        <span>10+ <span class="es">años</span><span class="en">years</span></span>
+      </div>
+
+      <h1 class="anim anim-d1">
+        <span class="es">Construimos el<br><span class="grad-text">Futuro Digital</span><br>de tu Empresa</span>
+        <span class="en">Engineering the<br><span class="grad-text">Digital Future</span><br>of Your Business</span>
+      </h1>
+
+      <p class="hero-sub anim anim-d2">
+        <span class="es">Empresa confiable de ingeniería de software con presencia en California, Newark NJ (EE.UU.) y Ecuador. Precios conscientes, código 100% tuyo, buen trabajo garantizado.</span>
+        <span class="en">Trusted software engineering company with offices in California, Newark NJ (USA) & Ecuador. Fair pricing, 100% code ownership, quality work guaranteed.</span>
+      </p>
+
+      <div class="hero-actions anim anim-d3">
+        <a href="https://wa.me/13347324056" class="btn-primary" target="_blank" rel="noopener">
+          💬 WhatsApp
+        </a>
+        <a href="https://amephia.com" class="btn-secondary" target="_blank" rel="noopener">
+          🌐 amephia.com
+        </a>
+        <a href="mailto:info@amephia.com" class="btn-secondary">
+          ✉️ info@amephia.com
+        </a>
+      </div>
+
+      <div class="hero-locations anim anim-d4">
+        <div class="hero-loc">🇺🇸 California, USA</div>
+        <div class="hero-loc">🇺🇸 Newark, NJ</div>
+        <div class="hero-loc">🇪🇨 Quito</div>
+        <div class="hero-loc">🇪🇨 Guayaquil</div>
+        <div class="hero-loc">🌎 <span class="es">Todo Ecuador</span><span class="en">All Ecuador</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STATS ─────────────────────────────────────────── -->
+  <div class="stats-strip">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-num">150+</div>
+        <div class="stat-label"><span class="es">Clientes en Producción</span><span class="en">Production Clients</span></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">10+</div>
+        <div class="stat-label"><span class="es">Años de Experiencia</span><span class="en">Years of Experience</span></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">99.9%</div>
+        <div class="stat-label"><span class="es">Disponibilidad Cloud</span><span class="en">Cloud Uptime SLA</span></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">100K+</div>
+        <div class="stat-label"><span class="es">Transacciones Procesadas</span><span class="en">Transactions Processed</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── ABOUT ─────────────────────────────────────────── -->
+  <section class="section">
+    <div class="chip">🏢 <span class="es">Quiénes Somos</span><span class="en">About Us</span></div>
+    <h2 class="section-title">
+      <span class="es">Ingeniería de <span class="grad-text">Alto Estándar</span>,<br>Precios Conscientes</span>
+      <span class="en">Elite Engineering,<br><span class="grad-text">Fair & Transparent</span> Pricing</span>
+    </h2>
+    <p class="section-sub">
+      <span class="es">AmePhia Systems Inc. es una firma de ingeniería de software con más de una década de trayectoria desarrollando plataformas críticas para empresas en Estados Unidos y Latinoamérica. Somos directos, transparentes, y entregamos código que escala.</span>
+      <span class="en">AmePhia Systems Inc. is a software engineering firm with over a decade of experience building mission-critical platforms for US companies and Latin American enterprises. We are direct, transparent, and deliver code that scales.</span>
+    </p>
+    <div class="about-grid">
+      <div class="about-card">
+        <div class="about-icon">🎯</div>
+        <h3><span class="es">Misión</span><span class="en">Mission</span></h3>
+        <p><span class="es">Acelerar el crecimiento de nuestros clientes construyendo software de alto rendimiento, con precios justos, entregas a tiempo y soporte continuo.</span><span class="en">Accelerate our clients' growth by building high-performance software with fair pricing, on-time delivery, and continuous support.</span></p>
+      </div>
+      <div class="about-card">
+        <div class="about-icon">🔭</div>
+        <h3><span class="es">Visión</span><span class="en">Vision</span></h3>
+        <p><span class="es">Ser la empresa de software de referencia para negocios en EE.UU. y Ecuador que buscan tecnología de primer nivel sin intermediarios ni sobreprecios.</span><span class="en">Become the go-to software company for US and Ecuador businesses seeking top-tier technology without intermediaries or inflated costs.</span></p>
+      </div>
+      <div class="about-card">
+        <div class="about-icon">💎</div>
+        <h3><span class="es">Valores</span><span class="en">Values</span></h3>
+        <p><span class="es">Confianza · Transparencia · Excelencia técnica · Código limpio · Compromiso con el cliente · Integridad en cada línea de código.</span><span class="en">Trust · Transparency · Technical excellence · Clean code · Client commitment · Integrity in every line of code.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── SERVICES ──────────────────────────────────────── -->
+  <section class="section-full services-bg">
+    <div class="section-inner">
+      <div class="chip">🛠️ <span class="es">Servicios</span><span class="en">Services</span></div>
+      <h2 class="section-title">
+        <span class="es">Lo que <span class="grad-text">Construimos</span> para Ti</span>
+        <span class="en">What We <span class="grad-text">Build</span> for You</span>
+      </h2>
+      <p class="section-sub">
+        <span class="es">Cada proyecto se desarrolla con ingenieros senior directamente — sin intermediarios, sin equipos externos, sin sorpresas.</span>
+        <span class="en">Every project is developed with senior engineers directly — no intermediaries, no outsourcing, no surprises.</span>
+      </p>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">🌐</div>
+          <h3><span class="es">Sistemas Web a Medida / ERPs</span><span class="en">Custom Web Systems / ERPs</span></h3>
+          <p><span class="es">Plataformas empresariales completas: ERPs, CRMs, SaaS multi-tenant, aplicaciones móviles. Stack moderno: React, TypeScript, Node.js, PostgreSQL, AWS.</span><span class="en">Full enterprise platforms: ERPs, CRMs, multi-tenant SaaS, mobile apps. Modern stack: React, TypeScript, Node.js, PostgreSQL, AWS.</span></p>
+          <span class="service-tag"><span class="es">Desarrollo a medida</span><span class="en">Custom development</span></span>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🚀</div>
+          <h3><span class="es">Modernización Web + SEO Orgánico</span><span class="en">Website Modernization + Organic SEO</span></h3>
+          <p><span class="es">Transformamos sitios lentos y obsoletos en plataformas de alta conversión: carga <1s, diseño moderno, arquitectura SEO para posicionar en Google.</span><span class="en">We transform slow, outdated websites into high-conversion platforms: sub-1s load times, modern design, and SEO architecture to rank on Google.</span></p>
+          <span class="service-tag">SEO + Performance</span>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">⭐</div>
+          <h3><span class="es">Review Shield — Embudo de Reseñas Google</span><span class="en">Review Shield — Google Business Review Funnel</span></h3>
+          <p><span class="es">Sistema automatizado post-servicio: clientes con 4–5⭐ se redirigen a Google Business; los de 1–3⭐ van a gestión interna. Protege y construye tu reputación pública.</span><span class="en">Automated post-service system: 4–5⭐ clients are redirected to Google Business; 1–3⭐ goes to internal management. Protect and build your public reputation.</span></p>
+          <span class="service-tag">Google Business</span>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🇺🇸</div>
+          <h3><span class="es">Nearshore Engineering para EE.UU.</span><span class="en">Nearshore Engineering for USA Companies</span></h3>
+          <p><span class="es">Equipo de ingenieros senior para empresas en California, NJ y todo EE.UU. Contratos bajo ley de California (W-9/W-8, ACH/Wire), coincidencia horaria PST/EST/CST.</span><span class="en">Senior engineering team for companies in California, NJ and all of USA. Contracts under California law (W-9/W-8, ACH/Wire), full PST/EST/CST timezone overlap.</span></p>
+          <span class="service-tag">US Contracts · Nearshore</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── PRODUCTS ──────────────────────────────────────── -->
+  <section class="section">
+    <div class="chip">📦 <span class="es">Productos Propietarios</span><span class="en">Proprietary Products</span></div>
+    <h2 class="section-title">
+      <span class="es">Suite de <span class="grad-text">Soluciones</span> Empresariales</span>
+      <span class="en">Enterprise <span class="grad-text">Solutions</span> Suite</span>
+    </h2>
+    <p class="section-sub">
+      <span class="es">9 productos propietarios construidos y probados en producción con clientes reales en Ecuador y EE.UU.</span>
+      <span class="en">9 proprietary products built and battle-tested in production with real clients in Ecuador and the USA.</span>
+    </p>
+    <div class="products-grid">
+      <div class="product-card">
+        <div class="product-emoji">🧾</div>
+        <div class="product-name">Facturón SRI</div>
+        <div class="product-desc"><span class="es">Facturación electrónica SRI 100% compatible. Facturas, retenciones, guías de remisión, firma XAdES-BES, API REST.</span><span class="en">100% SRI-compliant electronic invoicing. Invoices, withholdings, delivery guides, XAdES-BES signature, REST API.</span></div>
+      </div>
+      <div class="product-card">
+        <div class="product-emoji">📊</div>
+        <div class="product-name">ContAme</div>
+        <div class="product-desc"><span class="es">Contabilidad NIIF en la nube. Multi-empresa, nómina, conciliación bancaria, reportes financieros automáticos.</span><span class="en">Cloud NIIF/IFRS accounting. Multi-company, payroll, bank reconciliation, automatic financial reports.</span></div>
+      </div>
+      <div class="product-card">
+        <div class="product-emoji">🎓</div>
+        <div class="product-name">AmePhia EDU</div>
+        <div class="product-desc"><span class="es">Sistema escolar MinEduc 2025. LOEI, LMS nativo, portal de padres PWA, conciliación bancaria integrada.</span><span class="en">MinEduc 2025 school system. LOEI, native LMS, PWA parent portal, integrated bank reconciliation.</span></div>
+      </div>
+      <div class="product-card">
+        <div class="product-emoji">🛡️</div>
+        <div class="product-name">ShieldData</div>
+        <div class="product-desc"><span class="es">Cumplimiento LOPDP Ecuador con IA. RAT automático, derechos ARCO, notificación SPDP, firma PAdES.</span><span class="en">Ecuador LOPDP compliance with AI. Automatic RAT, ARCO rights, SPDP notification, PAdES signature.</span></div>
+      </div>
+      <div class="product-card">
+        <div class="product-emoji">💪</div>
+        <div class="product-name">AmePhia GYM</div>
+        <div class="product-desc"><span class="es">ERP para gimnasios. Membresías, facturación SRI, POS, inventario, contabilidad NIIF, control de asistencia.</span><span class="en">Gym ERP. Memberships, SRI invoicing, POS, inventory, NIIF accounting, attendance tracking.</span></div>
+      </div>
+      <div class="product-card">
+        <div class="product-emoji">🛒</div>
+        <div class="product-name">AmePhia STORE</div>
+        <div class="product-desc"><span class="es">Ecommerce SaaS multi-tenant. Pagos Nuvei/PayPhone/Kushki, inventario Kardex, facturación SRI, 22+ módulos.</span><span class="en">Multi-tenant SaaS ecommerce. Nuvei/PayPhone/Kushki payments, Kardex inventory, SRI invoicing, 22+ modules.</span></div>
+      </div>
+      <div class="product-card">
+        <div class="product-emoji">🔒</div>
+        <div class="product-name">Broker Seguro</div>
+        <div class="product-desc"><span class="es">Software para corredores de seguros. Pólizas, vencimientos, renovaciones, comisiones, portal del cliente.</span><span class="en">Insurance broker software. Policies, renewals, commissions, claims, client portal.</span></div>
+      </div>
+      <div class="product-card">
+        <div class="product-emoji">🏥</div>
+        <div class="product-name">AmePhia POS</div>
+        <div class="product-desc"><span class="es">Punto de venta rápido con facturación instantánea, devoluciones, lector de códigos e impresoras térmicas.</span><span class="en">Fast POS with instant invoicing, returns, barcode scanner, and thermal printer support.</span></div>
+      </div>
+      <div class="product-card">
+        <div class="product-emoji">✈️</div>
+        <div class="product-name">Migralia</div>
+        <div class="product-desc"><span class="es">Plataforma SaaS para facilitadores migratorios. Casos, clientes, documentos, pagos y portal del cliente.</span><span class="en">SaaS platform for immigration consultants. Cases, clients, documents, payments, client portal.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── WHY AMEPHIA ───────────────────────────────────── -->
+  <section class="section-full why-bg">
+    <div class="section-inner">
+      <div class="chip">✅ <span class="es">¿Por Qué AmePhia?</span><span class="en">Why AmePhia?</span></div>
+      <h2 class="section-title">
+        <span class="es">6 Razones para <span class="grad-text">Elegirnos</span></span>
+        <span class="en">6 Reasons to <span class="grad-text">Choose Us</span></span>
+      </h2>
+      <p class="section-sub">
+        <span class="es">No somos una agencia genérica. Somos ingenieros senior que resuelven problemas reales.</span>
+        <span class="en">We are not a generic agency. We are senior engineers who solve real problems.</span>
+      </p>
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-num">1</div>
+          <div class="why-text">
+            <h3><span class="es">Empresa Confiable y Seria</span><span class="en">Reliable & Trustworthy Company</span></h3>
+            <p><span class="es">10+ años de trayectoria comprobada. Contratos formales, entregas a tiempo y soporte continuo post-lanzamiento.</span><span class="en">10+ years of proven track record. Formal contracts, on-time delivery, and continuous post-launch support.</span></p>
+          </div>
+        </div>
+        <div class="why-card">
+          <div class="why-num">2</div>
+          <div class="why-text">
+            <h3><span class="es">Precios Conscientes y Transparentes</span><span class="en">Fair & Transparent Pricing</span></h3>
+            <p><span class="es">Sin sobreprecios ni costos ocultos. Tarifas justas ajustadas al alcance real de tu proyecto y al ROI que genera.</span><span class="en">No markup or hidden costs. Fair rates adjusted to your project scope and the ROI it generates.</span></p>
+          </div>
+        </div>
+        <div class="why-card">
+          <div class="why-num">3</div>
+          <div class="why-text">
+            <h3><span class="es">Código 100% Tuyo</span><span class="en">100% Your Code</span></h3>
+            <p><span class="es">Todo el código fuente, bases de datos y repositorios son propiedad exclusiva del cliente desde el primer día. Sin cautiverio de vendor.</span><span class="en">All source code, databases and repositories are exclusively owned by the client from day one. Zero vendor lock-in.</span></p>
+          </div>
+        </div>
+        <div class="why-card">
+          <div class="why-num">4</div>
+          <div class="why-text">
+            <h3><span class="es">Ingenieros Senior Directo</span><span class="en">Direct Senior Engineers</span></h3>
+            <p><span class="es">Hablas directamente con los ingenieros que construyen tu producto. Sin intermediarios, sin account managers, sin cadena de comunicación rota.</span><span class="en">You speak directly with the engineers building your product. No intermediaries, no account managers, no broken communication chain.</span></p>
+          </div>
+        </div>
+        <div class="why-card">
+          <div class="why-num">5</div>
+          <div class="why-text">
+            <h3><span class="es">Bilingüe: EE.UU. + Ecuador</span><span class="en">Bilingual: USA + Ecuador</span></h3>
+            <p><span class="es">Presencia real en California, Newark NJ y Ecuador. Contratos bajo legislación de EE.UU. (W-9/W-8, ACH/Wire) y Ecuador (SRI/LOPDP).</span><span class="en">Real presence in California, Newark NJ, and Ecuador. Contracts under US law (W-9/W-8, ACH/Wire) and Ecuador (SRI/LOPDP).</span></p>
+          </div>
+        </div>
+        <div class="why-card">
+          <div class="why-num">6</div>
+          <div class="why-text">
+            <h3><span class="es">Stack Moderno de Alto Rendimiento</span><span class="en">Modern High-Performance Stack</span></h3>
+            <p><span class="es">React, TypeScript, Node.js, PostgreSQL, AWS Cloud. 99.9% uptime SLA, tiempos de carga <1 segundo, arquitectura escalable desde el día uno.</span><span class="en">React, TypeScript, Node.js, PostgreSQL, AWS Cloud. 99.9% uptime SLA, sub-1s load times, scalable architecture from day one.</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── COVERAGE ──────────────────────────────────────── -->
+  <section class="section">
+    <div class="chip">🌎 <span class="es">Cobertura</span><span class="en">Coverage</span></div>
+    <h2 class="section-title">
+      <span class="es">Presencia <span class="grad-text">Internacional</span></span>
+      <span class="en"><span class="grad-text">International</span> Presence</span>
+    </h2>
+    <p class="section-sub">
+      <span class="es">Operamos con equipos en dos países para servir a clientes en todo Estados Unidos y Ecuador.</span>
+      <span class="en">We operate with teams in two countries to serve clients across the United States and Ecuador.</span>
+    </p>
+    <div class="coverage-grid">
+      <div class="coverage-card">
+        <div class="coverage-flag">🇺🇸</div>
+        <h3>United States</h3>
+        <p><span class="es">Presencia corporativa activa con contratos bajo legislación estadounidense (W-9/W-8, ACH/Wire). Coincidencia horaria completa PST · EST · CST.</span><span class="en">Active corporate presence with contracts under US law (W-9/W-8, ACH/Wire). Full PST · EST · CST timezone overlap.</span></p>
+        <div class="city-list">
+          <span class="city-pill">📍 California</span>
+          <span class="city-pill">📍 Los Angeles</span>
+          <span class="city-pill">📍 Newark, NJ</span>
+          <span class="city-pill">📍 <span class="es">Todo EE.UU.</span><span class="en">Nationwide</span></span>
+        </div>
+      </div>
+      <div class="coverage-card">
+        <div class="coverage-flag">🇪🇨</div>
+        <h3>Ecuador</h3>
+        <p><span class="es">Centro de ingeniería especializada con cumplimiento SRI, LOPDP, NIIF/IFRS y regulaciones del Ministerio de Educación (MinEduc).</span><span class="en">Specialized engineering hub with SRI, LOPDP, NIIF/IFRS and Ministry of Education (MinEduc) compliance.</span></p>
+        <div class="city-list">
+          <span class="city-pill">📍 Quito</span>
+          <span class="city-pill">📍 Guayaquil</span>
+          <span class="city-pill">📍 Cuenca</span>
+          <span class="city-pill">📍 Ambato</span>
+          <span class="city-pill">📍 Manta</span>
+          <span class="city-pill">📍 Loja</span>
+          <span class="city-pill">📍 <span class="es">Todo Ecuador</span><span class="en">All Ecuador</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── CONTACT / CTA ─────────────────────────────────── -->
+  <section class="section-full contact-section">
+    <div class="section-inner">
+      <div class="contact-grid">
+        <div class="contact-cta">
+          <div class="chip">📞 <span class="es">Contáctanos</span><span class="en">Contact Us</span></div>
+          <h2 class="section-title">
+            <span class="es">¿Listo para <span class="grad-text">empezar</span> tu proyecto?</span>
+            <span class="en">Ready to <span class="grad-text">start</span> your project?</span>
+          </h2>
+          <p>
+            <span class="es">Escríbenos por WhatsApp o email. Respondemos en <strong>menos de 2 horas</strong> en horario laboral (EST/PST/ECT). Primera consulta sin costo.</span>
+            <span class="en">Message us on WhatsApp or email. We respond in <strong>under 2 hours</strong> during business hours (EST/PST/ECT). First consultation is free.</span>
+          </p>
+          <div class="contact-items">
+            <a href="https://wa.me/13347324056" class="contact-item" target="_blank" rel="noopener">
+              <div class="contact-item-icon ci-green">💬</div>
+              <div class="contact-item-text">
+                <strong>WhatsApp</strong>
+                <span>+1 (334) 732-4056</span>
+              </div>
+            </a>
+            <a href="mailto:info@amephia.com" class="contact-item">
+              <div class="contact-item-icon ci-blue">✉️</div>
+              <div class="contact-item-text">
+                <strong>Email</strong>
+                <span>info@amephia.com</span>
+              </div>
+            </a>
+            <a href="https://amephia.com" class="contact-item" target="_blank" rel="noopener">
+              <div class="contact-item-icon ci-purple">🌐</div>
+              <div class="contact-item-text">
+                <strong>Website</strong>
+                <span>amephia.com</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- QR Code (generated via Google Charts API) -->
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;">
+          <div class="qr-box">
+            <img
+              src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=https://amephia.com&color=060B16&bgcolor=ffffff&margin=8"
+              alt="QR Code amephia.com"
+              width="160" height="160"
+              loading="lazy"
+            />
+            <p>amephia.com</p>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-size:13px;color:var(--slate);margin-bottom:4px;">
+              <span class="es">⭐ Calificación promedio</span>
+              <span class="en">⭐ Average rating</span>
+            </div>
+            <div style="font-size:28px;font-weight:800;font-family:var(--font2);background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">4.9 / 5</div>
+            <div style="font-size:12px;color:var(--slate2);">150+ <span class="es">clientes verificados</span><span class="en">verified clients</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-logo">Ame<span>Phia</span> Systems Inc.</div>
+      <div class="footer-copy">© 2026 AmePhia Systems Inc. · <span class="es">Todos los derechos reservados</span><span class="en">All rights reserved</span> · California, USA · Ecuador</div>
+      <a href="https://amephia.com" class="footer-link" target="_blank" rel="noopener">amephia.com →</a>
+    </div>
+  </footer>
+
+</div><!-- end .page -->
+
+<script>
+  function setLang(lang) {
+    document.body.classList.toggle('lang-en', lang === 'en');
+    document.getElementById('btn-es').classList.toggle('active', lang === 'es');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    localStorage.setItem('amephia-brochure-lang', lang);
+  }
+
+  // Restore language preference
+  (function() {
+    const saved = localStorage.getItem('amephia-brochure-lang');
+    // Also check browser language
+    const browserLang = navigator.language || navigator.userLanguage || 'es';
+    const preferred = saved || (browserLang.startsWith('en') ? 'en' : 'es');
+    if (preferred === 'en') setLang('en');
+  })();
+
+  // Scroll-triggered animations
+  if ('IntersectionObserver' in window) {
+    const cards = document.querySelectorAll('.about-card, .service-card, .product-card, .why-card, .coverage-card, .contact-item');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.animation = 'fadeUp .5s ease both';
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    cards.forEach(c => { c.style.opacity = '0'; io.observe(c); });
+  }
+</script>
+
+</body>
+</html>
