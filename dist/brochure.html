@@ -1144,18 +1144,18 @@
     if (preferred === 'en') setLang('en');
   })();
 
-  // Scroll-triggered animations
+  // Scroll-triggered animations: cards are ALWAYS visible (opacity: 1) by default
   if ('IntersectionObserver' in window) {
     const cards = document.querySelectorAll('.about-card, .service-card, .product-card, .why-card, .coverage-card, .contact-item');
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) {
-          e.target.style.animation = 'fadeUp .5s ease both';
+          e.target.style.animation = 'fadeUp .45s ease both';
           io.unobserve(e.target);
         }
       });
-    }, { threshold: 0.08 });
-    cards.forEach(c => { c.style.opacity = '0'; io.observe(c); });
+    }, { rootMargin: '60px 0px', threshold: 0.01 });
+    cards.forEach(c => io.observe(c));
   }
 </script>
 

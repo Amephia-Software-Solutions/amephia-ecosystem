@@ -33,18 +33,18 @@ export default function BrochurePage() {
     const preferred = saved || (browserLang.startsWith('en') ? 'en' : 'es');
     if (preferred === 'en') setLang('en');
 
-    // Scroll animations
+    // Scroll animations: cards are ALWAYS visible by default (never blank on mobile)
     if ('IntersectionObserver' in window) {
       const cards = document.querySelectorAll('.br-card');
       const io = new IntersectionObserver((entries) => {
         entries.forEach(e => {
           if (e.isIntersecting) {
-            (e.target as HTMLElement).style.animation = 'brFadeUp .5s ease both';
+            (e.target as HTMLElement).style.animation = 'brFadeUp .45s ease both';
             io.unobserve(e.target);
           }
         });
-      }, { threshold: 0.08 });
-      cards.forEach(c => { (c as HTMLElement).style.opacity = '0'; io.observe(c); });
+      }, { rootMargin: '60px 0px', threshold: 0.01 });
+      cards.forEach(c => io.observe(c));
     }
 
     return () => {
@@ -59,7 +59,7 @@ export default function BrochurePage() {
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
         :root{--br-bg:#060B16;--br-bg2:#0a1628;--br-blue:#3b82f6;--br-purple:#8b5cf6;--br-cyan:#06b6d4;--br-white:#fff;--br-slate:#94a3b8;--br-slate2:#64748b;--br-border:rgba(255,255,255,0.08);--br-grad:linear-gradient(135deg,#3b82f6,#8b5cf6,#06b6d4);--br-r:14px;--br-font:'Inter',system-ui,sans-serif;--br-font2:'Space Grotesk',system-ui,sans-serif;}
         .br-wrap{font-family:var(--br-font);background:var(--br-bg);color:var(--br-white);min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased;}
-        @keyframes brFadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes brFadeUp{from{opacity:0.6;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
         /* ── Language ── */
         .br-es{display:block}.br-en{display:none}
