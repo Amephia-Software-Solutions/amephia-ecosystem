@@ -51,6 +51,13 @@ ErrorDocument 404 /404.html
   <FilesMatch "^(index|404)\.html$">
     Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
   </FilesMatch>
+
+  # ga.js no lleva hash en el nombre (no lo genera Vite, vive en public/).
+  # Sin esta excepción heredaría el "1 year" de los assets y un cambio de
+  # Measurement ID tardaría hasta un año en llegar a los visitantes.
+  <FilesMatch "^ga\.js$">
+    Header set Cache-Control "public, max-age=3600, must-revalidate"
+  </FilesMatch>
 </IfModule>
 
 # Assets faltantes: devolver 404 sin HTML para evitar errores de MIME en el navegador.
