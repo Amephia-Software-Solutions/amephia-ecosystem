@@ -50,7 +50,12 @@ jobs:
             git worktree add -b deploy .deploy-worktree
           fi
 
-          rsync -a --delete --exclude '.git' dist/ .deploy-worktree/
+          # --checksum es obligatorio aquí: por defecto rsync decide con tamaño
+          # + fecha, y index.html cambia solo en el hash del bundle (8 chars,
+          # mismo tamaño). Si además el CSS no cambia, rsync lo da por igual y
+          # NO lo copia → la rama deploy queda con un index.html que apunta a un
+          # bundle ya borrado y el sitio sirve una página en blanco.
+          rsync -a --delete --checksum --exclude '.git' dist/ .deploy-worktree/
           cd .deploy-worktree
 
           git config user.name "github-actions[bot]"
