@@ -35,6 +35,11 @@ jobs:
         # con hashes obsoletos. Limpiar dist/ asegura un build determinista.
         run: rm -rf dist
 
+      - name: Install Chromium for prerendering
+        # npm run build prerenderiza el SPA con Playwright; sin el navegador
+        # el build falla en lugar de publicar un sitio sin HTML estático.
+        run: npx playwright install --with-deps chromium
+
       - name: Build site
         run: npm run build
 

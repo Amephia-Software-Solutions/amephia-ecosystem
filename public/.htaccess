@@ -48,7 +48,10 @@ ErrorDocument 404 /404.html
 # No cachear HTML: el index referencia assets con hash; si el HTML está viejo en caché
 # y el servidor ya desplegó otro build, el navegador pide .js/.css que ya no existen.
 <IfModule mod_headers.c>
-  <FilesMatch "^(index|404)\.html$">
+  # Cualquier .html, no solo index/404: las páginas prerenderizadas también
+  # referencian bundles con hash y una copia vieja en caché pediría ficheros
+  # que ya no existen.
+  <FilesMatch "\.html$">
     Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
   </FilesMatch>
 
@@ -72,6 +75,31 @@ RewriteRule ^ - [R=404,L]
 # /brochure or /brochure/  →  /brochure.html
 RewriteCond %{REQUEST_URI} ^/brochure/?$ [NC]
 RewriteRule ^ /brochure.html [L]
+
+# ── Páginas prerenderizadas ────────────────────────────────────
+# El SPA se renderiza en el cliente, así que sin esto todas las rutas sirven un
+# <div id="root"> vacío: Google ejecuta JS y lo resuelve, pero Bing y los bots
+# de IA que permite robots.txt no. scripts/prerender.mjs deja una copia ya
+# renderizada de cada URL del sitemap y estas reglas la sirven.
+#
+# Cada regla comprueba antes que el fichero exista (-f). Si el prerenderizado
+# no se ejecutó, ninguna coincide y todo cae al fallback del SPA de abajo, que
+# es el comportamiento de siempre.
+
+# Inglés: /?lang=en → /index.en.html
+RewriteCond %{QUERY_STRING} (^|&)lang=en(&|$)
+RewriteCond %{DOCUMENT_ROOT}/index.en.html -f
+RewriteRule ^$ /index.en.html [L]
+
+# Inglés: /proyecto/<id>?lang=en → /proyecto/<id>.en.html
+RewriteCond %{QUERY_STRING} (^|&)lang=en(&|$)
+RewriteCond %{DOCUMENT_ROOT}/proyecto/$1.en.html -f
+RewriteRule ^proyecto/([a-z-]+)/?$ /proyecto/$1.en.html [L]
+
+# Español (canónico): /proyecto/<id> → /proyecto/<id>.html
+# La portada en español ya es index.html, que sirve DirectoryIndex.
+RewriteCond %{DOCUMENT_ROOT}/proyecto/$1.html -f
+RewriteRule ^proyecto/([a-z-]+)/?$ /proyecto/$1.html [L]
 
 # SPA fallback — solo rutas de app (no archivos estáticos ni /assets/)
 RewriteCond %{REQUEST_URI} !^/assets/
