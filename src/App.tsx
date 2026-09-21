@@ -136,6 +136,12 @@ const getProjectFromHash = (hash: string): ProjectId | null => {
 const getProjectFromLocation = (pathname: string, hash: string): ProjectId | null =>
   getProjectFromPathname(pathname) ?? getProjectFromHash(hash);
 
+// Ruta del brochure (soporta /brochure, /brochure/, #brochure)
+const isBrochureRoute = () =>
+  typeof window !== 'undefined' &&
+  (window.location.pathname.replace(/\/+$/, '') === '/brochure' ||
+    window.location.hash === '#brochure');
+
 function App() {
   const [activeProject, setActiveProject] = useState<ProjectId | null>(() =>
     typeof window === 'undefined'
@@ -164,6 +170,10 @@ function App() {
   }, []);
 
   useEffect(() => {
+    // BrochurePage gestiona su propio <title> y su page_view: sin este corte,
+    // el efecto lo sobrescribiria con el titulo base y GA registraria la home.
+    if (isBrochureRoute()) return;
+
     const projectMeta = activeProject ? PROJECT_META[activeProject] : null;
     const nextTitle = projectMeta ? projectMeta.title : BASE_TITLE;
     const nextDescription = projectMeta ? projectMeta.description : BASE_DESCRIPTION;
@@ -350,12 +360,7 @@ function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
-  // Brochure route (support /brochure, /brochure/, #brochure)
-  if (
-    typeof window !== 'undefined' &&
-    (window.location.pathname.replace(/\/+$/, '') === '/brochure' ||
-      window.location.hash === '#brochure')
-  ) {
+  if (isBrochureRoute()) {
     return <BrochurePage />;
   }
 
