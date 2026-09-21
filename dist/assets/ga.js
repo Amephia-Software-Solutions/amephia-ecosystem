@@ -6,7 +6,7 @@
  * index.html / .env (VITE_GA_MEASUREMENT_ID).
  */
 (function () {
-  var GA_MEASUREMENT_ID = 'G-4WE576WZJ8';
+  var GA_MEASUREMENT_ID = 'G-0WTCDH7SYM';
 
   if (window.__amephiaGaLoaded) return;
   window.__amephiaGaLoaded = true;

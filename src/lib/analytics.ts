@@ -7,13 +7,30 @@ declare global {
   }
 }
 
+// ID real de la propiedad "amephia.com" en Google Analytics.
+const FALLBACK_MEASUREMENT_ID = 'G-0WTCDH7SYM';
+
+// Placeholders que han llegado a producción por la variable de entorno y que
+// hicieron que el sitio reportara a una propiedad inexistente durante meses:
+// la comprobación anterior solo descartaba 'G-XXXXXXXXXX', así que cualquier
+// otro valor de relleno pasaba sin más y la medición se perdía en silencio.
+const PLACEHOLDER_IDS = ['G-XXXXXXXXXX', 'G-ABC123XYZ', 'G-4WE576WZJ8'];
+
+const envMeasurementId = import.meta.env.VITE_GA_MEASUREMENT_ID?.trim();
+
 const GA_MEASUREMENT_ID =
-  (import.meta.env.VITE_GA_MEASUREMENT_ID && import.meta.env.VITE_GA_MEASUREMENT_ID !== 'G-XXXXXXXXXX'
-    ? import.meta.env.VITE_GA_MEASUREMENT_ID
-    : 'G-4WE576WZJ8'
-  )?.trim();
+  envMeasurementId && !PLACEHOLDER_IDS.includes(envMeasurementId)
+    ? envMeasurementId
+    : FALLBACK_MEASUREMENT_ID;
 
 const ANALYTICS_ENABLED = Boolean(GA_MEASUREMENT_ID);
+
+if (import.meta.env.DEV && envMeasurementId && PLACEHOLDER_IDS.includes(envMeasurementId)) {
+  console.warn(
+    `[analytics] VITE_GA_MEASUREMENT_ID="${envMeasurementId}" es un placeholder; ` +
+      `se usa ${FALLBACK_MEASUREMENT_ID} en su lugar.`
+  );
+}
 
 let analyticsInitialized = false;
 
