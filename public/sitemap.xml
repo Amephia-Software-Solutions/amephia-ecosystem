@@ -1,12 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Sitemap — AmePhia Systems Inc.
+
+  Reglas que sigue este archivo:
+
+  - Solo URLs que existen y renderizan su propio contenido. Las rutas de
+    producto son /proyecto/<id>; cualquier otra cosa cae en el fallback del
+    SPA y devuelve la portada, que para Google es un duplicado.
+  - /proyecto/facturon queda fuera a propósito: redirige a facturon.ec.
+  - No se listan URLs con #fragmento: Google las deduplica contra la página.
+  - hreflang SOLO donde hay inglés de verdad. La portada y las fichas que
+    renderiza ProjectLanding (facturacion, pos, nutri, advisory, contame)
+    traducen con ?lang=en. Las demás — gym, ecommerce, broker-seguro,
+    shielddata, migration, education y el brochure — tienen su propia landing
+    escrita solo en español, así que se declaran monolingües. Anunciar un
+    alternate en inglés que sirve español es peor que no anunciar nada.
+-->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 
-  <!-- ── HOMEPAGE (priority 1.0) ─────────────────────── -->
+  <!-- ══ BILINGÜES (es + ?lang=en) ═══════════════════════ -->
+
+  <!-- ── PORTADA ES (priority 1.0) ────────────────────── -->
   <url>
     <loc>https://amephia.com/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="es" href="https://amephia.com/" />
@@ -19,130 +38,128 @@
     </image:image>
   </url>
 
-  <!-- ── HOMEPAGE EN (priority 0.95) ──────────────────── -->
+  <!-- ── PORTADA EN (priority 0.9) ────────────────────── -->
   <url>
     <loc>https://amephia.com/?lang=en</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-21</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.95</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amephia.com/?lang=en" />
+    <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="es" href="https://amephia.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://amephia.com/?lang=en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://amephia.com/" />
   </url>
 
-  <!-- ── SECTION: SERVICIOS (priority 0.9) ────────────── -->
-  <url>
-    <loc>https://amephia.com/#servicios</loc>
-    <lastmod>2026-09-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <!-- ── SECTION: PRODUCTOS (priority 0.9) ────────────── -->
-  <url>
-    <loc>https://amephia.com/#productos</loc>
-    <lastmod>2026-09-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <!-- ── SECTION: NOSOTROS (priority 0.85) ────────────── -->
-  <url>
-    <loc>https://amephia.com/#nosotros</loc>
-    <lastmod>2026-09-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-
-  <!-- ── SECTION: CONTACTO (priority 0.85) ────────────── -->
-  <url>
-    <loc>https://amephia.com/#contacto</loc>
-    <lastmod>2026-09-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-
-  <!-- ── PRODUCTS: Facturón SRI ────────────────────────── -->
+  <!-- ── PRODUCTO: Facturón SRI ───────────────────────── -->
   <url>
     <loc>https://amephia.com/proyecto/facturacion</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="es" href="https://amephia.com/proyecto/facturacion" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://amephia.com/proyecto/facturacion" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://amephia.com/proyecto/facturacion?lang=en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://amephia.com/proyecto/facturacion" />
   </url>
 
-  <!-- ── PRODUCTS: AmePhia EDU ─────────────────────────── -->
+  <!-- ── PRODUCTO: ContAme (contabilidad NIIF) ────────── -->
   <url>
-    <loc>https://amephia.com/education</loc>
-    <lastmod>2026-09-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="es" href="https://amephia.com/education" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://amephia.com/education" />
-  </url>
-
-  <!-- ── PRODUCTS: AmePhia Gym ERP ─────────────────────── -->
-  <url>
-    <loc>https://amephia.com/proyecto/gym</loc>
-    <lastmod>2026-09-15</lastmod>
+    <loc>https://amephia.com/proyecto/contame</loc>
+    <lastmod>2026-09-21</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://amephia.com/proyecto/contame" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://amephia.com/proyecto/contame?lang=en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://amephia.com/proyecto/contame" />
   </url>
 
-  <!-- ── PRODUCTS: AmePhia Store / E-commerce ──────────── -->
-  <url>
-    <loc>https://amephia.com/proyecto/ecommerce</loc>
-    <lastmod>2026-09-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- ── PRODUCTS: AmePhia POS ─────────────────────────── -->
+  <!-- ── PRODUCTO: POS ────────────────────────────────── -->
   <url>
     <loc>https://amephia.com/proyecto/pos</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://amephia.com/proyecto/pos" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://amephia.com/proyecto/pos?lang=en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://amephia.com/proyecto/pos" />
   </url>
 
-  <!-- ── PRODUCTS: Migralia SaaS ───────────────────────── -->
-  <url>
-    <loc>https://amephia.com/proyecto/migration</loc>
-    <lastmod>2026-09-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-
-  <!-- ── PRODUCTS: Broker Seguro ───────────────────────── -->
-  <url>
-    <loc>https://amephia.com/proyecto/broker-seguro</loc>
-    <lastmod>2026-09-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-
-  <!-- ── PRODUCTS: ShieldData LOPDP ───────────────────── -->
-  <url>
-    <loc>https://amephia.com/proyecto/shielddata</loc>
-    <lastmod>2026-09-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-
-  <!-- ── PRODUCTS: Advisory ────────────────────────────── -->
+  <!-- ── SERVICIO: Asesoría tecnológica ───────────────── -->
   <url>
     <loc>https://amephia.com/proyecto/advisory</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://amephia.com/proyecto/advisory" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://amephia.com/proyecto/advisory?lang=en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://amephia.com/proyecto/advisory" />
   </url>
 
-  <!-- ── PRODUCTS: Nutri ───────────────────────────────── -->
+  <!-- ── PRODUCTO: Nutri ──────────────────────────────── -->
   <url>
     <loc>https://amephia.com/proyecto/nutri</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://amephia.com/proyecto/nutri" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://amephia.com/proyecto/nutri?lang=en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://amephia.com/proyecto/nutri" />
+  </url>
+
+  <!-- ══ SOLO ESPAÑOL (landing propia, sin traducir) ═════ -->
+
+  <!-- ── BROCHURE EJECUTIVO ───────────────────────────── -->
+  <url>
+    <loc>https://amephia.com/brochure</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ── PRODUCTO: AmePhia EDU ────────────────────────── -->
+  <url>
+    <loc>https://amephia.com/proyecto/education</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- ── PRODUCTO: AmePhia Gym ERP ────────────────────── -->
+  <url>
+    <loc>https://amephia.com/proyecto/gym</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ── PRODUCTO: AmePhia Ecommerce ──────────────────── -->
+  <url>
+    <loc>https://amephia.com/proyecto/ecommerce</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ── PRODUCTO: ShieldData LOPDP ───────────────────── -->
+  <url>
+    <loc>https://amephia.com/proyecto/shielddata</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ── PRODUCTO: Broker Seguro ──────────────────────── -->
+  <url>
+    <loc>https://amephia.com/proyecto/broker-seguro</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <!-- ── PRODUCTO: Migralia SaaS ──────────────────────── -->
+  <url>
+    <loc>https://amephia.com/proyecto/migration</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
   </url>
 
 </urlset>

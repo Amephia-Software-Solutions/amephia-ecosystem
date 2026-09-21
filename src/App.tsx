@@ -11,6 +11,13 @@ import BrochurePage from './components/BrochurePage';
 import { isProjectId } from './projects';
 import type { ProjectId } from './projects';
 import { trackEvent, trackPageView } from './lib/analytics';
+import { useLanguage } from './i18n';
+
+// Fichas con inglés real: las que renderiza ProjectLanding, que traduce con el
+// contexto de idioma. El resto (gym, ecommerce, broker-seguro, shielddata,
+// migration, education) tiene landing propia escrita solo en español, así que
+// no se les anuncia alternate en inglés: serviría español y Google lo penaliza.
+const BILINGUAL_PROJECTS: ProjectId[] = ['facturacion', 'pos', 'nutri', 'advisory', 'contame'];
 
 const BASE_TITLE = 'AmePhia Systems | Empresa de Desarrollo de Software';
 const BASE_DESCRIPTION =
@@ -143,6 +150,7 @@ const isBrochureRoute = () =>
     window.location.hash === '#brochure');
 
 function App() {
+  const { language } = useLanguage();
   const [activeProject, setActiveProject] = useState<ProjectId | null>(() =>
     typeof window === 'undefined'
       ? null
@@ -177,9 +185,15 @@ function App() {
     const projectMeta = activeProject ? PROJECT_META[activeProject] : null;
     const nextTitle = projectMeta ? projectMeta.title : BASE_TITLE;
     const nextDescription = projectMeta ? projectMeta.description : BASE_DESCRIPTION;
-    const nextCanonical = activeProject
+    // El inglés vive en ?lang=en. Si la versión inglesa se canonicalizara a la
+    // española, Google descartaria esa URL y el hreflang no serviria de nada.
+    const esUrl = activeProject
       ? `https://amephia.com/proyecto/${activeProject}`
       : 'https://amephia.com/';
+    const enUrl = `${esUrl}?lang=en`;
+    const isBilingual = activeProject ? BILINGUAL_PROJECTS.includes(activeProject) : true;
+    const showsEnglish = isBilingual && language === 'en';
+    const nextCanonical = showsEnglish ? enUrl : esUrl;
     const nextImage = projectMeta?.ogImage
       ? `https://amephia.com${projectMeta.ogImage}`
       : 'https://amephia.com/og-image.jpg';
@@ -202,6 +216,32 @@ function App() {
     // Canonical
     const canonicalLink = document.querySelector('link[rel="canonical"]');
     if (canonicalLink) canonicalLink.setAttribute('href', nextCanonical);
+
+    // El <html lang> de index.html es fijo ("es"), asi que anunciaba español
+    // aunque la pagina estuviera renderizada en inglés.
+    document.documentElement.lang = showsEnglish ? 'en' : 'es';
+
+    // hreflang por pagina. Los de index.html son estaticos y apuntan siempre a
+    // la portada, de modo que en /proyecto/<id> declaraban como alternativa una
+    // pagina distinta. Se regeneran aqui y solo cuando hay inglés de verdad.
+    document
+      .querySelectorAll('link[rel="alternate"][hreflang]')
+      .forEach((link) => link.remove());
+
+    if (isBilingual) {
+      const alternates: Array<[string, string]> = [
+        ['es', esUrl],
+        ['en', enUrl],
+        ['x-default', esUrl],
+      ];
+      alternates.forEach(([hreflang, href]) => {
+        const link = document.createElement('link');
+        link.rel = 'alternate';
+        link.hreflang = hreflang;
+        link.href = href;
+        document.head.appendChild(link);
+      });
+    }
 
     // Open Graph
     setMeta('meta[property="og:title"]', nextTitle);
@@ -342,7 +382,7 @@ function App() {
 
     const currentPath = `${window.location.pathname}${window.location.search}`;
     trackPageView(currentPath, nextTitle);
-  }, [activeProject]);
+  }, [activeProject, language]);
 
   const openProject = useCallback((projectId: ProjectId) => {
     const nextPath = `/proyecto/${projectId}`;
