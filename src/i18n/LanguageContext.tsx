@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useCallback } from 'react';
+import { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import type { ReactNode } from 'react';
 import { translations } from './translations';
 import type { Language, TranslationKey } from './translations';
@@ -14,13 +14,18 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const [language, setLanguageState] = useState<Language>(() => {
     if (typeof window !== 'undefined') {
+      const fromUrl = new URLSearchParams(window.location.search).get('lang');
+      if (fromUrl === 'en' || fromUrl === 'es') return fromUrl;
       const saved = localStorage.getItem('language') as Language;
       if (saved && translations[saved]) return saved;
-      const browserLang = navigator.language.split('-')[0];
-      if (browserLang === 'es') return 'es';
     }
-    return 'en';
+    // Español por defecto: coincide con canonical/hreflang x-default y con lo que indexa Google.
+    return 'es';
   });
+
+  useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
 
   const setLanguage = useCallback((lang: Language) => {
     setLanguageState(lang);

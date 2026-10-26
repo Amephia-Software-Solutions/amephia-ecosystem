@@ -26,7 +26,10 @@ RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
 
 # Gzip compression
 <IfModule mod_deflate.c>
-  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml
+  AddOutputFilterByType DEFLATE text/html text/css text/xml application/xml application/javascript application/json image/svg+xml
+</IfModule>
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/css text/xml application/xml application/javascript application/json image/svg+xml
 </IfModule>
 
 # Security headers
@@ -43,6 +46,8 @@ ErrorDocument 404 /404.html
 <IfModule mod_mime.c>
   AddType text/css .css
   AddType application/javascript .js .mjs
+  AddType font/woff2 .woff2
+  AddType application/manifest+json .webmanifest
 </IfModule>
 
 # No cachear HTML: el index referencia assets con hash; si el HTML está viejo en caché
@@ -65,6 +70,10 @@ RewriteRule ^ - [R=404,L]
 # /brochure or /brochure/  →  /brochure.html
 RewriteCond %{REQUEST_URI} ^/brochure/?$ [NC]
 RewriteRule ^ /brochure.html [L]
+
+# Páginas de servicio pre-renderizadas: /servicios/<slug> sirve el HTML estático sin redirección 301
+RewriteCond %{REQUEST_FILENAME}/index.html -f
+RewriteRule ^servicios/([a-z0-9-]+)/?$ /servicios/$1/index.html [L]
 
 # SPA fallback — solo rutas de app (no archivos estáticos ni /assets/)
 RewriteCond %{REQUEST_URI} !^/assets/

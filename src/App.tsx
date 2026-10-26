@@ -1,20 +1,25 @@
-import { useCallback, useEffect, useState } from 'react';
-import { ProjectLanding } from './components/ProjectLanding';
-import MigrationSaasLanding from './components/MigrationSaasLanding';
-import GymLanding from './components/GymLanding';
-import BrokerSeguroLanding from './components/BrokerSeguroLanding';
-import EcommerceLanding from './components/EcommerceLanding';
-import ShieldDataLanding from './components/ShieldDataLanding';
-import EducationLanding from './components/EducationLanding';
+import { lazy, startTransition, useCallback, useEffect, useState } from 'react';
+const ProjectLanding = lazy(() => import('./components/ProjectLanding').then(m => ({ default: m.ProjectLanding })));
+const MigrationSaasLanding = lazy(() => import('./components/MigrationSaasLanding'));
+const GymLanding = lazy(() => import('./components/GymLanding'));
+const BrokerSeguroLanding = lazy(() => import('./components/BrokerSeguroLanding'));
+const EcommerceLanding = lazy(() => import('./components/EcommerceLanding'));
+const ShieldDataLanding = lazy(() => import('./components/ShieldDataLanding'));
+const EducationLanding = lazy(() => import('./components/EducationLanding'));
 import { CompanyLanding } from './components/CompanyLanding';
-import BrochurePage from './components/BrochurePage';
+const BrochurePage = lazy(() => import('./components/BrochurePage'));
+const ServicePage = lazy(() => import('./components/ServicePage'));
 import { isProjectId } from './projects';
+import { getServiceBySlug } from './data/services';
+import type { ServiceData } from './data/services';
+import { serviceJsonLd, serviceMeta } from './data/serviceSeo';
+import { useLanguage } from './i18n';
 import type { ProjectId } from './projects';
 import { trackEvent, trackPageView } from './lib/analytics';
 
-const BASE_TITLE = 'AmePhia Systems | Empresa de Desarrollo de Software';
+const BASE_TITLE = 'Desarrollo de software a medida, ERP y consultoría tecnológica | AmePhia Solutions';
 const BASE_DESCRIPTION =
-  'AmePhia Systems desarrolla software a medida: plataformas web, apps Android/iOS, ecommerce con pagos online, facturación electrónica, ERP y asesoría tecnológica.';
+  'Más de 15 años desarrollando software a medida, ERP, facturación electrónica SRI y apps. Programadores senior y asesoría tecnológica en Ecuador y EE. UU.';
 
 interface ProjectSEO {
   title: string;
@@ -133,10 +138,18 @@ const getProjectFromHash = (hash: string): ProjectId | null => {
   return projectId;
 };
 
+const getServiceFromPathname = (pathname: string): ServiceData | null => {
+  const parts = pathname.replace(/\/+$/, '').split('/').filter(Boolean);
+  if (parts.length !== 2 || (parts[0] !== 'servicios' && parts[0] !== 'services')) return null;
+  return getServiceBySlug(parts[1]) ?? null;
+};
+
 const getProjectFromLocation = (pathname: string, hash: string): ProjectId | null =>
   getProjectFromPathname(pathname) ?? getProjectFromHash(hash);
 
 function App() {
+  const { language } = useLanguage();
+  const activeService = typeof window === 'undefined' ? null : getServiceFromPathname(window.location.pathname);
   const [activeProject, setActiveProject] = useState<ProjectId | null>(() =>
     typeof window === 'undefined'
       ? null
@@ -145,7 +158,7 @@ function App() {
 
   useEffect(() => {
     const syncProjectFromUrl = () => {
-      setActiveProject(getProjectFromLocation(window.location.pathname, window.location.hash));
+      startTransition(() => setActiveProject(getProjectFromLocation(window.location.pathname, window.location.hash)));
     };
 
     const legacyHashProject = getProjectFromHash(window.location.hash);
@@ -164,6 +177,31 @@ function App() {
   }, []);
 
   useEffect(() => {
+    if (!activeService) return;
+    const lang = language === 'en' ? 'en' : 'es';
+    const m = serviceMeta(activeService, lang);
+    const setMeta = (selector: string, content: string) => document.querySelector(selector)?.setAttribute('content', content);
+    document.title = m.title;
+    setMeta('meta[name="title"]', m.title);
+    setMeta('meta[name="description"]', m.description);
+    setMeta('meta[name="keywords"]', m.keywords);
+    document.querySelector('link[rel="canonical"]')?.setAttribute('href', m.canonical);
+    for (const prop of ['og:title', 'twitter:title']) setMeta(`meta[property="${prop}"]`, m.title);
+    for (const prop of ['og:description', 'twitter:description']) setMeta(`meta[property="${prop}"]`, m.description);
+    for (const prop of ['og:url', 'twitter:url']) setMeta(`meta[property="${prop}"]`, m.canonical);
+    document.querySelectorAll('script[data-seo="service"]').forEach(n => n.remove());
+    serviceJsonLd(activeService, lang).forEach(ld => {
+      const el = document.createElement('script');
+      el.type = 'application/ld+json';
+      el.setAttribute('data-seo', 'service');
+      el.textContent = JSON.stringify(ld);
+      document.head.appendChild(el);
+    });
+    trackPageView(window.location.pathname, m.title);
+  }, [activeService, language]);
+
+  useEffect(() => {
+    if (activeService) return;
     const projectMeta = activeProject ? PROJECT_META[activeProject] : null;
     const nextTitle = projectMeta ? projectMeta.title : BASE_TITLE;
     const nextDescription = projectMeta ? projectMeta.description : BASE_DESCRIPTION;
@@ -332,6 +370,10 @@ function App() {
 
     const currentPath = `${window.location.pathname}${window.location.search}`;
     trackPageView(currentPath, nextTitle);
+  }, [activeProject, activeService]);
+
+  useEffect(() => {
+    if (activeProject) document.documentElement.removeAttribute('data-hero');
   }, [activeProject]);
 
   const openProject = useCallback((projectId: ProjectId) => {
@@ -340,13 +382,13 @@ function App() {
       window.history.pushState(null, '', `${nextPath}${window.location.search}`);
     }
     trackEvent('project_open', { project_id: projectId });
-    setActiveProject(projectId);
+    startTransition(() => setActiveProject(projectId));
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
   const closeProject = useCallback(() => {
     window.history.pushState(null, '', `/${window.location.search}`);
-    setActiveProject(null);
+    startTransition(() => setActiveProject(null));
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
@@ -357,6 +399,10 @@ function App() {
       window.location.hash === '#brochure')
   ) {
     return <BrochurePage />;
+  }
+
+  if (activeService) {
+    return <ServicePage service={activeService} />;
   }
 
   if (activeProject === 'migration') {

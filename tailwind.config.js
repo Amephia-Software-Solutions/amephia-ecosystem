@@ -16,8 +16,8 @@ export default {
         mutedText: '#a3a3a3',
       },
       fontFamily: {
-        sans: ['"Inter Tight"', 'sans-serif'],
-        mono: ['"JetBrains Mono"', 'monospace'],
+        sans: ['Geist', '"Geist Fallback"', 'system-ui', 'sans-serif'],
+        mono: ['"Geist Mono"', 'ui-monospace', 'Menlo', 'monospace'],
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-out forwards',

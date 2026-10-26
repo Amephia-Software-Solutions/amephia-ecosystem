@@ -31,10 +31,19 @@ export const initializeAnalytics = () => {
     window.dataLayer?.push(args);
   };
 
-  const script = document.createElement('script');
-  script.async = true;
-  script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(GA_MEASUREMENT_ID as string)}`;
-  document.head.appendChild(script);
+  // gtag se carga en la primera interacción del usuario (o tras 8 s): no compite con el LCP ni con el TBT.
+  let loaded = false;
+  const loadScript = () => {
+    if (loaded) return;
+    loaded = true;
+    ['pointerdown', 'keydown', 'scroll', 'touchstart'].forEach(ev => window.removeEventListener(ev, loadScript));
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(GA_MEASUREMENT_ID as string)}`;
+    document.head.appendChild(script);
+  };
+  ['pointerdown', 'keydown', 'scroll', 'touchstart'].forEach(ev => window.addEventListener(ev, loadScript, { once: true, passive: true }));
+  window.setTimeout(loadScript, 8000);
 
   safeGtag('js', new Date());
   safeGtag('config', GA_MEASUREMENT_ID, { send_page_view: false });

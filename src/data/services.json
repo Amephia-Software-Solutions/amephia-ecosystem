@@ -1,0 +1,1152 @@
+[
+ {
+  "slug": "desarrollo-software-a-medida",
+  "key": "dev",
+  "title": {
+   "es": "Desarrollo de software a medida",
+   "en": "Custom software development"
+  },
+  "h1": {
+   "es": "Desarrollo de software a medida para tu empresa",
+   "en": "Custom software development for your company"
+  },
+  "metaTitle": {
+   "es": "Desarrollo de software a medida en Ecuador y EE. UU. | AmePhia Solutions",
+   "en": "Custom software development in Ecuador and the US | AmePhia Solutions"
+  },
+  "metaDescription": {
+   "es": "Programadores senior para desarrollar el software que tu empresa necesita: sistemas web, ERP, apps y APIs. Más de 15 años de experiencia, código 100 % tuyo y propuesta en 48 horas.",
+   "en": "Senior programmers to build the software your company needs: web systems, ERP, apps and APIs. Over 15 years of experience, 100% code ownership and a proposal in 48 hours."
+  },
+  "intro": {
+   "es": "Diseñamos y programamos sistemas a la medida de tu operación cuando un producto estándar no encaja. Trabajas directamente con ingenieros senior, ves avances cada semana y recibes el código fuente completo.",
+   "en": "We design and program systems tailored to your operation when an off-the-shelf product does not fit. You work directly with senior engineers, see progress every week and receive the full source code."
+  },
+  "includes": [
+   {
+    "t": {
+     "es": "Análisis y alcance",
+     "en": "Analysis and scope"
+    },
+    "d": {
+     "es": "Levantamos procesos, usuarios y reglas de negocio antes de escribir una línea de código.",
+     "en": "We map processes, users and business rules before writing a line of code."
+    }
+   },
+   {
+    "t": {
+     "es": "Arquitectura a tu escala",
+     "en": "Architecture for your scale"
+    },
+    "d": {
+     "es": "Diseño técnico pensado para crecer: base de datos, API, seguridad y despliegue.",
+     "en": "Technical design built to grow: database, API, security and deployment."
+    }
+   },
+   {
+    "t": {
+     "es": "Desarrollo en sprints",
+     "en": "Sprint-based development"
+    },
+    "d": {
+     "es": "Entregas cortas con demos semanales en un entorno privado.",
+     "en": "Short deliveries with weekly demos in a private environment."
+    }
+   },
+   {
+    "t": {
+     "es": "Pruebas y calidad",
+     "en": "Testing and quality"
+    },
+    "d": {
+     "es": "Pruebas funcionales y de seguridad antes de cada salida a producción.",
+     "en": "Functional and security testing before every release."
+    }
+   },
+   {
+    "t": {
+     "es": "Código y propiedad",
+     "en": "Code and ownership"
+    },
+    "d": {
+     "es": "Código fuente, bases de datos y configuraciones son 100 % de tu empresa desde la entrega.",
+     "en": "Source code, databases and configurations are 100% yours from delivery."
+    }
+   }
+  ],
+  "faqs": [
+   {
+    "q": {
+     "es": "¿Cuánto tarda desarrollar un sistema a medida?",
+     "en": "How long does a custom system take?"
+    },
+    "a": {
+     "es": "Depende del alcance. Tras analizar tu operación te entregamos en 48 horas una propuesta con arquitectura, cronograma por hitos y precio cerrado.",
+     "en": "It depends on scope. After analyzing your operation we deliver, within 48 hours, a proposal with architecture, a milestone schedule and a fixed price."
+    }
+   },
+   {
+    "q": {
+     "es": "¿El código fuente es de mi empresa?",
+     "en": "Do we own the source code?"
+    },
+    "a": {
+     "es": "Sí. Todo el código fuente, bases de datos, APIs y configuraciones cloud son de tu empresa desde la entrega, sin tarifas recurrentes por usuario.",
+     "en": "Yes. All source code, databases, APIs and cloud configurations are yours from delivery, with no per-user recurring fees."
+    }
+   },
+   {
+    "q": {
+     "es": "¿Pueden continuar un sistema que ya existe?",
+     "en": "Can you take over an existing system?"
+    },
+    "a": {
+     "es": "Sí. Auditamos el código y la infraestructura actuales, priorizamos los riesgos y continuamos el desarrollo o lo modernizamos por etapas.",
+     "en": "Yes. We audit the current code and infrastructure, prioritize risks and continue development or modernize it in stages."
+    }
+   }
+  ],
+  "related": [
+   "erp",
+   "web",
+   "cloud"
+  ],
+  "project": null,
+  "keywords": "desarrollo de software a medida, programadores Ecuador, empresa de desarrollo de software, software a medida Quito Guayaquil"
+ },
+ {
+  "slug": "asesoria-consultoria-tecnologica",
+  "key": "cto",
+  "title": {
+   "es": "Asesoría y consultoría tecnológica",
+   "en": "Technology advisory and consulting"
+  },
+  "h1": {
+   "es": "Asesoría y consultoría tecnológica para empresas",
+   "en": "Technology advisory and consulting for companies"
+  },
+  "metaTitle": {
+   "es": "Asesoría y consultoría tecnológica de software | AmePhia Solutions",
+   "en": "Software technology advisory and consulting | AmePhia Solutions"
+  },
+  "metaDescription": {
+   "es": "Asesores tecnológicos con más de 15 años de experiencia: auditoría de sistemas, arquitectura, hoja de ruta de producto y CTO as a Service para empresas en Ecuador y EE. UU.",
+   "en": "Technology advisors with over 15 years of experience: systems audits, architecture, product roadmap and CTO as a Service for companies in Ecuador and the US."
+  },
+  "intro": {
+   "es": "Te ayudamos a tomar decisiones de tecnología con criterio: qué construir, qué comprar, con qué stack y en qué orden. Puedes contratar una auditoría puntual o un director de tecnología externo que acompañe a tu equipo.",
+   "en": "We help you make technology decisions with sound judgment: what to build, what to buy, with which stack and in what order. Hire a one-off audit or an external technology lead who works alongside your team."
+  },
+  "includes": [
+   {
+    "t": {
+     "es": "Auditoría de sistemas",
+     "en": "Systems audit"
+    },
+    "d": {
+     "es": "Revisión de código, infraestructura, seguridad y deuda técnica con un informe priorizado.",
+     "en": "Review of code, infrastructure, security and technical debt with a prioritized report."
+    }
+   },
+   {
+    "t": {
+     "es": "Arquitectura y selección de tecnología",
+     "en": "Architecture and technology selection"
+    },
+    "d": {
+     "es": "Definimos la arquitectura y el stack adecuados para tu negocio y tu equipo.",
+     "en": "We define the right architecture and stack for your business and team."
+    }
+   },
+   {
+    "t": {
+     "es": "Hoja de ruta de producto",
+     "en": "Product roadmap"
+    },
+    "d": {
+     "es": "Priorizamos funcionalidades según impacto, costo y riesgo.",
+     "en": "We prioritize features by impact, cost and risk."
+    }
+   },
+   {
+    "t": {
+     "es": "CTO as a Service",
+     "en": "CTO as a Service"
+    },
+    "d": {
+     "es": "Un director de tecnología externo que acompaña a tu equipo de forma continua.",
+     "en": "An external technology lead who works alongside your team on an ongoing basis."
+    }
+   },
+   {
+    "t": {
+     "es": "Transformación digital",
+     "en": "Digital transformation"
+    },
+    "d": {
+     "es": "Plan por etapas para digitalizar procesos sin detener la operación.",
+     "en": "A staged plan to digitize processes without stopping operations."
+    }
+   }
+  ],
+  "faqs": [
+   {
+    "q": {
+     "es": "¿Qué incluye una asesoría tecnológica?",
+     "en": "What does a technology advisory include?"
+    },
+    "a": {
+     "es": "Análisis de tu operación y sistemas actuales, auditoría de código e infraestructura, diseño de arquitectura, hoja de ruta y selección de tecnología.",
+     "en": "Analysis of your operation and current systems, code and infrastructure audit, architecture design, roadmap and technology selection."
+    }
+   },
+   {
+    "q": {
+     "es": "¿Qué es CTO as a Service?",
+     "en": "What is CTO as a Service?"
+    },
+    "a": {
+     "es": "Es un director de tecnología externo que lidera decisiones técnicas, equipo y proveedores, con una dedicación acordada, sin el costo de una contratación a tiempo completo.",
+     "en": "It is an external technology lead who guides technical decisions, team and vendors with an agreed commitment, without the cost of a full-time hire."
+    }
+   },
+   {
+    "q": {
+     "es": "¿Pueden asesorar si ya tenemos un equipo de desarrollo?",
+     "en": "Can you advise if we already have a development team?"
+    },
+    "a": {
+     "es": "Sí. Trabajamos junto a tu equipo: revisamos arquitectura, procesos y calidad, y definimos mejoras sin reemplazarlo.",
+     "en": "Yes. We work alongside your team: we review architecture, processes and quality and define improvements without replacing it."
+    }
+   }
+  ],
+  "related": [
+   "dev",
+   "cloud",
+   "saas"
+  ],
+  "project": null,
+  "keywords": "asesoría tecnológica, consultoría de software, CTO as a service, auditoría de sistemas, transformación digital Ecuador"
+ },
+ {
+  "slug": "erp-sistemas-de-gestion",
+  "key": "erp",
+  "title": {
+   "es": "ERP y sistemas de gestión",
+   "en": "ERP and management systems"
+  },
+  "h1": {
+   "es": "ERP y sistemas de gestión empresarial a medida",
+   "en": "Custom ERP and business management systems"
+  },
+  "metaTitle": {
+   "es": "ERP y sistemas de gestión empresarial en Ecuador | AmePhia Solutions",
+   "en": "ERP and business management systems in Ecuador | AmePhia Solutions"
+  },
+  "metaDescription": {
+   "es": "Desarrollamos ERP a medida con compras, inventario Kardex, nómina, contabilidad NIIF y facturación electrónica SRI. También sistemas propios para gimnasios, colegios, brókers y más.",
+   "en": "We build custom ERP with purchasing, Kardex inventory, payroll, IFRS accounting and SRI e-invoicing. Plus our own systems for gyms, schools, brokers and more."
+  },
+  "intro": {
+   "es": "Un ERP bien hecho une compras, inventario, ventas, contabilidad y facturación en un solo sistema. Si tu proceso no encaja con un producto estándar, lo construimos a tu medida; si encaja, te ofrecemos uno de nuestros sistemas propios en producción.",
+   "en": "A well-built ERP joins purchasing, inventory, sales, accounting and invoicing in a single system. If your process does not fit a standard product we build it to measure; if it does, we offer one of our own systems already in production."
+  },
+  "includes": [
+   {
+    "t": {
+     "es": "Compras e inventario Kardex",
+     "en": "Purchasing and Kardex inventory"
+    },
+    "d": {
+     "es": "Control de existencias, costos y proveedores con trazabilidad.",
+     "en": "Stock, cost and supplier control with traceability."
+    }
+   },
+   {
+    "t": {
+     "es": "Ventas y facturación SRI",
+     "en": "Sales and SRI invoicing"
+    },
+    "d": {
+     "es": "Facturas, notas de crédito, retenciones y guías autorizadas por el SRI.",
+     "en": "Invoices, credit notes, withholdings and delivery guides authorized by the SRI."
+    }
+   },
+   {
+    "t": {
+     "es": "Contabilidad NIIF",
+     "en": "IFRS accounting"
+    },
+    "d": {
+     "es": "Asientos automáticos desde cada comprobante y reportes financieros.",
+     "en": "Automatic journal entries from every document and financial reports."
+    }
+   },
+   {
+    "t": {
+     "es": "Nómina y talento",
+     "en": "Payroll and HR"
+    },
+    "d": {
+     "es": "Roles de pago y obligaciones laborales integradas.",
+     "en": "Payslips and labor obligations integrated."
+    }
+   },
+   {
+    "t": {
+     "es": "Roles, permisos y auditoría",
+     "en": "Roles, permissions and audit"
+    },
+    "d": {
+     "es": "Cada usuario ve y hace solo lo que le corresponde, con registro de cambios.",
+     "en": "Every user sees and does only what applies to them, with change logging."
+    }
+   }
+  ],
+  "faqs": [
+   {
+    "q": {
+     "es": "¿Qué ERP recomiendan para mi empresa?",
+     "en": "Which ERP do you recommend for my company?"
+    },
+    "a": {
+     "es": "Depende de tu sector. Tenemos sistemas propios para gimnasios, corredores de seguros, colegios, tiendas en línea, puntos de venta y contabilidad. Si tu proceso es distinto, desarrollamos un ERP a medida.",
+     "en": "It depends on your industry. We have our own systems for gyms, insurance brokers, schools, online stores, points of sale and accounting. If your process is different, we build a custom ERP."
+    }
+   },
+   {
+    "q": {
+     "es": "¿El ERP incluye facturación electrónica SRI?",
+     "en": "Does the ERP include SRI e-invoicing?"
+    },
+    "a": {
+     "es": "Sí. Integramos la emisión de comprobantes electrónicos con firma y autorización del SRI en el mismo sistema.",
+     "en": "Yes. We integrate electronic document issuance with signature and SRI authorization in the same system."
+    }
+   },
+   {
+    "q": {
+     "es": "¿Pueden migrar los datos de mi sistema actual?",
+     "en": "Can you migrate the data from my current system?"
+    },
+    "a": {
+     "es": "Sí. Planificamos la migración, validamos los datos y hacemos pruebas en paralelo antes de la salida a producción.",
+     "en": "Yes. We plan the migration, validate the data and run parallel tests before going live."
+    }
+   }
+  ],
+  "related": [
+   "sri",
+   "dev",
+   "saas"
+  ],
+  "project": null,
+  "keywords": "ERP Ecuador, sistema de gestión empresarial, software ERP a medida, inventario Kardex, nómina Ecuador"
+ },
+ {
+  "slug": "facturacion-electronica-sri",
+  "key": "sri",
+  "title": {
+   "es": "Facturación electrónica SRI",
+   "en": "SRI electronic invoicing"
+  },
+  "h1": {
+   "es": "Facturación electrónica SRI para Ecuador",
+   "en": "SRI electronic invoicing for Ecuador"
+  },
+  "metaTitle": {
+   "es": "Facturación electrónica SRI Ecuador: sistema e integración | AmePhia Solutions",
+   "en": "SRI electronic invoicing Ecuador: system and integration | AmePhia Solutions"
+  },
+  "metaDescription": {
+   "es": "Facturón, nuestro sistema de facturación electrónica SRI, y servicios de integración para tu ERP, POS o tienda en línea. Sin comisión por documento.",
+   "en": "Facturón, our SRI electronic invoicing system, plus integration services for your ERP, POS or online store. No per-document fee."
+  },
+  "intro": {
+   "es": "Emite facturas, notas de crédito, retenciones y guías de remisión con firma electrónica y autorización del SRI. Puedes usar Facturón directamente o integrar la facturación en el sistema que ya tienes.",
+   "en": "Issue invoices, credit notes, withholdings and delivery guides with electronic signature and SRI authorization. Use Facturón directly or integrate invoicing into the system you already have."
+  },
+  "includes": [
+   {
+    "t": {
+     "es": "Comprobantes electrónicos",
+     "en": "Electronic documents"
+    },
+    "d": {
+     "es": "Facturas, notas de crédito y débito, retenciones y guías de remisión en XML.",
+     "en": "Invoices, credit and debit notes, withholdings and delivery guides in XML."
+    }
+   },
+   {
+    "t": {
+     "es": "Firma electrónica",
+     "en": "Electronic signature"
+    },
+    "d": {
+     "es": "Firmado con tu certificado y enviado al SRI automáticamente.",
+     "en": "Signed with your certificate and sent to the SRI automatically."
+    }
+   },
+   {
+    "t": {
+     "es": "Sin comisión por documento",
+     "en": "No per-document fee"
+    },
+    "d": {
+     "es": "Facturón parte desde $2.99 al mes, sin cobro por cada comprobante.",
+     "en": "Facturón starts at $2.99 per month, with no charge per document."
+    }
+   },
+   {
+    "t": {
+     "es": "API para integrar",
+     "en": "Integration API"
+    },
+    "d": {
+     "es": "Conecta tu ERP, POS o tienda en línea para emitir desde tu propio sistema.",
+     "en": "Connect your ERP, POS or online store to issue from your own system."
+    }
+   },
+   {
+    "t": {
+     "es": "Integración con contabilidad",
+     "en": "Accounting integration"
+    },
+    "d": {
+     "es": "Se integra con ContAme y con otros sistemas contables.",
+     "en": "Integrates with ContAme and other accounting systems."
+    }
+   }
+  ],
+  "faqs": [
+   {
+    "q": {
+     "es": "¿Qué es Facturón?",
+     "en": "What is Facturón?"
+    },
+    "a": {
+     "es": "Es nuestro sistema de facturación electrónica compatible con el SRI del Ecuador: genera comprobantes en XML con firma electrónica, sin comisión por documento.",
+     "en": "It is our e-invoicing system compatible with Ecuador’s SRI: it issues XML documents with electronic signature and no per-document fee."
+    }
+   },
+   {
+    "q": {
+     "es": "¿Puedo integrar la facturación en mi sistema actual?",
+     "en": "Can I integrate invoicing into my current system?"
+    },
+    "a": {
+     "es": "Sí. Facturón expone una API para que tu ERP, POS o tienda en línea emita comprobantes sin cambiar de sistema.",
+     "en": "Yes. Facturón exposes an API so your ERP, POS or online store can issue documents without changing systems."
+    }
+   },
+   {
+    "q": {
+     "es": "¿Qué comprobantes puedo emitir?",
+     "en": "Which documents can I issue?"
+    },
+    "a": {
+     "es": "Facturas, notas de crédito, notas de débito, retenciones y guías de remisión.",
+     "en": "Invoices, credit notes, debit notes, withholdings and delivery guides."
+    }
+   }
+  ],
+  "related": [
+   "erp",
+   "ecommerce",
+   "api"
+  ],
+  "project": "facturon",
+  "keywords": "facturación electrónica SRI, facturación electrónica Ecuador, software facturación SRI, sistema de facturación Ecuador, Facturón"
+ },
+ {
+  "slug": "aplicaciones-moviles-y-web",
+  "key": "web",
+  "title": {
+   "es": "Aplicaciones móviles y web",
+   "en": "Mobile and web applications"
+  },
+  "h1": {
+   "es": "Desarrollo de aplicaciones móviles y web",
+   "en": "Mobile and web application development"
+  },
+  "metaTitle": {
+   "es": "Desarrollo de aplicaciones móviles y web a medida | AmePhia Solutions",
+   "en": "Custom mobile and web application development | AmePhia Solutions"
+  },
+  "metaDescription": {
+   "es": "Programamos aplicaciones web y móviles para iOS y Android con React, Next.js y Flutter. Diseño, desarrollo y publicación en tiendas, con código 100 % tuyo.",
+   "en": "We build web and mobile apps for iOS and Android with React, Next.js and Flutter. Design, development and store publishing, with 100% code ownership."
+  },
+  "intro": {
+   "es": "Una aplicación útil se siente simple. Diseñamos y desarrollamos apps web y móviles rápidas, seguras y fáciles de mantener, conectadas a tus sistemas y a tus datos.",
+   "en": "A useful app feels simple. We design and build fast, secure, maintainable web and mobile apps connected to your systems and data."
+  },
+  "includes": [
+   {
+    "t": {
+     "es": "Aplicaciones web (PWA)",
+     "en": "Web apps (PWA)"
+    },
+    "d": {
+     "es": "Aplicaciones que funcionan en cualquier dispositivo y se instalan desde el navegador.",
+     "en": "Apps that work on any device and install from the browser."
+    }
+   },
+   {
+    "t": {
+     "es": "Apps móviles iOS y Android",
+     "en": "iOS and Android mobile apps"
+    },
+    "d": {
+     "es": "Una sola base de código con Flutter para ambas plataformas.",
+     "en": "A single codebase with Flutter for both platforms."
+    }
+   },
+   {
+    "t": {
+     "es": "Diseño de interfaz y experiencia",
+     "en": "UI and UX design"
+    },
+    "d": {
+     "es": "Flujos claros pensados para el usuario real.",
+     "en": "Clear flows designed for the real user."
+    }
+   },
+   {
+    "t": {
+     "es": "Publicación en tiendas",
+     "en": "Store publishing"
+    },
+    "d": {
+     "es": "Preparamos y publicamos en Google Play y App Store.",
+     "en": "We prepare and publish on Google Play and the App Store."
+    }
+   },
+   {
+    "t": {
+     "es": "Conexión con tus sistemas",
+     "en": "Connection to your systems"
+    },
+    "d": {
+     "es": "APIs, notificaciones y sincronización con tu ERP o base de datos.",
+     "en": "APIs, notifications and sync with your ERP or database."
+    }
+   }
+  ],
+  "faqs": [
+   {
+    "q": {
+     "es": "¿Desarrollan para iOS y Android a la vez?",
+     "en": "Do you build for iOS and Android at once?"
+    },
+    "a": {
+     "es": "Sí. Con Flutter mantenemos una sola base de código para ambas plataformas, lo que reduce tiempo y costo de mantenimiento.",
+     "en": "Yes. With Flutter we keep a single codebase for both platforms, which reduces time and maintenance cost."
+    }
+   },
+   {
+    "q": {
+     "es": "¿Qué tecnologías usan para web?",
+     "en": "Which technologies do you use for web?"
+    },
+    "a": {
+     "es": "React, Next.js, TypeScript, Node.js y NestJS, con bases de datos PostgreSQL, según lo que mejor encaje con tu proyecto.",
+     "en": "React, Next.js, TypeScript, Node.js and NestJS with PostgreSQL databases, depending on what best fits your project."
+    }
+   },
+   {
+    "q": {
+     "es": "¿Se encargan de publicar la app en las tiendas?",
+     "en": "Do you handle publishing the app to the stores?"
+    },
+    "a": {
+     "es": "Sí. Preparamos las fichas, los certificados y el proceso de revisión en Google Play y App Store.",
+     "en": "Yes. We prepare listings, certificates and the review process on Google Play and the App Store."
+    }
+   }
+  ],
+  "related": [
+   "dev",
+   "api",
+   "seo"
+  ],
+  "project": null,
+  "keywords": "desarrollo de aplicaciones móviles, desarrollo de apps Ecuador, aplicaciones web a medida, app Flutter, programador React"
+ },
+ {
+  "slug": "ecommerce-pasarelas-de-pago",
+  "key": "ecommerce",
+  "title": {
+   "es": "E-commerce y pasarelas de pago",
+   "en": "E-commerce and payment gateways"
+  },
+  "h1": {
+   "es": "E-commerce y pasarelas de pago para vender en línea",
+   "en": "E-commerce and payment gateways to sell online"
+  },
+  "metaTitle": {
+   "es": "Desarrollo de e-commerce y pasarelas de pago en Ecuador | AmePhia Solutions",
+   "en": "E-commerce and payment gateway development in Ecuador | AmePhia Solutions"
+  },
+  "metaDescription": {
+   "es": "Tiendas en línea con pagos locales, inventario Kardex y facturación electrónica SRI. Usa AmePhia Store o desarrollamos tu e-commerce a medida.",
+   "en": "Online stores with local payments, Kardex inventory and SRI e-invoicing. Use AmePhia Store or we build your e-commerce to measure."
+  },
+  "intro": {
+   "es": "Vender en línea exige catálogo, pagos, inventario y facturación funcionando juntos. AmePhia Store ya los integra; si necesitas algo distinto, desarrollamos tu tienda y la conectamos a tu operación.",
+   "en": "Selling online needs catalog, payments, inventory and invoicing working together. AmePhia Store already integrates them; if you need something different we build your store and connect it to your operation."
+  },
+  "includes": [
+   {
+    "t": {
+     "es": "Catálogo y checkout",
+     "en": "Catalog and checkout"
+    },
+    "d": {
+     "es": "Productos, variantes, carrito y compra en pocos pasos.",
+     "en": "Products, variants, cart and purchase in a few steps."
+    }
+   },
+   {
+    "t": {
+     "es": "Pasarelas de pago locales",
+     "en": "Local payment gateways"
+    },
+    "d": {
+     "es": "Integración con pasarelas usadas en Ecuador como Nuvei, PayPhone y Kushki.",
+     "en": "Integration with gateways used in Ecuador such as Nuvei, PayPhone and Kushki."
+    }
+   },
+   {
+    "t": {
+     "es": "Inventario Kardex",
+     "en": "Kardex inventory"
+    },
+    "d": {
+     "es": "Existencias y costos controlados con cada venta.",
+     "en": "Stock and costs controlled with every sale."
+    }
+   },
+   {
+    "t": {
+     "es": "Facturación electrónica SRI",
+     "en": "SRI e-invoicing"
+    },
+    "d": {
+     "es": "Comprobante autorizado por cada pedido.",
+     "en": "An authorized document for every order."
+    }
+   },
+   {
+    "t": {
+     "es": "Administración del negocio",
+     "en": "Business administration"
+    },
+    "d": {
+     "es": "Pedidos, envíos, devoluciones y reportes en un panel.",
+     "en": "Orders, shipping, returns and reports in one dashboard."
+    }
+   }
+  ],
+  "faqs": [
+   {
+    "q": {
+     "es": "¿Qué pasarelas de pago integran?",
+     "en": "Which payment gateways do you integrate?"
+    },
+    "a": {
+     "es": "Integramos las pasarelas más usadas en Ecuador, como Nuvei, PayPhone y Kushki, según tu banco y tu volumen.",
+     "en": "We integrate the gateways most used in Ecuador, such as Nuvei, PayPhone and Kushki, depending on your bank and volume."
+    }
+   },
+   {
+    "q": {
+     "es": "¿La tienda emite factura electrónica?",
+     "en": "Does the store issue e-invoices?"
+    },
+    "a": {
+     "es": "Sí. Cada pedido puede generar su comprobante autorizado por el SRI.",
+     "en": "Yes. Each order can generate its SRI-authorized document."
+    }
+   },
+   {
+    "q": {
+     "es": "¿Puedo usar AmePhia Store o necesito algo a medida?",
+     "en": "Can I use AmePhia Store or do I need something custom?"
+    },
+    "a": {
+     "es": "Si tu venta es estándar, AmePhia Store te permite empezar rápido. Si tienes procesos particulares, desarrollamos tu e-commerce a medida.",
+     "en": "If your sales are standard, AmePhia Store lets you start quickly. If you have particular processes, we build your e-commerce to measure."
+    }
+   }
+  ],
+  "related": [
+   "sri",
+   "erp",
+   "web"
+  ],
+  "project": "ecommerce",
+  "keywords": "desarrollo de e-commerce, tienda en línea Ecuador, pasarela de pago Ecuador, plataforma ecommerce, PayPhone Nuvei Kushki"
+ },
+ {
+  "slug": "plataformas-saas-multitenant",
+  "key": "saas",
+  "title": {
+   "es": "Plataformas SaaS multitenant",
+   "en": "Multi-tenant SaaS platforms"
+  },
+  "h1": {
+   "es": "Desarrollo de plataformas SaaS multitenant",
+   "en": "Multi-tenant SaaS platform development"
+  },
+  "metaTitle": {
+   "es": "Desarrollo de plataformas SaaS multitenant | AmePhia Solutions",
+   "en": "Multi-tenant SaaS platform development | AmePhia Solutions"
+  },
+  "metaDescription": {
+   "es": "Convertimos tu idea o tu proceso en un producto SaaS: multiempresa, suscripciones, roles y aislamiento de datos. Experiencia con varios SaaS propios en producción.",
+   "en": "We turn your idea or process into a SaaS product: multi-company, subscriptions, roles and data isolation. Experience with several of our own SaaS products in production."
+  },
+  "intro": {
+   "es": "Operamos varios productos SaaS propios, así que conocemos los retos reales: aislamiento de datos entre clientes, cobros recurrentes, soporte y crecimiento. Ponemos esa experiencia al servicio de tu producto.",
+   "en": "We run several of our own SaaS products, so we know the real challenges: data isolation between customers, recurring billing, support and growth. We put that experience at the service of your product."
+  },
+  "includes": [
+   {
+    "t": {
+     "es": "Arquitectura multitenant",
+     "en": "Multi-tenant architecture"
+    },
+    "d": {
+     "es": "Cada cliente con sus datos aislados y configuración propia.",
+     "en": "Each customer with isolated data and its own configuration."
+    }
+   },
+   {
+    "t": {
+     "es": "Planes y suscripciones",
+     "en": "Plans and subscriptions"
+    },
+    "d": {
+     "es": "Cobros recurrentes, planes por módulos y límites de uso.",
+     "en": "Recurring billing, module-based plans and usage limits."
+    }
+   },
+   {
+    "t": {
+     "es": "Roles y permisos",
+     "en": "Roles and permissions"
+    },
+    "d": {
+     "es": "Control fino de accesos por empresa, sucursal y usuario.",
+     "en": "Fine-grained access control by company, branch and user."
+    }
+   },
+   {
+    "t": {
+     "es": "Panel de administración",
+     "en": "Admin panel"
+    },
+    "d": {
+     "es": "Gestión de clientes, planes y soporte desde un solo lugar.",
+     "en": "Customer, plan and support management in one place."
+    }
+   },
+   {
+    "t": {
+     "es": "Escalabilidad y seguridad",
+     "en": "Scalability and security"
+    },
+    "d": {
+     "es": "Infraestructura en la nube lista para crecer, con cifrado y respaldos.",
+     "en": "Cloud infrastructure ready to grow, with encryption and backups."
+    }
+   }
+  ],
+  "faqs": [
+   {
+    "q": {
+     "es": "¿Qué significa multitenant?",
+     "en": "What does multi-tenant mean?"
+    },
+    "a": {
+     "es": "Que una sola plataforma atiende a muchos clientes, cada uno con sus datos aislados y su propia configuración.",
+     "en": "That a single platform serves many customers, each with isolated data and its own configuration."
+    }
+   },
+   {
+    "q": {
+     "es": "¿Pueden ayudarme a validar la idea antes de construir todo?",
+     "en": "Can you help me validate the idea before building everything?"
+    },
+    "a": {
+     "es": "Sí. Definimos un primer alcance mínimo, lo construimos rápido y evolucionamos con lo que aprendas de tus primeros clientes.",
+     "en": "Yes. We define a minimum first scope, build it fast and evolve with what you learn from your first customers."
+    }
+   },
+   {
+    "q": {
+     "es": "¿El producto SaaS será de mi propiedad?",
+     "en": "Will I own the SaaS product?"
+    },
+    "a": {
+     "es": "Sí. El código fuente y la infraestructura son tuyos desde la entrega.",
+     "en": "Yes. The source code and infrastructure are yours from delivery."
+    }
+   }
+  ],
+  "related": [
+   "dev",
+   "cloud",
+   "cto"
+  ],
+  "project": null,
+  "keywords": "desarrollo SaaS, plataforma multitenant, software como servicio, SaaS Ecuador, producto SaaS a medida"
+ },
+ {
+  "slug": "cloud-aws-devops",
+  "key": "cloud",
+  "title": {
+   "es": "Cloud, AWS y DevOps",
+   "en": "Cloud, AWS and DevOps"
+  },
+  "h1": {
+   "es": "Cloud, AWS y DevOps para tu infraestructura",
+   "en": "Cloud, AWS and DevOps for your infrastructure"
+  },
+  "metaTitle": {
+   "es": "Servicios cloud, AWS y DevOps | AmePhia Solutions",
+   "en": "Cloud, AWS and DevOps services | AmePhia Solutions"
+  },
+  "metaDescription": {
+   "es": "Diseñamos, desplegamos y operamos tu infraestructura en AWS: Docker, Kubernetes, CI/CD, respaldos y monitoreo, con alta disponibilidad y seguridad.",
+   "en": "We design, deploy and run your infrastructure on AWS: Docker, Kubernetes, CI/CD, backups and monitoring, with high availability and security."
+  },
+  "intro": {
+   "es": "Una buena infraestructura se nota cuando no pasa nada: el sistema está disponible, los despliegues son seguros y los respaldos funcionan. Nos encargamos de que así sea.",
+   "en": "Good infrastructure shows when nothing happens: the system is available, deployments are safe and backups work. We make sure of it."
+  },
+  "includes": [
+   {
+    "t": {
+     "es": "Infraestructura en AWS",
+     "en": "AWS infrastructure"
+    },
+    "d": {
+     "es": "Arquitectura multi-zona con redes, bases de datos y almacenamiento bien dimensionados.",
+     "en": "Multi-zone architecture with well-sized networking, databases and storage."
+    }
+   },
+   {
+    "t": {
+     "es": "Contenedores y Kubernetes",
+     "en": "Containers and Kubernetes"
+    },
+    "d": {
+     "es": "Docker y orquestación para despliegues repetibles.",
+     "en": "Docker and orchestration for repeatable deployments."
+    }
+   },
+   {
+    "t": {
+     "es": "CI/CD",
+     "en": "CI/CD"
+    },
+    "d": {
+     "es": "Pruebas y despliegues automáticos en cada cambio.",
+     "en": "Automatic tests and deployments on every change."
+    }
+   },
+   {
+    "t": {
+     "es": "Respaldos y recuperación",
+     "en": "Backups and recovery"
+    },
+    "d": {
+     "es": "Copias verificadas y plan de recuperación ante fallos.",
+     "en": "Verified copies and a disaster recovery plan."
+    }
+   },
+   {
+    "t": {
+     "es": "Monitoreo y seguridad",
+     "en": "Monitoring and security"
+    },
+    "d": {
+     "es": "Alertas, cifrado TLS y controles de acceso.",
+     "en": "Alerts, TLS encryption and access controls."
+    }
+   }
+  ],
+  "faqs": [
+   {
+    "q": {
+     "es": "¿Pueden migrar mi sistema a AWS?",
+     "en": "Can you migrate my system to AWS?"
+    },
+    "a": {
+     "es": "Sí. Planificamos la migración por etapas, con pruebas y una ventana de salida acordada para no afectar tu operación.",
+     "en": "Yes. We plan the migration in stages, with testing and an agreed cutover window so your operation is not affected."
+    }
+   },
+   {
+    "q": {
+     "es": "¿Ofrecen soporte después del despliegue?",
+     "en": "Do you offer support after deployment?"
+    },
+    "a": {
+     "es": "Sí. Ofrecemos garantía y soporte posterior a la entrega, además de planes de operación y monitoreo.",
+     "en": "Yes. We provide warranty and post-delivery support, plus operations and monitoring plans."
+    }
+   },
+   {
+    "q": {
+     "es": "¿Cómo cuidan la seguridad de los datos?",
+     "en": "How do you protect data security?"
+    },
+    "a": {
+     "es": "Usamos cifrado TLS 1.3, infraestructura multi-zona, control de accesos y firmamos un NDA antes de ver tus datos.",
+     "en": "We use TLS 1.3 encryption, multi-zone infrastructure, access control and sign an NDA before seeing your data."
+    }
+   }
+  ],
+  "related": [
+   "dev",
+   "saas",
+   "cto"
+  ],
+  "project": null,
+  "keywords": "AWS Ecuador, DevOps, Kubernetes, Docker, infraestructura en la nube, migración a AWS"
+ },
+ {
+  "slug": "integraciones-automatizacion",
+  "key": "api",
+  "title": {
+   "es": "Integraciones y automatización",
+   "en": "Integrations and automation"
+  },
+  "h1": {
+   "es": "Integraciones y automatización de procesos",
+   "en": "Integrations and process automation"
+  },
+  "metaTitle": {
+   "es": "Integraciones, APIs y automatización de procesos | AmePhia Solutions",
+   "en": "Integrations, APIs and process automation | AmePhia Solutions"
+  },
+  "metaDescription": {
+   "es": "Conectamos tus sistemas y automatizamos tareas repetitivas: APIs, webhooks, facturación electrónica, pagos, mensajería y reportes.",
+   "en": "We connect your systems and automate repetitive tasks: APIs, webhooks, e-invoicing, payments, messaging and reports."
+  },
+  "intro": {
+   "es": "Cuando tus sistemas no se hablan entre sí, tu equipo hace el trabajo a mano. Construimos las integraciones y automatizaciones que eliminan esa fricción.",
+   "en": "When your systems do not talk to each other, your team does the work by hand. We build the integrations and automations that remove that friction."
+  },
+  "includes": [
+   {
+    "t": {
+     "es": "APIs y webhooks",
+     "en": "APIs and webhooks"
+    },
+    "d": {
+     "es": "Conexión segura entre tus sistemas y los de terceros.",
+     "en": "Secure connection between your systems and third parties."
+    }
+   },
+   {
+    "t": {
+     "es": "Integración con SRI y bancos",
+     "en": "SRI and bank integration"
+    },
+    "d": {
+     "es": "Comprobantes electrónicos y conciliación bancaria automatizados.",
+     "en": "Automated electronic documents and bank reconciliation."
+    }
+   },
+   {
+    "t": {
+     "es": "Pasarelas de pago",
+     "en": "Payment gateways"
+    },
+    "d": {
+     "es": "Cobros en línea conectados a tu facturación y contabilidad.",
+     "en": "Online payments connected to your invoicing and accounting."
+    }
+   },
+   {
+    "t": {
+     "es": "Mensajería y notificaciones",
+     "en": "Messaging and notifications"
+    },
+    "d": {
+     "es": "WhatsApp, correo y notificaciones automáticas a tus clientes.",
+     "en": "WhatsApp, email and automatic customer notifications."
+    }
+   },
+   {
+    "t": {
+     "es": "Reportes automáticos",
+     "en": "Automatic reports"
+    },
+    "d": {
+     "es": "Información consolidada y entregada sin trabajo manual.",
+     "en": "Consolidated information delivered without manual work."
+    }
+   }
+  ],
+  "faqs": [
+   {
+    "q": {
+     "es": "¿Qué sistemas pueden integrar?",
+     "en": "Which systems can you integrate?"
+    },
+    "a": {
+     "es": "ERP, POS, tiendas en línea, sistemas contables, pasarelas de pago, el SRI, bancos y cualquier servicio que exponga una API.",
+     "en": "ERP, POS, online stores, accounting systems, payment gateways, the SRI, banks and any service that exposes an API."
+    }
+   },
+   {
+    "q": {
+     "es": "¿Pueden automatizar un proceso manual que hacemos hoy?",
+     "en": "Can you automate a manual process we do today?"
+    },
+    "a": {
+     "es": "Sí. Analizamos el proceso, definimos qué automatizar y lo construimos con pruebas para que sea confiable.",
+     "en": "Yes. We analyze the process, define what to automate and build it with tests so it is reliable."
+    }
+   },
+   {
+    "q": {
+     "es": "¿Qué pasa si una integración falla?",
+     "en": "What happens if an integration fails?"
+    },
+    "a": {
+     "es": "Diseñamos reintentos, registros y alertas para detectar y corregir fallos antes de que afecten a tu operación.",
+     "en": "We design retries, logs and alerts to detect and fix failures before they affect your operation."
+    }
+   }
+  ],
+  "related": [
+   "sri",
+   "erp",
+   "ecommerce"
+  ],
+  "project": null,
+  "keywords": "integración de sistemas, API REST, automatización de procesos, webhooks, integración SRI"
+ },
+ {
+  "slug": "modernizacion-web-seo",
+  "key": "seo",
+  "title": {
+   "es": "Modernización web y SEO",
+   "en": "Web modernization and SEO"
+  },
+  "h1": {
+   "es": "Modernización web y SEO técnico",
+   "en": "Web modernization and technical SEO"
+  },
+  "metaTitle": {
+   "es": "Modernización web y SEO técnico para empresas | AmePhia Solutions",
+   "en": "Web modernization and technical SEO for companies | AmePhia Solutions"
+  },
+  "metaDescription": {
+   "es": "Modernizamos tu sitio y tu sistema: velocidad, seguridad, diseño y posicionamiento en buscadores con SEO técnico y datos estructurados.",
+   "en": "We modernize your site and system: speed, security, design and search ranking with technical SEO and structured data."
+  },
+  "intro": {
+   "es": "Un sitio rápido, claro y bien estructurado convierte más y se encuentra mejor. Mejoramos tu web o tu sistema actual sin empezar de cero cuando no hace falta.",
+   "en": "A fast, clear, well-structured site converts more and is easier to find. We improve your current website or system without starting from scratch when it is not needed."
+  },
+  "includes": [
+   {
+    "t": {
+     "es": "Velocidad y Core Web Vitals",
+     "en": "Speed and Core Web Vitals"
+    },
+    "d": {
+     "es": "Optimización de carga, imágenes y código para una experiencia rápida.",
+     "en": "Load, image and code optimization for a fast experience."
+    }
+   },
+   {
+    "t": {
+     "es": "SEO técnico",
+     "en": "Technical SEO"
+    },
+    "d": {
+     "es": "Estructura, metadatos, sitemap y rastreo pensados para buscadores.",
+     "en": "Structure, metadata, sitemap and crawling built for search engines."
+    }
+   },
+   {
+    "t": {
+     "es": "Datos estructurados",
+     "en": "Structured data"
+    },
+    "d": {
+     "es": "Marcado schema.org para mostrar tu empresa de forma clara en los resultados.",
+     "en": "schema.org markup to present your company clearly in results."
+    }
+   },
+   {
+    "t": {
+     "es": "Rediseño y experiencia",
+     "en": "Redesign and experience"
+    },
+    "d": {
+     "es": "Interfaz moderna, adaptable a móvil y enfocada en la conversión.",
+     "en": "Modern, mobile-friendly interface focused on conversion."
+    }
+   },
+   {
+    "t": {
+     "es": "Seguridad y actualización",
+     "en": "Security and updates"
+    },
+    "d": {
+     "es": "HTTPS, dependencias al día y buenas prácticas de seguridad.",
+     "en": "HTTPS, up-to-date dependencies and security best practices."
+    }
+   }
+  ],
+  "faqs": [
+   {
+    "q": {
+     "es": "¿Pueden mejorar mi sitio sin rehacerlo por completo?",
+     "en": "Can you improve my site without rebuilding it entirely?"
+    },
+    "a": {
+     "es": "Sí. Auditamos primero y priorizamos lo que más impacto tiene en velocidad, posicionamiento y conversión.",
+     "en": "Yes. We audit first and prioritize what has the most impact on speed, ranking and conversion."
+    }
+   },
+   {
+    "q": {
+     "es": "¿Qué incluye el SEO técnico?",
+     "en": "What does technical SEO include?"
+    },
+    "a": {
+     "es": "Estructura de encabezados, metadatos, sitemap, datos estructurados, velocidad, enlaces internos y rastreabilidad.",
+     "en": "Heading structure, metadata, sitemap, structured data, speed, internal links and crawlability."
+    }
+   },
+   {
+    "q": {
+     "es": "¿Garantizan el primer lugar en Google?",
+     "en": "Do you guarantee first place on Google?"
+    },
+    "a": {
+     "es": "Nadie puede garantizarlo. Sí construimos una base técnica sólida y contenido claro que mejora tus posibilidades de posicionarte.",
+     "en": "No one can guarantee it. We do build a solid technical foundation and clear content that improves your chances of ranking."
+    }
+   }
+  ],
+  "related": [
+   "web",
+   "dev",
+   "api"
+  ],
+  "project": null,
+  "keywords": "modernización web, SEO técnico, optimización velocidad web, Core Web Vitals, rediseño de sitio web"
+ }
+]

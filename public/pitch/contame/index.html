@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ContAME - ERP Ecuador</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--app:#EDF0EE;--panel:#FFFFFF;--panel-2:#F7F9F8;
+--line:#E0E5E2;--line-2:#CBD3CE;
+--ink:#0E1613;--ink-2:#47524C;--ink-3:#667169;
+--chrome:#0E1613;--on-chrome:#FFFFFF;--on-chrome-2:#9AA6A0;
+--brand:#00A651;--brand-d:#077A3D;--brand-l:#3FD98A;--brand-soft:#E8F6EE;
+--ok:#077A3D;--warn:#8A5D08;--alert:#A33527;
+--pen:#24499B;   /* tinta de anotación: la mano que marcó el sistema */
+--r:10px;--r-sm:6px;
+
+--step--1:clamp(.72rem,.70rem + .10vw,.79rem);
+--step-0:clamp(.88rem,.86rem + .14vw,.96rem);
+--step-1:clamp(1.02rem,.96rem + .30vw,1.22rem);
+--step-2:clamp(1.30rem,1.10rem + .95vw,1.90rem);
+--step-3:clamp(1.65rem,1.30rem + 1.70vw,2.60rem);
+--s1:.5rem;--s2:.9rem;--s3:1.4rem;--s4:2.2rem;
+
+--pad-x:clamp(14px,3.2vw,52px);
+--pad-top:clamp(14px,2.4vh,30px);
+--nav-h:clamp(44px,5.6vh,54px);
+--pad-bottom:calc(var(--nav-h) + clamp(12px,1.8vh,22px));
+}
+html{font-size:16px}
+@media (max-width:1280px){html{font-size:15.5px}}
+@media (max-width:1024px){html{font-size:15px}}
+@media (max-width:768px){html{font-size:15.5px}}
+@media (max-width:420px){html{font-size:14.5px}}
+@media (max-height:820px) and (min-width:769px){html{font-size:15px}}
+@media (max-height:700px) and (min-width:769px){html{font-size:14px}}
+@media (max-height:620px){html{font-size:13px}}
+@media (max-height:500px){html{font-size:12px}}
+
+html,body{height:100%;overflow:hidden;background:var(--app);color:var(--ink);
+font-family:'Onest',system-ui,sans-serif;-webkit-text-size-adjust:100%;
+overscroll-behavior:none;font-variant-numeric:tabular-nums}
+
+/* ===== MOTOR ===== */
+.deck{position:relative;width:100%;height:100vh;height:100dvh;overflow:hidden;background:var(--app)}
+.slide{position:absolute;inset:0;overflow:hidden;opacity:0;pointer-events:none;z-index:0;
+transform:translateX(16px);transition:opacity .3s cubic-bezier(.3,0,.2,1),transform .3s cubic-bezier(.3,0,.2,1)}
+.slide.active{opacity:1;transform:none;pointer-events:auto;z-index:10}
+.slide.prev{opacity:0;transform:translateX(-16px)}
+.slide-scroll{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;
+padding:var(--pad-top) var(--pad-x) var(--pad-bottom);
+overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
+scrollbar-width:thin;scrollbar-color:var(--line-2) transparent}
+.slide-scroll>*{margin-block:auto;width:100%;max-width:100%}
+.slide-scroll::-webkit-scrollbar{width:6px}
+.slide-scroll::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:3px}
+
+/* ===== LA VENTANA DE LA APLICACIÓN ===== */
+/* Una sola elevación en todo el sistema. Nada flota sin motivo. */
+.win{max-width:1200px;margin-inline:auto;width:100%;background:var(--panel);
+border:1px solid var(--line-2);border-radius:var(--r);overflow:hidden;
+box-shadow:0 1px 2px #0e161308,0 12px 32px -12px #0e161326}
+.win.narrow{max-width:940px}
+
+.bar{display:flex;align-items:center;gap:var(--s2);padding:0 var(--s3);height:clamp(38px,4.8vh,46px);
+background:var(--chrome);color:var(--on-chrome)}
+.bar .brand{display:inline-flex;align-items:center;gap:.5em;font-weight:700;font-size:var(--step-0);letter-spacing:-.01em}
+.bar .bars{display:flex;align-items:flex-end;gap:2px;height:.92em}
+.bar .bars i{width:3px;background:var(--brand-l);border-radius:1px}
+.bar .bars i:nth-child(1){height:42%}.bar .bars i:nth-child(2){height:70%}.bar .bars i:nth-child(3){height:100%}
+.bar .crumb{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:var(--step--1);
+color:var(--on-chrome-2);letter-spacing:.04em}
+.bar .crumb b{color:var(--on-chrome);font-weight:500}
+.bar .right{margin-left:auto;display:flex;align-items:center;gap:var(--s2);
+font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:var(--step--1);color:var(--on-chrome-2)}
+.bar .dot{width:7px;height:7px;border-radius:50%;background:var(--brand-l)}
+
+/* Cabecera de contenido: aquí vive el mensaje, como título de pantalla */
+.head{padding:var(--s3) var(--s3) var(--s2);border-bottom:1px solid var(--line);
+display:flex;align-items:flex-start;justify-content:space-between;gap:var(--s3);flex-wrap:wrap}
+.head .tag{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:var(--step--1);
+letter-spacing:.1em;text-transform:uppercase;color:var(--brand-d);display:block;margin-bottom:6px}
+.head h1,.head h2{font-size:var(--step-3);font-weight:700;letter-spacing:-.028em;line-height:1.1;text-wrap:balance}
+.head .a{color:var(--brand-d)}
+.head p{font-size:var(--step-0);line-height:1.5;color:var(--ink-2);max-width:60ch;margin-top:8px}
+.body{padding:var(--s3)}
+.body.tight{padding:var(--s2) var(--s3) var(--s3)}
+
+/* ===== COMPONENTES DE INTERFAZ REAL ===== */
+
+/* Indicador de estado: punto + etiqueta. Nunca color solo. */
+.pill{display:inline-flex;align-items:center;gap:7px;font-size:var(--step--1);font-weight:600;
+letter-spacing:.02em;white-space:nowrap;color:var(--ink-2)}
+.pill::before{content:'';width:7px;height:7px;border-radius:50%;background:currentColor;flex-shrink:0}
+.pill.ok{color:var(--ok)}.pill.warn{color:var(--warn)}.pill.alert{color:var(--alert)}
+.pill.core{color:var(--brand-d);font-weight:700}
+
+/* Tabla de datos: filetes, sin cebra, sin sombras */
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:var(--step--1);font-weight:500;
+letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);text-align:left;
+padding:0 var(--s2) 9px;border-bottom:1px solid var(--line-2)}
+.tbl th:last-child,.tbl td:last-child{text-align:right}
+.tbl td{padding:clamp(8px,1.4vh,13px) var(--s2);border-bottom:1px solid var(--line);
+font-size:var(--step-0);vertical-align:baseline}
+.tbl tr:last-child td{border-bottom:0}
+.tbl td:first-child,.tbl th:first-child{padding-left:0}
+.tbl td:last-child,.tbl th:last-child{padding-right:0}
+.tbl .k{font-weight:600}
+.tbl .s{display:block;font-size:var(--step--1);color:var(--ink-3);margin-top:3px;line-height:1.4}
+.tbl .num{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:var(--step--1);color:var(--ink-2)}
+.tbl tr.hi td{background:var(--brand-soft)}
+.tbl tr.hi .k{color:var(--brand-d)}
+
+/* Indicadores: recuadros de interfaz, no contadores de marketing */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(50%,140px),1fr));
+border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden}
+.kpis>div{padding:clamp(10px,1.6vh,15px) var(--s2);border-right:1px solid var(--line);
+border-bottom:1px solid var(--line)}
+.kpis>div:last-child{border-right:0}
+.kpi-k{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:var(--step--1);
+letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.kpi-v{font-size:var(--step-2);font-weight:700;letter-spacing:-.03em;line-height:1.05;margin-top:5px}
+.kpi-v.a{color:var(--brand-d)}
+.kpi-d{font-size:var(--step--1);margin-top:4px;color:var(--ink-3);font-weight:500}
+.kpi-d.up{color:var(--ok)}.kpi-d.dn{color:var(--alert)}
+
+/* Rejilla de paneles: una sola altura de elevación, bordes de 1px */
+.panes{display:grid;grid-template-columns:1fr;gap:var(--s2)}
+@media (min-width:640px){.panes.c2{grid-template-columns:1fr 1fr}}
+@media (min-width:860px){.panes.c3{grid-template-columns:repeat(3,1fr)}}
+@media (min-width:760px){.panes.duo{grid-template-columns:1.5fr 1fr;align-items:start}}
+.pane{border:1px solid var(--line);border-radius:var(--r-sm);padding:clamp(11px,1.8vh,17px);background:var(--panel)}
+.pane.fill{background:var(--brand-soft);border-color:#BFE6CF}
+.pane.dark{background:var(--chrome);color:var(--on-chrome);border-color:var(--chrome)}
+.pane-t{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:var(--step--1);
+letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:9px}
+.pane.dark .pane-t{color:var(--on-chrome-2)}
+.pane h4{font-size:var(--step-1);font-weight:700;letter-spacing:-.018em;line-height:1.2}
+.pane p{font-size:var(--step-0);line-height:1.5;color:var(--ink-2);margin-top:5px}
+.pane.dark p{color:var(--on-chrome-2)}
+
+/* Barra lateral de navegación del sistema */
+.with-side{display:grid;grid-template-columns:1fr}
+@media (min-width:760px){.with-side{grid-template-columns:168px 1fr}}
+.side{border-right:1px solid var(--line);padding:var(--s2);display:none;background:var(--panel-2)}
+@media (min-width:760px){.side{display:block}}
+.side .t{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:var(--step--1);
+letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);padding:0 8px 8px}
+.side a,.side span{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:var(--r-sm);
+font-size:var(--step-0);color:var(--ink-2);text-decoration:none}
+.side .on{background:var(--brand-soft);color:var(--brand-d);font-weight:600}
+.side .on::before{content:'';width:3px;height:14px;background:var(--brand);border-radius:2px;margin-left:-4px}
+
+/* Barra de herramientas: el botón de acción vive aquí, como en el producto */
+.tools{display:flex;align-items:center;gap:var(--s2);flex-wrap:wrap;
+padding-top:var(--s2);margin-top:var(--s2);border-top:1px solid var(--line)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--brand-d);color:#fff;
+font-family:inherit;font-size:var(--step-0);font-weight:600;letter-spacing:-.005em;
+padding:clamp(9px,1.4vh,12px) clamp(14px,1.8vw,20px);border-radius:var(--r-sm);border:0;
+text-decoration:none;transition:background .15s}
+.btn:hover{background:#055f2f}
+.btn.ghost{background:var(--panel);color:var(--ink-2);border:1px solid var(--line-2)}
+.btn.ghost:hover{background:var(--panel-2)}
+.note{font-size:var(--step--1);color:var(--ink-3)}
+
+/* Gráfico y anillo: piezas de producto, una serie un color */
+.chart .plot{display:flex;align-items:flex-end;justify-content:space-between;gap:6px;height:clamp(58px,8vh,86px)}
+.chart .plot i{flex:1;max-width:26px;margin-inline:auto;background:var(--brand);border-radius:3px 3px 0 0;display:block}
+.chart .lab{display:flex;gap:6px;margin-top:7px}
+.chart .lab span{flex:1;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:var(--step--1);color:var(--ink-3)}
+.ring{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;height:100%}
+.ring .dial{width:clamp(56px,7.4vw,74px);aspect-ratio:1;border-radius:50%;
+background:conic-gradient(var(--brand) 0 98%,var(--line) 98% 100%);display:flex;align-items:center;justify-content:center}
+.ring .dial::after{content:'98%';width:70%;height:70%;border-radius:50%;background:var(--panel);
+display:flex;align-items:center;justify-content:center;font-size:var(--step-0);font-weight:700;letter-spacing:-.02em}
+.ring small{font-size:var(--step--1);color:var(--ink-3);text-align:center;line-height:1.4}
+
+/* Conversación del asistente, tal como se ve en el producto */
+.chat{display:flex;flex-direction:column;gap:var(--s2)}
+.msg{max-width:88%;padding:10px 13px;border-radius:var(--r-sm);font-size:var(--step-0);line-height:1.5}
+.msg.me{align-self:flex-end;background:var(--chrome);color:#fff}
+.msg.ai{align-self:flex-start;background:var(--panel-2);border:1px solid var(--line);color:var(--ink-2)}
+.msg.ai b{color:var(--ink);font-weight:700}
+
+/* Flujo antes/después como estados del sistema */
+.flow{display:grid;grid-template-columns:1fr;gap:var(--s2);align-items:stretch}
+@media (min-width:700px){.flow{grid-template-columns:1fr auto 1fr;align-items:center}}
+.flow .arrow{display:flex;align-items:center;justify-content:center;color:var(--brand-d);font-size:1.3rem}
+@media (max-width:699px){.flow .arrow{transform:rotate(90deg)}}
+.flow ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+.flow li{font-size:var(--step-0);color:var(--ink-3);text-decoration:line-through}
+
+/* Facturación / planes como pantalla de suscripción */
+.plan-row{display:grid;grid-template-columns:1fr;gap:var(--s2)}
+@media (min-width:700px){.plan-row{grid-template-columns:1fr 1fr}}
+.plan{border:1px solid var(--line);border-radius:var(--r-sm);padding:clamp(13px,2vh,19px);display:flex;flex-direction:column}
+.plan.cur{border-color:var(--brand);box-shadow:inset 0 0 0 1px var(--brand)}
+.plan-h{display:flex;align-items:baseline;justify-content:space-between;gap:var(--s2);
+padding-bottom:var(--s2);border-bottom:1px solid var(--line)}
+.plan-h .nm{font-size:var(--step-0);font-weight:700}
+.plan-h .pr{font-size:var(--step-2);font-weight:700;letter-spacing:-.03em;line-height:1}
+.plan-h .pr span{font-size:.45em;font-weight:500;color:var(--ink-3);letter-spacing:0}
+.plan ul{list-style:none;margin:var(--s2) 0;flex:1;display:grid;grid-template-columns:1fr;gap:6px}
+@media (min-width:480px){.plan ul{grid-template-columns:1fr 1fr}}
+.plan li{font-size:var(--step--1);color:var(--ink-2);display:flex;gap:7px;align-items:baseline}
+.plan li::before{content:'✓';color:var(--brand-d);font-weight:700;font-size:.9em}
+
+/* Pantalla de bienvenida / cierre */
+.splash{text-align:center;padding:clamp(24px,5vh,56px) var(--s3)}
+.splash .mark{display:inline-flex;align-items:center;gap:.5em;font-size:var(--step-3);font-weight:800;letter-spacing:-.035em}
+.splash .mark .bars{display:flex;align-items:flex-end;gap:.1em;height:.9em}
+.splash .mark .bars i{width:.18em;background:var(--brand);border-radius:1px}
+.splash .mark .bars i:nth-child(1){height:42%}.splash .mark .bars i:nth-child(2){height:70%}.splash .mark .bars i:nth-child(3){height:100%}
+
+/* ===== TABLA COMPARATIVA DE PLANES ===== */
+.cmp th,.cmp td{text-align:center}
+.cmp th:first-child,.cmp td:first-child{text-align:left}
+.cmp th:last-child,.cmp td:last-child{text-align:center}
+.cmp .pick{background:var(--brand-soft)}
+.cmp thead .pick{border-bottom-color:var(--brand)}
+.cmp .plan-nm{font-weight:700;color:var(--ink);font-size:var(--step-0);text-transform:none;letter-spacing:-.01em;display:block}
+.cmp .pr{font-size:var(--step-1);font-weight:700;letter-spacing:-.025em;display:block;margin-top:3px}
+.cmp .pr span{font-size:.62em;font-weight:500;color:var(--ink-3)}
+.cmp .yes{color:var(--brand-d);font-weight:700}
+.cmp .no{color:var(--line-2)}
+.cmp .lim{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:var(--step--1);color:var(--ink-2)}
+
+/* ===== SEGUNDA VOZ: ANOTACIÓN A MANO ===== */
+/* Una sola por pantalla. Es la huella de la persona que preparó la reunión. */
+.ann{display:inline-flex;align-items:flex-start;gap:8px;color:var(--pen);
+font-family:'Caveat',cursive;font-weight:600;font-size:clamp(1.02rem,1.5vw,1.3rem);
+line-height:1.12;transform:rotate(-1.4deg);transform-origin:left center}
+.ann.r{transform:rotate(1.2deg)}
+.ann .nib{flex-shrink:0;width:clamp(26px,2.6vw,36px);height:auto;margin-top:-2px;
+stroke:var(--pen);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ann .nib.flip{transform:scaleX(-1)}
+
+/* Trazos a mano sobre una palabra concreta */
+.circled{position:relative;display:inline-block;padding:0 .2em;z-index:0}
+.circled>svg{position:absolute;left:-.28em;top:-.34em;width:calc(100% + .56em);height:calc(100% + .68em);
+stroke:var(--pen);fill:none;stroke-width:2.1;stroke-linecap:round;z-index:-1;overflow:visible}
+.underl{position:relative;display:inline-block}
+.underl>svg{position:absolute;left:0;bottom:-.34em;width:100%;height:.4em;
+stroke:var(--pen);fill:none;stroke-width:2.1;stroke-linecap:round;overflow:visible}
+
+/* ===== NAVEGACIÓN ===== */
+.nav-bar{position:fixed;left:0;right:0;bottom:0;height:var(--nav-h);z-index:100;
+display:flex;align-items:center;gap:clamp(8px,1.2vw,14px);
+padding:0 var(--pad-x) env(safe-area-inset-bottom);background:var(--panel);border-top:1px solid var(--line-2)}
+.nav-btn{width:clamp(29px,3.6vh,33px);height:clamp(29px,3.6vh,33px);flex-shrink:0;cursor:pointer;
+background:var(--panel);border:1px solid var(--line-2);border-radius:var(--r-sm);color:var(--ink-2);
+display:flex;align-items:center;justify-content:center;font-size:.88rem;transition:all .15s}
+.nav-btn:hover:not(:disabled){background:var(--brand-d);border-color:var(--brand-d);color:#fff}
+.nav-btn:disabled{opacity:.34;cursor:default}
+.slide-counter{font-family:'IBM Plex Mono',monospace;font-size:var(--step--1);font-weight:500;color:var(--ink-3);min-width:5.4em}
+.nav-title{font-family:'IBM Plex Mono',monospace;font-size:var(--step--1);letter-spacing:.1em;
+text-transform:uppercase;color:var(--ink-3);margin-left:auto;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+@media (max-width:620px){.nav-title{display:none}}
+.nav-dots{display:none}
+.progress{position:fixed;top:0;left:0;right:0;height:3px;background:var(--line);z-index:120}
+.progress>i{display:block;height:100%;width:0;background:var(--brand);transition:width .32s cubic-bezier(.3,0,.2,1)}
+.scroll-hint{position:fixed;right:var(--pad-x);bottom:calc(var(--nav-h) + 11px);z-index:99;
+padding:6px 12px;background:var(--chrome);color:#fff;border-radius:99px;
+font-size:var(--step--1);font-weight:600;
+opacity:0;visibility:hidden;transition:opacity .2s,visibility .2s;pointer-events:none}
+.scroll-hint.show{opacity:1;visibility:visible}
+.table-scroll{width:100%;overflow-x:auto}
+.table-hint{margin-top:8px;font-size:var(--step--1);color:var(--ink-3)}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+
+/* ===== MOVIMIENTO ===== */
+.slide.active .up{animation:rs .3s cubic-bezier(.25,.7,.3,1) forwards}
+.slide.active .up-1{animation:rs .3s .05s cubic-bezier(.25,.7,.3,1) forwards}
+.slide.active .up-2{animation:rs .3s .1s cubic-bezier(.25,.7,.3,1) forwards}
+.slide.active .up-3{animation:rs .3s .15s cubic-bezier(.25,.7,.3,1) forwards}
+.up,.up-1,.up-2,.up-3{opacity:0;transform:translateY(7px)}
+@keyframes rs{to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){
+*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+.up,.up-1,.up-2,.up-3{opacity:1;transform:none}
+}
+@media (max-width:640px){
+:root{--s3:1rem;--s4:1.5rem}
+.head h1,.head h2{font-size:clamp(1.5rem,6.4vw,2rem)}
+.tbl td{padding:9px var(--s2)}
+}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+<!-- 01 · BIENVENIDA -->
+<div class="slide active" data-slide="0" data-title="Bienvenida">
+<div class="slide-scroll"><div class="win narrow up">
+<div class="bar"><span class="brand"><span class="bars"><i></i><i></i><i></i></span>ContAME</span><span class="crumb">Inicio / <b>Bienvenida</b></span><span class="right"><span class="dot"></span>Sistema operativo</span></div>
+<div class="splash">
+<span class="mark"><span class="bars"><i></i><i></i><i></i></span>ContAME</span>
+<p class="note" style="margin-top:6px;letter-spacing:.12em;text-transform:uppercase">ERP Ecuador · Versión 2.7</p>
+<h1 style="font-size:var(--step-3);font-weight:700;letter-spacing:-.028em;line-height:1.12;margin-top:var(--s3)">
+Su contabilidad al día.<br><span style="color:var(--brand-d)">Sin re-digitar nada.</span></h1>
+<p style="font-size:var(--step-0);line-height:1.55;color:var(--ink-2);max-width:54ch;margin:var(--s2) auto 0">
+Facturación electrónica SRI, contabilidad NIIF, inventario, nómina y CRM en una sola plataforma, con inteligencia artificial integrada.</p>
+<div style="margin-top:var(--s3);display:flex;gap:var(--s2);justify-content:center;align-items:center;flex-wrap:wrap">
+<a href="https://contame.amephia.com/" target="_blank" rel="noreferrer" class="btn">Probar 14 días gratis</a>
+<span class="note">Sin tarjeta · Sin compromiso</span>
+</div>
+</div>
+<div class="body tight">
+<div class="kpis">
+<div><div class="kpi-k">Módulos</div><div class="kpi-v">25+</div><div class="kpi-d">integrados</div></div>
+<div><div class="kpi-k">Comprobantes SRI</div><div class="kpi-v">6</div><div class="kpi-d">autorizados</div></div>
+<div><div class="kpi-k">Empresas</div><div class="kpi-v a">+80</div><div class="kpi-d up">en todo el país</div></div>
+<div><div class="kpi-k">Autorización SRI</div><div class="kpi-v">98%</div><div class="kpi-d up">facturas aceptadas</div></div>
+</div>
+</div>
+</div></div>
+</div>
+
+<!-- 02 · DIAGNÓSTICO -->
+<div class="slide" data-slide="1" data-title="Diagnóstico">
+<div class="slide-scroll"><div class="win up">
+<div class="bar"><span class="brand"><span class="bars"><i></i><i></i><i></i></span>ContAME</span><span class="crumb">Diagnóstico / <b>Trabajo manual</b></span><span class="right">6 procesos detectados</span></div>
+<div class="head">
+<div><span class="tag">Un problema real</span>
+<h2>Su equipo digita lo que<br>el SRI <span class="a">ya tiene registrado.</span></h2></div>
+</div>
+<div class="body">
+<div class="table-scroll"><table class="tbl" style="min-width:520px">
+<thead><tr><th>Proceso manual</th><th>Frecuencia</th><th>Estado</th></tr></thead>
+<tbody>
+<tr><td class="k">Re-digitación de información<span class="s">El mismo comprobante se teclea en varios sistemas</span></td><td class="num"><span class="circled">3 veces por documento<svg viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true"><path d="M92 19c0 10-20 18-42 18S7 30 7 19 28 3 51 3s42 6 42 17c0 4-3 7-8 9"/></svg></span></td><td><span class="pill alert">Crítico</span></td></tr>
+<tr><td class="k">Revisión manual de facturas</td><td class="num">Diaria</td><td><span class="pill alert">Crítico</span></td></tr>
+<tr><td class="k">Conciliación de información</td><td class="num">Cada cierre</td><td><span class="pill warn">Alto</span></td></tr>
+<tr><td class="k">Búsqueda de documentos</td><td class="num">Sin índice único</td><td><span class="pill warn">Alto</span></td></tr>
+<tr><td class="k">Preparación de reportes</td><td class="num">Cierre al día 14</td><td><span class="pill alert">Crítico</span></td></tr>
+<tr><td class="k">Procesos repetitivos</td><td class="num">Todo el ejercicio</td><td><span class="pill warn">Alto</span></td></tr>
+</tbody></table></div>
+<div class="tools"><span class="pill ok">ContAME automatiza los 6 procesos</span><span class="ann"><svg class="nib" viewBox="0 0 48 34" aria-hidden="true"><path d="M3 4c13 1 25 8 33 21"/><path d="M36 25l-8-3M36 25l1-9"/></svg>aquí es donde se le va el mes</span></div>
+</div>
+</div></div>
+</div>
+
+<!-- 03 · MÓDULOS -->
+<div class="slide" data-slide="2" data-title="Módulos">
+<div class="slide-scroll"><div class="win up">
+<div class="bar"><span class="brand"><span class="bars"><i></i><i></i><i></i></span>ContAME</span><span class="crumb">Configuración / <b>Módulos</b></span><span class="right">6 de 25+ activos</span></div>
+<div class="with-side">
+<div class="side">
+<div class="t">Sistema</div>
+<span class="on">Módulos</span><span>Usuarios</span><span>Empresas</span><span>Facturación</span><span>Integraciones</span><span>Seguridad</span>
+</div>
+<div>
+<div class="head"><div><span class="tag">Todo en un solo sistema</span>
+<h2>Módulos que trabajan juntos,<br>no seis programas sueltos.</h2></div></div>
+<div class="body">
+<div class="table-scroll"><table class="tbl" style="min-width:480px">
+<thead><tr><th>Módulo</th><th>Función</th><th>Estado</th></tr></thead>
+<tbody>
+<tr><td class="k">Facturación SRI</td><td class="num">Comprobantes electrónicos</td><td><span class="pill ok">Operativo</span></td></tr>
+<tr><td class="k">Contabilidad NIIF</td><td class="num">Información financiera</td><td><span class="pill ok">Operativo</span></td></tr>
+<tr><td class="k">Inventario</td><td class="num">Productos y existencias</td><td><span class="pill ok">Operativo</span></td></tr>
+<tr><td class="k">Nómina</td><td class="num">Empleados y roles</td><td><span class="pill ok">Operativo</span></td></tr>
+<tr><td class="k">CRM</td><td class="num">Clientes y oportunidades</td><td><span class="pill ok">Operativo</span></td></tr>
+<tr class="hi"><td class="k">Inteligencia Artificial</td><td class="num">Análisis y recomendaciones</td><td><span class="pill core">Núcleo v2.7</span></td></tr>
+</tbody></table></div>
+<div class="tools"><span class="ann"><svg class="nib" viewBox="0 0 48 34" aria-hidden="true"><path d="M3 4c13 1 25 8 33 21"/><path d="M36 25l-8-3M36 25l1-9"/></svg>esto no lo tiene nadie más aquí</span></div>
+</div>
+</div>
+</div>
+</div></div>
+</div>
+
+<!-- 04 · ASISTENTE IA -->
+<div class="slide" data-slide="3" data-title="Asistente con IA">
+<div class="slide-scroll"><div class="win up">
+<div class="bar"><span class="brand"><span class="bars"><i></i><i></i><i></i></span>ContAME</span><span class="crumb">Asistente / <b>Consulta</b></span><span class="right"><span class="dot"></span>IA activa</span></div>
+<div class="head"><div><span class="tag">Inteligencia artificial · v2.7</span>
+<h2>No solo guarda sus datos.<br><span class="a">Los entiende.</span></h2></div></div>
+<div class="body">
+<div class="panes duo">
+<div class="pane">
+<div class="pane-t">Conversación</div>
+<div class="chat">
+<div class="msg me">¿Cuánto me debe Distribuidora Andina?</div>
+<div class="msg ai">Tiene <b>3 facturas pendientes</b> por <b>$4.820,00</b>. La más antigua vence en 4 días.</div>
+<div class="msg me">Factúrale a Juan 3 laptops.</div>
+<div class="msg ai">Pre-factura lista: <b>Juan Pérez</b> · 3 × Laptop Pro 14" · <b>$2.691,00</b> IVA incluido.</div>
+</div>
+<div class="tools"><a href="https://contame.amephia.com/" target="_blank" rel="noreferrer" class="btn">Confirmar y emitir al SRI</a><span class="note">o editar antes de emitir</span></div>
+</div>
+<div style="display:grid;gap:var(--s2)">
+<div class="pane"><div class="pane-t">Analiza</div><p>Entiende la información contable y comercial de su negocio.</p></div>
+<div class="pane"><div class="pane-t">Recomienda</div><p>Identifica oportunidades y advierte problemas antes del cierre.</p></div>
+<div class="pane fill"><div class="pane-t">Aprende</div><p>Mejora con el comportamiento y los criterios de su empresa.</p></div>
+</div>
+</div>
+</div>
+</div></div>
+</div>
+
+<!-- 05 · FLUJO -->
+<div class="slide" data-slide="4" data-title="Flujo de trabajo">
+<div class="slide-scroll"><div class="win narrow up">
+<div class="bar"><span class="brand"><span class="bars"><i></i><i></i><i></i></span>ContAME</span><span class="crumb">Automatización / <b>Flujo de trabajo</b></span><span class="right">1 entrada · 5 módulos</span></div>
+<div class="head"><div><span class="tag">Automatización</span>
+<h2>El dato se captura una vez<br>y recorre <span class="a">todo el sistema.</span></h2></div></div>
+<div class="body">
+<div class="flow">
+<div class="pane"><div class="pane-t">Proceso actual</div>
+<ul><li>Copiar</li><li>Pegar</li><li>Revisar</li><li>Corregir</li><li>Volver a ingresar</li></ul></div>
+<div class="arrow">→</div>
+<div class="pane fill"><div class="pane-t">Con ContAME</div>
+<h4>Se ingresa una sola vez</h4>
+<p>El sistema conecta la información entre facturación, contabilidad, inventario, nómina y CRM.</p></div>
+</div>
+<div class="tools" style="border-top:0;padding-top:0"><span class="ann r"><svg class="nib flip" viewBox="0 0 48 34" aria-hidden="true"><path d="M3 4c13 1 25 8 33 21"/><path d="M36 25l-8-3M36 25l1-9"/></svg>once días de diferencia</span></div>
+<div class="kpis" style="margin-top:var(--s2)">
+<div><div class="kpi-k">Entradas manuales</div><div class="kpi-v">1</div><div class="kpi-d">en lugar de 3</div></div>
+<div><div class="kpi-k">Módulos conectados</div><div class="kpi-v a">5</div><div class="kpi-d up">sin recapturar</div></div>
+<div><div class="kpi-k">Cierre contable</div><div class="kpi-v">día 3</div><div class="kpi-d up">antes: día 14</div></div>
+</div>
+</div>
+</div></div>
+</div>
+
+<!-- 06 · CUMPLIMIENTO SRI -->
+<div class="slide" data-slide="5" data-title="Cumplimiento SRI">
+<div class="slide-scroll"><div class="win up">
+<div class="bar"><span class="brand"><span class="bars"><i></i><i></i><i></i></span>ContAME</span><span class="crumb">Facturación / <b>Cumplimiento SRI</b></span><span class="right"><span class="dot"></span>Catálogo al día</span></div>
+<div class="head"><div><span class="tag">Hecho para Ecuador</span>
+<h2>Cumple con el SRI.<br><span class="a">Siempre actualizado.</span></h2></div></div>
+<div class="body">
+<div class="panes duo">
+<div class="table-scroll"><table class="tbl" style="min-width:420px">
+<thead><tr><th>Comprobante autorizado</th><th>Código</th><th>Estado</th></tr></thead>
+<tbody>
+<tr><td class="k">Factura</td><td class="num">01</td><td><span class="pill ok">Habilitado</span></td></tr>
+<tr><td class="k">Nota de crédito</td><td class="num">04</td><td><span class="pill ok">Habilitado</span></td></tr>
+<tr><td class="k">Nota de débito</td><td class="num">05</td><td><span class="pill ok">Habilitado</span></td></tr>
+<tr><td class="k">Comprobante de retención</td><td class="num">07</td><td><span class="pill ok">Habilitado</span></td></tr>
+<tr><td class="k">Guía de remisión</td><td class="num">06</td><td><span class="pill ok">Habilitado</span></td></tr>
+<tr><td class="k">Liquidación de compra</td><td class="num">03</td><td><span class="pill ok">Habilitado</span></td></tr>
+</tbody></table></div>
+<div style="display:grid;gap:var(--s2)">
+<div class="pane"><div class="pane-t">Firma electrónica</div><h4>XAdES-BES</h4><p>Con el certificado digital de su empresa. RIDE generado automáticamente.</p></div>
+<div class="pane"><div class="pane-t">Si el servicio del SRI falla</div><h4>Reintento automático</h4><p>El sistema reintenta hasta obtener la autorización.</p></div>
+<div class="pane"><div class="pane-t">Normativa</div><h4>Actualización continua</h4><p>Retenciones IR e IVA, plan SCVS y formularios al día, sin costo adicional.</p></div>
+</div>
+</div>
+</div>
+</div></div>
+</div>
+
+<!-- 07 · PANEL -->
+<div class="slide" data-slide="6" data-title="Panel de control">
+<div class="slide-scroll"><div class="win up">
+<div class="bar"><span class="brand"><span class="bars"><i></i><i></i><i></i></span>ContAME</span><span class="crumb">Inicio / <b>Resumen general</b></span><span class="right">Septiembre 2026</span></div>
+<div class="with-side">
+<div class="side">
+<div class="t">Navegación</div>
+<span class="on">Inicio</span><span>Facturación</span><span>Contabilidad</span><span>Inventario</span><span>Nómina</span><span>CRM</span><span>Reportes</span>
+</div>
+<div>
+<div class="head"><div><span class="tag">El sistema en operación</span>
+<h2>Toda la empresa,<br>en una sola vista.</h2></div></div>
+<div class="body">
+<div class="kpis">
+<div><div class="kpi-k">Ventas</div><div class="kpi-v">$12.480</div><div class="kpi-d up">+10% vs mes anterior</div></div>
+<div><div class="kpi-k">Gastos</div><div class="kpi-v">$8.230</div><div class="kpi-d dn">−4% vs mes anterior</div></div>
+<div><div class="kpi-k">Por cobrar</div><div class="kpi-v">$5.460</div><div class="kpi-d">3 pendientes</div></div>
+<div><div class="kpi-k">Inventario</div><div class="kpi-v">1.482</div><div class="kpi-d">productos</div></div>
+</div>
+<div class="panes duo" style="margin-top:var(--s2)">
+<div class="pane chart"><div class="pane-t">Ventas · últimos 6 meses</div>
+<div class="plot" role="img" aria-label="Ventas mensuales de enero a junio con tendencia creciente hasta mayo.">
+<i style="height:46%"></i><i style="height:58%"></i><i style="height:52%"></i><i style="height:74%"></i><i style="height:100%"></i><i style="height:82%"></i></div>
+<div class="lab"><span>Ene</span><span>Feb</span><span>Mar</span><span>Abr</span><span>May</span><span>Jun</span></div></div>
+<div class="pane"><div class="pane-t">Autorización SRI</div>
+<div class="ring"><div class="dial" role="img" aria-label="98% de facturas autorizadas por el SRI."></div><small>Facturas<br>autorizadas</small></div></div>
+</div>
+</div>
+</div>
+</div>
+</div></div>
+</div>
+
+<!-- 08 · SUSCRIPCIÓN -->
+<div class="slide" data-slide="7" data-title="Suscripción">
+<div class="slide-scroll"><div class="win up">
+<div class="bar"><span class="brand"><span class="bars"><i></i><i></i><i></i></span>ContAME</span><span class="crumb">Configuración / <b>Suscripción</b></span><span class="right">5 planes disponibles</span></div>
+<div class="head"><div><span class="tag">Planes</span>
+<h2>Empiece por donde esté.<br><span class="a">Crezca cuando lo necesite.</span></h2></div></div>
+<div class="body">
+<div class="table-scroll"><table class="tbl cmp" style="min-width:760px">
+<thead><tr>
+<th>Plan</th>
+<th><span class="plan-nm">Básico</span><span class="pr">$30 <span>/mes</span></span></th>
+<th><span class="plan-nm">Emprendedor</span><span class="pr">$40 <span>/mes</span></span></th>
+<th class="pick"><span class="plan-nm">Profesional</span><span class="pr">$65 <span>/mes</span></span></th>
+<th><span class="plan-nm">Business</span><span class="pr">$100 <span>/mes</span></span></th>
+<th><span class="plan-nm">Enterprise</span><span class="pr">Contáctenos</span></th>
+</tr></thead>
+<tbody>
+<tr><td class="k">Empresas</td><td class="lim">1</td><td class="lim">1</td><td class="pick lim">3</td><td class="lim">3</td><td class="lim">Ilimitadas</td></tr>
+<tr><td class="k">Usuarios</td><td class="lim">1</td><td class="lim">2</td><td class="pick lim">5</td><td class="lim">Múltiples</td><td class="lim">Ilimitados</td></tr>
+<tr><td class="k">Facturación SRI</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td><td class="pick"><span class="yes">✓</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+<tr><td class="k">Contabilidad NIIF</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td><td class="pick"><span class="yes">✓</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+<tr><td class="k">Inventario</td><td><span class="no">—</span></td><td><span class="yes">✓</span></td><td class="pick"><span class="yes">✓</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+<tr><td class="k">CRM</td><td><span class="no">—</span></td><td><span class="yes">✓</span></td><td class="pick"><span class="yes">✓</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+<tr><td class="k">Nómina</td><td><span class="no">—</span></td><td><span class="no">—</span></td><td class="pick"><span class="yes">✓</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+<tr><td class="k">Inteligencia Artificial</td><td><span class="no">—</span></td><td><span class="no">—</span></td><td class="pick"><span class="yes">✓</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+<tr><td class="k">Soporte</td><td class="lim">Correo</td><td class="lim">Correo</td><td class="pick lim">Chat</td><td class="lim">Prioritario</td><td class="lim">Ejecutivo</td></tr>
+</tbody></table></div>
+<div class="tools">
+<a href="https://contame.amephia.com/" target="_blank" rel="noreferrer" class="btn">Probar 14 días gratis</a>
+<span class="pill ok">Sin tarjeta de crédito</span>
+<span class="ann"><svg class="nib" viewBox="0 0 48 34" aria-hidden="true"><path d="M3 4c13 1 25 8 33 21"/><path d="M36 25l-8-3M36 25l1-9"/></svg>el que mejor calza para su tamaño</span>
+</div>
+</div>
+</div></div>
+</div>
+
+<!-- 09 · COMPARATIVA -->
+<div class="slide" data-slide="8" data-title="Por qué ContAME">
+<div class="slide-scroll"><div class="win up">
+<div class="bar"><span class="brand"><span class="bars"><i></i><i></i><i></i></span>ContAME</span><span class="crumb">Diagnóstico / <b>Comparativa</b></span><span class="right">Antes · Después</span></div>
+<div class="head"><div><span class="tag">Por qué ContAME</span>
+<h2>Menos sistemas. Menos trabajo.<br><span class="a">Más control.</span></h2></div></div>
+<div class="body">
+<div class="table-scroll"><table class="tbl" style="min-width:560px">
+<thead><tr><th>Criterio</th><th>Sistemas sueltos</th><th>Con ContAME</th></tr></thead>
+<tbody>
+<tr><td class="k">Captura del dato</td><td class="num">3 veces por documento</td><td><span class="pill ok">Una sola vez</span></td></tr>
+<tr><td class="k">Cierre contable</td><td class="num">Día 14</td><td><span class="pill ok">Día 3</span></td></tr>
+<tr><td class="k">Formularios del SRI</td><td class="num">Armados a mano</td><td><span class="pill ok">Desde la contabilidad</span></td></tr>
+<tr><td class="k">Análisis de información</td><td class="num">No disponible</td><td><span class="pill core">Inteligencia Artificial</span></td></tr>
+<tr><td class="k">Normativa ecuatoriana</td><td class="num">Actualización manual</td><td><span class="pill ok">Continua e incluida</span></td></tr>
+<tr><td class="k">Soporte</td><td class="num">Por proveedor</td><td><span class="pill ok">Un solo responsable</span></td></tr>
+</tbody></table></div>
+</div>
+</div></div>
+</div>
+
+<!-- 10 · CLIENTES -->
+<div class="slide" data-slide="9" data-title="Clientes">
+<div class="slide-scroll"><div class="win up">
+<div class="bar"><span class="brand"><span class="bars"><i></i><i></i><i></i></span>ContAME</span><span class="crumb">CRM / <b>Empresas activas</b></span><span class="right">+80 registros</span></div>
+<div class="head"><div><span class="tag">Lo que dicen nuestros clientes</span>
+<h2>Empresas que ya operan<br>con ContAME.</h2></div></div>
+<div class="body">
+<div class="table-scroll"><table class="tbl" style="min-width:560px">
+<thead><tr><th>Empresa</th><th>Valoración</th><th>Estado</th></tr></thead>
+<tbody>
+<tr><td class="k">Comercio <span class="s">Guayaquil</span></td><td class="num" style="white-space:normal;max-width:34ch">"Nos ahorra horas de trabajo cada semana. Todo está en un solo lugar."</td><td><span class="pill ok">Activa</span></td></tr>
+<tr><td class="k">Servicios <span class="s">Quito</span></td><td class="num" style="white-space:normal;max-width:34ch">"La integración con el SRI es excelente. Fácil de usar y muy completo."</td><td><span class="pill ok">Activa</span></td></tr>
+<tr><td class="k">Importación <span class="s">Cuenca</span></td><td class="num" style="white-space:normal;max-width:34ch">"La IA realmente ayuda. Ahora tenemos más control y mejores decisiones."</td><td><span class="pill ok">Activa</span></td></tr>
+</tbody></table></div>
+<div class="kpis" style="margin-top:var(--s2)">
+<div><div class="kpi-k">Empresas</div><div class="kpi-v a">+80</div><div class="kpi-d">en todo el país</div></div>
+<div><div class="kpi-k">Ciudades</div><div class="kpi-v">3</div><div class="kpi-d">principales</div></div>
+<div><div class="kpi-k">Autorización SRI</div><div class="kpi-v">98%</div><div class="kpi-d up">facturas aceptadas</div></div>
+</div>
+</div>
+</div></div>
+</div>
+
+<!-- 11 · ACTIVACIÓN -->
+<div class="slide" data-slide="10" data-title="Activar cuenta">
+<div class="slide-scroll"><div class="win narrow up">
+<div class="bar"><span class="brand"><span class="bars"><i></i><i></i><i></i></span>ContAME</span><span class="crumb">Cuenta / <b>Activación</b></span><span class="right">Paso 1 de 1</span></div>
+<div class="head"><div><span class="tag">Su próximo paso</span>
+<h2>Su negocio ya tiene suficiente trabajo.<br><span class="a">La contabilidad no debería ser uno más.</span></h2>
+<p>Únase a las empresas que ya simplificaron su gestión administrativa con ContAME.</p></div></div>
+<div class="body">
+<div class="panes c3">
+<div class="pane"><div class="pane-t">Prueba</div><h4>14 días</h4><p>Sin costo y con todas las funciones habilitadas.</p></div>
+<div class="pane"><div class="pane-t">Requisitos</div><h4>Sin tarjeta</h4><p>No se solicitan datos de pago para empezar.</p></div>
+<div class="pane fill"><div class="pane-t">Puesta en marcha</div><h4>Acompañada</h4><p>Migración guiada desde sus archivos actuales.</p></div>
+</div>
+<div class="tools">
+<a href="https://contame.amephia.com/" target="_blank" rel="noreferrer" class="btn">Probar 14 días gratis</a>
+<span class="ann r"><svg class="nib flip" viewBox="0 0 48 34" aria-hidden="true"><path d="M3 4c13 1 25 8 33 21"/><path d="M36 25l-8-3M36 25l1-9"/></svg>sin tarjeta, de verdad</span>
+<span class="note">ventas@contame.ec · contame.amephia.com</span>
+</div>
+</div>
+</div></div>
+</div>
+
+<!-- 12 · CIERRE -->
+<div class="slide" data-slide="11" data-title="ContAME">
+<div class="slide-scroll"><div class="win narrow up">
+<div class="bar"><span class="brand"><span class="bars"><i></i><i></i><i></i></span>ContAME</span><span class="crumb">Sesión / <b>Cerrar</b></span><span class="right">Quito · Ecuador</span></div>
+<div class="splash">
+<span class="mark"><span class="bars"><i></i><i></i><i></i></span>ContAME</span>
+<p class="note" style="margin-top:6px;letter-spacing:.12em;text-transform:uppercase">ERP Ecuador · Versión 2.7</p>
+<h2 style="font-size:var(--step-2);font-weight:700;letter-spacing:-.025em;line-height:1.2;margin-top:var(--s3)">
+Contabilidad más simple.<br><span style="color:var(--brand-d)">Negocios más grandes.</span></h2>
+</div>
+<div class="body tight">
+<div class="kpis">
+<div><div class="kpi-k">Módulos</div><div class="kpi-v">25+</div><div class="kpi-d">integrados</div></div>
+<div><div class="kpi-k">Inteligencia Artificial</div><div class="kpi-v a">v2.7</div><div class="kpi-d up">incluida</div></div>
+<div><div class="kpi-k">Empresas</div><div class="kpi-v">+80</div><div class="kpi-d">en el país</div></div>
+<div><div class="kpi-k">Prueba</div><div class="kpi-v">14</div><div class="kpi-d">días sin costo</div></div>
+</div>
+<div class="tools"><span class="note">ventas@contame.ec · soporte@contame.ec · contame.amephia.com</span></div>
+</div>
+</div></div>
+</div>
+
+</div><!-- end deck -->
+
+<div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
+
+<nav class="nav-bar" aria-label="Navegación de la presentación">
+<button class="nav-btn" id="btnPrev" onclick="prevSlide()" title="Anterior (←)" aria-label="Diapositiva anterior">&#8592;</button>
+<button class="nav-btn" id="btnNext" onclick="nextSlide()" title="Siguiente (→)" aria-label="Diapositiva siguiente">&#8594;</button>
+<div class="slide-counter" id="counter">01 / 12</div>
+<div class="nav-dots" id="navDots"></div>
+<div class="nav-title" id="navTitle"></div>
+</nav>
+
+<div class="scroll-hint" id="scrollHint" aria-hidden="true">Desliza ↓</div>
+
+<script>
+const deck=document.getElementById('deck');
+const slides=[...deck.querySelectorAll('.slide')];
+const dotsContainer=document.getElementById('navDots');
+const counter=document.getElementById('counter');
+const navTitle=document.getElementById('navTitle');
+const progressBar=document.getElementById('progressBar');
+const scrollHint=document.getElementById('scrollHint');
+const btnPrev=document.getElementById('btnPrev');
+const btnNext=document.getElementById('btnNext');
+const total=slides.length;
+let current=0;
+
+const fromHash=()=>{
+const n=parseInt(location.hash.replace('#',''),10);
+return Number.isInteger(n)&&n>=0&&n<total?n:0;
+};
+
+slides.forEach((_,i)=>{
+const dot=document.createElement('button');
+dot.className='nav-dot'+(i===0?' active':'');
+dot.type='button';
+dot.setAttribute('aria-label',`Ir a la diapositiva ${i+1}`);
+dot.onclick=()=>goTo(i);
+dotsContainer.appendChild(dot);
+});
+
+const scroller=i=>slides[i].querySelector('.slide-scroll');
+const pad=n=>String(n).padStart(2,'0');
+
+function updateUI(){
+slides.forEach((s,i)=>{
+s.classList.toggle('active',i===current);
+s.classList.toggle('prev',i<current);
+s.inert=i!==current;
+});
+[...dotsContainer.children].forEach((d,i)=>{d.className='nav-dot'+(i===current?' active':'')});
+counter.textContent=`${pad(current+1)} / ${total}`;
+navTitle.textContent=slides[current].dataset.title||'';
+progressBar.style.width=`${((current+1)/total)*100}%`;
+btnPrev.disabled=current===0;
+btnNext.disabled=current===total-1;
+scroller(current).scrollTo({top:0,behavior:'auto'});
+history.replaceState(null,'',current===0?location.pathname+location.search:`#${current}`);
+updateHint();
+}
+
+function updateHint(){
+const el=scroller(current);
+const overflows=el.scrollHeight-el.clientHeight>24;
+const atBottom=el.scrollTop+el.clientHeight>=el.scrollHeight-24;
+scrollHint.classList.toggle('show',overflows&&!atBottom);
+}
+
+function nextSlide(){if(current<total-1){current++;updateUI()}}
+function prevSlide(){if(current>0){current--;updateUI()}}
+function goTo(n){if(n>=0&&n<total&&n!==current){current=n;updateUI()}}
+
+document.querySelectorAll('.table-scroll').forEach(t=>{
+const hint=document.createElement('div');
+hint.className='table-hint';
+hint.textContent='↔ Desliza la tabla para ver todo';
+t.after(hint);
+const sync=()=>{hint.style.display=t.scrollWidth-t.clientWidth>8?'block':'none'};
+sync(); addEventListener('resize',sync); t.addEventListener('scroll',sync,{passive:true});
+});
+
+slides.forEach(s=>s.querySelector('.slide-scroll').addEventListener('scroll',()=>{
+if(s.classList.contains('active'))updateHint();
+},{passive:true}));
+
+let resizeTimer;
+addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(updateHint,150)});
+addEventListener('hashchange',()=>goTo(fromHash()));
+
+document.addEventListener('keydown',e=>{
+if(e.metaKey||e.ctrlKey||e.altKey)return;
+const el=scroller(current);
+const canScroll=el.scrollHeight-el.clientHeight>24;
+switch(e.key){
+case 'ArrowRight':case 'PageDown':e.preventDefault();nextSlide();break;
+case 'ArrowLeft':case 'PageUp':e.preventDefault();prevSlide();break;
+case 'Backspace':e.preventDefault();prevSlide();break;
+case 'Home':e.preventDefault();goTo(0);break;
+case 'End':e.preventDefault();goTo(total-1);break;
+case 'ArrowDown':
+if(canScroll){e.preventDefault();el.scrollBy({top:el.clientHeight*.8,behavior:'smooth'})}
+break;
+case 'ArrowUp':
+if(canScroll){e.preventDefault();el.scrollBy({top:-el.clientHeight*.8,behavior:'smooth'})}
+break;
+case ' ':case 'Enter':{
+const atBottom=el.scrollTop+el.clientHeight>=el.scrollHeight-24;
+e.preventDefault();
+if(canScroll&&!atBottom)el.scrollBy({top:el.clientHeight*.8,behavior:'smooth'});
+else nextSlide();
+break;
+}
+}
+});
+
+let sx=0,sy=0,ignoreSwipe=false;
+deck.addEventListener('touchstart',e=>{
+const t=e.changedTouches[0];sx=t.screenX;sy=t.screenY;
+const tbl=e.target.closest('.table-scroll');
+ignoreSwipe=!!tbl&&tbl.scrollWidth>tbl.clientWidth;
+},{passive:true});
+deck.addEventListener('touchend',e=>{
+if(ignoreSwipe)return;
+const t=e.changedTouches[0];
+const dx=sx-t.screenX,dy=sy-t.screenY;
+if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)dx>0?nextSlide():prevSlide();
+},{passive:true});
+
+current=fromHash();
+updateUI();
+</script>
+</body>
+</html>

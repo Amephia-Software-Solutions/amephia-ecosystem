@@ -9,12 +9,10 @@ Allow: /
 Disallow: /wp-admin/
 Disallow: /admin/
 Disallow: /api/
-Crawl-delay: 1
 
 # ── GOOGLE ──────────────────────────────────────────────
 User-agent: Googlebot
 Allow: /
-Crawl-delay: 0
 
 User-agent: Googlebot-Image
 Allow: /
@@ -31,7 +29,6 @@ Allow: /
 # ── BING / MICROSOFT ────────────────────────────────────
 User-agent: bingbot
 Allow: /
-Crawl-delay: 0
 
 User-agent: BingPreview
 Allow: /
