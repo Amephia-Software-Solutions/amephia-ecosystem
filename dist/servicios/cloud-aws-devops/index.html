@@ -269,6 +269,21 @@
   }
   </script>
 
+  <!-- Google Analytics (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0WTCDH7SYM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    // send_page_view en false a propósito: es el SPA quien envía los page_view
+    // (src/lib/analytics.ts), con la ruta y el título reales de cada vista. Con
+    // true se contaba dos veces cada carga: la automática de aquí más la del
+    // SPA, inflando visitas y sesiones. Las páginas estáticas no pasan por
+    // aquí — usan /assets/ga.js, que sí envía la vista automática.
+    gtag('config', 'G-0WTCDH7SYM', {
+      send_page_view: false
+    });
+  </script>
 
   <link rel="help" type="text/plain" href="/llms.txt" title="LLMs Context Directive" />
   
@@ -311,7 +326,7 @@
 <section class="am-sec am-light py-14 md:py-16"><div class="mx-auto max-w-[1320px] px-5 md:px-10"><p class="text-[13px] font-medium text-[color:var(--am-mute)]">Servicios relacionados</p><ul class="mt-3 grid gap-3 md:grid-cols-3"><li><a href="/servicios/desarrollo-software-a-medida" class="am-mini flex h-full items-center justify-between gap-4 rounded-xl border border-[color:var(--am-line)] bg-white p-4"><span class="text-[1.05rem] font-semibold tracking-tight">Desarrollo de software a medida</span></a></li><li><a href="/servicios/plataformas-saas-multitenant" class="am-mini flex h-full items-center justify-between gap-4 rounded-xl border border-[color:var(--am-line)] bg-white p-4"><span class="text-[1.05rem] font-semibold tracking-tight">Plataformas SaaS multitenant</span></a></li><li><a href="/servicios/asesoria-consultoria-tecnologica" class="am-mini flex h-full items-center justify-between gap-4 rounded-xl border border-[color:var(--am-line)] bg-white p-4"><span class="text-[1.05rem] font-semibold tracking-tight">Asesoría y consultoría tecnológica</span></a></li></ul><h2 class="mt-8 text-[13px] font-medium text-[color:var(--am-mute)]">Todos los servicios</h2><ul class="mt-3"><li><a href="/servicios/desarrollo-software-a-medida">Desarrollo de software a medida</a></li><li><a href="/servicios/asesoria-consultoria-tecnologica">Asesoría y consultoría tecnológica</a></li><li><a href="/servicios/erp-sistemas-de-gestion">ERP y sistemas de gestión</a></li><li><a href="/servicios/facturacion-electronica-sri">Facturación electrónica SRI</a></li><li><a href="/servicios/aplicaciones-moviles-y-web">Aplicaciones móviles y web</a></li><li><a href="/servicios/ecommerce-pasarelas-de-pago">E-commerce y pasarelas de pago</a></li><li><a href="/servicios/plataformas-saas-multitenant">Plataformas SaaS multitenant</a></li><li><a href="/servicios/cloud-aws-devops">Cloud, AWS y DevOps</a></li><li><a href="/servicios/integraciones-automatizacion">Integraciones y automatización</a></li><li><a href="/servicios/modernizacion-web-seo">Modernización web y SEO</a></li></ul></div></section>
 </main></div></div>
 <script>(function(){var d=document.documentElement;function s(){var e=document.getElementById("hero");if(e)d.style.setProperty("--hero-h",e.offsetHeight+"px")}s();addEventListener("resize",s);addEventListener("load",s)})()</script>
-<script>addEventListener("load",function(){setTimeout(function(){["/assets/vendor-icons-DwGaqYxZ.js","/assets/vendor-react-CgDNax35.js"].forEach(function(u){var l=document.createElement("link");l.rel="modulepreload";l.href=u;document.head.appendChild(l)});var s=document.createElement("script");s.type="module";s.src="/assets/index-CfwmLoE-.js";document.head.appendChild(s)},700)})</script>
+<script>addEventListener("load",function(){setTimeout(function(){["/assets/vendor-icons-DwGaqYxZ.js","/assets/vendor-react-CgDNax35.js"].forEach(function(u){var l=document.createElement("link");l.rel="modulepreload";l.href=u;document.head.appendChild(l)});var s=document.createElement("script");s.type="module";s.src="/assets/index-ChfaT2G9.js";document.head.appendChild(s)},700)})</script>
 </body>
 
 </html>

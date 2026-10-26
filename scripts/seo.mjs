@@ -1,4 +1,4 @@
-// Post-build SEO: genera sitemap.xml y pre-renderiza las páginas de servicios como HTML estático.
+// Post-build SEO: pre-renderiza las páginas de servicios como HTML estático.
 // Uso: node scripts/seo.mjs            -> dist/ (después de `vite build`) y public/sitemap.xml
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -7,34 +7,11 @@ import { serviceJsonLd, serviceMeta, SITE } from '../src/data/serviceSeo.ts';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const services = JSON.parse(readFileSync(join(root, 'src/data/services.json'), 'utf8'));
-const today = new Date().toISOString().slice(0, 10);
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-// ── Sitemap ─────────────────────────────────────────────
-const projects = ['education', 'shielddata', 'gym', 'broker-seguro', 'ecommerce', 'migration'];
-const alt = (path) => `
-    <xhtml:link rel="alternate" hreflang="es" href="${SITE}${path}" />
-    <xhtml:link rel="alternate" hreflang="en" href="${SITE}${path}?lang=en" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}${path}" />`;
-const url = (path, freq, prio, withAlt = true) => `  <url>
-    <loc>${SITE}${path}</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>${freq}</changefreq>
-    <priority>${prio}</priority>${withAlt ? alt(path) : ''}
-  </url>`;
-const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-${[url('/', 'weekly', '1.0'),
-  ...services.map(s => url(`/servicios/${s.slug}`, 'monthly', '0.9')),
-  ...projects.map(p => url(`/proyecto/${p}`, 'monthly', '0.8')),
-  url('/brochure', 'monthly', '0.5', false)].join('\n')}
-</urlset>
-`;
-writeFileSync(join(root, 'public/sitemap.xml'), sitemap);
-
+// El sitemap vive a mano en public/sitemap.xml (incluye /servicios/*); aquí solo se pre-renderizan las páginas.
 const dist = join(root, 'dist');
-if (!existsSync(join(dist, 'index.html'))) { console.log('sitemap escrito (sin dist/: omito pre-render)'); process.exit(0); }
-writeFileSync(join(dist, 'sitemap.xml'), sitemap);
+if (!existsSync(join(dist, 'index.html'))) { console.log('sin dist/: omito pre-render'); process.exit(0); }
 
 // ── Pre-render de /servicios/<slug>/ ─────────────────────
 const base = readFileSync(join(dist, 'index.html'), 'utf8');
@@ -90,4 +67,4 @@ for (const s of services) {
   mkdirSync(out, { recursive: true });
   writeFileSync(join(out, 'index.html'), html);
 }
-console.log(`sitemap + ${services.length} páginas de servicio generadas`);
+console.log(`${services.length} páginas de servicio generadas`);

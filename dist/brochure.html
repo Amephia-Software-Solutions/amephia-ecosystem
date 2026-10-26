@@ -453,6 +453,9 @@
       }
     }
   </style>
+  <!-- Google Analytics (GA4) -->
+  <script src="/assets/ga.js"></script>
+
 </head>
 <body>
 
@@ -477,9 +480,9 @@
         <span class="es">🔍 Lámina HD</span>
         <span class="en">🔍 HD Sheet</span>
       </button>
-      <button class="btn-toggle" id="btn-es" onclick="switchLang('es')" style="font-weight: 800;">ES</button>
-      <button class="btn-toggle" id="btn-en" onclick="switchLang('en')" style="font-weight: 800;">EN</button>
-      <button class="btn-print" onclick="window.print()">PDF</button>
+      <button class="btn-toggle" id="btn-es" onclick="switchLang('es', true)" style="font-weight: 800;">ES</button>
+      <button class="btn-toggle" id="btn-en" onclick="switchLang('en', true)" style="font-weight: 800;">EN</button>
+      <button class="btn-print" onclick="printBrochure()">PDF</button>
     </div>
   </header>
 
@@ -642,9 +645,23 @@
   <script>
     var curPage = 0;
     var curLang = 'es';
+    var curViewMode = 'book';
+
+    var PAGE_NAMES = ['portada', 'panel-1-2', 'panel-3-cierre'];
+
+    function track(name, params) {
+      if (typeof window.ameTrack === 'function') window.ameTrack(name, params);
+    }
 
     function goToPage(p) {
       if (p < 0 || p > 2) return;
+      if (p !== curPage) {
+        track('brochure_page_view', {
+          brochure_page: p + 1,
+          page_name: PAGE_NAMES[p],
+          language: curLang,
+        });
+      }
       curPage = p;
       document.getElementById('book-page-0').style.display = (p === 0) ? 'block' : 'none';
       document.getElementById('book-page-1').style.display = (p === 1) ? 'flex' : 'none';
@@ -661,7 +678,14 @@
     function nextPage() { if (curPage < 2) goToPage(curPage + 1); }
     function prevPage() { if (curPage > 0) goToPage(curPage - 1); }
 
+    function printBrochure() {
+      track('brochure_download_pdf', { language: curLang, view_mode: curViewMode });
+      window.print();
+    }
+
     function switchView(mode) {
+      curViewMode = mode;
+      track('brochure_view_mode', { view_mode: mode, language: curLang });
       document.getElementById('view-book').style.display = (mode === 'book') ? 'flex' : 'none';
       document.getElementById('view-trifold').style.display = (mode === 'trifold') ? 'block' : 'none';
       document.getElementById('view-hd').style.display = (mode === 'hd') ? 'block' : 'none';
@@ -671,7 +695,9 @@
       document.getElementById('tab-hd').classList.toggle('active', mode === 'hd');
     }
 
-    function switchLang(l) {
+    // userInitiated evita registrar el evento en la auto-deteccion de idioma al cargar
+    function switchLang(l, userInitiated) {
+      if (userInitiated) track('brochure_language', { language: l, view_mode: curViewMode });
       curLang = l;
       document.body.classList.toggle('lang-en', l === 'en');
       document.getElementById('btn-es').classList.toggle('active', l === 'es');
@@ -691,6 +717,19 @@
       if (printImg) printImg.src = (l === 'en') ? '/brochure-en.jpg' : '/brochure-es.jpg';
       localStorage.setItem('amephia-lang', l);
     }
+
+    // Clicks de contacto (WhatsApp / email) en cualquier parte del brochure
+    document.addEventListener('click', function(e) {
+      var a = e.target.closest && e.target.closest('a[href]');
+      if (!a) return;
+      var href = a.getAttribute('href') || '';
+      var channel = href.indexOf('wa.me') > -1 ? 'whatsapp'
+        : href.indexOf('mailto:') === 0 ? 'email'
+        : null;
+      if (!channel) return;
+      track('contact_click', { channel: channel, context: 'brochure', language: curLang });
+      track('generate_lead', { method: channel, context: 'brochure' });
+    });
 
     // Keyboard support
     window.addEventListener('keydown', function(e) {

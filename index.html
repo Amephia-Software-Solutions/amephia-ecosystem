@@ -353,6 +353,21 @@
   }
   </script>
 
+  <!-- Google Analytics (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0WTCDH7SYM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    // send_page_view en false a propósito: es el SPA quien envía los page_view
+    // (src/lib/analytics.ts), con la ruta y el título reales de cada vista. Con
+    // true se contaba dos veces cada carga: la automática de aquí más la del
+    // SPA, inflando visitas y sesiones. Las páginas estáticas no pasan por
+    // aquí — usan /assets/ga.js, que sí envía la vista automática.
+    gtag('config', 'G-0WTCDH7SYM', {
+      send_page_view: false
+    });
+  </script>
 
   <link rel="help" type="text/plain" href="/llms.txt" title="LLMs Context Directive" />
 </head>

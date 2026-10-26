@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import logoImg from '../assets/images/amelogo_v3_white.png';
+import { trackContactClick, trackEvent, trackLeadGenerated, trackPageView } from '../lib/analytics';
+
+const PAGE_NAMES = ['portada', 'panel-1-2', 'panel-3-cierre'];
 
 export default function BrochurePage() {
   const [lang, setLang] = useState<'es' | 'en'>('es');
@@ -12,6 +15,16 @@ export default function BrochurePage() {
       ? 'AmePhia Software Solutions — Brochure Tríptico Ejecutivo 2026'
       : 'AmePhia Software Solutions — Official Corporate Executive Brochure 2026';
   }, [lang]);
+
+  // App.tsx no reporta esta ruta (ver isBrochureRoute): el page_view del
+  // brochure se emite aquí, una sola vez. El cambio de idioma se registra
+  // como evento propio (brochure_language), no como una visita nueva.
+  useEffect(() => {
+    trackPageView(
+      `${window.location.pathname}${window.location.search}${window.location.hash}`,
+      document.title
+    );
+  }, []);
 
   // Keyboard navigation for realistic book experience
   useEffect(() => {
@@ -27,8 +40,28 @@ export default function BrochurePage() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [viewMode, page]);
 
+  const selectView = (mode: 'book' | 'trifold' | 'hd') => {
+    if (mode !== viewMode) trackEvent('brochure_view_mode', { view_mode: mode, language: lang });
+    setViewMode(mode);
+  };
+
+  const selectLang = (next: 'es' | 'en') => {
+    if (next !== lang) trackEvent('brochure_language', { language: next, view_mode: viewMode });
+    setLang(next);
+  };
+
+  const handlePrint = () => {
+    trackEvent('brochure_download_pdf', { language: lang, view_mode: viewMode });
+    window.print();
+  };
+
   const goToPage = (newPage: number) => {
     if (newPage === page || newPage < 0 || newPage > 2) return;
+    trackEvent('brochure_page_view', {
+      brochure_page: newPage + 1,
+      page_name: PAGE_NAMES[newPage],
+      language: lang,
+    });
     setIsFlipping(true);
     setTimeout(() => {
       setPage(newPage);
@@ -42,6 +75,11 @@ export default function BrochurePage() {
 
   const prevPage = () => {
     if (page > 0) goToPage(page - 1);
+  };
+
+  const handleWhatsAppClick = (context: string) => {
+    trackContactClick('whatsapp', context);
+    trackLeadGenerated('whatsapp', context);
   };
 
   const waLink = "https://wa.me/13347324056?text=" + encodeURIComponent(
@@ -72,7 +110,7 @@ export default function BrochurePage() {
         {/* Center View Selector */}
         <div className="flex items-center gap-1 bg-white/[0.04] p-1 rounded-2xl border border-white/10 text-xs">
           <button
-            onClick={() => setViewMode('book')}
+            onClick={() => selectView('book')}
             className={`px-3 py-1.5 rounded-xl font-bold transition-all flex items-center gap-1.5 ${
               viewMode === 'book'
                 ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-600/30'
@@ -85,7 +123,7 @@ export default function BrochurePage() {
           </button>
 
           <button
-            onClick={() => setViewMode('trifold')}
+            onClick={() => selectView('trifold')}
             className={`px-3 py-1.5 rounded-xl font-bold transition-all flex items-center gap-1.5 ${
               viewMode === 'trifold'
                 ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30'
@@ -98,7 +136,7 @@ export default function BrochurePage() {
           </button>
 
           <button
-            onClick={() => setViewMode('hd')}
+            onClick={() => selectView('hd')}
             className={`px-3 py-1.5 rounded-xl font-bold transition-all flex items-center gap-1.5 ${
               viewMode === 'hd'
                 ? 'bg-cyan-600 text-white shadow-lg shadow-cyan-600/30'
@@ -116,7 +154,7 @@ export default function BrochurePage() {
           {/* Language Toggle */}
           <div className="inline-flex rounded-xl bg-white/[0.04] p-1 border border-white/10 text-xs">
             <button
-              onClick={() => setLang('es')}
+              onClick={() => selectLang('es')}
               className={`px-2.5 py-1 rounded-lg font-black transition-all ${
                 lang === 'es' ? 'bg-blue-600 text-white shadow' : 'text-slate-400 hover:text-white'
               }`}
@@ -124,7 +162,7 @@ export default function BrochurePage() {
               ES
             </button>
             <button
-              onClick={() => setLang('en')}
+              onClick={() => selectLang('en')}
               className={`px-2.5 py-1 rounded-lg font-black transition-all ${
                 lang === 'en' ? 'bg-blue-600 text-white shadow' : 'text-slate-400 hover:text-white'
               }`}
@@ -138,6 +176,7 @@ export default function BrochurePage() {
             href={waLink}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => handleWhatsAppClick("brochure_header")}
             className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-emerald-600/90 hover:bg-emerald-500 text-white text-xs font-bold shadow-lg shadow-emerald-600/20 transition-all active:scale-95"
           >
             <span>WhatsApp</span>
@@ -145,7 +184,7 @@ export default function BrochurePage() {
 
           {/* Download PDF button */}
           <button
-            onClick={() => window.print()}
+            onClick={handlePrint}
             className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/[0.06] hover:bg-white/[0.1] text-slate-200 border border-white/10 text-xs font-bold transition-all active:scale-95"
           >
             <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -380,6 +419,7 @@ export default function BrochurePage() {
                         href={waLink}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={() => handleWhatsAppClick("brochure_cierre_ejecutivo")}
                         className="w-full py-4 px-6 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-extrabold text-sm flex items-center justify-center gap-2 shadow-xl shadow-emerald-600/30 transition-all active:scale-98"
                       >
                         <span>💬</span>
@@ -472,7 +512,7 @@ export default function BrochurePage() {
               {lang === 'es' ? 'TRÍPTICO CORPORATIVO PANORÁMICO (3 PANELES)' : 'PANORAMIC CORPORATE TRIFOLD (3 PANELS)'}
             </span>
             <button
-              onClick={() => setViewMode('book')}
+              onClick={() => selectView('book')}
               className="text-blue-400 hover:text-blue-300 underline font-semibold cursor-pointer"
             >
               {lang === 'es' ? '← Volver al modo Libro 3D' : '← Return to 3D Book mode'}
@@ -517,6 +557,7 @@ export default function BrochurePage() {
               href={lang === 'es' ? '/brochure-es.jpg' : '/brochure-en.jpg'}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackEvent("brochure_open_hd_sheet", { language: lang })}
               className="text-blue-400 hover:underline flex items-center gap-1"
             >
               <span>{lang === 'es' ? 'Abrir archivo completo en pestaña nueva ↗' : 'Open full file in new tab ↗'}</span>
@@ -566,9 +607,9 @@ export default function BrochurePage() {
         <div className="flex items-center gap-4">
           <a href="/" className="hover:text-white transition-colors">Sitio Principal</a>
           <span>·</span>
-          <a href="mailto:hola@amephia.com" className="hover:text-white transition-colors">hola@amephia.com</a>
+          <a href="mailto:hola@amephia.com" onClick={() => { trackContactClick("email", "brochure_footer"); trackLeadGenerated("email", "brochure_footer"); }} className="hover:text-white transition-colors">hola@amephia.com</a>
           <span>·</span>
-          <a href="https://wa.me/13347324056" target="_blank" rel="noopener" className="text-emerald-400 hover:underline">+1 (334) 732-4056</a>
+          <a href="https://wa.me/13347324056" target="_blank" rel="noopener" onClick={() => handleWhatsAppClick("brochure_footer")} className="text-emerald-400 hover:underline">+1 (334) 732-4056</a>
         </div>
       </footer>
 
