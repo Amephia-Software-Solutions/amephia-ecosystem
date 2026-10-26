@@ -13,14 +13,61 @@
 --accent:#06d6a0;--accent-light:#34d399;--accent-glow:#06d6a030;
 --orange:#f59e0b;--red:#ef4444;--cyan:#22d3ee;--pink:#ec4899;
 --text:#f1f5f9;--text-muted:#94a3b8;--text-dim:#64748b;
+
+/* Ritmo fluido: todo el espaciado escala con la altura/ancho real de pantalla */
+--gap-sm:clamp(10px,1.8vh,20px);
+--gap-lg:clamp(14px,2.6vh,30px);
+--gap-xl:clamp(18px,4vh,44px);
+--pad-x:clamp(18px,4.5vw,80px);
+--pad-top:clamp(26px,5vh,60px);
+--nav-h:clamp(52px,7vh,64px);
+--nav-gap:clamp(14px,2.5vh,30px);
+--pad-bottom:calc(var(--nav-h) + var(--nav-gap) + clamp(14px,2vh,26px));
+--card-pad:clamp(18px,2.6vh,32px);
+--radius:16px;
 }
-html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif}
+
+/* Escala tipográfica base por tamaño de pantalla (todo el deck usa rem) */
+html{font-size:16px}
+@media (max-width:1280px){html{font-size:15px}}
+@media (max-width:1024px){html{font-size:14.5px}}
+@media (max-width:768px){html{font-size:15px}}
+@media (max-width:420px){html{font-size:14px}}
+@media (max-height:820px) and (min-width:769px){html{font-size:15px}}
+@media (max-height:700px) and (min-width:769px){html{font-size:14px}}
+@media (max-height:620px){html{font-size:13px}}
+@media (max-height:500px){html{font-size:12px}}
+
+/* Pantallas bajas (portátiles 768px, móvil en horizontal): se recorta el aire
+   vertical para que la diapositiva entre entera en vez de obligar a desplazar. */
+@media (max-height:820px){
+:root{--pad-top:clamp(18px,3.2vh,40px);--gap-xl:clamp(14px,3vh,32px);--gap-lg:clamp(12px,2.2vh,22px);--gap-sm:clamp(8px,1.4vh,16px);--card-pad:clamp(16px,2.2vh,26px);
+--nav-h:clamp(48px,6.2vh,58px);--nav-gap:clamp(12px,1.8vh,18px);
+--pad-bottom:calc(var(--nav-h) + var(--nav-gap) + clamp(10px,1.4vh,18px))}
+}
+
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;-webkit-text-size-adjust:100%;overscroll-behavior:none}
 
 /* ===== SLIDE ENGINE ===== */
-.deck{position:relative;width:100vw;height:100vh;overflow:hidden}
-.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:60px 80px 110px;opacity:0;transform:translateX(60px);transition:all .6s cubic-bezier(.4,0,.2,1);pointer-events:none;z-index:0}
-.slide.active{opacity:1;transform:translateX(0);pointer-events:all;z-index:10}
+/* .deck fija el escenario; .slide sólo posiciona y decora; .slide-scroll es el
+   único elemento con scroll, así el contenido alto nunca se recorta por arriba. */
+.deck{position:relative;width:100%;height:100vh;height:100dvh;overflow:hidden}
+.slide{position:absolute;inset:0;overflow:hidden;opacity:0;transform:translateX(60px);transition:opacity .55s cubic-bezier(.4,0,.2,1),transform .55s cubic-bezier(.4,0,.2,1);pointer-events:none;z-index:0}
+.slide.active{opacity:1;transform:translateX(0);pointer-events:auto;z-index:10}
 .slide.prev{opacity:0;transform:translateX(-60px)}
+
+.slide-scroll{position:absolute;inset:0;z-index:2;
+display:flex;flex-direction:column;align-items:center;
+padding:var(--pad-top) var(--pad-x) var(--pad-bottom);
+overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
+scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+/* margin-block:auto centra cuando sobra espacio y se anula cuando falta:
+   el contenido alto arranca desde arriba y se puede desplazar completo. */
+.slide-scroll>*{margin-block:auto;width:100%;max-width:100%}
+.slide-scroll::-webkit-scrollbar{width:8px;height:8px}
+.slide-scroll::-webkit-scrollbar-track{background:transparent}
+.slide-scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+.slide-scroll::-webkit-scrollbar-thumb:hover{background:var(--primary)}
 
 /* ===== BACKGROUNDS ===== */
 .bg-gradient{background:radial-gradient(ellipse at 20% 50%,#6366f115 0%,transparent 50%),radial-gradient(ellipse at 80% 20%,#06d6a010 0%,transparent 50%),var(--bg)}
@@ -29,17 +76,18 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .bg-warm{background:radial-gradient(ellipse at 50% 50%,#f59e0b08 0%,transparent 50%),var(--bg)}
 
 /* ===== GRID DECORATION ===== */
-.grid-bg{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;opacity:.08;pointer-events:none}
-.glow-orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.15;pointer-events:none;animation:float 8s ease-in-out infinite}
+.grid-bg{position:absolute;inset:0;z-index:1;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:clamp(34px,6vw,60px) clamp(34px,6vw,60px);opacity:.08;pointer-events:none}
+/* max-* acota los orbes (definidos en px inline) en pantallas pequeñas */
+.glow-orb{position:absolute;z-index:1;border-radius:50%;filter:blur(80px);opacity:.15;pointer-events:none;animation:float 8s ease-in-out infinite;max-width:70vw;max-height:70vw}
+@media (max-width:700px){.glow-orb{filter:blur(60px)}}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
 
 /* ===== TYPOGRAPHY ===== */
 .font-display{font-family:'Space Grotesk','Inter',sans-serif}
-.hero-title{font-size:clamp(2.5rem,5vw,4.5rem);font-weight:800;line-height:1.05;letter-spacing:-0.03em}
-.section-title{font-size:clamp(2rem,3.5vw,3.2rem);font-weight:700;line-height:1.15;letter-spacing:-0.02em}
-.subtitle{font-size:clamp(1.1rem,1.8vw,1.4rem);font-weight:400;color:var(--text-muted);line-height:1.6;max-width:700px}
-.label{font-size:.75rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--primary-light)}
-.stat-number{font-size:clamp(2rem,4vw,3.5rem);font-weight:800;font-family:'Space Grotesk',sans-serif}
+.hero-title{font-size:clamp(1.75rem,5vw,4.5rem);font-weight:800;line-height:1.08;letter-spacing:-0.03em;text-wrap:balance}
+.section-title{font-size:clamp(1.45rem,3.5vw,3.2rem);font-weight:700;line-height:1.18;letter-spacing:-0.02em;text-wrap:balance}
+.subtitle{font-size:clamp(.95rem,1.8vw,1.4rem);font-weight:400;color:var(--text-muted);line-height:1.6;max-width:min(700px,100%)}
+.label{font-size:clamp(.66rem,1.1vw,.75rem);font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--primary-light)}
 
 /* ===== GRADIENTS TEXT ===== */
 .gradient-text{background:linear-gradient(135deg,var(--primary-light),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
@@ -48,66 +96,169 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .gradient-pink{background:linear-gradient(135deg,var(--pink),var(--primary-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
 /* ===== CARDS ===== */
-.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:32px;position:relative;overflow:hidden;transition:all .3s}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:var(--card-pad);position:relative;overflow:hidden;transition:border-color .3s,transform .3s,box-shadow .3s}
 .card:hover{border-color:var(--primary);transform:translateY(-2px);box-shadow:0 8px 30px var(--primary-glow)}
-.card-glow{position:absolute;top:-1px;left:20%;right:20%;height:1px;background:linear-gradient(90deg,transparent,var(--primary-light),transparent)}
 
 /* ===== MODULE CARDS ===== */
-.module-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;width:100%;max-width:1100px}
-.module-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;text-align:left;transition:all .3s}
+/* auto-fit: 3 → 2 → 1 columnas sin saltos bruscos entre breakpoints */
+.module-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,255px),1fr));gap:clamp(9px,1.3vw,16px);width:100%;max-width:1100px;margin-inline:auto}
+.module-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:clamp(13px,1.9vh,20px);text-align:left;transition:border-color .3s,box-shadow .3s}
 .module-card:hover{border-color:var(--primary);box-shadow:0 4px 20px var(--primary-glow)}
-.module-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:16px}
-.module-card h3{font-size:1.05rem;font-weight:700;margin-bottom:8px}
-.module-card p{font-size:.85rem;color:var(--text-muted);line-height:1.5}
+/* Icono en línea con el título: la tarjeta mide casi la mitad que apilada,
+   que es lo que hace viable ver 9 módulos en un móvil. */
+.module-head{display:flex;align-items:center;gap:10px;margin-bottom:7px}
+.module-icon{width:clamp(30px,3.8vh,36px);height:clamp(30px,3.8vh,36px);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1.05rem;flex-shrink:0}
+.module-card h3{font-size:.92rem;font-weight:700;line-height:1.25}
+.module-card p{font-size:.78rem;color:var(--text-muted);line-height:1.45}
 
 /* ===== STATS ROW ===== */
-.stats-row{display:flex;gap:40px;justify-content:center;flex-wrap:wrap}
-.stat-item{text-align:center;min-width:140px}
-.stat-item .number{font-size:2.8rem;font-weight:800;font-family:'Space Grotesk',sans-serif;line-height:1}
+.stats-row{display:flex;gap:clamp(18px,4vw,40px);justify-content:center;flex-wrap:wrap}
+.stat-item{text-align:center;min-width:min(140px,40vw);flex:0 1 auto}
+.stat-item .number{font-size:clamp(1.9rem,4.5vw,2.8rem);font-weight:800;font-family:'Space Grotesk',sans-serif;line-height:1}
 .stat-item .label-stat{font-size:.8rem;color:var(--text-muted);margin-top:8px;text-transform:uppercase;letter-spacing:.08em}
 
 /* ===== FEATURE LIST ===== */
-.feature-list{display:flex;flex-direction:column;gap:14px;max-width:600px}
-.feature-item{display:flex;align-items:flex-start;gap:14px;padding:10px 0}
+.feature-list{display:flex;flex-direction:column;gap:clamp(8px,1.4vh,14px);max-width:600px}
+.feature-item{display:flex;align-items:flex-start;gap:14px;padding:clamp(4px,.8vh,10px) 0}
 .feature-check{width:28px;height:28px;border-radius:8px;background:var(--accent-glow);border:1px solid var(--accent);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.9rem;color:var(--accent)}
-.feature-text{font-size:1rem;line-height:1.5}
+.feature-text{font-size:clamp(.88rem,1.4vw,1rem);line-height:1.5}
 .feature-text strong{color:var(--text);font-weight:600}
 .feature-text span{color:var(--text-muted)}
 
 /* ===== TWO COLUMNS ===== */
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:60px;width:100%;max-width:1100px;align-items:center}
-.two-col.gap-40{gap:40px}
-
-/* ===== TIMELINE ===== */
-.timeline{display:flex;flex-direction:column;gap:0;max-width:600px;position:relative}
-.timeline::before{content:'';position:absolute;left:19px;top:20px;bottom:20px;width:2px;background:linear-gradient(to bottom,var(--primary),var(--accent))}
-.timeline-item{display:flex;gap:20px;padding:16px 0}
-.timeline-dot{width:40px;height:40px;border-radius:50%;background:var(--card);border:2px solid var(--primary);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.85rem;font-weight:700;color:var(--primary-light);z-index:2}
-.timeline-content h4{font-size:1rem;font-weight:700;margin-bottom:4px}
-.timeline-content p{font-size:.85rem;color:var(--text-muted);line-height:1.5}
+/* 2 columnas mientras cada una tenga ≥380px; si no, se apilan solas */
+.two-col{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:clamp(24px,4vw,60px);width:100%;max-width:1100px;margin-inline:auto;align-items:center}
 
 /* ===== PRICING ===== */
-.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:900px}
-.pricing-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:36px 28px;text-align:center;position:relative;transition:all .3s}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,24px);width:100%;max-width:1050px;margin-inline:auto}
+/* 3 planes: o caben los tres, o se apilan. Dos arriba y uno suelto se ve roto. */
+@media (max-width:1000px){.pricing-grid{grid-template-columns:1fr;max-width:420px}}
+.pricing-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:clamp(18px,2.6vh,30px) clamp(16px,2vw,26px);text-align:center;position:relative;transition:border-color .3s,box-shadow .3s}
 .pricing-card.featured{border-color:var(--primary);box-shadow:0 0 40px var(--primary-glow)}
-.pricing-card.featured::before{content:'RECOMENDADO';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--primary),var(--accent));color:white;font-size:.65rem;font-weight:700;letter-spacing:.1em;padding:4px 16px;border-radius:20px}
-.pricing-card .price{font-size:2.5rem;font-weight:800;font-family:'Space Grotesk',sans-serif;margin:16px 0 8px}
-.pricing-card .period{font-size:.85rem;color:var(--text-muted)}
-.pricing-card .features{list-style:none;margin-top:20px;font-size:.85rem;color:var(--text-muted);text-align:left}
-.pricing-card .features li{padding:6px 0;border-bottom:1px solid var(--border)}
+.pricing-card.featured::before{content:'RECOMENDADO';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--primary),var(--accent));color:white;font-size:.65rem;font-weight:700;letter-spacing:.1em;padding:4px 16px;border-radius:20px;white-space:nowrap}
+.pricing-name{font-size:.8rem;font-weight:700;letter-spacing:.05em}
+.pricing-card .price{font-size:clamp(1.85rem,4.2vw,2.3rem);font-weight:800;font-family:'Space Grotesk',sans-serif;margin:8px 0 4px;line-height:1}
+.pricing-card .period{font-size:.78rem;color:var(--text-muted)}
+.pricing-card .features{list-style:none;margin-top:clamp(10px,1.6vh,16px);font-size:.78rem;color:var(--text-muted);text-align:left}
+.pricing-card .features li{padding:clamp(3px,.6vh,5px) 0;border-bottom:1px solid var(--border)}
 .pricing-card .features li::before{content:'✓ ';color:var(--accent);font-weight:700}
+/* Apilados (≤1000px) el precio se pone al lado del nombre en vez de debajo:
+   recupera una línea por tarjeta justo donde el móvil va más justo. */
+@media (max-width:1000px){
+.pricing-head{display:grid;grid-template-columns:1fr auto;column-gap:14px;align-items:center;text-align:left}
+.pricing-name{grid-column:1;grid-row:1}
+.pricing-card .price{grid-column:2;grid-row:1 / span 2;margin:0}
+.pricing-card .period{grid-column:1;grid-row:2}
+}
+
+/* ===== DASHBOARD / ROI GRIDS ===== */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(10px,1.4vw,16px);margin-bottom:var(--gap-lg);width:100%}
+@media (max-width:1000px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.kpi-grid{grid-template-columns:1fr}}
+.chart-row{display:grid;grid-template-columns:2fr 1fr;gap:clamp(10px,1.4vw,16px);width:100%}
+@media (max-width:860px){.chart-row{grid-template-columns:1fr}}
+.roi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,2vw,24px);margin-bottom:var(--gap-xl);width:100%}
+@media (max-width:640px){.roi-grid{grid-template-columns:1fr;max-width:380px;margin-inline:auto}}
+.roi-total{background:linear-gradient(135deg,var(--card),var(--surface));border:1px solid var(--accent);border-radius:20px;padding:clamp(20px,3vh,32px);display:flex;align-items:center;justify-content:center;gap:clamp(16px,3vw,40px);flex-wrap:wrap}
+.roi-total>div{text-align:center}
+.vsep{width:1px;background:var(--border);align-self:stretch;flex:0 0 1px}
+@media (max-width:700px){.vsep{display:none}}
+
+/* ===== GRÁFICOS DEL DASHBOARD ===== */
+/* Una sola serie = un solo color. El pico se señala con texto, no con otro color:
+   colorear por rango codificaría el ranking en el canal de identidad. */
+.chart-card{padding:clamp(16px,2.4vh,24px);text-align:left;display:flex;flex-direction:column}
+.chart-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:clamp(12px,2vh,18px)}
+.chart-title{font-size:.85rem;font-weight:700}
+.chart-total{font-size:.85rem;font-weight:700;font-family:'Space Grotesk',sans-serif;color:var(--text-muted);font-variant-numeric:tabular-nums}
+
+.chart{display:grid;grid-template-columns:auto 1fr;column-gap:10px;row-gap:6px}
+.chart-axis{position:relative;min-width:4ch;font-size:.6rem;color:var(--text-dim);font-variant-numeric:tabular-nums}
+.chart-axis span{position:absolute;right:0;transform:translateY(-50%);line-height:1}
+.chart-axis span:nth-child(1){top:0}
+.chart-axis span:nth-child(2){top:50%}
+.chart-axis span:nth-child(3){top:100%}
+.chart-plot{position:relative;height:clamp(100px,15vh,140px)}
+/* Rejilla: línea de 1px sólida, un paso por encima de la superficie, recesiva */
+.chart-grid{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none}
+.chart-grid i{height:1px;background:var(--border)}
+.chart-cols{position:absolute;inset:0;display:flex;align-items:flex-end;gap:2px}
+.col{flex:1;height:100%;display:flex;align-items:flex-end;justify-content:center;position:relative}
+/* Columna ≤24px: nunca llena la banda, el sobrante es aire */
+.bar{width:100%;max-width:24px;height:calc(var(--v) / var(--max) * 100%);
+background:linear-gradient(to top,var(--primary),var(--primary-light));
+border-radius:4px 4px 0 0;transition:filter .2s}
+.col:hover .bar{filter:brightness(1.25)}
+/* Etiqueta directa solo en el máximo, en color de texto (nunca el color del dato) */
+.peak{position:absolute;bottom:calc(var(--v) / var(--max) * 100%);margin-bottom:5px;
+font-size:.6rem;font-weight:700;color:var(--text-muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+.chart-days{grid-column:2;display:flex;gap:2px}
+.chart-days span{flex:1;text-align:center;font-size:.6rem;color:var(--text-dim)}
+
+/* Tooltip al pasar por encima: el valor exacto sin saturar el gráfico de números */
+.col::after{content:attr(data-val);position:absolute;bottom:calc(var(--v) / var(--max) * 100%);
+left:50%;transform:translateX(-50%);margin-bottom:5px;padding:4px 8px;border-radius:8px;
+background:var(--surface);border:1px solid var(--border);box-shadow:0 4px 14px #0006;
+font-size:.6rem;font-weight:600;color:var(--text);white-space:nowrap;font-variant-numeric:tabular-nums;
+opacity:0;transition:opacity .15s;pointer-events:none;z-index:5}
+.col:hover::after{opacity:1}
+.col:hover .peak{opacity:0}
+.col:first-child::after{left:0;transform:none}
+.col:last-child::after{left:auto;right:0;transform:none}
+
+/* Distribución de planes: ordenada de mayor a menor para comparar de un vistazo */
+.dist{display:flex;flex-direction:column;gap:clamp(8px,1.5vh,12px)}
+.dist-label{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:.78rem;margin-bottom:5px}
+.dist-label b{font-weight:700;color:var(--text-muted);font-variant-numeric:tabular-nums}
+.dist-track{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.dist-track i{display:block;height:100%;width:var(--pct);border-radius:3px}
+/* ===== TABLAS CON SCROLL HORIZONTAL ===== */
+/* En móvil la tabla no se aplasta: se desplaza en su propio contenedor */
+.table-scroll{width:100%;max-width:1000px;margin-inline:auto;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.table-scroll::-webkit-scrollbar{height:8px}
+.table-scroll::-webkit-scrollbar-track{background:transparent}
+.table-scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+.table-hint{margin:10px auto 0;font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim);text-align:center}
+.comparison-table{width:100%;min-width:520px;border-collapse:separate;border-spacing:0}
+.comparison-table.cmp-wide{min-width:720px}
+.comparison-table th{padding:clamp(10px,1.4vh,14px) clamp(10px,1.4vw,20px);font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);text-align:left;border-bottom:1px solid var(--border)}
+.comparison-table th:last-child{text-align:center;color:var(--accent)}
+.comparison-table td{padding:clamp(10px,1.4vh,14px) clamp(10px,1.4vw,20px);font-size:clamp(.82rem,1.3vw,.95rem);border-bottom:1px solid var(--border)}
+.comparison-table td:first-child{color:var(--text-muted);font-weight:500}
+.comparison-table:not(.cmp-wide) td:nth-child(2){color:var(--red);text-align:center}
+.comparison-table:not(.cmp-wide) td:last-child{text-align:center;color:var(--accent);font-weight:600}
+.comparison-table tr:last-child td{border-bottom:none}
 
 /* ===== NAVIGATION ===== */
-.nav-bar{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:10px 20px;z-index:100;backdrop-filter:blur(20px)}
-.nav-btn{width:40px;height:40px;border-radius:10px;background:var(--card);border:1px solid var(--border);color:var(--text-muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:all .2s}
-.nav-btn:hover{background:var(--primary);border-color:var(--primary);color:white}
-.nav-dots{display:flex;gap:6px}
-.nav-dot{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;transition:all .3s}
+.nav-bar{position:fixed;bottom:max(var(--nav-gap),env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:clamp(8px,1.2vw,12px);background:rgba(18,18,26,.85);border:1px solid var(--border);border-radius:16px;padding:clamp(7px,1vh,10px) clamp(12px,1.6vw,20px);z-index:100;backdrop-filter:blur(20px);max-width:calc(100vw - 24px);height:var(--nav-h)}
+.nav-btn{width:clamp(34px,4.6vh,40px);height:clamp(34px,4.6vh,40px);border-radius:10px;background:var(--card);border:1px solid var(--border);color:var(--text-muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;transition:background .2s,border-color .2s,color .2s}
+.nav-btn:hover:not(:disabled){background:var(--primary);border-color:var(--primary);color:white}
+.nav-btn:disabled{opacity:.35;cursor:default}
+.nav-dots{display:flex;gap:6px;flex-wrap:nowrap}
+.nav-dot{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;flex-shrink:0;transition:background .3s,width .3s}
 .nav-dot.active{background:var(--primary);width:24px;border-radius:4px}
-.slide-counter{font-size:.75rem;color:var(--text-dim);font-weight:600;font-variant-numeric:tabular-nums;min-width:42px;text-align:center}
+.slide-counter{font-size:.75rem;color:var(--text-dim);font-weight:600;font-variant-numeric:tabular-nums;min-width:46px;text-align:center}
+/* Sin sitio para 14 puntos: el contador y la barra superior llevan la referencia */
+@media (max-width:680px){.nav-dots{display:none}}
+
+/* Velo inferior: el contenido se desvanece al pasar tras la barra de navegación */
+body::after{content:'';position:fixed;left:0;right:0;bottom:0;height:calc(var(--nav-h) + var(--nav-gap)*2);background:linear-gradient(to top,var(--bg) 30%,transparent);pointer-events:none;z-index:97}
+
+/* Barra de progreso fija arriba */
+.progress{position:fixed;top:0;left:0;right:0;height:3px;background:rgba(255,255,255,.06);z-index:120}
+.progress>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width .45s cubic-bezier(.4,0,.2,1)}
+
+/* Aviso de "hay más contenido abajo" cuando la diapositiva desborda */
+.scroll-hint{position:fixed;left:50%;bottom:calc(var(--nav-h) + var(--nav-gap) + 10px);transform:translateX(-50%);z-index:99;
+display:flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;
+background:rgba(18,18,26,.85);border:1px solid var(--border);backdrop-filter:blur(10px);
+font-size:.68rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);
+opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;pointer-events:none}
+.scroll-hint.show{opacity:1;visibility:visible;animation:bob 1.8s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,4px)}}
 
 /* ===== LOGO AREA ===== */
-.logo-mark{width:64px;height:64px;border-radius:16px;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:900;color:white;font-family:'Space Grotesk',sans-serif;box-shadow:0 8px 30px var(--primary-glow)}
+.logo-mark{width:clamp(48px,7vh,64px);height:clamp(48px,7vh,64px);border-radius:16px;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;font-size:clamp(1.4rem,3vh,1.8rem);font-weight:900;color:white;font-family:'Space Grotesk',sans-serif;box-shadow:0 8px 30px var(--primary-glow);flex-shrink:0}
 
 /* ===== ANIMATIONS ===== */
 .slide.active .anim-up{animation:slideUp .7s cubic-bezier(.4,0,.2,1) forwards}
@@ -121,24 +272,11 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .anim-fade{opacity:0}
 @keyframes slideUp{to{opacity:1;transform:translateY(0)}}
 @keyframes fadeIn{to{opacity:1}}
-@keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}}
 
-/* ===== COMPARISON TABLE ===== */
-.comparison-table{width:100%;max-width:900px;border-collapse:separate;border-spacing:0}
-.comparison-table th{padding:14px 20px;font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);text-align:left;border-bottom:1px solid var(--border)}
-.comparison-table th:last-child{text-align:center;color:var(--accent)}
-.comparison-table td{padding:14px 20px;font-size:.95rem;border-bottom:1px solid var(--border)}
-.comparison-table td:first-child{color:var(--text-muted);font-weight:500}
-.comparison-table td:nth-child(2){color:var(--red);text-align:center}
-.comparison-table td:last-child{text-align:center;color:var(--accent);font-weight:600}
-.comparison-table tr:last-child td{border-bottom:none}
-
-/* ===== RESPONSIVE ===== */
-@media(max-width:900px){
-.module-grid{grid-template-columns:repeat(2,1fr)}
-.two-col{grid-template-columns:1fr;gap:30px}
-.pricing-grid{grid-template-columns:1fr;max-width:340px}
-.slide{padding:30px 24px}
+@media (prefers-reduced-motion:reduce){
+*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+.anim-up,.anim-up-d1,.anim-up-d2,.anim-up-d3,.anim-up-d4,.anim-up-d5,.anim-fade{opacity:1;transform:none}
+.slide-scroll{scroll-behavior:auto}
 }
 </style>
   <!-- Google Analytics (GA4) -->
@@ -156,6 +294,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 <div class="glow-orb" style="width:400px;height:400px;background:var(--primary);top:-100px;right:-100px"></div>
 <div class="glow-orb" style="width:300px;height:300px;background:var(--accent);bottom:-50px;left:-50px;animation-delay:3s"></div>
 
+<div class="slide-scroll">
 <div style="text-align:center;max-width:800px;position:relative;z-index:2">
 <div class="anim-up" style="display:flex;justify-content:center;margin-bottom:32px">
 <div class="logo-mark">A</div>
@@ -168,11 +307,12 @@ Digitalice su gimnasio.<br>
 <p class="subtitle anim-up-d3" style="margin:24px auto 0">
 Un solo sistema para membresías, facturación electrónica SRI, punto de venta, inventario, contabilidad y reportes en tiempo real.
 </p>
-<div class="anim-up-d4" style="margin-top:40px;display:flex;gap:16px;justify-content:center">
+<div class="anim-up-d4" style="margin-top:var(--gap-xl);display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
 <div style="padding:12px 28px;background:linear-gradient(135deg,var(--primary),#4f46e5);border-radius:12px;font-weight:600;font-size:.95rem;box-shadow:0 4px 20px var(--primary-glow)">Ver Demostración &rarr;</div>
 <div style="padding:12px 28px;border:1px solid var(--border);border-radius:12px;font-weight:500;font-size:.95rem;color:var(--text-muted)">Presentación Abril 2026</div>
 </div>
 </div>
+</div><!-- /slide-scroll -->
 </div>
 
 <!-- ============================================ -->
@@ -180,12 +320,13 @@ Un solo sistema para membresías, facturación electrónica SRI, punto de venta,
 <!-- ============================================ -->
 <div class="slide bg-dark" data-slide="1">
 <div class="grid-bg"></div>
+<div class="slide-scroll">
 <div style="text-align:center;max-width:900px">
 <div class="label anim-up" style="margin-bottom:12px;color:var(--red)">El Problema Actual</div>
 <h2 class="section-title font-display anim-up-d1">Sin un sistema integrado,<br>su negocio <span style="color:var(--red)">pierde dinero</span> cada día</h2>
-<p class="subtitle anim-up-d2" style="margin:20px auto 40px;text-align:center">Estos problemas afectan al 87% de gimnasios que usan procesos manuales o sistemas desconectados.</p>
+<p class="subtitle anim-up-d2" style="margin:var(--gap-sm) auto var(--gap-xl);text-align:center">Estos problemas afectan al 87% de gimnasios que usan procesos manuales o sistemas desconectados.</p>
 
-<div class="module-grid anim-up-d3" style="grid-template-columns:repeat(3,1fr)">
+<div class="module-grid anim-up-d3">
 <div class="card" style="text-align:left">
 <div style="font-size:2rem;margin-bottom:12px">📋</div>
 <h3 style="font-size:1rem;font-weight:700;margin-bottom:8px;color:var(--red)">Control Manual</h3>
@@ -218,6 +359,7 @@ Un solo sistema para membresías, facturación electrónica SRI, punto de venta,
 </div>
 </div>
 </div>
+</div><!-- /slide-scroll -->
 </div>
 
 <!-- ============================================ -->
@@ -227,13 +369,14 @@ Un solo sistema para membresías, facturación electrónica SRI, punto de venta,
 <div class="grid-bg"></div>
 <div class="glow-orb" style="width:350px;height:350px;background:var(--accent);top:20%;left:5%"></div>
 
+<div class="slide-scroll">
 <div style="text-align:center;max-width:900px">
 <div class="label anim-up" style="margin-bottom:12px">La Solución</div>
 <h2 class="section-title font-display anim-up-d1">
 Un ecosistema completo.<br>
 <span class="gradient-text">Todo en un solo lugar.</span>
 </h2>
-<p class="subtitle anim-up-d2" style="margin:20px auto 50px;text-align:center">
+<p class="subtitle anim-up-d2" style="margin:var(--gap-sm) auto var(--gap-xl);text-align:center">
 AMEPHIA GYM integra cada aspecto de su negocio en una plataforma web moderna, accesible desde cualquier dispositivo.
 </p>
 
@@ -256,6 +399,7 @@ AMEPHIA GYM integra cada aspecto de su negocio en una plataforma web moderna, ac
 </div>
 </div>
 </div>
+</div><!-- /slide-scroll -->
 </div>
 
 <!-- ============================================ -->
@@ -264,76 +408,69 @@ AMEPHIA GYM integra cada aspecto de su negocio en una plataforma web moderna, ac
 <div class="slide bg-dark" data-slide="3">
 <div class="grid-bg"></div>
 
+<div class="slide-scroll">
 <div style="text-align:center;width:100%;max-width:1100px">
 <div class="label anim-up" style="margin-bottom:12px">Ecosistema Completo</div>
-<h2 class="section-title font-display anim-up-d1" style="margin-bottom:40px">Módulos del Sistema</h2>
+<h2 class="section-title font-display anim-up-d1" style="margin-bottom:var(--gap-xl)">Módulos del Sistema</h2>
 
 <div class="module-grid anim-up-d2">
 <div class="module-card">
-<div class="module-icon" style="background:linear-gradient(135deg,#6366f130,#6366f110)">
+<div class="module-head"><div class="module-icon" style="background:linear-gradient(135deg,#6366f130,#6366f110)">
 <span style="color:var(--primary-light)">👥</span>
-</div>
-<h3>Gestión de Miembros</h3>
+</div><h3>Gestión de Miembros</h3></div>
 <p>Registro completo, fotos, cédula, contacto de emergencia. Búsqueda instantánea. Historial de pagos y suscripciones.</p>
 </div>
 <div class="module-card">
-<div class="module-icon" style="background:linear-gradient(135deg,#06d6a030,#06d6a010)">
+<div class="module-head"><div class="module-icon" style="background:linear-gradient(135deg,#06d6a030,#06d6a010)">
 <span style="color:var(--accent)">💳</span>
-</div>
-<h3>Suscripciones & Planes</h3>
+</div><h3>Suscripciones & Planes</h3></div>
 <p>Planes flexibles (diario, mensual, trimestral, anual). Control automático de vencimientos. Congelamiento de membresías.</p>
 </div>
 <div class="module-card">
-<div class="module-icon" style="background:linear-gradient(135deg,#f59e0b30,#f59e0b10)">
+<div class="module-head"><div class="module-icon" style="background:linear-gradient(135deg,#f59e0b30,#f59e0b10)">
 <span style="color:var(--orange)">🧾</span>
-</div>
-<h3>Facturación SRI</h3>
+</div><h3>Facturación SRI</h3></div>
 <p>Facturación electrónica 100% integrada. Firma digital, envío al SRI, RIDE PDF. Notas de crédito y retenciones.</p>
 </div>
 <div class="module-card">
-<div class="module-icon" style="background:linear-gradient(135deg,#ec489930,#ec489910)">
+<div class="module-head"><div class="module-icon" style="background:linear-gradient(135deg,#ec489930,#ec489910)">
 <span style="color:var(--pink)">🛒</span>
-</div>
-<h3>Punto de Venta (POS)</h3>
+</div><h3>Punto de Venta (POS)</h3></div>
 <p>Interfaz táctil para ventas rápidas. Bebidas, suplementos, accesorios. Lectura de códigos. Facturación automática.</p>
 </div>
 <div class="module-card">
-<div class="module-icon" style="background:linear-gradient(135deg,#22d3ee30,#22d3ee10)">
+<div class="module-head"><div class="module-icon" style="background:linear-gradient(135deg,#22d3ee30,#22d3ee10)">
 <span style="color:var(--cyan)">📦</span>
-</div>
-<h3>Inventario</h3>
+</div><h3>Inventario</h3></div>
 <p>Control de stock en tiempo real. Alertas de stock bajo. Movimientos de entrada/salida. Ajustes y trazabilidad.</p>
 </div>
 <div class="module-card">
-<div class="module-icon" style="background:linear-gradient(135deg,#a78bfa30,#a78bfa10)">
+<div class="module-head"><div class="module-icon" style="background:linear-gradient(135deg,#a78bfa30,#a78bfa10)">
 <span style="color:#a78bfa">💰</span>
-</div>
-<h3>Caja Registradora</h3>
+</div><h3>Caja Registradora</h3></div>
 <p>Apertura/cierre de caja por turnos. Arqueo automático. Detección de diferencias. Historial completo de movimientos.</p>
 </div>
 <div class="module-card">
-<div class="module-icon" style="background:linear-gradient(135deg,#34d39930,#34d39910)">
+<div class="module-head"><div class="module-icon" style="background:linear-gradient(135deg,#34d39930,#34d39910)">
 <span style="color:#34d399">📒</span>
-</div>
-<h3>Contabilidad NIIF</h3>
+</div><h3>Contabilidad NIIF</h3></div>
 <p>Plan de cuentas completo. Libro Diario, Mayor, Balance de Comprobación. Estados financieros para PYMES Ecuador.</p>
 </div>
 <div class="module-card">
-<div class="module-icon" style="background:linear-gradient(135deg,#fb923c30,#fb923c10)">
+<div class="module-head"><div class="module-icon" style="background:linear-gradient(135deg,#fb923c30,#fb923c10)">
 <span style="color:#fb923c">📈</span>
-</div>
-<h3>Reportes & Dashboard</h3>
+</div><h3>Reportes & Dashboard</h3></div>
 <p>Dashboard en tiempo real. Ingresos, membresías activas, ventas del día, gastos. Exportación a PDF.</p>
 </div>
 <div class="module-card">
-<div class="module-icon" style="background:linear-gradient(135deg,#f4364430,#f4364410)">
+<div class="module-head"><div class="module-icon" style="background:linear-gradient(135deg,#f4364430,#f4364410)">
 <span style="color:#f43644">🔐</span>
-</div>
-<h3>Seguridad & Roles</h3>
+</div><h3>Seguridad & Roles</h3></div>
 <p>Admin, Cajero, Contador, Entrenador. Permisos granulares por módulo. Bitácora de auditoría completa.</p>
 </div>
 </div>
 </div>
+</div><!-- /slide-scroll -->
 </div>
 
 <!-- ============================================ -->
@@ -342,13 +479,14 @@ AMEPHIA GYM integra cada aspecto de su negocio en una plataforma web moderna, ac
 <div class="slide bg-accent" data-slide="4">
 <div class="grid-bg"></div>
 
+<div class="slide-scroll">
 <div class="two-col">
 <div>
 <div class="label anim-up" style="margin-bottom:12px;color:var(--accent-light)">Cumplimiento Tributario</div>
 <h2 class="section-title font-display anim-up-d1" style="margin-bottom:20px">
 Facturación Electrónica <span class="gradient-text">100% SRI</span>
 </h2>
-<p class="subtitle anim-up-d2" style="margin-bottom:30px">
+<p class="subtitle anim-up-d2" style="margin-bottom:var(--gap-lg)">
 Olvídese de facturas en papel. Cada venta genera automáticamente su factura electrónica válida ante el SRI.
 </p>
 <div class="feature-list anim-up-d3">
@@ -398,6 +536,7 @@ Olvídese de facturas en papel. Cada venta genera automáticamente su factura el
 </div>
 </div>
 </div>
+</div><!-- /slide-scroll -->
 </div>
 
 <!-- ============================================ -->
@@ -406,14 +545,15 @@ Olvídese de facturas en papel. Cada venta genera automáticamente su factura el
 <div class="slide bg-gradient" data-slide="5">
 <div class="grid-bg"></div>
 
+<div class="slide-scroll">
 <div style="text-align:center;max-width:1100px;width:100%">
 <div class="label anim-up" style="margin-bottom:12px">Datos en Tiempo Real</div>
-<h2 class="section-title font-display anim-up-d1" style="margin-bottom:40px">
+<h2 class="section-title font-display anim-up-d1" style="margin-bottom:var(--gap-xl)">
 Dashboard Ejecutivo <span class="gradient-text">en Vivo</span>
 </h2>
 
 <!-- Simulated Dashboard -->
-<div class="anim-up-d2" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px">
+<div class="anim-up-d2 kpi-grid">
 <div class="card" style="padding:20px;text-align:left">
 <div style="font-size:.75rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Ingresos del Mes</div>
 <div style="font-size:1.8rem;font-weight:800;font-family:'Space Grotesk',sans-serif;color:var(--accent)">$4,004</div>
@@ -436,52 +576,43 @@ Dashboard Ejecutivo <span class="gradient-text">en Vivo</span>
 </div>
 </div>
 
-<div class="anim-up-d3" style="display:grid;grid-template-columns:2fr 1fr;gap:16px">
-<div class="card" style="padding:24px;text-align:left">
-<div style="font-size:.85rem;font-weight:700;margin-bottom:16px">Ingresos Últimos 7 Días</div>
-<div style="display:flex;align-items:flex-end;gap:8px;height:120px">
-<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
-<div style="width:100%;background:linear-gradient(to top,var(--primary),var(--primary-light));border-radius:6px 6px 0 0;height:60%"></div>
-<span style="font-size:.65rem;color:var(--text-dim)">Lun</span>
+<div class="anim-up-d3 chart-row">
+<div class="card chart-card">
+<div class="chart-head">
+<div class="chart-title">Ingresos Últimos 7 Días</div>
+<div class="chart-total">$930</div>
 </div>
-<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
-<div style="width:100%;background:linear-gradient(to top,var(--primary),var(--primary-light));border-radius:6px 6px 0 0;height:80%"></div>
-<span style="font-size:.65rem;color:var(--text-dim)">Mar</span>
-</div>
-<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
-<div style="width:100%;background:linear-gradient(to top,var(--primary),var(--primary-light));border-radius:6px 6px 0 0;height:45%"></div>
-<span style="font-size:.65rem;color:var(--text-dim)">Mie</span>
-</div>
-<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
-<div style="width:100%;background:linear-gradient(to top,var(--primary),var(--primary-light));border-radius:6px 6px 0 0;height:90%"></div>
-<span style="font-size:.65rem;color:var(--text-dim)">Jue</span>
-</div>
-<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
-<div style="width:100%;background:linear-gradient(to top,var(--primary),var(--primary-light));border-radius:6px 6px 0 0;height:100%"></div>
-<span style="font-size:.65rem;color:var(--text-dim)">Vie</span>
-</div>
-<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
-<div style="width:100%;background:linear-gradient(to top,var(--accent),var(--accent-light));border-radius:6px 6px 0 0;height:70%"></div>
-<span style="font-size:.65rem;color:var(--text-dim)">Sab</span>
-</div>
-<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
-<div style="width:100%;background:linear-gradient(to top,var(--orange),#fbbf24);border-radius:6px 6px 0 0;height:35%"></div>
-<span style="font-size:.65rem;color:var(--text-dim)">Dom</span>
+<div class="chart" style="--max:200" role="img" aria-label="Ingresos diarios de la última semana: lunes 115, martes 155, miércoles 85, jueves 175, viernes 195, sábado 135 y domingo 70 dólares. Total de la semana: 930 dólares.">
+<div class="chart-axis" aria-hidden="true"><span>$200</span><span>$100</span><span>$0</span></div>
+<div class="chart-plot">
+<div class="chart-grid" aria-hidden="true"><i></i><i></i><i></i></div>
+<div class="chart-cols">
+<div class="col" style="--v:115" data-val="Lun · $115"><div class="bar"></div></div>
+<div class="col" style="--v:155" data-val="Mar · $155"><div class="bar"></div></div>
+<div class="col" style="--v:85" data-val="Mié · $85"><div class="bar"></div></div>
+<div class="col" style="--v:175" data-val="Jue · $175"><div class="bar"></div></div>
+<div class="col is-peak" style="--v:195" data-val="Vie · $195"><b class="peak">$195</b><div class="bar"></div></div>
+<div class="col" style="--v:135" data-val="Sáb · $135"><div class="bar"></div></div>
+<div class="col" style="--v:70" data-val="Dom · $70"><div class="bar"></div></div>
 </div>
 </div>
-</div>
-<div class="card" style="padding:24px;text-align:left">
-<div style="font-size:.85rem;font-weight:700;margin-bottom:16px">Distribución de Planes</div>
-<div style="display:flex;flex-direction:column;gap:12px">
-<div><div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:4px"><span>Mensual</span><span style="color:var(--primary-light)">23%</span></div><div style="height:6px;background:var(--border);border-radius:3px"><div style="height:100%;width:23%;background:var(--primary);border-radius:3px"></div></div></div>
-<div><div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:4px"><span>Trimestral</span><span style="color:var(--accent)">31%</span></div><div style="height:6px;background:var(--border);border-radius:3px"><div style="height:100%;width:31%;background:var(--accent);border-radius:3px"></div></div></div>
-<div><div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:4px"><span>Pase Diario</span><span style="color:var(--orange)">14%</span></div><div style="height:6px;background:var(--border);border-radius:3px"><div style="height:100%;width:14%;background:var(--orange);border-radius:3px"></div></div></div>
-<div><div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:4px"><span>Anual / VIP</span><span style="color:var(--pink)">23%</span></div><div style="height:6px;background:var(--border);border-radius:3px"><div style="height:100%;width:23%;background:var(--pink);border-radius:3px"></div></div></div>
-<div><div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:4px"><span>Semestral</span><span style="color:var(--cyan)">9%</span></div><div style="height:6px;background:var(--border);border-radius:3px"><div style="height:100%;width:9%;background:var(--cyan);border-radius:3px"></div></div></div>
+<div class="chart-days" aria-hidden="true"><span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span></div>
 </div>
 </div>
+<div class="card chart-card">
+<div class="chart-head">
+<div class="chart-title">Distribución de Planes</div>
+</div>
+<div class="dist">
+<div class="dist-row" style="--pct:31%"><div class="dist-label"><span>Trimestral</span><b>31%</b></div><div class="dist-track"><i style="background:var(--accent)"></i></div></div>
+<div class="dist-row" style="--pct:23%"><div class="dist-label"><span>Mensual</span><b>23%</b></div><div class="dist-track"><i style="background:var(--primary)"></i></div></div>
+<div class="dist-row" style="--pct:23%"><div class="dist-label"><span>Anual / VIP</span><b>23%</b></div><div class="dist-track"><i style="background:var(--pink)"></i></div></div>
+<div class="dist-row" style="--pct:14%"><div class="dist-label"><span>Pase Diario</span><b>14%</b></div><div class="dist-track"><i style="background:var(--orange)"></i></div></div>
+<div class="dist-row" style="--pct:9%"><div class="dist-label"><span>Semestral</span><b>9%</b></div><div class="dist-track"><i style="background:var(--cyan)"></i></div></div>
 </div>
 </div>
+</div></div>
+</div><!-- /slide-scroll -->
 </div>
 
 <!-- ============================================ -->
@@ -490,13 +621,14 @@ Dashboard Ejecutivo <span class="gradient-text">en Vivo</span>
 <div class="slide bg-warm" data-slide="6">
 <div class="grid-bg"></div>
 
+<div class="slide-scroll">
 <div style="text-align:center;max-width:900px;width:100%">
 <div class="label anim-up" style="margin-bottom:12px">Transformación Digital</div>
-<h2 class="section-title font-display anim-up-d1" style="margin-bottom:40px">
+<h2 class="section-title font-display anim-up-d1" style="margin-bottom:var(--gap-xl)">
 Antes vs <span class="gradient-text">Después</span>
 </h2>
 
-<table class="comparison-table anim-up-d2">
+<div class="table-scroll anim-up-d2"><table class="comparison-table">
 <thead>
 <tr>
 <th style="width:35%">Proceso</th>
@@ -541,8 +673,9 @@ Antes vs <span class="gradient-text">Después</span>
 <td>Stock exacto + alertas</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 </div>
+</div><!-- /slide-scroll -->
 </div>
 
 <!-- ============================================ -->
@@ -552,13 +685,14 @@ Antes vs <span class="gradient-text">Después</span>
 <div class="grid-bg"></div>
 <div class="glow-orb" style="width:300px;height:300px;background:var(--pink);top:10%;right:10%"></div>
 
+<div class="slide-scroll">
 <div class="two-col">
 <div>
 <div class="label anim-up" style="margin-bottom:12px;color:var(--pink)">Seguridad Empresarial</div>
 <h2 class="section-title font-display anim-up-d1" style="margin-bottom:20px">
 Cada persona ve <span class="gradient-pink">solo lo que necesita</span>
 </h2>
-<p class="subtitle anim-up-d2" style="margin-bottom:30px">
+<p class="subtitle anim-up-d2" style="margin-bottom:var(--gap-lg)">
 4 roles predefinidos con permisos granulares. Auditoría completa de cada acción en el sistema.
 </p>
 </div>
@@ -583,6 +717,7 @@ Cada persona ve <span class="gradient-pink">solo lo que necesita</span>
 </div>
 </div>
 </div>
+</div><!-- /slide-scroll -->
 </div>
 
 <!-- ============================================ -->
@@ -591,13 +726,14 @@ Cada persona ve <span class="gradient-pink">solo lo que necesita</span>
 <div class="slide bg-accent" data-slide="8">
 <div class="grid-bg"></div>
 
+<div class="slide-scroll">
 <div class="two-col">
 <div>
 <div class="label anim-up" style="margin-bottom:12px">Contabilidad Automática</div>
 <h2 class="section-title font-display anim-up-d1" style="margin-bottom:20px">
 Contabilidad <span class="gradient-text">NIIF PYMES</span><br>integrada
 </h2>
-<p class="subtitle anim-up-d2" style="margin-bottom:30px">
+<p class="subtitle anim-up-d2" style="margin-bottom:var(--gap-lg)">
 Cada factura, compra y gasto genera automáticamente sus asientos contables. Su contador tendrá todo listo.
 </p>
 <div class="feature-list anim-up-d3">
@@ -638,6 +774,7 @@ Cada factura, compra y gasto genera automáticamente sus asientos contables. Su 
 </div>
 </div>
 </div>
+</div><!-- /slide-scroll -->
 </div>
 
 <!-- ============================================ -->
@@ -647,45 +784,47 @@ Cada factura, compra y gasto genera automáticamente sus asientos contables. Su 
 <div class="grid-bg"></div>
 <div class="glow-orb" style="width:400px;height:400px;background:var(--accent);bottom:-100px;right:10%"></div>
 
+<div class="slide-scroll">
 <div style="text-align:center;max-width:900px">
 <div class="label anim-up" style="margin-bottom:12px;color:var(--accent-light)">Retorno de Inversión</div>
 <h2 class="section-title font-display anim-up-d1" style="margin-bottom:16px">
 El sistema <span class="gradient-text">se paga solo</span>
 </h2>
-<p class="subtitle anim-up-d2" style="margin:0 auto 40px;text-align:center">Estimación conservadora basada en gimnasios similares en Ecuador.</p>
+<p class="subtitle anim-up-d2" style="margin:0 auto var(--gap-xl);text-align:center">Estimación conservadora basada en gimnasios similares en Ecuador.</p>
 
-<div class="anim-up-d3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:40px">
-<div class="card" style="text-align:center;padding:32px 20px">
+<div class="anim-up-d3 roi-grid">
+<div class="card" style="text-align:center;padding:clamp(20px,3vh,32px) 20px">
 <div style="font-size:2.5rem;font-weight:800;font-family:'Space Grotesk',sans-serif;color:var(--accent)">$320</div>
 <div style="font-size:.85rem;color:var(--text-muted);margin-top:8px">Ahorro mensual en<br>tiempo administrativo</div>
 </div>
-<div class="card" style="text-align:center;padding:32px 20px">
+<div class="card" style="text-align:center;padding:clamp(20px,3vh,32px) 20px">
 <div style="font-size:2.5rem;font-weight:800;font-family:'Space Grotesk',sans-serif;color:var(--orange)">$150</div>
 <div style="font-size:.85rem;color:var(--text-muted);margin-top:8px">Recuperación por<br>cobros no olvidados</div>
 </div>
-<div class="card" style="text-align:center;padding:32px 20px">
+<div class="card" style="text-align:center;padding:clamp(20px,3vh,32px) 20px">
 <div style="font-size:2.5rem;font-weight:800;font-family:'Space Grotesk',sans-serif;color:var(--primary-light)">$200</div>
 <div style="font-size:.85rem;color:var(--text-muted);margin-top:8px">Ahorro en contador<br>externo para SRI</div>
 </div>
 </div>
 
-<div class="anim-up-d4" style="background:linear-gradient(135deg,var(--card),var(--surface));border:1px solid var(--accent);border-radius:20px;padding:32px;display:flex;align-items:center;justify-content:center;gap:40px">
+<div class="anim-up-d4 roi-total">
 <div style="text-align:center">
 <div style="font-size:.8rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">Ahorro Mensual Total</div>
 <div style="font-size:3rem;font-weight:800;font-family:'Space Grotesk',sans-serif;color:var(--accent)">$670+</div>
 </div>
-<div style="width:1px;height:60px;background:var(--border)"></div>
+<div class="vsep" style="height:60px"></div>
 <div style="text-align:center">
 <div style="font-size:.8rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">Ahorro Anual</div>
 <div style="font-size:3rem;font-weight:800;font-family:'Space Grotesk',sans-serif;color:var(--orange)">$8,040+</div>
 </div>
-<div style="width:1px;height:60px;background:var(--border)"></div>
+<div class="vsep" style="height:60px"></div>
 <div style="text-align:center">
 <div style="font-size:.8rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">ROI Estimado</div>
 <div style="font-size:3rem;font-weight:800;font-family:'Space Grotesk',sans-serif;color:var(--primary-light)">10x</div>
 </div>
 </div>
 </div>
+</div><!-- /slide-scroll -->
 </div>
 
 <!-- ============================================ -->
@@ -694,13 +833,14 @@ El sistema <span class="gradient-text">se paga solo</span>
 <div class="slide bg-dark" data-slide="10">
 <div class="grid-bg"></div>
 
+<div class="slide-scroll">
 <div class="two-col">
 <div>
 <div class="label anim-up" style="margin-bottom:12px;color:var(--cyan)">Base Tecnológica</div>
 <h2 class="section-title font-display anim-up-d1" style="margin-bottom:20px">
 Construido con <span class="gradient-cyan">tecnología moderna</span>
 </h2>
-<p class="subtitle anim-up-d2" style="margin-bottom:30px">
+<p class="subtitle anim-up-d2" style="margin-bottom:var(--gap-lg)">
 Stack empresarial probado. Sin dependencias de terceros para facturación. Su data es 100% suya.
 </p>
 <div class="feature-list anim-up-d3">
@@ -745,6 +885,7 @@ Stack empresarial probado. Sin dependencias de terceros para facturación. Su da
 </div>
 </div>
 </div>
+</div><!-- /slide-scroll -->
 </div>
 
 <!-- ============================================ -->
@@ -754,20 +895,23 @@ Stack empresarial probado. Sin dependencias de terceros para facturación. Su da
 <div class="grid-bg"></div>
 <div class="glow-orb" style="width:350px;height:350px;background:var(--primary);top:10%;left:5%"></div>
 
+<div class="slide-scroll">
 <div style="text-align:center;max-width:1050px;width:100%">
 <div class="label anim-up" style="margin-bottom:12px;color:var(--accent-light)">Planes & Precios</div>
 <h2 class="section-title font-display anim-up-d1" style="margin-bottom:16px">
 Elija el plan <span class="gradient-text">ideal para su gimnasio</span>
 </h2>
-<p class="subtitle anim-up-d2" style="margin:0 auto 40px;text-align:center">Desde gimnasios pequeños hasta cadenas con múltiples sucursales. Sin contratos, cancele cuando quiera.</p>
+<p class="subtitle anim-up-d2" style="margin:0 auto var(--gap-xl);text-align:center">Desde gimnasios pequeños hasta cadenas con múltiples sucursales. Sin contratos, cancele cuando quiera.</p>
 
-<div class="pricing-grid anim-up-d3" style="max-width:1050px">
+<div class="pricing-grid anim-up-d3">
 
 <!-- PLAN BÁSICO -->
 <div class="pricing-card">
-<div style="font-size:.85rem;font-weight:700;color:var(--text-muted);letter-spacing:.05em">BÁSICO</div>
+<div class="pricing-head">
+<div class="pricing-name" style="color:var(--text-muted)">BÁSICO</div>
 <div class="price" style="color:var(--cyan)">$29</div>
 <div class="period">/mes &mdash; hasta 100 miembros</div>
+</div>
 <ul class="features">
 <li>Gestión de Miembros</li>
 <li>Suscripciones & Planes</li>
@@ -785,9 +929,11 @@ Elija el plan <span class="gradient-text">ideal para su gimnasio</span>
 
 <!-- PLAN PROFESIONAL (FEATURED) -->
 <div class="pricing-card featured">
-<div style="font-size:.85rem;font-weight:700;color:var(--primary-light);letter-spacing:.05em">PROFESIONAL</div>
+<div class="pricing-head">
+<div class="pricing-name" style="color:var(--primary-light)">PROFESIONAL</div>
 <div class="price" style="color:var(--text)">$59</div>
 <div class="period">/mes &mdash; hasta 300 miembros</div>
+</div>
 <ul class="features">
 <li>Gestión de Miembros</li>
 <li>Suscripciones & Planes</li>
@@ -805,9 +951,11 @@ Elija el plan <span class="gradient-text">ideal para su gimnasio</span>
 
 <!-- PLAN ENTERPRISE -->
 <div class="pricing-card">
-<div style="font-size:.85rem;font-weight:700;color:var(--orange);letter-spacing:.05em">ENTERPRISE</div>
+<div class="pricing-head">
+<div class="pricing-name" style="color:var(--orange)">ENTERPRISE</div>
 <div class="price" style="color:var(--orange)">$99</div>
 <div class="period">/mes &mdash; miembros ilimitados</div>
+</div>
 <ul class="features">
 <li>Todo lo del plan Profesional</li>
 <li><strong style="color:var(--orange)">Miembros ilimitados</strong></li>
@@ -825,6 +973,7 @@ Elija el plan <span class="gradient-text">ideal para su gimnasio</span>
 
 </div>
 </div>
+</div><!-- /slide-scroll -->
 </div>
 
 <!-- ============================================ -->
@@ -833,14 +982,15 @@ Elija el plan <span class="gradient-text">ideal para su gimnasio</span>
 <div class="slide bg-warm" data-slide="12">
 <div class="grid-bg"></div>
 
+<div class="slide-scroll">
 <div style="text-align:center;max-width:1000px;width:100%">
 <div class="label anim-up" style="margin-bottom:12px;color:var(--orange)">Comparativa de Mercado</div>
 <h2 class="section-title font-display anim-up-d1" style="margin-bottom:16px">
 Otras herramientas <span class="gradient-orange">cuestan mucho más</span>
 </h2>
-<p class="subtitle anim-up-d2" style="margin:0 auto 40px;text-align:center">Y la mayoría no incluye facturación SRI ni contabilidad NIIF para Ecuador.</p>
+<p class="subtitle anim-up-d2" style="margin:0 auto var(--gap-xl);text-align:center">Y la mayoría no incluye facturación SRI ni contabilidad NIIF para Ecuador.</p>
 
-<table class="comparison-table anim-up-d3" style="max-width:1000px">
+<div class="table-scroll anim-up-d3"><table class="comparison-table cmp-wide">
 <thead>
 <tr>
 <th style="width:22%">Plataforma</th>
@@ -908,9 +1058,9 @@ Otras herramientas <span class="gradient-orange">cuestan mucho más</span>
 <td style="text-align:center;color:var(--accent);font-weight:600;font-size:.8rem">Ecuador</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 
-<div class="anim-up-d4" style="margin-top:32px;display:flex;gap:24px;justify-content:center;flex-wrap:wrap">
+<div class="anim-up-d4" style="margin-top:var(--gap-lg);display:flex;gap:clamp(12px,2vw,24px);justify-content:center;flex-wrap:wrap">
 <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 28px;text-align:center">
 <div style="font-size:.7rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">Ahorro vs GymMaster</div>
 <div style="font-size:1.6rem;font-weight:800;font-family:'Space Grotesk',sans-serif;color:var(--accent)">hasta 76%</div>
@@ -925,6 +1075,7 @@ Otras herramientas <span class="gradient-orange">cuestan mucho más</span>
 </div>
 </div>
 </div>
+</div><!-- /slide-scroll -->
 </div>
 
 <!-- ============================================ -->
@@ -935,6 +1086,7 @@ Otras herramientas <span class="gradient-orange">cuestan mucho más</span>
 <div class="glow-orb" style="width:500px;height:500px;background:var(--primary);top:-150px;left:30%"></div>
 <div class="glow-orb" style="width:300px;height:300px;background:var(--accent);bottom:-50px;right:20%;animation-delay:4s"></div>
 
+<div class="slide-scroll">
 <div style="text-align:center;max-width:800px;position:relative;z-index:2">
 <div class="anim-up" style="display:flex;justify-content:center;margin-bottom:24px">
 <div class="logo-mark" style="width:56px;height:56px;font-size:1.5rem">A</div>
@@ -943,7 +1095,7 @@ Otras herramientas <span class="gradient-orange">cuestan mucho más</span>
 Transforme su gimnasio<br>
 <span class="gradient-text">en un negocio inteligente.</span>
 </h2>
-<p class="subtitle anim-up-d2" style="margin:0 auto 40px;text-align:center">
+<p class="subtitle anim-up-d2" style="margin:0 auto var(--gap-xl);text-align:center">
 AMEPHIA GYM no es solo un software. Es la plataforma que le permite enfocarse en lo que importa: <strong style="color:var(--text)">hacer crecer su negocio y sus clientes</strong>.
 </p>
 
@@ -953,84 +1105,170 @@ Ver Demo en Vivo &rarr;
 </a>
 </div>
 
-<div class="anim-up-d4" style="margin-top:60px;display:flex;gap:40px;justify-content:center;flex-wrap:wrap">
+<div class="anim-up-d4" style="margin-top:var(--gap-xl);display:flex;gap:clamp(16px,4vw,40px);justify-content:center;flex-wrap:wrap">
 <div style="text-align:center">
 <div style="font-size:1.5rem;font-weight:800;font-family:'Space Grotesk',sans-serif;color:var(--text)">72</div>
 <div style="font-size:.7rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em">Miembros</div>
 </div>
-<div style="width:1px;background:var(--border)"></div>
+<div class="vsep"></div>
 <div style="text-align:center">
 <div style="font-size:1.5rem;font-weight:800;font-family:'Space Grotesk',sans-serif;color:var(--text)">104</div>
 <div style="font-size:.7rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em">Facturas SRI</div>
 </div>
-<div style="width:1px;background:var(--border)"></div>
+<div class="vsep"></div>
 <div style="text-align:center">
 <div style="font-size:1.5rem;font-weight:800;font-family:'Space Grotesk',sans-serif;color:var(--text)">NIIF</div>
 <div style="font-size:.7rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em">Contabilidad</div>
 </div>
-<div style="width:1px;background:var(--border)"></div>
+<div class="vsep"></div>
 <div style="text-align:center">
 <div style="font-size:1.5rem;font-weight:800;font-family:'Space Grotesk',sans-serif;color:var(--text)">$11.8K</div>
 <div style="font-size:.7rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em">Ventas Totales</div>
 </div>
 </div>
 </div>
+</div><!-- /slide-scroll -->
 </div>
 
 </div><!-- end deck -->
 
+<!-- PROGRESS BAR -->
+<div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
+
 <!-- NAVIGATION BAR -->
-<nav class="nav-bar">
-<button class="nav-btn" onclick="prevSlide()" title="Anterior (←)">&#8592;</button>
+<nav class="nav-bar" aria-label="Navegación de la presentación">
+<button class="nav-btn" id="btnPrev" onclick="prevSlide()" title="Anterior (←)" aria-label="Diapositiva anterior">&#8592;</button>
 <div class="nav-dots" id="navDots"></div>
-<button class="nav-btn" onclick="nextSlide()" title="Siguiente (→)">&#8594;</button>
+<button class="nav-btn" id="btnNext" onclick="nextSlide()" title="Siguiente (→)" aria-label="Diapositiva siguiente">&#8594;</button>
 <div class="slide-counter" id="counter">1 / 14</div>
 </nav>
+
+<!-- AVISO DE CONTENIDO DESPLAZABLE -->
+<div class="scroll-hint" id="scrollHint" aria-hidden="true">&#8595;&nbsp; Desliza</div>
 
 <script>
 const deck=document.getElementById('deck');
 const slides=[...deck.querySelectorAll('.slide')];
 const dotsContainer=document.getElementById('navDots');
 const counter=document.getElementById('counter');
-let current=0;
+const progressBar=document.getElementById('progressBar');
+const scrollHint=document.getElementById('scrollHint');
+const btnPrev=document.getElementById('btnPrev');
+const btnNext=document.getElementById('btnNext');
 const total=slides.length;
+let current=0;
 
-// Create dots
+// La diapositiva de arranque puede venir en el enlace (#3)
+const fromHash=()=>{
+const n=parseInt(location.hash.replace('#',''),10);
+return Number.isInteger(n)&&n>=0&&n<total?n:0;
+};
+
 slides.forEach((_,i)=>{
-const dot=document.createElement('div');
+const dot=document.createElement('button');
 dot.className='nav-dot'+(i===0?' active':'');
+dot.type='button';
+dot.setAttribute('aria-label',`Ir a la diapositiva ${i+1}`);
 dot.onclick=()=>goTo(i);
 dotsContainer.appendChild(dot);
 });
 
+const scroller=i=>slides[i].querySelector('.slide-scroll');
+
 function updateUI(){
 slides.forEach((s,i)=>{
-s.classList.remove('active','prev');
-if(i===current)s.classList.add('active');
-else if(i<current)s.classList.add('prev');
+s.classList.toggle('active',i===current);
+s.classList.toggle('prev',i<current);
+s.inert=i!==current;                      // el contenido oculto no recibe foco ni tabulación
 });
 [...dotsContainer.children].forEach((d,i)=>{d.className='nav-dot'+(i===current?' active':'')});
 counter.textContent=`${current+1} / ${total}`;
+progressBar.style.width=`${((current+1)/total)*100}%`;
+btnPrev.disabled=current===0;
+btnNext.disabled=current===total-1;
+// Cada diapositiva vuelve a empezar por arriba, nunca a media altura de la anterior
+scroller(current).scrollTo({top:0,behavior:'auto'});
+history.replaceState(null,'',current===0?location.pathname+location.search:`#${current}`);
+updateHint();
+}
+
+// El aviso sólo aparece si esta diapositiva realmente desborda y aún queda algo por ver
+function updateHint(){
+const el=scroller(current);
+const overflows=el.scrollHeight-el.clientHeight>24;
+const atBottom=el.scrollTop+el.clientHeight>=el.scrollHeight-24;
+scrollHint.classList.toggle('show',overflows&&!atBottom);
 }
 
 function nextSlide(){if(current<total-1){current++;updateUI()}}
 function prevSlide(){if(current>0){current--;updateUI()}}
-function goTo(n){current=n;updateUI()}
+function goTo(n){if(n>=0&&n<total&&n!==current){current=n;updateUI()}}
 
-document.addEventListener('keydown',e=>{
-if(e.key==='ArrowRight'||e.key===' '||e.key==='Enter'){e.preventDefault();nextSlide()}
-if(e.key==='ArrowLeft'||e.key==='Backspace'){e.preventDefault();prevSlide()}
-if(e.key==='Home'){e.preventDefault();goTo(0)}
-if(e.key==='End'){e.preventDefault();goTo(total-1)}
+// Las tablas anchas se desplazan de lado: avisarlo, o nadie lo descubre en el móvil
+document.querySelectorAll('.table-scroll').forEach(t=>{
+const hint=document.createElement('div');
+hint.className='table-hint';
+hint.textContent='\u2194 Desliza la tabla para ver todo';
+t.after(hint);
+const sync=()=>{hint.style.display=t.scrollWidth-t.clientWidth>8?'block':'none'};
+sync();
+addEventListener('resize',sync);
+t.addEventListener('scroll',sync,{passive:true});
 });
 
-// Touch swipe
-let touchStartX=0;
-deck.addEventListener('touchstart',e=>{touchStartX=e.changedTouches[0].screenX},{passive:true});
-deck.addEventListener('touchend',e=>{
-const diff=touchStartX-e.changedTouches[0].screenX;
-if(Math.abs(diff)>50){diff>0?nextSlide():prevSlide()}
+slides.forEach(s=>s.querySelector('.slide-scroll').addEventListener('scroll',()=>{
+if(s.classList.contains('active'))updateHint();
+},{passive:true}));
+
+// Un cambio de tamaño u orientación puede volver desplazable lo que no lo era
+let resizeTimer;
+addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(updateHint,150)});
+addEventListener('hashchange',()=>goTo(fromHash()));
+
+document.addEventListener('keydown',e=>{
+if(e.metaKey||e.ctrlKey||e.altKey)return;
+const el=scroller(current);
+const canScroll=el.scrollHeight-el.clientHeight>24;
+switch(e.key){
+case 'ArrowRight':case 'PageDown':e.preventDefault();nextSlide();break;
+case 'ArrowLeft':case 'PageUp':e.preventDefault();prevSlide();break;
+case 'Backspace':e.preventDefault();prevSlide();break;
+case 'Home':e.preventDefault();goTo(0);break;
+case 'End':e.preventDefault();goTo(total-1);break;
+// Arriba/abajo recorren la diapositiva larga; si no hay nada que recorrer, navegan
+case 'ArrowDown':
+if(canScroll){e.preventDefault();el.scrollBy({top:el.clientHeight*.8,behavior:'smooth'})}
+break;
+case 'ArrowUp':
+if(canScroll){e.preventDefault();el.scrollBy({top:-el.clientHeight*.8,behavior:'smooth'})}
+break;
+case ' ':case 'Enter':{
+const atBottom=el.scrollTop+el.clientHeight>=el.scrollHeight-24;
+e.preventDefault();
+if(canScroll&&!atBottom)el.scrollBy({top:el.clientHeight*.8,behavior:'smooth'});
+else nextSlide();
+break;
+}
+}
+});
+
+// Swipe horizontal: sólo si el gesto es claramente lateral, para no robarle
+// el desplazamiento vertical a las diapositivas largas ni el lateral a las tablas
+let sx=0,sy=0,ignoreSwipe=false;
+deck.addEventListener('touchstart',e=>{
+const t=e.changedTouches[0];sx=t.screenX;sy=t.screenY;
+const tbl=e.target.closest('.table-scroll');
+ignoreSwipe=!!tbl&&tbl.scrollWidth>tbl.clientWidth;
 },{passive:true});
+deck.addEventListener('touchend',e=>{
+if(ignoreSwipe)return;
+const t=e.changedTouches[0];
+const dx=sx-t.screenX,dy=sy-t.screenY;
+if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)dx>0?nextSlide():prevSlide();
+},{passive:true});
+
+current=fromHash();
+updateUI();
 </script>
 </body>
 </html>
