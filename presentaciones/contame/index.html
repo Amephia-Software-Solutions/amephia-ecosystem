@@ -15,7 +15,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" href="/favicon.ico" />
   <link rel="preload" href="/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="slides/01-cover.webp" as="image" />
+  <link rel="preload" href="slides/01-cover.webp?v=2" as="image" />
   <style>
     @font-face { font-family: 'Geist'; font-style: normal; font-weight: 100 900; font-display: swap; src: url('/fonts/geist-latin.woff2') format('woff2'); }
     @font-face { font-family: 'Geist Mono'; font-style: normal; font-weight: 100 900; font-display: swap; src: url('/fonts/geist-mono-latin.woff2') format('woff2'); }
@@ -96,7 +96,7 @@
     <a class="brand" href="/" aria-label="AmePhia, inicio"><img src="/assets/logo-nav.webp" alt="" width="26" height="26" /><span>AmePhia</span></a>
     <nav class="crumb mono" aria-label="Ruta"><a href="/presentaciones/">Presentaciones</a> / ContAme</nav>
     <div class="spacer"></div>
-    <a class="btn" href="contame-presentacion.pdf" download>
+    <a class="btn" href="contame-presentacion.pdf?v=2" download="contame-presentacion.pdf">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-4-4m4 4 4-4M5 21h14"/></svg>
       <span>PDF</span>
     </a>
@@ -110,7 +110,7 @@
   <main>
     <h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">ContAme · Presentación del sistema</h1>
     <div class="stage" id="stage" aria-roledescription="carrusel" aria-label="Láminas de la presentación">
-      <img id="slide" src="slides/01-cover.webp" alt="Lámina 1: Toda su empresa en un solo sistema" width="1920" height="1080" />
+      <img id="slide" src="slides/01-cover.webp?v=2" alt="Lámina 1: Toda su empresa en un solo sistema" width="1920" height="1080" />
       <button class="hit prev" id="hitPrev" type="button" aria-label="Lámina anterior"></button>
       <button class="hit next" id="hitNext" type="button" aria-label="Lámina siguiente"></button>
     </div>
@@ -127,7 +127,7 @@
   <nav class="thumbs" id="thumbs" aria-label="Todas las láminas"></nav>
 
   <noscript>
-    <p class="noscript">Para pasar las láminas se necesita JavaScript. También puede <a href="contame-presentacion.pdf">descargar la presentación en PDF</a>.</p>
+    <p class="noscript">Para pasar las láminas se necesita JavaScript. También puede <a href="contame-presentacion.pdf?v=2">descargar la presentación en PDF</a>.</p>
   </noscript>
 
   <script>
@@ -171,7 +171,9 @@
       var current = 0;
       var started = false;
 
-      var src = function (i) { return 'slides/' + SLIDES[i][0] + '.webp'; };
+      // ?v= cambia cada vez que se reexportan las láminas: el servidor las guarda en caché un año.
+      var VERSION = '2';
+      var src = function (i) { return 'slides/' + SLIDES[i][0] + '.webp?v=' + VERSION; };
       var preload = function (i) {
         if (i < 0 || i >= total || cache[i]) return;
         cache[i] = new Image();
