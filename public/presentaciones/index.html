@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Presentaciones | AmePhia</title>
+  <meta name="description" content="Presentaciones de los productos de AmePhia Software Solutions, para verlas en línea o descargarlas en PDF." />
+  <link rel="canonical" href="https://amephia.com/presentaciones/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="AmePhia" />
+  <meta property="og:title" content="Presentaciones | AmePhia" />
+  <meta property="og:description" content="Presentaciones de nuestros productos, para verlas en línea o descargarlas en PDF." />
+  <meta property="og:url" content="https://amephia.com/presentaciones/" />
+  <meta property="og:image" content="https://amephia.com/presentaciones/contame/og.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="preload" href="/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <style>
+    @font-face { font-family: 'Geist'; font-style: normal; font-weight: 100 900; font-display: swap; src: url('/fonts/geist-latin.woff2') format('woff2'); }
+    @font-face { font-family: 'Geist Mono'; font-style: normal; font-weight: 100 900; font-display: swap; src: url('/fonts/geist-mono-latin.woff2') format('woff2'); }
+    :root {
+      --bg: #060B16; --ink: #F1F5FF; --mute: #97A6C6; --line: rgba(148, 163, 220, 0.16);
+      --sig: #7DB0FF; --solid: #2563EB; --card-a: rgba(255, 255, 255, 0.045); --card-b: rgba(255, 255, 255, 0.015);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body { background: var(--bg); color: var(--ink); font-family: 'Geist', system-ui, sans-serif; -webkit-font-smoothing: antialiased; min-height: 100vh; display: flex; flex-direction: column; }
+    a { color: inherit; }
+    .mono { font-family: 'Geist Mono', ui-monospace, Menlo, monospace; }
+    .wrap { width: 100%; max-width: 1320px; margin: 0 auto; padding: 0 40px; }
+
+    .bar { border-bottom: 1px solid var(--line); }
+    .bar .wrap { display: flex; align-items: center; gap: 16px; height: 64px; }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 600; letter-spacing: -.01em; }
+    .brand img { width: 28px; height: 28px; }
+    .spacer { flex: 1; }
+    .back { font-size: 14px; color: var(--mute); text-decoration: none; }
+    .back:hover { color: var(--ink); }
+
+    .hero { padding: 72px 0 40px; background: radial-gradient(ellipse 60% 80% at 15% 0%, rgba(99, 140, 255, 0.18), transparent 70%); }
+    .eyebrow { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--sig); margin: 0 0 14px; }
+    h1 { font-size: clamp(40px, 6vw, 72px); line-height: 1; letter-spacing: -.035em; font-weight: 600; margin: 0 0 18px; }
+    .lead { font-size: 18px; line-height: 1.55; color: var(--mute); max-width: 620px; margin: 0; }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 24px; padding: 24px 0 96px; }
+    .card { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: linear-gradient(180deg, var(--card-a), var(--card-b)); transition: border-color .2s ease, transform .2s ease; }
+    .card:hover { border-color: rgba(125, 176, 255, .45); transform: translateY(-2px); }
+    .thumb { display: block; aspect-ratio: 16 / 9; background: #0f172a; border-bottom: 1px solid var(--line); overflow: hidden; }
+    .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease; }
+    .card:hover .thumb img { transform: scale(1.02); }
+    .body { padding: 22px 24px 24px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+    .meta { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--mute); }
+    .meta b { color: var(--sig); font-weight: 500; }
+    h2 { font-size: 22px; line-height: 1.2; letter-spacing: -.02em; font-weight: 600; margin: 0; }
+    h2 a { text-decoration: none; }
+    .desc { font-size: 15px; line-height: 1.55; color: var(--mute); margin: 0; flex: 1; }
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink); font-size: 14px; text-decoration: none; white-space: nowrap; }
+    .btn:hover { border-color: var(--sig); }
+    .btn.primary { background: var(--solid); border-color: var(--solid); color: #fff; }
+    .btn.primary:hover { background: #1D4ED8; }
+    .btn svg { width: 16px; height: 16px; }
+
+    footer { margin-top: auto; border-top: 1px solid var(--line); background: #040812; }
+    footer .wrap { display: flex; justify-content: space-between; gap: 16px; padding-top: 24px; padding-bottom: 24px; font-size: 11px; color: var(--mute); }
+    footer a { text-decoration: none; }
+    footer a:hover { color: var(--ink); }
+
+    @media (max-width: 640px) {
+      .wrap { padding: 0 16px; }
+      .hero { padding: 48px 0 28px; }
+      .lead { font-size: 16px; }
+      .grid { grid-template-columns: 1fr; padding-bottom: 64px; }
+      footer .wrap { flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) { .card, .thumb img { transition: none; } .card:hover { transform: none; } .card:hover .thumb img { transform: none; } }
+  </style>
+</head>
+<body>
+  <header class="bar">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="AmePhia, inicio"><img src="/assets/logo-nav.webp" alt="" width="28" height="28" /><span>AmePhia</span></a>
+      <div class="spacer"></div>
+      <a class="back" href="/">Volver al sitio</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow mono">Recursos</p>
+      <h1>Presentaciones</h1>
+      <p class="lead">Las presentaciones de nuestros productos, para verlas en línea o descargarlas en PDF.</p>
+    </div>
+  </section>
+
+  <main class="wrap">
+    <div class="grid">
+      <article class="card">
+        <a class="thumb" href="/presentaciones/contame/" tabindex="-1" aria-hidden="true"><img src="/presentaciones/contame/slides/01-cover.webp" alt="" width="1920" height="1080" loading="lazy" /></a>
+        <div class="body">
+          <div class="meta mono"><b>ContAme</b> · 25 láminas · Noviembre 2026</div>
+          <h2><a href="/presentaciones/contame/">ContAme · Presentación del sistema</a></h2>
+          <p class="desc">Qué es ContAme y cómo funciona cada área: facturación con el SRI, compras, cobros y pagos, inventario, importaciones, producción, contabilidad, impuestos y nómina. Incluye cómo el sistema aprende con cada aprobación.</p>
+          <div class="actions">
+            <a class="btn primary" href="/presentaciones/contame/">Ver presentación</a>
+            <a class="btn" href="/presentaciones/contame/contame-presentacion.pdf" download>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-4-4m4 4 4-4M5 21h14"/></svg>
+              Descargar PDF
+            </a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap mono">
+      <span>© 2026 AmePhia Software Solutions</span>
+      <a href="/">amephia.com</a>
+    </div>
+  </footer>
+  <script src="/assets/ga.js"></script>
+</body>
+</html>

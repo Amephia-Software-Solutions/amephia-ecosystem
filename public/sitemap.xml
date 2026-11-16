@@ -114,6 +114,20 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- ── PRESENTACIONES (HTML estático en public/presentaciones) ── -->
+  <url>
+    <loc>https://amephia.com/presentaciones/</loc>
+    <lastmod>2026-11-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://amephia.com/presentaciones/contame/</loc>
+    <lastmod>2026-11-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
   <!-- ── PRODUCTO: AmePhia EDU ────────────────────────── -->
   <url>
     <loc>https://amephia.com/proyecto/education</loc>

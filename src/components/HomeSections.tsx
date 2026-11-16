@@ -618,6 +618,7 @@ export const Footer = ({ onOpenLegal }: { onOpenLegal: (p: Exclude<LegalPage, nu
         </div>
         <span>California · Newark, NJ · Ecuador</span>
         <div className="flex gap-6">
+          <a href="/presentaciones/" className="am-link hover:text-white">{en ? 'Presentations' : 'Presentaciones'}</a>
           <button onClick={() => onOpenLegal('terms')} className="am-link hover:text-white">{en ? 'Terms' : 'Términos'}</button>
           <button onClick={() => onOpenLegal('privacy')} className="am-link hover:text-white">{en ? 'Privacy' : 'Privacidad'}</button>
         </div>
