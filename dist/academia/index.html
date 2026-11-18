@@ -5,17 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <script>
   // Enlaces antiguos del demo (/academia/#tablero, #portal…) siguen funcionando.
-  (function(){ var h = location.hash.slice(1); var demo = ['tablero','cursos','grupos','alumnos','notas','bitacora','certificados','flota','contame','portal','verificar'];
+  (function(){ var h = location.hash.slice(1); var demo = ['tablero','cursos','grupos','alumnos','notas','bitacora','certificados','recursos','contame','portal','verificar'];
     if (demo.indexOf(h) >= 0) location.replace('/academia/demo/#' + h); })();
 </script>
-<title>AmePhia Academia | Cursos, notas y certificados para escuelas de drones</title>
-<meta name="description" content="AmePhia Academia gestiona cursos, alumnos, notas, horas de vuelo y certificados verificables con QR. Conectada a ContAme para facturar al SRI, cobrar y llevar la contabilidad.">
+<title>AmePhia Academia | Cursos, notas y certificados para centros de capacitación</title>
+<meta name="description" content="AmePhia Academia gestiona cursos, alumnos, notas, laboratorios y certificados verificables con QR. Conectada a ContAme para facturar al SRI, cobrar y llevar la contabilidad.">
 <meta name="robots" content="noindex, nofollow">
 <link rel="canonical" href="https://amephia.com/academia/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="AmePhia">
 <meta property="og:title" content="AmePhia Academia">
-<meta property="og:description" content="De la matrícula al certificado: cursos, notas, bitácora de vuelo y certificados con QR, conectados a ContAme.">
+<meta property="og:description" content="De la matrícula al certificado: cursos, notas, laboratorios y certificados con QR, conectados a ContAme.">
 <meta property="og:url" content="https://amephia.com/academia/">
 <link rel="icon" href="/favicon.ico">
 <link rel="preload" href="/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -225,9 +225,9 @@ footer a:hover{color:var(--ink)}
   <div class="hero">
     <div class="contours" aria-hidden="true"><svg id="contours" preserveAspectRatio="xMidYMid slice"></svg></div>
     <div class="wrap">
-      <span class="pill"><i></i>Para escuelas de drones y centros de capacitación</span>
-      <h1>Tu escuela, de la matrícula al <em>certificado</em>.</h1>
-      <p class="lead">AmePhia Academia organiza cursos, grupos, notas y horas de vuelo, y emite certificados que cualquier empresa puede verificar. Conectada a ContAme, cada matrícula sale facturada ante el SRI y contabilizada sin digitar nada.</p>
+      <span class="pill"><i></i>Para centros de capacitación y certificación tecnológica</span>
+      <h1>Tu academia, de la matrícula al <em>certificado</em>.</h1>
+      <p class="lead">AmePhia Academia organiza cursos de nube, desarrollo y ciberseguridad: grupos, notas, laboratorios y simulacros de examen. Emite certificados que cualquier empresa puede verificar. Conectada a ContAme, cada matrícula sale facturada ante el SRI y contabilizada sin digitar nada.</p>
       <div class="ctas">
         <a class="btn primary" href="/academia/demo/#tablero">Explorar el demo en vivo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         <a class="btn" href="https://wa.me/13347324056?text=Hola%2C%20quiero%20conocer%20AmePhia%20Academia" target="_blank" rel="noopener">Agendar una reunión</a>
@@ -242,8 +242,8 @@ footer a:hover{color:var(--ink)}
           </div>
         </div>
         <div class="proof">
-          <div><b>Notas ponderadas</b><span>Teoría, simulador, vuelo y asistencia</span></div>
-          <div><b>Horas de vuelo firmadas</b><span>Bitácora por alumno y por dron</span></div>
+          <div><b>Notas ponderadas</b><span>Exámenes, simulacros, laboratorios y asistencia</span></div>
+          <div><b>Laboratorios prácticos</b><span>Horas y entornos por alumno</span></div>
           <div><b>Certificado con QR</b><span>Verificable por cualquier empresa</span></div>
           <div><b>Factura SRI automática</b><span>Con ContAme, en el mismo paso</span></div>
         </div>
@@ -255,13 +255,13 @@ footer a:hover{color:var(--ink)}
     <div class="wrap">
       <div class="head">
         <span class="eyebrow">El problema</span>
-        <h2>Una escuela de drones no debería vivir entre hojas de cálculo.</h2>
-        <p>La parte académica, la operación de vuelo y el dinero suelen estar en lugares distintos. Eso cuesta horas de coordinación y deja huecos que nadie ve hasta que un alumno reclama.</p>
+        <h2>Una academia no debería vivir entre hojas de cálculo.</h2>
+        <p>La parte académica, los laboratorios y el dinero suelen estar en lugares distintos. Eso cuesta horas de coordinación y deja huecos que nadie ve hasta que un alumno reclama.</p>
       </div>
       <div class="pains">
         <div class="pain"><span class="from">notas en Excel</span><h3>Notas en un solo lugar</h3><p>Cada componente con su peso. La nota final se calcula sola y se ve quién está en riesgo.</p></div>
-        <div class="pain"><span class="from">cuaderno de vuelos</span><h3>Horas de vuelo que cuentan</h3><p>Cada vuelo con fecha, dron, maniobra y firma del instructor. El requisito mínimo se controla solo.</p></div>
-        <div class="pain"><span class="from">certificado en Word</span><h3>Certificados imposibles de falsificar</h3><p>Código único y QR. La empresa que contrata al piloto lo comprueba en segundos.</p></div>
+        <div class="pain"><span class="from">laboratorios sin control</span><h3>Práctica que se puede medir</h3><p>Cada laboratorio con su entorno, duración y revisión del instructor. El requisito mínimo se controla solo.</p></div>
+        <div class="pain"><span class="from">certificado en Word</span><h3>Certificados imposibles de falsificar</h3><p>Código único y QR. La empresa que contrata al profesional lo comprueba en segundos.</p></div>
         <div class="pain"><span class="from">cobros sueltos</span><h3>Cobros que cuadran</h3><p>Factura, cobro y asiento contable en ContAme. El certificado se libera cuando la cuenta está al día.</p></div>
       </div>
     </div>
@@ -271,18 +271,18 @@ footer a:hover{color:var(--ink)}
     <div class="wrap">
       <div class="head">
         <span class="eyebrow">Funciones</span>
-        <h2>Todo lo que pasa en la escuela, en un solo panel.</h2>
+        <h2>Todo lo que pasa en la academia, en un solo panel.</h2>
         <p>Pensado para coordinadores, instructores y alumnos. Funciona en la computadora y en el celular.</p>
       </div>
       <div class="features">
         <div class="feat"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5M8 7h7"/></svg></span><h3>Cursos y grupos</h3><p>Horas de teoría y de práctica, requisitos para certificar, precio y vigencia del certificado.</p><a href="/academia/demo/#cursos">Ver en el demo →</a></div>
         <div class="feat"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><h3>Horario y asistencia</h3><p>Calendario semanal por sede. La asistencia se toma desde el celular del instructor.</p><a href="/academia/demo/#grupos">Ver en el demo →</a></div>
-        <div class="feat"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h5M8 17h3"/></svg></span><h3>Notas ponderadas</h3><p>Teórico, simulador, práctica de vuelo y asistencia, con nota mínima configurable por curso.</p><a href="/academia/demo/#notas">Ver en el demo →</a></div>
-        <div class="feat"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.2 4.6 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5L4.8 8.3l5-.7z"/></svg></span><h3>Bitácora de vuelo</h3><p>Cada vuelo queda firmado por el instructor y suma al requisito de horas del alumno.</p><a href="/academia/demo/#bitacora">Ver en el demo →</a></div>
+        <div class="feat"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h5M8 17h3"/></svg></span><h3>Notas ponderadas</h3><p>Exámenes, simulacros, laboratorios y asistencia, con nota mínima configurable por curso.</p><a href="/academia/demo/#notas">Ver en el demo →</a></div>
+        <div class="feat"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.2 4.6 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5L4.8 8.3l5-.7z"/></svg></span><h3>Bitácora de laboratorios</h3><p>Cada práctica queda revisada por el instructor y suma al requisito de horas del alumno.</p><a href="/academia/demo/#bitacora">Ver en el demo →</a></div>
         <div class="feat"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5"/><path d="M8.5 13l-1.5 8 5-2.5 5 2.5-1.5-8"/></svg></span><h3>Certificados con QR</h3><p>Se emiten en lote al cerrar notas, con vigencia y aviso de renovación antes de que venzan.</p><a href="/academia/demo/#certificados">Ver en el demo →</a></div>
-        <div class="feat"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="5.5" r="2.5"/><circle cx="18.5" cy="5.5" r="2.5"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/><path d="M7.5 7.5l3 3M16.5 7.5l-3 3M7.5 16.5l3-3M16.5 16.5l-3-3"/><rect x="10" y="10" width="4" height="4" rx="1"/></svg></span><h3>Flota de drones</h3><p>Horas por equipo, mantenimiento preventivo y reserva automática para cada práctica.</p><a href="/academia/demo/#flota">Ver en el demo →</a></div>
-        <div class="feat"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></svg></span><h3>Portal del alumno</h3><p>Su próxima clase, el dron asignado, sus notas, sus horas, sus facturas y su certificado.</p><a href="/academia/demo/#portal">Ver en el demo →</a></div>
-        <div class="feat"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M6 18l2.5-2.5M15.5 8.5L18 6"/></svg></span><h3>Condiciones de vuelo</h3><p>Viento, ráfagas y lluvia por sede antes de cada práctica, para decidir a tiempo.</p><a href="/academia/demo/#tablero">Ver en el demo →</a></div>
+        <div class="feat"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4.5 4.5 0 0 1-.5-9A6 6 0 0 1 18 9.5a4 4 0 0 1-.5 8.5z"/></svg></span><h3>Laboratorios y nube</h3><p>Aulas de cómputo y cuentas de práctica en la nube, con control del consumo de créditos.</p><a href="/academia/demo/#recursos">Ver en el demo →</a></div>
+        <div class="feat"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></svg></span><h3>Portal del alumno</h3><p>Su próxima clase, su laboratorio, sus notas, sus horas, sus facturas y su certificado.</p><a href="/academia/demo/#portal">Ver en el demo →</a></div>
+        <div class="feat"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M6 18l2.5-2.5M15.5 8.5L18 6"/></svg></span><h3>Preparación para el examen</h3><p>Fechas de examen y puntaje del último simulacro, para saber quién está listo y quién debe reforzar.</p><a href="/academia/demo/#tablero">Ver en el demo →</a></div>
       </div>
     </div>
   </section>
@@ -297,7 +297,7 @@ footer a:hover{color:var(--ink)}
       <div class="path">
         <div class="stop"><span class="n">01</span><span class="who">Academia</span><h3>Matrícula</h3><p>Alumno, curso, grupo y quién paga: el alumno o su empresa.</p></div>
         <div class="stop ca"><span class="n">02</span><span class="who">ContAme</span><h3>Factura autorizada</h3><p>Firmada, enviada al SRI y autorizada. El RIDE llega al correo del alumno.</p></div>
-        <div class="stop"><span class="n">03</span><span class="who">Academia</span><h3>Clases y vuelos</h3><p>Asistencia, simulador y prácticas de vuelo registradas en la bitácora.</p></div>
+        <div class="stop"><span class="n">03</span><span class="who">Academia</span><h3>Clases y laboratorios</h3><p>Asistencia, simulacros y laboratorios registrados por alumno.</p></div>
         <div class="stop ca"><span class="n">04</span><span class="who">ContAme</span><h3>Cobro y contabilidad</h3><p>Contado o cuotas. Cada pago genera su asiento y actualiza la cartera.</p></div>
         <div class="stop"><span class="n">05</span><span class="who">Academia</span><h3>Certificado</h3><p>Con nota aprobada, horas cumplidas y cuenta al día, se emite con QR.</p></div>
       </div>
@@ -309,8 +309,8 @@ footer a:hover{color:var(--ink)}
       <div>
         <div class="head" style="margin-bottom:0">
           <span class="eyebrow">Conectada a ContAme</span>
-          <h2>La administración de la escuela, resuelta.</h2>
-          <p>ContAme es el sistema contable de AmePhia para negocios de Ecuador. Junto con la Academia, la escuela deja de digitar dos veces y el contador recibe todo listo.</p>
+          <h2>La administración de la academia, resuelta.</h2>
+          <p>ContAme es el sistema contable de AmePhia para negocios de Ecuador. Junto con la Academia, la academia deja de digitar dos veces y el contador recibe todo listo.</p>
         </div>
         <ul class="checks">
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><b>Factura al matricular.</b> Al alumno o a la empresa que lo patrocina.</span></li>
@@ -324,7 +324,7 @@ footer a:hover{color:var(--ink)}
         <div><b>Cobros y cartera</b><span>Cuotas, abonos y estado de cuenta por alumno.</span></div>
         <div><b>Contabilidad NIIF para PYMES</b><span>Cada matrícula, cobro y pago con su asiento.</span></div>
         <div><b>Pago a instructores</b><span>Las horas dictadas pasan a cuentas por pagar o a nómina.</span></div>
-        <div><b>Flota como activo fijo</b><span>Depreciación mensual y mantenimientos como gasto.</span></div>
+        <div><b>Laboratorios y nube</b><span>Laptops como activo fijo y consumo de nube como gasto.</span></div>
         <div><b>Impuestos preparados</b><span>Prepara el 104, el 103 y el ATS; el contador revisa y presenta.</span></div>
       </div>
     </div>
@@ -334,14 +334,14 @@ footer a:hover{color:var(--ink)}
     <div class="wrap split">
       <div class="cert" aria-label="Ejemplo de certificado">
         <div class="cert-in">
-          <span class="iss">Escuela de drones · ejemplo</span>
+          <span class="iss">Academia de ejemplo</span>
           <span class="t">Certificado de competencia</span>
           <span style="font-size:12.5px;color:#3c4752">Se certifica que</span>
           <span class="nm">Sofía Andrade</span>
-          <p>aprobó el programa Piloto de drones · Nivel básico, con 16 horas de formación teórica y 10,4 horas de vuelo registradas en bitácora.</p>
+          <p>aprobó el programa AWS Cloud Practitioner · Preparación, con 16 horas de formación teórica y 12,5 horas de laboratorio.</p>
           <div class="row">
             <div class="sig"><b style="display:block;color:#14202c;font-size:11.5px">Director académico</b>Firma</div>
-            <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><div class="qr" id="qr" aria-hidden="true"></div><span class="code">AA-RPAS101-2026-0142</span></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><div class="qr" id="qr" aria-hidden="true"></div><span class="code">AA-CLF101-2026-0142</span></div>
             <div class="sig" style="text-align:right"><b style="display:block;color:#14202c;font-size:11.5px">Instructor evaluador</b>Firma</div>
           </div>
         </div>
@@ -350,11 +350,11 @@ footer a:hover{color:var(--ink)}
         <div class="head" style="margin-bottom:0">
           <span class="eyebrow">Certificados verificables</span>
           <h2>Un certificado que vale porque se puede comprobar.</h2>
-          <p>Cada certificado lleva un código único y un QR. Las empresas que contratan pilotos lo validan en una página pública y ven el titular, el curso, las horas de vuelo y la vigencia.</p>
+          <p>Cada certificado lleva un código único y un QR. Las empresas que contratan lo validan en una página pública y ven el titular, el curso, las horas de práctica y la vigencia.</p>
         </div>
-        <div class="verify-card"><span class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>Certificado válido</b><div class="mute" style="font-size:14px">Vigente · 10,4 h de vuelo acreditadas · emitido con AmePhia Academia</div></div></div>
+        <div class="verify-card"><span class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>Certificado válido</b><div class="mute" style="font-size:14px">Vigente · 12,5 h de laboratorio acreditadas · emitido con AmePhia Academia</div></div></div>
         <ul class="checks">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><b>Aviso de renovación.</b> Antes de que venza, la escuela ofrece la recertificación con su cotización.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><b>Aviso de renovación.</b> Antes de que venza, la academia ofrece la recertificación con su cotización.</span></li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><b>Emisión en lote.</b> Al cerrar notas, se emiten los de todos los que cumplen los requisitos.</span></li>
         </ul>
         <div class="ctas" style="justify-content:flex-start;margin-top:28px"><a class="btn" href="/academia/demo/#verificar">Probar la verificación</a></div>
@@ -366,11 +366,11 @@ footer a:hover{color:var(--ink)}
     <div class="wrap">
       <div class="head">
         <span class="eyebrow">Para quién es</span>
-        <h2>Hecha para drones. Útil para cualquier formación con práctica.</h2>
+        <h2>Para cualquier formación con práctica y certificación.</h2>
       </div>
       <div class="who-grid">
-        <div><h3>Escuelas de pilotos de drones</h3><p>Cursos básicos y avanzados, fotogrametría, aspersión agrícola, termografía y mantenimiento.</p></div>
-        <div><h3>Centros de capacitación técnica</h3><p>Formación con horas prácticas que deben registrarse y certificarse: maquinaria, seguridad industrial, soldadura.</p></div>
+        <div><h3>Academias de tecnología</h3><p>Preparación para certificaciones de nube como AWS, desarrollo, DevOps, ciberseguridad y datos.</p></div>
+        <div><h3>Centros de capacitación técnica</h3><p>Formación con horas prácticas que deben registrarse y certificarse: maquinaria, seguridad industrial, idiomas.</p></div>
         <div><h3>Empresas que forman a su personal</h3><p>Llevan el registro de quién está certificado, hasta cuándo y quién debe renovar.</p></div>
       </div>
     </div>
@@ -381,7 +381,7 @@ footer a:hover{color:var(--ink)}
       <div class="head"><span class="eyebrow">Preguntas frecuentes</span><h2>Lo que suelen preguntarnos.</h2></div>
       <div class="faq">
         <details><summary>¿Necesito usar ContAme para tener la Academia?</summary><p>No es obligatorio. La conexión con ContAme es la que suma la factura electrónica, los cobros y la contabilidad automática, y es la forma recomendada de trabajar.</p></details>
-        <details><summary>¿Se adapta a mis cursos y a mi forma de calificar?</summary><p>Sí. Cada curso define sus horas de teoría y de práctica, el peso de cada componente de la nota, la nota mínima, las horas de vuelo requeridas y la vigencia del certificado.</p></details>
+        <details><summary>¿Se adapta a mis cursos y a mi forma de calificar?</summary><p>Sí. Cada curso define sus horas de teoría y de práctica, el peso de cada componente de la nota, la nota mínima, las horas de laboratorio requeridas y la vigencia del certificado.</p></details>
         <details><summary>¿Los alumnos tienen que instalar algo?</summary><p>No. El portal del alumno funciona en el navegador del celular o de la computadora.</p></details>
         <details><summary>¿Puedo traer mis alumnos y certificados actuales?</summary><p>Sí. Se importan desde Excel o CSV y los repetidos se detectan por cédula.</p></details>
         <details><summary>¿Cuánto cuesta?</summary><p>Depende del número de alumnos y de sedes. Escríbenos y te enviamos una cotización.</p></details>
@@ -393,7 +393,7 @@ footer a:hover{color:var(--ink)}
     <div class="wrap">
       <div class="final-card">
         <span class="eyebrow">AmePhia Academia</span>
-        <h2>Veamos cómo funcionaría en tu escuela.</h2>
+        <h2>Veamos cómo funcionaría en tu academia.</h2>
         <p>Te mostramos el sistema con tus cursos y te ayudamos a pasar tus alumnos, tus notas y tus certificados.</p>
         <div class="ctas">
           <a class="btn primary" href="https://wa.me/13347324056?text=Hola%2C%20quiero%20conocer%20AmePhia%20Academia" target="_blank" rel="noopener">Escribir por WhatsApp</a>

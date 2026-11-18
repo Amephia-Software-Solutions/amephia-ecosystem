@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="AmePhia Academia: gestión de cursos, alumnos, notas, bitácora de vuelo y certificaciones, conectada a ContAme.">
+<meta name="description" content="AmePhia Academia: gestión de cursos, alumnos, notas, bitácora de laboratorios y certificaciones, conectada a ContAme.">
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="/favicon.ico">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
@@ -176,7 +176,7 @@ td.r,th.r{text-align:right}
 .cal .slots{padding:8px;display:flex;flex-direction:column;gap:8px}
 .sess{border-radius:9px;padding:9px 10px;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);display:flex;flex-direction:column;gap:4px;font-size:12.5px;cursor:pointer;transition:box-shadow .15s}
 .sess:hover{box-shadow:var(--shadow-lg)}
-.sess.vuelo{border-left-color:var(--ok)}
+.sess.lab{border-left-color:var(--ok)}
 .sess.sim{border-left-color:var(--warn)}
 .sess b{font-size:13px;font-weight:600;line-height:1.3}
 
@@ -320,7 +320,7 @@ td.r,th.r{text-align:right}
 .final.pill{display:inline-block;min-width:48px;text-align:center;padding:3px 8px;border-radius:8px;background:var(--surface-2)}
 .final.pill.ok{background:var(--ok-soft);color:var(--ok)}.final.pill.bad{background:var(--bad-soft);color:var(--bad)}
 .sess{background:color-mix(in srgb,var(--accent) 6%,var(--surface))}
-.sess.vuelo{background:color-mix(in srgb,var(--ok) 7%,var(--surface))}
+.sess.lab{background:color-mix(in srgb,var(--ok) 7%,var(--surface))}
 .sess.sim{background:color-mix(in srgb,var(--warn) 8%,var(--surface))}
 .wx{display:flex;gap:12px;align-items:center}
 .wind{width:40px;height:40px;border-radius:50%;border:1px solid var(--border);display:grid;place-items:center;flex:none;background:var(--surface-2)}
@@ -371,14 +371,14 @@ td.r,th.r{text-align:right}
   <aside class="side" id="side">
     <a class="brand" href="/academia/" title="Volver a AmePhia Academia" style="text-decoration:none;color:inherit">
       <div class="brand-mark" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--bg)" stroke-width="1.8" stroke-linecap="round"><circle cx="5.5" cy="5.5" r="2.6"/><circle cx="18.5" cy="5.5" r="2.6"/><circle cx="5.5" cy="18.5" r="2.6"/><circle cx="18.5" cy="18.5" r="2.6"/><path d="M7.5 7.5l3 3M16.5 7.5l-3 3M7.5 16.5l3-3M16.5 16.5l-3-3"/><rect x="9.6" y="9.6" width="4.8" height="4.8" rx="1.2" fill="var(--bg)" stroke="none"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--bg)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/><path d="M22 9v6"/></svg>
       </div>
       <div><b>AmePhia Academia</b><span>Cursos y certificaciones</span></div>
     </a>
     <nav class="nav" id="nav"></nav>
     <div class="side-foot">
       <div class="small" style="display:flex;align-items:center;gap:8px;font-weight:600"><span class="dot"></span>Conectada a ContAme</div>
-      <div class="small muted">AeroEscuela Demo S.A. · facturación, cobros y contabilidad en línea</div>
+      <div class="small muted">TechCampus Demo S.A. · facturación, cobros y contabilidad en línea</div>
     </div>
     <div class="me-card"><span class="av" style="--h:200">CA</span><div><b>Carolina Arévalo</b><span class="small muted">Coordinación académica</span></div></div>
   </aside>
@@ -411,7 +411,6 @@ const I = {
   grade:'<path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h5M8 17h3"/>',
   log:'<path d="M12 3l2.2 4.6 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5L4.8 8.3l5-.7z"/>',
   cert:'<circle cx="12" cy="9" r="5"/><path d="M8.5 13l-1.5 8 5-2.5 5 2.5-1.5-8"/>',
-  drone:'<circle cx="5.5" cy="5.5" r="2.5"/><circle cx="18.5" cy="5.5" r="2.5"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/><path d="M7.5 7.5l3 3M16.5 7.5l-3 3M7.5 16.5l3-3M16.5 16.5l-3-3"/><rect x="10" y="10" width="4" height="4" rx="1"/>',
   link:'<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
   phone:'<rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10.5 18.5h3"/>',
   shield:'<path d="M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/>',
@@ -434,7 +433,12 @@ const I = {
   leaf:'<path d="M5 19c0-8 5-14 15-14 0 10-6 15-14 15"/><path d="M5 19l8-8"/>',
   thermo:'<path d="M10 14V5a2 2 0 0 1 4 0v9a4 4 0 1 1-4 0z"/><path d="M12 10v6"/>',
   wind:'<path d="M3 8h11a3 3 0 1 0-3-3M3 12h16a3 3 0 1 1-3 3M3 16h8"/>',
-  nav:'<path d="M12 3l6 17-6-4-6 4z"/>'
+  nav:'<path d="M12 3l6 17-6-4-6 4z"/>',
+  cloud:'<path d="M7 18a4.5 4.5 0 0 1-.5-9A6 6 0 0 1 18 9.5a4 4 0 0 1-.5 8.5z"/>',
+  code:'<path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/>',
+  box:'<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/>',
+  lock:'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+  chart:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>'
 };
 const ic = (n, extra='') => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ${extra}>${I[n]}</svg>`;
 
@@ -475,34 +479,34 @@ function kpi(label, icon, value, sub, vals, delta){
 }
 
 /* ===================== Datos de ejemplo ===================== */
-const COMPANY = 'AeroEscuela Demo S.A.';
+const COMPANY = 'TechCampus Demo S.A.';
 const COURSES = [
-  {id:'RPAS-101', name:'Piloto de drones · Nivel básico', level:'Básico', teo:16, vuelo:24, minFlight:10, price:450, months:24,
-   modules:['Normativa aeronáutica y espacio aéreo','Meteorología aplicada al vuelo','Planificación y listas de chequeo','Procedimientos de emergencia','Vuelo con línea de vista (VLOS)'],
-   cert:'Piloto de drones — Nivel básico'},
-  {id:'RPAS-201', name:'Piloto profesional · Operaciones avanzadas', level:'Avanzado', teo:24, vuelo:36, minFlight:20, price:780, months:24,
-   modules:['Gestión de riesgo operacional','Vuelo nocturno y en entornos urbanos','Operaciones con carga útil','Coordinación con control de tránsito aéreo','Evaluación práctica en campo'],
-   cert:'Piloto profesional de drones — Operaciones avanzadas'},
-  {id:'FOT-301', name:'Fotogrametría y mapeo con drones', level:'Especialización', teo:14, vuelo:18, minFlight:8, price:620, months:36,
-   modules:['Planes de vuelo automáticos y traslapes','Puntos de control (GCP) y RTK','Procesamiento de ortomosaicos','Modelos digitales de superficie','Entrega de planos y volumetrías'],
-   cert:'Especialista en fotogrametría con drones'},
-  {id:'AGR-310', name:'Agricultura de precisión y aspersión', level:'Especialización', teo:16, vuelo:24, minFlight:12, price:850, months:24,
-   modules:['Drones de aspersión: calibración y caudal','Mapas de prescripción por lote','Manejo seguro de agroquímicos','Operación en bananeras y cacaotales','Mantenimiento de bombas y boquillas'],
-   cert:'Operador de drones agrícolas de aspersión'},
-  {id:'TER-320', name:'Inspección termográfica industrial', level:'Especialización', teo:12, vuelo:12, minFlight:6, price:540, months:36,
-   modules:['Fundamentos de termografía','Inspección de paneles solares','Líneas eléctricas y subestaciones','Reporte técnico de hallazgos'],
-   cert:'Inspector termográfico con drones'},
-  {id:'MNT-150', name:'Mantenimiento y reparación de drones', level:'Técnico', teo:12, vuelo:8, minFlight:0, price:320, months:36,
-   modules:['Motores, hélices y ESC','Baterías LiPo: cuidado y almacenamiento','Calibración de IMU y brújula','Diagnóstico de fallas frecuentes'],
-   cert:'Técnico en mantenimiento de drones'}
+  {id:'CLF-101', name:'AWS Cloud Practitioner · Preparación', level:'Fundamentos', teo:16, lab:14, minLab:10, price:390, months:24,
+   modules:['Conceptos de nube y responsabilidad compartida','Servicios principales: EC2, S3, RDS y Lambda','Seguridad e identidad con IAM','Precios, facturación y soporte','Simulacros de examen'],
+   cert:'Fundamentos de nube AWS — preparación Cloud Practitioner'},
+  {id:'SAA-201', name:'AWS Solutions Architect Associate · Preparación', level:'Asociado', teo:24, lab:36, minLab:20, price:690, months:24,
+   modules:['Redes con VPC, subredes y enrutamiento','Alta disponibilidad y escalado automático','Almacenamiento y bases de datos','Arquitecturas seguras y de bajo costo','Laboratorio final: arquitectura de tres capas'],
+   cert:'Arquitectura de soluciones en AWS — nivel asociado'},
+  {id:'K8S-301', name:'DevOps con Docker y Kubernetes', level:'Especialización', teo:14, lab:18, minLab:8, price:620, months:36,
+   modules:['Contenedores con Docker','Kubernetes: pods, servicios y despliegues','Integración y entrega continua (CI/CD)','Monitoreo y registros','Proyecto final en un clúster real'],
+   cert:'DevOps con contenedores y Kubernetes'},
+  {id:'DVA-310', name:'AWS Developer Associate · Preparación', level:'Asociado', teo:20, lab:28, minLab:16, price:650, months:24,
+   modules:['Aplicaciones sin servidor con Lambda y API Gateway','DynamoDB y modelado de datos','Despliegue con CloudFormation y SAM','Seguridad para desarrolladores','Simulacros de examen'],
+   cert:'Desarrollo de aplicaciones en AWS — nivel asociado'},
+  {id:'SEC-320', name:'Ciberseguridad en la nube', level:'Especialización', teo:16, lab:16, minLab:10, price:580, months:36,
+   modules:['Gestión de identidades y accesos','Cifrado y gestión de llaves','Detección de amenazas y respuesta','Cumplimiento y auditoría'],
+   cert:'Seguridad en entornos de nube'},
+  {id:'DAT-150', name:'Python y análisis de datos', level:'Fundamentos', teo:14, lab:18, minLab:10, price:320, months:36,
+   modules:['Python desde cero','Pandas y limpieza de datos','Visualización y tableros','Proyecto con datos reales'],
+   cert:'Análisis de datos con Python'}
 ];
 const GROUPS = [
-  {id:'G14', course:'RPAS-101', city:'Guayaquil', site:'Campo de vuelo Samborondón', schedule:'Sábados 08:00–13:00', start:'2026-10-03', end:'2026-12-12', instructor:'Cap. Andrés Molina', cap:12, progress:.62, state:'En curso'},
-  {id:'G15', course:'RPAS-101', city:'Quito', site:'Aula 2 y pista Tababela', schedule:'Mar y Jue 18:30–21:30', start:'2026-11-03', end:'2027-01-14', instructor:'Ing. Valeria Cedeño', cap:12, progress:.2, state:'En curso'},
-  {id:'G06', course:'RPAS-201', city:'Guayaquil', site:'Campo de vuelo Samborondón', schedule:'Domingos 08:00–14:00', start:'2026-09-20', end:'2027-01-31', instructor:'Cap. Andrés Molina', cap:10, progress:.45, state:'En curso'},
-  {id:'G03', course:'FOT-301', city:'Cuenca', site:'Laboratorio SIG y Parque Industrial', schedule:'Vie 17:00–21:00 · Sáb 08:00–12:00', start:'2026-09-11', end:'2026-11-28', instructor:'Ing. Diego Paredes', cap:10, progress:.85, state:'Cierre de notas'},
-  {id:'G02', course:'AGR-310', city:'Quevedo', site:'Finca demostrativa El Guayabo', schedule:'Sábados 07:00–15:00', start:'2026-10-17', end:'2027-01-09', instructor:'Tnlgo. Karla Ríos', cap:10, progress:.35, state:'En curso'},
-  {id:'G01', course:'TER-320', city:'Guayaquil', site:'Planta solar de prácticas', schedule:'Sábados 08:00–14:00', start:'2026-12-05', end:'2027-01-23', instructor:'Ing. Diego Paredes', cap:10, progress:0, state:'Inscripciones abiertas'}
+  {id:'G14', course:'CLF-101', city:'Guayaquil', site:'Sede Kennedy · Aula 3', schedule:'Sábados 08:00–13:00', start:'2026-10-03', end:'2026-12-12', instructor:'Ing. Andrés Molina', cap:20, progress:.62, state:'En curso'},
+  {id:'G15', course:'CLF-101', city:'Quito', site:'Sede La Carolina · Aula 2', schedule:'Mar y Jue 18:30–21:30', start:'2026-11-03', end:'2027-01-14', instructor:'Ing. Valeria Cedeño', cap:20, progress:.2, state:'En curso'},
+  {id:'G06', course:'SAA-201', city:'En línea', site:'Clase en vivo por videollamada', schedule:'Domingos 08:00–14:00', start:'2026-09-20', end:'2027-01-31', instructor:'Ing. Andrés Molina', cap:25, progress:.45, state:'En curso'},
+  {id:'G03', course:'K8S-301', city:'Cuenca', site:'Laboratorio de cómputo', schedule:'Vie 17:00–21:00 · Sáb 08:00–12:00', start:'2026-09-11', end:'2026-11-28', instructor:'Ing. Diego Paredes', cap:16, progress:.85, state:'Cierre de notas'},
+  {id:'G02', course:'DVA-310', city:'Guayaquil', site:'In company · Banco Demo S.A.', schedule:'Sábados 08:00–14:00', start:'2026-10-17', end:'2027-01-09', instructor:'Ing. Karla Ríos', cap:12, progress:.35, state:'En curso'},
+  {id:'G01', course:'SEC-320', city:'Guayaquil', site:'Sede Kennedy · Laboratorio', schedule:'Sábados 08:00–14:00', start:'2026-12-05', end:'2027-01-23', instructor:'Ing. Diego Paredes', cap:20, progress:0, state:'Inscripciones abiertas'}
 ];
 const course = id => COURSES.find(c => c.id === id);
 const group = id => GROUPS.find(g => g.id === id);
@@ -514,22 +518,22 @@ const NAMES = ['Sofía Andrade','Mateo Villacís','Camila Briones','Joaquín Sal
   'Victoria León','Felipe Montalvo','Carla Intriago','Esteban Murillo',
   'Ariana Cevallos','Julián Proaño'];
 const PLAN = [['G14',8],['G15',5],['G06',4],['G03',5],['G02',4],['G01',2]];
-const DRONES_BY = {'RPAS-101':['DR-01','DR-02','DR-03'],'RPAS-201':['DR-03','DR-06'],'FOT-301':['DR-04'],'AGR-310':['DR-05'],'TER-320':['DR-06'],'MNT-150':['DR-07']};
-const FLEET = [
-  {code:'DR-01', model:'DJI Mini 4 Pro', use:'Entrenamiento básico', hours:142.5, next:150, batt:'3 baterías · 118 ciclos', state:'Operativo', book:740},
-  {code:'DR-02', model:'DJI Mini 4 Pro', use:'Entrenamiento básico', hours:149.1, next:150, batt:'3 baterías · 131 ciclos', state:'Revisión próxima', book:705},
-  {code:'DR-03', model:'DJI Air 3', use:'Básico y avanzado', hours:88.4, next:150, batt:'4 baterías · 64 ciclos', state:'Operativo', book:1120},
-  {code:'DR-04', model:'DJI Mavic 3 Enterprise RTK', use:'Fotogrametría', hours:211.7, next:250, batt:'4 baterías · 152 ciclos', state:'Operativo', book:4260},
-  {code:'DR-05', model:'DJI Agras T40', use:'Aspersión agrícola', hours:96.0, next:100, batt:'2 baterías · 210 ciclos', state:'Revisión próxima', book:17480},
-  {code:'DR-06', model:'DJI Matrice 30T', use:'Termografía y avanzado', hours:64.2, next:150, batt:'2 baterías · 48 ciclos', state:'Operativo', book:9870},
-  {code:'DR-07', model:'DJI Air 3', use:'Taller de mantenimiento', hours:121.3, next:150, batt:'2 baterías · 97 ciclos', state:'En mantenimiento', book:960},
-  {code:'SIM-01', model:'Estación de simulador de vuelo', use:'Simulador (todos los cursos)', hours:612.0, next:null, batt:'—', state:'Operativo', book:2150}
+const ENVS_BY = {'CLF-101':['SBX-01','LAB-01'],'SAA-201':['SBX-02'],'K8S-301':['K8S-01'],'DVA-310':['SBX-03'],'SEC-320':['SBX-04'],'DAT-150':['LAB-02']};
+const RESOURCES = [
+  {code:'LAB-01', model:'Laboratorio Kennedy · 20 laptops', use:'Clases presenciales en Guayaquil', usage:'142 h de uso este mes', pct:.62, state:'Operativo', book:14800, kind:'Activo fijo'},
+  {code:'LAB-02', model:'Laboratorio La Carolina · 16 laptops', use:'Clases presenciales en Quito', usage:'96 h de uso este mes', pct:.48, state:'Operativo', book:11900, kind:'Activo fijo'},
+  {code:'SBX-01', model:'Cuenta de práctica AWS · CLF-101', use:'Laboratorios de fundamentos', usage:'$38 de $60 en créditos', pct:.63, state:'Operativo', book:38, kind:'Gasto del mes'},
+  {code:'SBX-02', model:'Cuenta de práctica AWS · SAA-201', use:'Laboratorios de arquitectura', usage:'$171 de $200 en créditos', pct:.86, state:'Cerca del límite', book:171, kind:'Gasto del mes'},
+  {code:'SBX-03', model:'Cuenta de práctica AWS · DVA-310', use:'Laboratorios de desarrollo', usage:'$64 de $150 en créditos', pct:.43, state:'Operativo', book:64, kind:'Gasto del mes'},
+  {code:'SBX-04', model:'Cuenta de práctica AWS · SEC-320', use:'Se activa con el grupo G01', usage:'Inicia el 5 de diciembre', pct:0, state:'Por activar', book:0, kind:'Gasto del mes'},
+  {code:'K8S-01', model:'Clúster Kubernetes de práctica', use:'DevOps · K8S-301', usage:'$118 de $140 en créditos', pct:.84, state:'Cerca del límite', book:118, kind:'Gasto del mes'},
+  {code:'SIM-01', model:'Plataforma de simulacros de examen', use:'Todos los cursos', usage:'1.240 intentos este mes', pct:null, state:'Operativo', book:49, kind:'Gasto del mes'}
 ];
-const FLIGHT_TYPES = {'RPAS-101':['Despegue y aterrizaje de precisión','Circuito en ocho','Vuelo estacionario con viento','Retorno a casa manual'],
-  'RPAS-201':['Vuelo nocturno','Operación urbana simulada','Carga útil y lanzamiento','Inspección de estructura'],
-  'FOT-301':['Misión de mapeo en grilla','Vuelo oblicuo para modelo 3D','Levantamiento con RTK'],
-  'AGR-310':['Calibración de caudal','Aspersión por franjas','Mapa de prescripción'],
-  'TER-320':['Inspección de paneles','Barrido térmico de línea'], 'MNT-150':['Prueba de vuelo tras reparación']};
+const LAB_TYPES = {'CLF-101':['Instancia EC2 y grupos de seguridad','Bucket S3 con política de acceso','Usuarios, grupos y roles en IAM','Alarma de facturación'],
+  'SAA-201':['VPC con subredes públicas y privadas','Balanceador y escalado automático','Base de datos RDS multi-AZ','Arquitectura de tres capas'],
+  'K8S-301':['Imagen Docker y registro','Despliegue en Kubernetes','Pipeline de CI/CD','Monitoreo con métricas'],
+  'DVA-310':['API con Lambda y API Gateway','Tabla DynamoDB','Despliegue con SAM'],
+  'SEC-320':['Políticas de mínimo privilegio','Cifrado con KMS'], 'DAT-150':['Limpieza de datos con Pandas']};
 
 let invSeq = 4731, entrySeq = 388;
 const STUDENTS = [];
@@ -539,13 +543,13 @@ PLAN.forEach(([gid, n]) => {
   for (let i = 0; i < n; i++) {
     const name = NAMES[ni++];
     const s = { id:'AL-'+String(1040+ni).padStart(4,'0'), name, ced:'09'+String(Math.floor(R(10000000,99999999))), email:slug(name)+'@ejemplo.ec',
-      phone:'09'+String(Math.floor(R(80000000,99999999))), city:g.city, group:gid, payer: gid==='G02' && i<3 ? 'Agrícola Demo S.A.' : null,
-      g:{teo:null, sim:null, vuelo:null, asis:null}, flightMin:0, balance:0, enrolled: iso(addDays(pdate(g.start), -Math.floor(R(3,18)))) };
-    if (gid==='G03'){ s.g = {teo:r1(R(7.4,9.6)), sim:r1(R(7.2,9.5)), vuelo:r1(R(7.5,9.4)), asis:Math.round(R(88,100))}; s.flightMin = Math.round(R(520,690)); }
-    if (gid==='G14'){ s.g = {teo:r1(R(7,9.5)), sim:r1(R(6.8,9.4)), vuelo:r1(R(6.9,9.2)), asis:Math.round(R(84,100))}; s.flightMin = Math.round(R(320,560)); }
-    if (gid==='G06'){ s.g = {teo:r1(R(7.2,9.6)), sim:r1(R(7,9.3)), vuelo:null, asis:Math.round(R(85,100))}; s.flightMin = Math.round(R(600,900)); }
-    if (gid==='G15'){ s.g = {teo:null, sim:null, vuelo:null, asis:Math.round(R(80,100))}; s.flightMin = Math.round(R(35,110)); }
-    if (gid==='G02'){ s.g = {teo:r1(R(7.3,9.5)), sim:null, vuelo:null, asis:Math.round(R(86,100))}; s.flightMin = Math.round(R(160,320)); }
+      phone:'09'+String(Math.floor(R(80000000,99999999))), city:g.city, group:gid, payer: gid==='G02' && i<3 ? 'Banco Demo S.A.' : null,
+      g:{teo:null, sim:null, lab:null, asis:null}, labMin:0, balance:0, enrolled: iso(addDays(pdate(g.start), -Math.floor(R(3,18)))) };
+    if (gid==='G03'){ s.g = {teo:r1(R(7.4,9.6)), sim:r1(R(7.2,9.5)), lab:r1(R(7.5,9.4)), asis:Math.round(R(88,100))}; s.labMin = Math.round(R(520,690)); }
+    if (gid==='G14'){ s.g = {teo:r1(R(7,9.5)), sim:r1(R(6.8,9.4)), lab:r1(R(6.9,9.2)), asis:Math.round(R(84,100))}; s.labMin = Math.round(R(320,560)); }
+    if (gid==='G06'){ s.g = {teo:r1(R(7.2,9.6)), sim:r1(R(7,9.3)), lab:null, asis:Math.round(R(85,100))}; s.labMin = Math.round(R(600,900)); }
+    if (gid==='G15'){ s.g = {teo:null, sim:null, lab:null, asis:Math.round(R(80,100))}; s.labMin = Math.round(R(35,110)); }
+    if (gid==='G02'){ s.g = {teo:r1(R(7.3,9.5)), sim:null, lab:null, asis:Math.round(R(86,100))}; s.labMin = Math.round(R(160,320)); }
     if (rng() < .3) s.balance = Math.min(c.price, pick([150,225,190]));
     if (gid==='G01'){ s.balance = 0; }
     STUDENTS.push(s);
@@ -555,9 +559,9 @@ PLAN.forEach(([gid, n]) => {
 (() => { const g3 = STUDENTS.filter(s => s.group==='G03');
   g3.forEach(s => s.balance = 0);
   g3[3].balance = 310;                                  // aprobado con saldo pendiente
-  Object.assign(g3[4].g, {teo:6.6, vuelo:5.8}); g3[4].flightMin = 405; // en riesgo
+  Object.assign(g3[4].g, {teo:6.6, lab:5.8}); g3[4].labMin = 405; // en riesgo
   const g14 = STUDENTS.filter(s => s.group==='G14');
-  g14[0].balance = 0; Object.assign(g14[5].g,{vuelo:5.9, asis:72});
+  g14[0].balance = 0; Object.assign(g14[5].g,{lab:5.9, asis:72});
 })();
 
 function buildInvoice(s){
@@ -573,51 +577,51 @@ const ALUMNI = ['Ricardo Palacios','Fernanda Ruiz','Héctor Loor','Diana Macías
 const CERTS = [];
 let certSeq = 118;
 ALUMNI.forEach((n, i) => {
-  const cid = ['RPAS-101','RPAS-101','FOT-301','RPAS-201','AGR-310','RPAS-101','TER-320','MNT-150'][i % 8];
+  const cid = ['CLF-101','CLF-101','K8S-301','SAA-201','DVA-310','CLF-101','SEC-320','DAT-150'][i % 8];
   const c = course(cid);
   const issued = i === 13 ? new Date(2024,5,4) : i < 4 ? addDays(new Date(2024,11,10), i*6) : addDays(new Date(2025,1,14), i*37);
   const exp = new Date(issued); exp.setMonth(exp.getMonth() + c.months);
-  CERTS.push({code:'AA-'+cid.replace('-','')+'-'+issued.getFullYear()+'-'+String(certSeq++).padStart(4,'0'), name:n, course:cid, issued:iso(issued), expires:iso(exp), grade:r1(R(7.6,9.7)), flightMin:Math.round(R(c.minFlight*60, c.minFlight*60+260)), ced:'09'+String(Math.floor(R(10000000,99999999)))});
+  CERTS.push({code:'AA-'+cid.replace('-','')+'-'+issued.getFullYear()+'-'+String(certSeq++).padStart(4,'0'), name:n, course:cid, issued:iso(issued), expires:iso(exp), grade:r1(R(7.6,9.7)), labMin:Math.round(R(c.minLab*60, c.minLab*60+260)), ced:'09'+String(Math.floor(R(10000000,99999999)))});
 });
 CERTS.sort((a,b) => b.issued.localeCompare(a.issued));
 
 const EVENTS = [
-  {t:'Hoy 09:12', kind:'sri', text:'Factura 001-002-000004760 autorizada por el SRI', sub:'Matrícula de Ariana Cevallos · TER-320'},
+  {t:'Hoy 09:12', kind:'sri', text:'Factura 001-002-000004760 autorizada por el SRI', sub:'Matrícula de Ariana Cevallos · SEC-320'},
   {t:'Hoy 09:12', kind:'ledger', text:'Asiento 2026-11-0418 contabilizado', sub:'Cuentas por cobrar contra ingresos por capacitación'},
   {t:'Ayer 17:40', kind:'pay', text:'Cobro registrado: $225.00 por transferencia', sub:'Joaquín Salazar · cartera actualizada en la Academia'},
-  {t:'Ayer 16:05', kind:'cert', text:'Certificado liberado: cuenta al día', sub:'Paula Espinoza · RPAS-201'},
-  {t:'16 nov', kind:'pay', text:'Pago a instructor enviado a cuentas por pagar', sub:'Ing. Diego Paredes · 12 horas dictadas en FOT-301'},
-  {t:'15 nov', kind:'wrench', text:'Mantenimiento de DR-07 registrado como gasto', sub:'Cambio de gimbal y hélices · $186.40'},
-  {t:'15 nov', kind:'ledger', text:'Depreciación mensual de la flota contabilizada', sub:'8 equipos · activos fijos de ContAme'}
+  {t:'Ayer 16:05', kind:'cert', text:'Certificado liberado: cuenta al día', sub:'Paula Espinoza · SAA-201'},
+  {t:'16 nov', kind:'pay', text:'Pago a instructor enviado a cuentas por pagar', sub:'Ing. Diego Paredes · 12 horas dictadas en K8S-301'},
+  {t:'15 nov', kind:'wrench', text:'Consumo de nube de noviembre registrado como gasto', sub:'Cuentas de práctica AWS · $171.00'},
+  {t:'15 nov', kind:'ledger', text:'Depreciación mensual de los laboratorios', sub:'36 laptops · activos fijos de ContAme'}
 ];
 
 // Semana actual (lun 16 – dom 22 nov 2026)
 const SESSIONS = [
-  {day:0, from:'18:30', to:'21:30', g:'G15', type:'teo', title:'Normativa aeronáutica y espacio aéreo', room:'Aula 2 · Quito', taken:true},
-  {day:1, from:'18:30', to:'21:30', g:'G15', type:'teo', title:'Meteorología aplicada al vuelo', room:'Aula 2 · Quito', taken:true},
-  {day:2, from:'19:00', to:'21:00', g:'G06', type:'sim', title:'Simulador: emergencias en vuelo nocturno', room:'Sala de simulador · Guayaquil', taken:false},
-  {day:3, from:'18:30', to:'21:30', g:'G15', type:'sim', title:'Simulador: primeros despegues', room:'Sala de simulador · Quito', taken:false},
-  {day:4, from:'17:00', to:'21:00', g:'G03', type:'teo', title:'Procesamiento de ortomosaicos', room:'Laboratorio SIG · Cuenca', taken:false},
-  {day:5, from:'07:00', to:'15:00', g:'G02', type:'vuelo', title:'Aspersión por franjas en banano', room:'Finca El Guayabo · Quevedo', drones:'DR-05', taken:false},
-  {day:5, from:'08:00', to:'12:00', g:'G03', type:'vuelo', title:'Evaluación final: misión de mapeo', room:'Parque Industrial · Cuenca', drones:'DR-04', taken:false},
-  {day:5, from:'08:00', to:'13:00', g:'G14', type:'vuelo', title:'Circuitos y aterrizaje de precisión', room:'Campo Samborondón', drones:'DR-01 · DR-02 · DR-03', taken:false},
-  {day:6, from:'08:00', to:'14:00', g:'G06', type:'vuelo', title:'Operación urbana simulada', room:'Campo Samborondón', drones:'DR-03 · DR-06', taken:false}
+  {day:0, from:'18:30', to:'21:30', g:'G15', type:'teo', title:'IAM y responsabilidad compartida', room:'Aula 2 · Quito', taken:true},
+  {day:1, from:'18:30', to:'21:30', g:'G15', type:'teo', title:'Servicios de cómputo: EC2 y Lambda', room:'Aula 2 · Quito', taken:true},
+  {day:2, from:'19:00', to:'21:00', g:'G06', type:'sim', title:'Simulacro de examen SAA (65 preguntas)', room:'En línea · videollamada', taken:false},
+  {day:3, from:'18:30', to:'21:30', g:'G15', type:'sim', title:'Simulacro de examen Cloud Practitioner', room:'Aula 2 · Quito', taken:false},
+  {day:4, from:'17:00', to:'21:00', g:'G03', type:'teo', title:'Kubernetes: servicios y despliegues', room:'Laboratorio de cómputo · Cuenca', taken:false},
+  {day:5, from:'08:00', to:'14:00', g:'G02', type:'lab', title:'Laboratorio: API sin servidor', room:'In company · Banco Demo', envs:'SBX-03', taken:false},
+  {day:5, from:'08:00', to:'12:00', g:'G03', type:'lab', title:'Proyecto final: despliegue en el clúster', room:'Laboratorio de cómputo · Cuenca', envs:'K8S-01', taken:false},
+  {day:5, from:'08:00', to:'13:00', g:'G14', type:'lab', title:'Laboratorio: S3, IAM y alarmas', room:'Sede Kennedy · Aula 3', envs:'SBX-01 · LAB-01', taken:false},
+  {day:6, from:'08:00', to:'14:00', g:'G06', type:'lab', title:'Laboratorio: VPC y alta disponibilidad', room:'En línea · videollamada', envs:'SBX-02', taken:false}
 ];
 
-const state = { requirePaid:true, notasGroup:'G03', bitStudent:null, q:'', fGroup:'', fState:'todos', certTab:'todos', flightsCache:{}, verifyCode:'' };
+const state = { requirePaid:true, notasGroup:'G03', bitStudent:null, q:'', fGroup:'', fState:'todos', certTab:'todos', labsCache:{}, verifyCode:'' };
 
 /* ===================== Reglas académicas ===================== */
-const W = {teo:.30, sim:.15, vuelo:.45, asis:.10};
+const W = {teo:.30, sim:.15, lab:.45, asis:.10};
 const MIN_GRADE = 7;
 function finalGrade(s){
   let sum = 0, w = 0;
-  for (const k of ['teo','sim','vuelo','asis']) { const v = s.g[k]; if (v == null || v === '') continue; const val = k==='asis' ? v/10 : +v; sum += val*W[k]; w += W[k]; }
+  for (const k of ['teo','sim','lab','asis']) { const v = s.g[k]; if (v == null || v === '') continue; const val = k==='asis' ? v/10 : +v; sum += val*W[k]; w += W[k]; }
   if (!w) return {value:null, complete:false};
   return {value: r1(sum/w), complete: w > .999};
 }
 function academic(s){
   const g = group(s.group), c = course(g.course), f = finalGrade(s);
-  const hoursOk = s.flightMin >= c.minFlight*60;
+  const hoursOk = s.labMin >= c.minLab*60;
   if (g.state === 'Inscripciones abiertas') return {label:'Inscrito', cls:''};
   if (f.value == null) return {label:'En curso', cls:'acc'};
   if (f.value < MIN_GRADE || (s.g.asis != null && s.g.asis < 75)) return {label:'En riesgo', cls:'bad'};
@@ -628,26 +632,26 @@ function eligibility(s){
   const c = course(group(s.group).course), f = finalGrade(s), reasons = [];
   if (!f.complete) reasons.push({t:'Faltan notas por registrar', cls:''});
   else if (f.value < MIN_GRADE) reasons.push({t:'Nota final '+n1(f.value)+' (mínimo 7,0)', cls:'bad'});
-  if (s.flightMin < c.minFlight*60) reasons.push({t:'Horas de vuelo '+hrs(s.flightMin)+' de '+c.minFlight+' h', cls:'warn'});
+  if (s.labMin < c.minLab*60) reasons.push({t:'Horas de laboratorio '+hrs(s.labMin)+' de '+c.minLab+' h', cls:'warn'});
   if (state.requirePaid && s.balance > 0) reasons.push({t:'Saldo '+money(s.balance)+' en ContAme', cls:'warn'});
   if (CERTS.some(x => x.sid === s.id)) return {ok:false, issued:true, reasons:[]};
   return {ok: reasons.length === 0, reasons};
 }
 function payChip(s){ return s.balance > 0 ? `<span class="chip warn">Saldo ${money(s.balance)}</span>` : `<span class="chip ok">${ic('check','style="width:12px;height:12px"')}Al día</span>`; }
 
-function flightsOf(s){
-  if (state.flightsCache[s.id]) return state.flightsCache[s.id];
+function labsOf(s){
+  if (state.labsCache[s.id]) return state.labsCache[s.id];
   const g = group(s.group), c = course(g.course), r = mulberry32(parseInt(s.id.slice(3)) * 97);
-  const list = []; let left = s.flightMin, dt = pdate(g.start), k = 0;
-  const pool = DRONES_BY[c.id], types = FLIGHT_TYPES[c.id];
+  const list = []; let left = s.labMin, dt = pdate(g.start), k = 0;
+  const pool = ENVS_BY[c.id], types = LAB_TYPES[c.id];
   while (left > 0 && k < 40) {
     const m = Math.min(left, Math.round(18 + r()*30));
-    list.push({date: iso(dt), drone: pool[Math.floor(r()*pool.length)], type: types[Math.floor(r()*types.length)], min:m, instructor:g.instructor, ok:true, note: r() < .25 ? 'Viento racheado 18 km/h; buen control' : ''});
+    list.push({date: iso(dt), env: pool[Math.floor(r()*pool.length)], type: types[Math.floor(r()*types.length)], min:m, instructor:g.instructor, ok:true, note: r() < .25 ? 'Resolvió el error de permisos sin ayuda' : ''});
     left -= m; k++; if (k % 2 === 0) dt = addDays(dt, 7);
     if (dt > TODAY) dt = addDays(TODAY, -1);
   }
-  state.flightsCache[s.id] = list.reverse();
-  return state.flightsCache[s.id];
+  state.labsCache[s.id] = list.reverse();
+  return state.labsCache[s.id];
 }
 
 /* ===================== Navegación ===================== */
@@ -658,9 +662,9 @@ const ROUTES = [
   {id:'grupos', label:'Grupos y horario', icon:'cal'},
   {id:'alumnos', label:'Alumnos', icon:'users', badge:() => STUDENTS.length},
   {id:'notas', label:'Notas', icon:'grade'},
-  {id:'bitacora', label:'Bitácora de vuelo', icon:'log'},
+  {id:'bitacora', label:'Bitácora de laboratorios', icon:'log'},
   {id:'certificados', label:'Certificados', icon:'cert'},
-  {id:'flota', label:'Flota de drones', icon:'drone'},
+  {id:'recursos', label:'Laboratorios y nube', icon:'cloud'},
   {sec:'Conexión'},
   {id:'contame', label:'ContAme', icon:'link'},
   {sec:'Vistas públicas'},
@@ -695,18 +699,18 @@ const AFTER = {};
 VIEWS.tablero = () => {
   const active = STUDENTS.filter(s => group(s.group).state !== 'Inscripciones abiertas').length;
   const running = GROUPS.filter(g => g.progress > 0).length;
-  const flightNov = Math.round(STUDENTS.reduce((a,s) => a + s.flightMin, 0) * .34);
+  const labNov = Math.round(STUDENTS.reduce((a,s) => a + s.labMin, 0) * .34);
   const ar = STUDENTS.reduce((a,s) => a + s.balance, 0);
   const debtors = STUDENTS.filter(s => s.balance > 0).length;
   const expiring = CERTS.filter(c => daysTo(c.expires) >= 0 && daysTo(c.expires) <= 60);
   const months = [['jun',6480,14],['jul',8920,19],['ago',7640,16],['sep',10310,22],['oct',11870,25],['nov',7960+STUDENTS.filter(s=>s.isNew).reduce((a,s)=>a+s.invoices[0].total,0),17+STUDENTS.filter(s=>s.isNew).length]];
   const today = SESSIONS.filter(x => x.day >= 2).slice(0,5);
   return head('Buenos días, Carolina', fd(TODAY,{weekday:'long',day:'numeric',month:'long',year:'numeric'})+' · '+COMPANY) + `
-  <div class="hero-strip"><span class="chip acc">${ic('cal','style="width:13px;height:13px"')}3 clases hoy y mañana</span><span class="chip ok">${ic('drone','style="width:13px;height:13px"')}4 prácticas de vuelo el fin de semana</span><span class="chip warn">${ic('cert','style="width:13px;height:13px"')}${expiring.length} certificados por renovar</span></div>
+  <div class="hero-strip"><span class="chip acc">${ic('cal','style="width:13px;height:13px"')}3 clases hoy y mañana</span><span class="chip ok">${ic('cloud','style="width:13px;height:13px"')}4 laboratorios el fin de semana</span><span class="chip warn">${ic('cert','style="width:13px;height:13px"')}${expiring.length} certificados por renovar</span></div>
   <div class="grid g4">
     ${kpi('Alumnos activos','users', active, 'vs. octubre', [18,19,21,22,24,active], ['+8 %','up'])}
     ${kpi('Grupos en curso','cal', running, '1 grupo abre el 5 de diciembre', [3,4,4,5,5,running])}
-    ${kpi('Horas de vuelo · noviembre','drone', hrs(flightNov)+' h', 'vs. octubre', [38,44,41,52,57,flightNov/60], ['+6 %','up'])}
+    ${kpi('Horas de laboratorio · noviembre','log', hrs(labNov)+' h', 'vs. octubre', [38,44,41,52,57,labNov/60], ['+6 %','up'])}
     ${kpi('Por cobrar · ContAme','coin', money0(ar), debtors+' alumnos con saldo', [2100,1980,1760,1840,1620,ar], ['−8 %','up'])}
   </div>
   <div class="grid g-main">
@@ -717,7 +721,7 @@ VIEWS.tablero = () => {
     <div class="card">
       <div class="card-head"><h2>Próximas clases</h2><a href="#grupos" class="btn sm ghost">Ver horario ${ic('arrow')}</a></div>
       <div class="list">${today.map(x => { const g = group(x.g); const dd = addDays(new Date(2026,10,16), x.day); return `
-        <div><span class="stripe ${x.type==='vuelo'?'ok':x.type==='sim'?'warn':''}"></span><div style="min-width:0;flex:1">
+        <div><span class="stripe ${x.type==='lab'?'ok':x.type==='sim'?'warn':''}"></span><div style="min-width:0;flex:1">
           <div style="display:flex;justify-content:space-between;gap:8px"><b style="font-weight:600">${esc(x.title)}</b><span class="small muted num" style="white-space:nowrap">${x.day===2?'Hoy':fd(dd,{weekday:'short',day:'numeric'})} · ${x.from}</span></div>
           <div class="small muted">${course(g.course).id} · ${g.id} · ${esc(x.room)}</div></div></div>`; }).join('')}
       </div>
@@ -729,8 +733,8 @@ VIEWS.tablero = () => {
       <div class="list">
         <div><span class="stripe warn"></span><div><b style="font-weight:600">${expiring.length} certificados vencen en los próximos 60 días</b><p class="small muted">Ofrece la recertificación: la proforma se crea en ContAme con un clic.</p></div><a class="btn sm" href="#certificados" style="margin-left:auto">Revisar</a></div>
         <div><span class="stripe warn"></span><div><b style="font-weight:600">${debtors} alumnos con saldo pendiente</b><p class="small muted">Su certificado queda retenido hasta que ContAme registre el pago.</p></div><a class="btn sm" href="#alumnos" style="margin-left:auto">Ver</a></div>
-        <div><span class="stripe bad"></span><div><b style="font-weight:600">DR-05 (Agras T40) llega a 100 h de vuelo</b><p class="small muted">Programar mantenimiento antes de la práctica del sábado en Quevedo.</p></div><a class="btn sm" href="#flota" style="margin-left:auto">Flota</a></div>
-        <div><span class="stripe"></span><div><b style="font-weight:600">FOT-301 · G03 cierra notas el 28 de noviembre</b><p class="small muted">3 alumnos ya cumplen todo para recibir su certificado.</p></div><a class="btn sm" href="#notas" style="margin-left:auto">Notas</a></div>
+        <div><span class="stripe bad"></span><div><b style="font-weight:600">La cuenta de práctica de SAA-201 va en 86 % de créditos</b><p class="small muted">Revisa el consumo antes del laboratorio del domingo para no cortar la práctica.</p></div><a class="btn sm" href="#recursos" style="margin-left:auto">Recursos</a></div>
+        <div><span class="stripe"></span><div><b style="font-weight:600">K8S-301 · G03 cierra notas el 28 de noviembre</b><p class="small muted">3 alumnos ya cumplen todo para recibir su certificado.</p></div><a class="btn sm" href="#notas" style="margin-left:auto">Notas</a></div>
       </div>
     </div>
     ${wxCard()}
@@ -744,18 +748,18 @@ VIEWS.tablero = () => {
   </div>`;
 };
 
-const WX = [
-  {site:'Campo Samborondón', who:'RPAS-101 · G14 · 08:00', wind:12, gust:19, dir:225, rain:10, vis:10},
-  {site:'Finca El Guayabo, Quevedo', who:'AGR-310 · G02 · 07:00', wind:8, gust:14, dir:180, rain:40, vis:8},
-  {site:'Parque Industrial, Cuenca', who:'FOT-301 · G03 · 08:00', wind:21, gust:31, dir:270, rain:20, vis:9}
+const EXAMS = [
+  {name:'Mateo Villacís', exam:'AWS Certified Cloud Practitioner', date:'27 nov', sim:86},
+  {name:'Isabella Cárdenas', exam:'AWS Certified Cloud Practitioner', date:'2 dic', sim:74},
+  {name:'Gabriel Moncayo', exam:'AWS Solutions Architect – Associate', date:'10 dic', sim:63}
 ];
 function wxCard(){
-  return `<div class="card"><div class="card-head"><div><h2>Condiciones de vuelo</h2><p class="small muted">Sábado 21 de noviembre · pronóstico por sede</p></div></div>
-    <div class="list">${WX.map(w => { const st = w.gust >= 35 || w.rain >= 70 ? ['bad','No apto'] : w.gust >= 28 || w.rain >= 50 ? ['warn','Precaución'] : ['ok','Apto']; return `
-      <div class="wx"><span class="wind" title="Viento desde ${w.dir}°">${ic('nav','style="transform:rotate('+(w.dir+180)+'deg)"')}</span>
-      <div style="flex:1;min-width:0"><div style="display:flex;justify-content:space-between;gap:8px"><b style="font-weight:600">${w.site}</b><span class="chip ${st[0]}">${st[1]}</span></div>
-      <div class="small muted">${w.who}</div>
-      <div class="wx-meta"><span>Viento <b class="num">${w.wind} km/h</b></span><span>Ráfagas <b class="num">${w.gust}</b></span><span>Lluvia <b class="num">${w.rain} %</b></span><span>Visib. <b class="num">${w.vis} km</b></span></div></div></div>`; }).join('')}
+  return `<div class="card"><div class="card-head"><div><h2>Exámenes de certificación</h2><p class="small muted">Agendados por los alumnos · último simulacro</p></div></div>
+    <div class="list">${EXAMS.map(x => { const st = x.sim >= 80 ? ['ok','Listo'] : x.sim >= 70 ? ['warn','Casi listo'] : ['bad','Reforzar']; return `
+      <div class="wx">${av(x.name)}
+      <div style="flex:1;min-width:0"><div style="display:flex;justify-content:space-between;gap:8px"><b style="font-weight:600">${x.name}</b><span class="chip ${st[0]}">${st[1]}</span></div>
+      <div class="small muted">${x.exam}</div>
+      <div class="wx-meta"><span>Examen <b>${x.date}</b></span><span>Simulacro <b class="num">${x.sim} %</b></span><span>Mínimo <b class="num">70 %</b></span></div></div></div>`; }).join('')}
     </div></div>`;
 }
 function barChart(data){
@@ -774,8 +778,8 @@ function barChart(data){
   return s + '</svg>';
 }
 
-const COURSE_HUE = {'RPAS-101':200,'RPAS-201':228,'FOT-301':165,'AGR-310':105,'TER-320':18,'MNT-150':275};
-const COURSE_ICON = {'RPAS-101':'drone','RPAS-201':'shield','FOT-301':'map','AGR-310':'leaf','TER-320':'thermo','MNT-150':'wrench'};
+const COURSE_HUE = {'CLF-101':200,'SAA-201':228,'K8S-301':165,'DVA-310':275,'SEC-320':18,'DAT-150':105};
+const COURSE_ICON = {'CLF-101':'cloud','SAA-201':'box','K8S-301':'code','DVA-310':'spark','SEC-320':'lock','DAT-150':'chart'};
 function courseArt(c){
   const h = COURSE_HUE[c.id] ?? 200, r = mulberry32([...c.id].reduce((a,ch) => a + ch.charCodeAt(0)*7, 3));
   const cx = 230 + r()*120, cy = 26 + r()*40, st = a => `stroke:hsl(${h} 62% var(--av-l) / ${a})`;
@@ -785,23 +789,23 @@ function courseArt(c){
   const dots = pts.slice(1,-1).map(p => `<circle cx="${p[0].toFixed(0)}" cy="${p[1].toFixed(0)}" r="3" style="fill:var(--surface);${st(1)};stroke-width:1.5"/>`).join('');
   return `<div class="course-art" style="--h:${h}"><svg viewBox="0 0 400 92" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${rings}<polyline points="${poly}" style="fill:none;${st(.75)};stroke-width:1.5;stroke-dasharray:4 5"/>${dots}</svg><span class="chip ctag">${c.level}</span><span class="cico">${ic(COURSE_ICON[c.id] || 'book')}</span></div>`;
 }
-VIEWS.cursos = () => head('Cursos', 'Catálogo de programas con horas de teoría y de vuelo, requisitos para certificar y precio. Cada curso está enlazado a su producto en ContAme para facturar.', `<button class="btn" data-act="new-course">${ic('plus')}Nuevo curso</button>`) +
-  `<div class="grid g3">${COURSES.map(c => { const gs = GROUPS.filter(g => g.course===c.id); const tot = c.teo + c.vuelo; return `
+VIEWS.cursos = () => head('Cursos', 'Catálogo de programas con horas de teoría y de laboratorio, requisitos para certificar y precio. Cada curso está enlazado a su producto en ContAme para facturar.', `<button class="btn" data-act="new-course">${ic('plus')}Nuevo curso</button>`) +
+  `<div class="grid g3">${COURSES.map(c => { const gs = GROUPS.filter(g => g.course===c.id); const tot = c.teo + c.lab; return `
   <div class="card course">${courseArt(c)}<div class="course-body">
-    <div class="top"><span class="code">${c.id}</span><span class="small muted num">${c.teo + c.vuelo} h en total</span></div>
+    <div class="top"><span class="code">${c.id}</span><span class="small muted num">${c.teo + c.lab} h en total</span></div>
     <div><h3 style="font-size:1.05rem">${esc(c.name)}</h3><p class="small muted" style="margin-top:4px">Certificado: ${esc(c.cert)}</p></div>
     <div style="display:flex;flex-direction:column;gap:7px">
-      <div class="split"><i class="t" style="width:${c.teo/tot*100}%"></i><i class="v" style="width:${c.vuelo/tot*100}%"></i></div>
-      <div class="legend"><span><i style="background:var(--fg);opacity:.75"></i>${c.teo} h teoría</span><span><i style="background:var(--accent)"></i>${c.vuelo} h ${c.id==='MNT-150'?'taller':'práctica de vuelo'}</span></div>
+      <div class="split"><i class="t" style="width:${c.teo/tot*100}%"></i><i class="v" style="width:${c.lab/tot*100}%"></i></div>
+      <div class="legend"><span><i style="background:var(--fg);opacity:.75"></i>${c.teo} h teoría</span><span><i style="background:var(--accent)"></i>${c.lab} h de laboratorio</span></div>
     </div>
     <ul class="mods">${c.modules.slice(0,4).map(m => `<li>${esc(m)}</li>`).join('')}${c.modules.length>4?`<li class="muted">y ${c.modules.length-4} módulo más</li>`:''}</ul>
-    <div class="kv"><div><span>Precio</span><b>${money0(c.price)}</b></div><div><span>Vuelo mínimo</span><b>${c.minFlight ? c.minFlight+' h' : '—'}</b></div><div><span>Vigencia</span><b>${c.months} meses</b></div></div>
+    <div class="kv"><div><span>Precio</span><b>${money0(c.price)}</b></div><div><span>Labs mínimo</span><b>${c.minLab ? c.minLab+' h' : '—'}</b></div><div><span>Vigencia</span><b>${c.months} meses</b></div></div>
     <div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span class="small muted">${gs.length ? gs.length+' grupo'+(gs.length>1?'s':'')+' · '+gs.map(g=>g.city).join(', ') : 'Sin grupos abiertos'}</span><a class="btn sm" href="#grupos">Grupos</a></div>
   </div></div>`; }).join('')}</div>`;
 
 VIEWS.grupos = () => {
   const base = new Date(2026,10,16);
-  return head('Grupos y horario', 'Semana del 16 al 22 de noviembre de 2026. Las prácticas de vuelo reservan los drones de la flota automáticamente.') + `
+  return head('Grupos y horario', 'Semana del 16 al 22 de noviembre de 2026. Cada laboratorio reserva su entorno de práctica automáticamente.') + `
   <div class="grid g3">${GROUPS.map(g => { const c = course(g.course); const n = STUDENTS.filter(s=>s.group===g.id).length; return `
     <div class="card card-pad" style="display:flex;flex-direction:column;gap:10px">
       <div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><b class="mono">${c.id} · ${g.id}</b><span class="chip ${g.state==='En curso'?'acc':g.state==='Cierre de notas'?'warn':''}">${g.state}</span></div>
@@ -814,14 +818,14 @@ VIEWS.grupos = () => {
       <div class="bar"><i style="width:${Math.max(g.progress*100,1.5)}%"></i></div>
     </div>`; }).join('')}</div>
   <div class="card">
-    <div class="card-head"><h2>Horario de la semana</h2><div class="legend"><span><i style="background:var(--accent)"></i>Teoría</span><span><i style="background:var(--warn)"></i>Simulador</span><span><i style="background:var(--ok)"></i>Vuelo</span></div></div>
+    <div class="card-head"><h2>Horario de la semana</h2><div class="legend"><span><i style="background:var(--accent)"></i>Teoría</span><span><i style="background:var(--warn)"></i>Simulacro</span><span><i style="background:var(--ok)"></i>Laboratorio</span></div></div>
     <div class="tbl-wrap"><div class="cal">${[0,1,2,3,4,5,6].map(d => { const dt = addDays(base,d); return `
       <div class="day ${d===2?'today':''}"><div class="dh"><span class="small">${fd(dt,{weekday:'short'})}</span><b class="num">${dt.getDate()}</b></div>
       <div class="slots">${SESSIONS.map((x,i)=>[x,i]).filter(([x])=>x.day===d).map(([x,i]) => `
         <div class="sess ${x.type}" data-act="attendance" data-i="${i}" tabindex="0" role="button">
           <span class="small muted num">${x.from}–${x.to}</span><b>${esc(x.title)}</b>
           <span class="small muted">${group(x.g).course} · ${x.g}</span>
-          ${x.drones?`<span class="small" style="color:var(--ok)">${ic('drone','style="width:12px;height:12px;vertical-align:-2px"')} ${x.drones}</span>`:''}
+          ${x.envs?`<span class="small" style="color:var(--ok)">${ic('cloud','style="width:12px;height:12px;vertical-align:-2px"')} ${x.envs}</span>`:''}
           ${x.taken?`<span class="chip ok" style="align-self:flex-start">Asistencia tomada</span>`:d===2?`<span class="chip acc" style="align-self:flex-start">Tomar asistencia</span>`:''}
         </div>`).join('') || '<span class="small muted" style="padding:4px">Sin clases</span>'}</div></div>`; }).join('')}
     </div></div>
@@ -835,7 +839,7 @@ VIEWS.alumnos = () => head('Alumnos', 'Ficha académica y estado de pago de cada
       <select id="fgroup" class="select"><option value="">Todos los grupos</option>${GROUPS.map(g => `<option value="${g.id}" ${state.fGroup===g.id?'selected':''}>${g.course} · ${g.id} · ${g.city}</option>`).join('')}</select>
       <div class="seg" id="fstate">${[['todos','Todos'],['dia','Al día'],['saldo','Con saldo'],['riesgo','En riesgo']].map(([k,l]) => `<button data-f="${k}" class="${state.fState===k?'on':''}">${l}</button>`).join('')}</div>
     </div>
-    <div class="tbl-wrap"><table><thead><tr><th>Alumno</th><th>Curso y grupo</th><th>Horas de vuelo</th><th class="r">Nota</th><th>Estado</th><th>Pago (ContAme)</th></tr></thead><tbody id="rows"></tbody></table></div>
+    <div class="tbl-wrap"><table><thead><tr><th>Alumno</th><th>Curso y grupo</th><th>Horas de laboratorio</th><th class="r">Nota</th><th>Estado</th><th>Pago (ContAme)</th></tr></thead><tbody id="rows"></tbody></table></div>
   </div>`;
 AFTER.alumnos = () => { renderRows(); };
 function renderRows(){
@@ -843,11 +847,11 @@ function renderRows(){
   const list = STUDENTS.filter(s => (!q || (s.name+' '+s.ced+' '+s.email).toLowerCase().includes(q)) && (!state.fGroup || s.group===state.fGroup) &&
     (state.fState==='todos' || (state.fState==='dia' && !s.balance) || (state.fState==='saldo' && s.balance>0) || (state.fState==='riesgo' && academic(s).label==='En riesgo')));
   const el = document.getElementById('rows'); if (!el) return;
-  el.innerHTML = list.map(s => { const g = group(s.group), c = course(g.course), f = finalGrade(s), a = academic(s), pct = c.minFlight ? Math.min(1, s.flightMin/(c.minFlight*60)) : 1; return `
+  el.innerHTML = list.map(s => { const g = group(s.group), c = course(g.course), f = finalGrade(s), a = academic(s), pct = c.minLab ? Math.min(1, s.labMin/(c.minLab*60)) : 1; return `
     <tr class="click" data-act="student" data-id="${s.id}">
       <td><div class="who">${av(s.name)}<div style="min-width:0"><b>${esc(s.name)}${s.isNew?' <span class="chip acc" style="height:18px">Nuevo</span>':''}</b><span>${esc(s.email)}</span></div></div></td>
       <td style="white-space:nowrap"><span class="code">${c.id}</span><div class="small muted" style="margin-top:3px">${g.id} · ${g.city}</div></td>
-      <td style="min-width:150px"><div class="small num" style="margin-bottom:5px">${hrs(s.flightMin)} de ${c.minFlight} h</div><div class="bar ${pct>=1?'ok':''}"><i style="width:${Math.max(pct*100,2)}%"></i></div></td>
+      <td style="min-width:150px"><div class="small num" style="margin-bottom:5px">${hrs(s.labMin)} de ${c.minLab} h</div><div class="bar ${pct>=1?'ok':''}"><i style="width:${Math.max(pct*100,2)}%"></i></div></td>
       <td class="r num"><b>${n1(f.value)}</b>${f.value!=null && !f.complete?'<div class="small muted">parcial</div>':''}</td>
       <td><span class="chip ${a.cls}">${a.label}</span></td>
       <td>${payChip(s)}</td>
@@ -856,23 +860,23 @@ function renderRows(){
 
 VIEWS.notas = () => {
   const g = group(state.notasGroup), c = course(g.course);
-  return head('Notas', 'Calificación por componentes con ponderación del curso. La nota final, las horas de vuelo y el pago en ContAme deciden quién recibe el certificado.') + `
+  return head('Notas', 'Calificación por componentes con ponderación del curso. La nota final, las horas de laboratorio y el pago en ContAme deciden quién recibe el certificado.') + `
   <div class="card">
     <div class="toolbar" style="justify-content:space-between">
       <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
         <select id="ngroup" class="select">${GROUPS.filter(x=>x.progress>0).map(x => `<option value="${x.id}" ${x.id===g.id?'selected':''}>${x.course} · ${x.id} · ${x.city}</option>`).join('')}</select>
-        <span class="small muted">Teórico 30 % · Simulador 15 % · Práctica de vuelo 45 % · Asistencia 10 % · mínimo para aprobar 7,0</span>
+        <span class="small muted">Exámenes 30 % · Simulacro 15 % · Laboratorios 45 % · Asistencia 10 % · mínimo para aprobar 7,0</span>
       </div>
       <button class="btn primary" id="issue-btn" data-act="issue">${ic('cert')}Emitir certificados</button>
     </div>
-    <div class="tbl-wrap"><table><thead><tr><th>Alumno</th><th class="r">Teórico</th><th class="r">Simulador</th><th class="r">Vuelo</th><th class="r">Asistencia %</th><th class="r">Final</th><th>Horas (mín. ${c.minFlight} h)</th><th>Certificado</th></tr></thead>
+    <div class="tbl-wrap"><table><thead><tr><th>Alumno</th><th class="r">Exámenes</th><th class="r">Simulacro</th><th class="r">Labs</th><th class="r">Asistencia %</th><th class="r">Final</th><th>Horas (mín. ${c.minLab} h)</th><th>Certificado</th></tr></thead>
     <tbody>${STUDENTS.filter(s => s.group===g.id).map(s => `
       <tr data-sid="${s.id}">
         <td><div class="who">${av(s.name)}<div><b>${esc(s.name)}</b><span>${payChip(s)}</span></div></div></td>
-        ${['teo','sim','vuelo'].map(k => `<td class="r"><input class="gin" id="g-${s.id}-${k}" data-grade="${k}" data-sid="${s.id}" inputmode="decimal" value="${s.g[k]==null?'':String(s.g[k]).replace('.',',')}" placeholder="—" aria-label="${k} de ${esc(s.name)}"></td>`).join('')}
+        ${['teo','sim','lab'].map(k => `<td class="r"><input class="gin" id="g-${s.id}-${k}" data-grade="${k}" data-sid="${s.id}" inputmode="decimal" value="${s.g[k]==null?'':String(s.g[k]).replace('.',',')}" placeholder="—" aria-label="${k} de ${esc(s.name)}"></td>`).join('')}
         <td class="r"><input class="gin" id="g-${s.id}-asis" data-grade="asis" data-sid="${s.id}" inputmode="numeric" value="${s.g.asis ?? ''}" placeholder="—" aria-label="asistencia de ${esc(s.name)}"></td>
         <td class="r"><span class="final num" id="f-${s.id}"></span></td>
-        <td class="num small">${hrs(s.flightMin)} h</td>
+        <td class="num small">${hrs(s.labMin)} h</td>
         <td id="e-${s.id}"></td>
       </tr>`).join('')}</tbody></table></div>
   </div>`;
@@ -890,31 +894,31 @@ function updateGradeRow(s){
 
 VIEWS.bitacora = () => {
   if (!state.bitStudent) state.bitStudent = STUDENTS.find(s => s.group==='G14').id;
-  const s = STUDENTS.find(x => x.id===state.bitStudent), g = group(s.group), c = course(g.course), fl = flightsOf(s);
-  const pct = c.minFlight ? Math.min(1, s.flightMin/(c.minFlight*60)) : 1;
-  return head('Bitácora de vuelo', 'Cada vuelo queda registrado con dron, maniobra, duración y firma del instructor. Las horas cuentan para el requisito del certificado.') + `
+  const s = STUDENTS.find(x => x.id===state.bitStudent), g = group(s.group), c = course(g.course), lb = labsOf(s);
+  const pct = c.minLab ? Math.min(1, s.labMin/(c.minLab*60)) : 1;
+  return head('Bitácora de laboratorios', 'Cada laboratorio queda registrado con su entorno, duración y revisión del instructor. Las horas cuentan para el requisito del certificado.') + `
   <div class="card"><div class="toolbar">
     <select id="bstudent" class="select" style="min-width:260px">${STUDENTS.filter(x=>group(x.group).progress>0).map(x => `<option value="${x.id}" ${x.id===s.id?'selected':''}>${esc(x.name)} · ${group(x.group).course}</option>`).join('')}</select>
     <span class="small muted">${c.id} · ${g.id} · instructor ${g.instructor}</span>
   </div>
   <div class="grid g4" style="padding:18px">
-    <div class="kpi" style="padding:0"><span class="eyebrow">Horas acumuladas</span><span class="v">${hrs(s.flightMin)} h</span><div class="bar ${pct>=1?'ok':''}"><i style="width:${Math.max(pct*100,2)}%"></i></div><span class="d">${pct>=1?'Cumple el mínimo del curso':'Faltan '+hrs(Math.max(0,c.minFlight*60-s.flightMin))+' h para el mínimo de '+c.minFlight+' h'}</span></div>
-    <div class="kpi" style="padding:0"><span class="eyebrow">Vuelos registrados</span><span class="v">${fl.length}</span><span class="d">Todos firmados por el instructor</span></div>
-    <div class="kpi" style="padding:0"><span class="eyebrow">Último vuelo</span><span class="v" style="font-size:1.3rem">${fl[0]?fd(fl[0].date):'—'}</span><span class="d">${fl[0]?esc(fl[0].type):''}</span></div>
-    <div class="kpi" style="padding:0"><span class="eyebrow">Nota de vuelo</span><span class="v">${n1(s.g.vuelo)}</span><span class="d">${s.g.vuelo==null?'Se califica en la evaluación práctica':'Componente con mayor peso (45 %)'}</span></div>
+    <div class="kpi" style="padding:0"><span class="eyebrow">Horas acumuladas</span><span class="v">${hrs(s.labMin)} h</span><div class="bar ${pct>=1?'ok':''}"><i style="width:${Math.max(pct*100,2)}%"></i></div><span class="d">${pct>=1?'Cumple el mínimo del curso':'Faltan '+hrs(Math.max(0,c.minLab*60-s.labMin))+' h para el mínimo de '+c.minLab+' h'}</span></div>
+    <div class="kpi" style="padding:0"><span class="eyebrow">Laboratorios registrados</span><span class="v">${lb.length}</span><span class="d">Todos revisados por el instructor</span></div>
+    <div class="kpi" style="padding:0"><span class="eyebrow">Último laboratorio</span><span class="v" style="font-size:1.3rem">${lb[0]?fd(lb[0].date):'—'}</span><span class="d">${lb[0]?esc(lb[0].type):''}</span></div>
+    <div class="kpi" style="padding:0"><span class="eyebrow">Nota de laboratorios</span><span class="v">${n1(s.g.lab)}</span><span class="d">${s.g.lab==null?'Se califica con los laboratorios entregados':'Componente con mayor peso (45 %)'}</span></div>
   </div></div>
   <div class="grid g-main">
-    <div class="card"><div class="card-head"><h2>Vuelos</h2></div><div class="tbl-wrap"><table><thead><tr><th>Fecha</th><th>Dron</th><th>Maniobra o misión</th><th class="r">Minutos</th><th>Firma</th></tr></thead><tbody>
-      ${fl.map(f => `<tr><td class="num" style="white-space:nowrap">${fd(f.date)}</td><td class="mono">${f.drone}</td><td>${esc(f.type)}${f.note?`<div class="small muted">${esc(f.note)}</div>`:''}</td><td class="r num">${f.min}</td><td><span class="chip ok">${ic('check','style="width:12px;height:12px"')}${esc(f.instructor.split(' ').slice(-1)[0])}</span></td></tr>`).join('') || '<tr><td colspan="5" class="muted" style="text-align:center;padding:30px">Aún no tiene vuelos registrados.</td></tr>'}
+    <div class="card"><div class="card-head"><h2>Laboratorios</h2></div><div class="tbl-wrap"><table><thead><tr><th>Fecha</th><th>Entorno</th><th>Laboratorio</th><th class="r">Minutos</th><th>Firma</th></tr></thead><tbody>
+      ${lb.map(f => `<tr><td class="num" style="white-space:nowrap">${fd(f.date)}</td><td class="mono">${f.env}</td><td>${esc(f.type)}${f.note?`<div class="small muted">${esc(f.note)}</div>`:''}</td><td class="r num">${f.min}</td><td><span class="chip ok">${ic('check','style="width:12px;height:12px"')}${esc(f.instructor.split(' ').slice(-1)[0])}</span></td></tr>`).join('') || '<tr><td colspan="5" class="muted" style="text-align:center;padding:30px">Aún no tiene laboratorios registrados.</td></tr>'}
     </tbody></table></div></div>
-    <div class="card"><div class="card-head"><h2>Registrar vuelo</h2></div>
-      <form class="card-pad" id="flight-form" style="display:flex;flex-direction:column;gap:12px">
+    <div class="card"><div class="card-head"><h2>Registrar laboratorio</h2></div>
+      <form class="card-pad" id="lab-form" style="display:flex;flex-direction:column;gap:12px">
         <div class="field"><label for="ff-date">Fecha</label><input id="ff-date" class="input" type="date" value="${iso(TODAY)}"></div>
-        <div class="field"><label for="ff-drone">Dron</label><select id="ff-drone" class="select">${FLEET.filter(d=>d.state!=='En mantenimiento' && d.code!=='SIM-01').map(d => `<option value="${d.code}" ${DRONES_BY[c.id].includes(d.code)?'':'disabled'}>${d.code} · ${d.model}</option>`).join('')}</select></div>
-        <div class="field"><label for="ff-type">Maniobra o misión</label><select id="ff-type" class="select">${FLIGHT_TYPES[c.id].map(t => `<option>${t}</option>`).join('')}</select></div>
+        <div class="field"><label for="ff-env">Entorno</label><select id="ff-env" class="select">${RESOURCES.filter(d=>d.state!=='En mantenimiento' && d.code!=='SIM-01').map(d => `<option value="${d.code}" ${ENVS_BY[c.id].includes(d.code)?'':'disabled'}>${d.code} · ${d.model}</option>`).join('')}</select></div>
+        <div class="field"><label for="ff-type">Laboratorio</label><select id="ff-type" class="select">${LAB_TYPES[c.id].map(t => `<option>${t}</option>`).join('')}</select></div>
         <div class="field"><label for="ff-min">Duración (minutos)</label><input id="ff-min" class="input" type="number" min="1" max="120" value="25"></div>
         <div class="field"><label for="ff-note">Observaciones del instructor</label><input id="ff-note" class="input" placeholder="Opcional"></div>
-        <button class="btn primary" type="submit">${ic('check')}Registrar y firmar</button>
+        <button class="btn primary" type="submit">${ic('check')}Registrar y revisar</button>
       </form>
     </div>
   </div>`;
@@ -940,18 +944,18 @@ VIEWS.certificados = () => {
   </div>`;
 };
 
-VIEWS.flota = () => head('Flota de drones', 'Horas de vuelo por equipo, mantenimiento preventivo y valor en libros. Cada dron es un activo fijo en ContAme y se deprecia solo cada mes.') + `
+VIEWS.recursos = () => head('Laboratorios y nube', 'Aulas de cómputo y cuentas de práctica en la nube. Las laptops son activos fijos en ContAme y el consumo de nube se registra solo como gasto de cada mes.') + `
   <div class="grid g4">
-    <div class="card kpi"><span class="eyebrow">Equipos</span><span class="v">${FLEET.length}</span><span class="d">7 drones y 1 simulador</span></div>
-    <div class="card kpi"><span class="eyebrow">Operativos hoy</span><span class="v">${FLEET.filter(f=>f.state!=='En mantenimiento').length}</span><span class="d">1 en taller</span></div>
-    <div class="card kpi"><span class="eyebrow">Horas de vuelo totales</span><span class="v">${hrs(FLEET.filter(f=>f.code!=='SIM-01').reduce((a,f)=>a+f.hours*60,0))}</span><span class="d">Suman desde la bitácora</span></div>
-    <div class="card kpi"><span class="eyebrow">Valor en libros · ContAme</span><span class="v">${money0(FLEET.reduce((a,f)=>a+f.book,0))}</span><span class="d">Depreciación de noviembre contabilizada</span></div>
+    <div class="card kpi"><span class="eyebrow">Recursos</span><span class="v">${RESOURCES.length}</span><span class="d">2 aulas y 6 entornos en la nube</span></div>
+    <div class="card kpi"><span class="eyebrow">Cerca del límite</span><span class="v" style="color:var(--warn)">${RESOURCES.filter(f=>f.state==='Cerca del límite').length}</span><span class="d">Revisa antes del próximo laboratorio</span></div>
+    <div class="card kpi"><span class="eyebrow">Gasto en nube · noviembre</span><span class="v">${money0(RESOURCES.filter(f=>f.kind==='Gasto del mes').reduce((a,f)=>a+f.book,0))}</span><span class="d">Registrado en ContAme</span></div>
+    <div class="card kpi"><span class="eyebrow">Valor en libros · ContAme</span><span class="v">${money0(RESOURCES.filter(f=>f.kind==='Activo fijo').reduce((a,f)=>a+f.book,0))}</span><span class="d">Depreciación de noviembre contabilizada</span></div>
   </div>
-  <div class="card"><div class="tbl-wrap"><table><thead><tr><th>Código</th><th>Equipo</th><th>Uso</th><th>Horas</th><th>Baterías</th><th class="r">Valor en libros</th><th>Estado</th></tr></thead><tbody>
-  ${FLEET.map(f => { const pct = f.next ? f.hours/f.next : 0; const cls = f.state==='Operativo'?'ok':f.state==='En mantenimiento'?'bad':'warn'; return `
+  <div class="card"><div class="tbl-wrap"><table><thead><tr><th>Código</th><th>Recurso</th><th>Uso</th><th>Consumo</th><th class="r">En ContAme</th><th>Estado</th></tr></thead><tbody>
+  ${RESOURCES.map(f => { const cls = f.state==='Operativo'?'ok':f.state==='Por activar'?'':'warn'; return `
     <tr><td class="mono">${f.code}</td><td><b style="font-weight:600">${f.model}</b></td><td class="muted">${f.use}</td>
-    <td style="min-width:170px"><div class="small num" style="margin-bottom:5px">${f.hours.toLocaleString('es-EC',{minimumFractionDigits:1})} h${f.next?` · mantenimiento a las ${f.next} h`:''}</div>${f.next?`<div class="bar ${pct>.95?'warn':''}"><i style="width:${Math.min(100,pct*100)}%;${pct>.95?'':''}"></i></div>`:''}</td>
-    <td class="small muted">${f.batt}</td><td class="r num">${money(f.book)}</td><td><span class="chip ${cls}">${f.state}</span></td></tr>`; }).join('')}
+    <td style="min-width:170px"><div class="small num" style="margin-bottom:5px">${f.usage}</div>${f.pct!=null?`<div class="bar ${f.pct>.8?'warn':''}"><i style="width:${Math.max(2,Math.min(100,f.pct*100))}%"></i></div>`:''}</td>
+    <td class="r num">${money(f.book)}<div class="small muted">${f.kind}</div></td><td><span class="chip ${cls}">${f.state}</span></td></tr>`; }).join('')}
   </tbody></table></div></div>`;
 
 VIEWS.contame = () => head('Conexión con ContAme', 'La Academia se encarga de lo académico. ContAme factura, cobra y lleva la contabilidad. Los dos sistemas comparten datos solos, sin volver a digitar nada.') + `
@@ -962,7 +966,7 @@ VIEWS.contame = () => head('Conexión con ContAme', 'La Academia se encarga de l
       <div class="step ca"><span class="n">2</span><span class="who-side">ContAme</span><b>Factura electrónica</b><p class="small muted">Se emite, se firma y el SRI la autoriza. El RIDE y el XML llegan al correo del alumno.</p></div>
       <div class="step ca"><span class="n">3</span><span class="who-side">ContAme</span><b>Cobro y cartera</b><p class="small muted">Contado, cuotas o pago en línea. El saldo de cada alumno se actualiza solo.</p></div>
       <div class="step ca"><span class="n">4</span><span class="who-side">ContAme</span><b>Asiento contable</b><p class="small muted">Ingresos por capacitación y cuentas por cobrar, sin que el contador digite nada.</p></div>
-      <div class="step"><span class="n">5</span><span class="who-side" style="color:var(--accent)">Academia</span><b>Certificado liberado</b><p class="small muted">Con la nota aprobada, las horas de vuelo y la cuenta al día, se emite con QR.</p></div>
+      <div class="step"><span class="n">5</span><span class="who-side" style="color:var(--accent)">Academia</span><b>Certificado liberado</b><p class="small muted">Con la nota aprobada, las horas de laboratorio y la cuenta al día, se emite con QR.</p></div>
     </div>
   </div>
   <div class="grid g3">
@@ -970,7 +974,7 @@ VIEWS.contame = () => head('Conexión con ContAme', 'La Academia se encarga de l
        ['coin','Cobros y cartera','Saldo por alumno, cuotas, recordatorios y portal de pago. La Academia ve si está al día.'],
        ['ledger','Contabilidad automática','Cada matrícula, cobro y pago genera su asiento NIIF para PYMES.'],
        ['pay','Pago a instructores','Las horas dictadas pasan a cuentas por pagar o a la nómina del mes.'],
-       ['drone','Flota como activo fijo','Cada dron se deprecia solo y sus mantenimientos se registran como gasto.'],
+       ['cloud','Laboratorios y nube','Las laptops se deprecian solas y el consumo de nube se registra como gasto.'],
        ['spark','Impuestos preparados','ContAme prepara el 104, el 103 y el ATS y recomienda qué declarar; el contador revisa y presenta.']]
       .map(([i,t,d]) => `<div class="card card-pad why" style="gap:10px"><div><span class="ic">${ic(i)}</span><div><h3>${t}</h3><p class="small muted" style="margin-top:3px">${d}</p></div></div></div>`).join('')}
   </div>
@@ -996,33 +1000,33 @@ function eventsHtml(){
 }
 
 VIEWS.portal = () => {
-  const s = STUDENTS.find(x => x.id === PORTAL_ID), g = group(s.group), c = course(g.course), f = finalGrade(s), pct = Math.min(1, s.flightMin/(c.minFlight*60));
+  const s = STUDENTS.find(x => x.id === PORTAL_ID), g = group(s.group), c = course(g.course), f = finalGrade(s), pct = Math.min(1, s.labMin/(c.minLab*60));
   const circ = 2*Math.PI*26;
-  return head('Portal del alumno', 'Lo que ve el alumno en su celular: clases, notas, horas de vuelo, pagos y su certificado.') + `
+  return head('Portal del alumno', 'Lo que ve el alumno en su celular: clases, notas, horas de laboratorio, pagos y su certificado.') + `
   <div class="portal">
     <div class="phone"><div class="phone-in">
       <div class="ph-top"><span class="small" style="opacity:.85">AmePhia Academia</span><span class="hi">Hola, ${esc(s.name.split(' ')[0])}</span><span class="small" style="opacity:.85">${esc(c.name)} · ${g.id}</span></div>
       <div class="ph-body">
         <div class="ph-card" style="flex-direction:row;align-items:center;gap:14px">
           <svg class="ring" viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="none" stroke="var(--surface-2)" stroke-width="7"/><circle cx="32" cy="32" r="26" fill="none" stroke="var(--accent)" stroke-width="7" stroke-linecap="round" stroke-dasharray="${circ*pct} ${circ}" transform="rotate(-90 32 32)"/><text x="32" y="36" text-anchor="middle" font-size="13" font-weight="700" fill="var(--fg)" font-family="Inter Tight, Inter, sans-serif">${Math.round(pct*100)}%</text></svg>
-          <div><b>Horas de vuelo</b><p class="small muted">${hrs(s.flightMin)} de ${c.minFlight} h · faltan ${hrs(Math.max(0,c.minFlight*60-s.flightMin))} h</p></div>
+          <div><b>Horas de laboratorio</b><p class="small muted">${hrs(s.labMin)} de ${c.minLab} h · faltan ${hrs(Math.max(0,c.minLab*60-s.labMin))} h</p></div>
         </div>
-        <div class="ph-card"><span class="eyebrow">Próxima clase</span><b>Circuitos y aterrizaje de precisión</b><span class="small muted">Sábado 21 nov · 08:00 · Campo Samborondón</span><span class="chip ok" style="align-self:flex-start">Dron asignado: DR-02</span></div>
+        <div class="ph-card"><span class="eyebrow">Próxima clase</span><b>Laboratorio: S3, IAM y alarmas</b><span class="small muted">Sábado 21 nov · 08:00 · Sede Kennedy, Aula 3</span><span class="chip ok" style="align-self:flex-start">Entorno: cuenta de práctica SBX-01</span></div>
         <div class="ph-card"><div style="display:flex;justify-content:space-between"><span class="eyebrow">Mis notas</span><b class="num">${n1(f.value)}</b></div>
-          ${[['Teórico','teo'],['Simulador','sim'],['Práctica de vuelo','vuelo']].map(([l,k]) => `<div style="display:flex;justify-content:space-between" class="small"><span>${l}</span><b class="num">${n1(s.g[k])}</b></div>`).join('')}
+          ${[['Exámenes','teo'],['Simulacro','sim'],['Laboratorios','lab']].map(([l,k]) => `<div style="display:flex;justify-content:space-between" class="small"><span>${l}</span><b class="num">${n1(s.g[k])}</b></div>`).join('')}
           <div style="display:flex;justify-content:space-between" class="small"><span>Asistencia</span><b class="num">${s.g.asis} %</b></div></div>
         <div class="ph-card"><span class="eyebrow">Pagos</span>
           <div style="display:flex;justify-content:space-between;align-items:center" class="small"><span>Factura ${s.invoices[0].num}</span><span class="chip ok">Pagada</span></div>
           <span class="small muted">Autorizada por el SRI · ${money(s.invoices[0].total)}</span>
           <button class="btn sm" data-act="toast" data-msg="Se descargaría el RIDE en PDF desde ContAme.">${ic('download')}Descargar factura</button></div>
-        <div class="ph-card"><span class="eyebrow">Mi certificado</span><p class="small">Se habilita al aprobar el curso y completar las ${c.minFlight} h de vuelo.</p><div class="bar"><i style="width:${Math.round(g.progress*100)}%"></i></div><span class="small muted">Curso al ${Math.round(g.progress*100)} % · termina el ${fd(g.end)}</span></div>
+        <div class="ph-card"><span class="eyebrow">Mi certificado</span><p class="small">Se habilita al aprobar el curso y completar las ${c.minLab} h de laboratorio.</p><div class="bar"><i style="width:${Math.round(g.progress*100)}%"></i></div><span class="small muted">Curso al ${Math.round(g.progress*100)} % · termina el ${fd(g.end)}</span></div>
       </div>
     </div></div>
     <div class="card card-pad why">
       <h2>Por qué le sirve a la escuela</h2>
-      ${[['phone','Menos llamadas y mensajes','El alumno consulta su horario, el dron asignado y sus notas sin escribir a coordinación.'],
+      ${[['phone','Menos llamadas y mensajes','El alumno consulta su horario, su laboratorio y sus notas sin escribir a coordinación.'],
          ['coin','Cobra antes','Ve su saldo y descarga su factura. El pago se registra en ContAme y la cartera queda al día.'],
-         ['cert','Certificado en el celular','Al aprobar, descarga su certificado con QR y lo comparte con la empresa que lo contrata.'],
+         ['cert','Certificado en el celular','Al aprobar, descarga su certificado con QR y lo comparte en su hoja de vida o en LinkedIn.'],
          ['shield','Confianza para las empresas','Cualquier empresa verifica el certificado en línea con el código o el QR.']]
         .map(([i,t,d]) => `<div><span class="ic">${ic(i)}</span><div><h3>${t}</h3><p class="small muted" style="margin-top:3px">${d}</p></div></div>`).join('')}
     </div>
@@ -1034,7 +1038,7 @@ VIEWS.verificar = () => `
     <div style="text-align:center;display:flex;flex-direction:column;gap:8px;align-items:center">
       <span class="why"><span class="ic" style="width:48px;height:48px;border-radius:14px">${ic('shield','style="width:24px;height:24px"')}</span></span>
       <h1>Verificar un certificado</h1>
-      <p class="muted">Escribe el código impreso en el certificado o escanea su QR. Esta página es pública para que cualquier empresa compruebe que el piloto está certificado.</p>
+      <p class="muted">Escribe el código impreso en el certificado o escanea su QR. Esta página es pública para que cualquier empresa compruebe que la persona está certificada.</p>
     </div>
     <form class="card card-pad" id="verify-form" style="display:flex;flex-direction:column;gap:12px">
       <div class="vrow"><input id="vcode" class="input" placeholder="AA-RPAS101-2025-0123" value="${esc(state.verifyCode)}" aria-label="Código del certificado"><button class="btn primary" type="submit">Verificar</button></div>
@@ -1050,7 +1054,7 @@ function doVerify(){
   const d = daysTo(c.expires), co = course(c.course);
   el.innerHTML = `<div class="card vres"><div class="vok"><span class="big ${d<0?'bad':''}">${ic(d<0?'x':'check')}</span><div><h2>${d<0?'Certificado vencido':'Certificado válido'}</h2><p class="small muted">Emitido por ${COMPANY} con AmePhia Academia</p></div></div>
     <div class="dl"><div><span>Titular</span><b>${esc(c.name)}</b></div><div><span>Cédula</span><b class="num">${c.ced.slice(0,4)}•••••${c.ced.slice(-1)}</b></div>
-    <div><span>Certificación</span><b>${esc(co.cert)}</b></div><div><span>Horas de vuelo acreditadas</span><b class="num">${hrs(c.flightMin)} h</b></div>
+    <div><span>Certificación</span><b>${esc(co.cert)}</b></div><div><span>Horas de laboratorio acreditadas</span><b class="num">${hrs(c.labMin)} h</b></div>
     <div><span>Emitido</span><b>${fd(c.issued)}</b></div><div><span>Vigente hasta</span><b style="color:${d<0?'var(--bad)':'inherit'}">${fd(c.expires)}</b></div></div>
     <button class="btn" data-act="cert" data-code="${c.code}" style="align-self:flex-start">Ver certificado</button></div>`;
 }
@@ -1080,10 +1084,10 @@ function studentDrawer(id){
         <div><span>Cédula</span><b class="num">${s.ced}</b></div><div><span>Teléfono</span><b class="num">${s.phone}</b></div>
         <div><span>Correo</span><b>${esc(s.email)}</b></div><div><span>Matriculado</span><b>${fd(s.enrolled)}</b></div></div></div>
       <div class="sec"><span class="eyebrow">Académico</span>
-        <div class="dl">${[['Teórico (30 %)','teo'],['Simulador (15 %)','sim'],['Práctica de vuelo (45 %)','vuelo']].map(([l,k]) => `<div><span>${l}</span><b class="num">${n1(s.g[k])}</b></div>`).join('')}
+        <div class="dl">${[['Exámenes (30 %)','teo'],['Simulacro (15 %)','sim'],['Laboratorios (45 %)','lab']].map(([l,k]) => `<div><span>${l}</span><b class="num">${n1(s.g[k])}</b></div>`).join('')}
         <div><span>Asistencia (10 %)</span><b class="num">${s.g.asis ?? '—'} %</b></div><div><span>Nota ${f.complete?'final':'parcial'}</span><b class="num" style="font-size:18px;font-family:var(--font-display)">${n1(f.value)}</b></div>
-        <div><span>Horas de vuelo</span><b class="num">${hrs(s.flightMin)} de ${c.minFlight} h</b></div></div>
-        <button class="btn sm" style="align-self:flex-start" data-act="goto-log" data-id="${s.id}">${ic('log')}Ver bitácora de vuelo</button></div>
+        <div><span>Horas de laboratorio</span><b class="num">${hrs(s.labMin)} de ${c.minLab} h</b></div></div>
+        <button class="btn sm" style="align-self:flex-start" data-act="goto-log" data-id="${s.id}">${ic('log')}Ver bitácora de laboratorios</button></div>
       <div class="sec"><span class="eyebrow">Facturas y pagos · desde ContAme</span>
         ${s.invoices.map(iv => `<div class="inv"><div class="inv-row"><b class="mono">Factura ${iv.num}</b><span class="chip ok">${ic('check','style="width:12px;height:12px"')}${iv.sri} por el SRI</span></div>
           <div class="small muted">${esc(iv.concept)} · a nombre de ${esc(iv.to)} · ${fd(iv.date)}</div>
@@ -1104,15 +1108,15 @@ function certModal(code){
   openModal(mhead('Certificado', c.code) + `
     <div class="modal-body">
       <div class="cert"><div class="cert-in">
-        <div class="seal" aria-hidden="true">${ic('drone')}</div>
+        <div class="seal" aria-hidden="true">${ic('cert')}</div>
         <span class="issuer">${COMPANY}</span>
         <h2>Certificado de competencia</h2>
         <p>Se certifica que</p>
         <div class="name">${esc(c.name)}</div>
-        <p>aprobó el programa <b>${esc(co.name)}</b> y queda acreditado como <b>${esc(co.cert)}</b>, con ${co.teo} horas de formación teórica y ${hrs(c.flightMin)} horas de vuelo registradas en bitácora.</p>
+        <p>aprobó el programa <b>${esc(co.name)}</b> y queda acreditado como <b>${esc(co.cert)}</b>, con ${co.teo} horas de formación teórica y ${hrs(c.labMin)} horas de laboratorio registradas en bitácora.</p>
         <div class="meta"><div>Nota final<b>${n1(c.grade)} / 10</b></div><div>Emitido<b>${fd(c.issued,{day:'numeric',month:'long',year:'numeric'})}</b></div><div>Vigente hasta<b>${fd(c.expires,{day:'numeric',month:'long',year:'numeric'})}</b></div></div>
         <div class="cert-foot">
-          <div class="sig"><b>Cap. Andrés Molina</b>Director académico</div>
+          <div class="sig"><b>Ing. Andrés Molina</b>Director académico</div>
           <div style="display:flex;flex-direction:column;align-items:center"><div class="qr" id="qr"></div><span class="code">${c.code}</span></div>
           <div class="sig"><b>${esc(GROUPS.find(g=>g.course===c.course)?.instructor || 'Ing. Diego Paredes')}</b>Instructor evaluador</div>
         </div>
@@ -1155,7 +1159,7 @@ function runEnroll(){
   const company = document.getElementById('en-payer').value === 'company' ? (document.getElementById('en-company').value.trim() || 'Empresa patrocinadora') : null;
   const email = document.getElementById('en-email').value.trim() || slug(name)+'@ejemplo.ec';
   const s = { id:'AL-'+String(1040 + STUDENTS.length + 1).padStart(4,'0'), name, ced: document.getElementById('en-ced').value.trim() || '0900000000', email, phone: document.getElementById('en-phone').value.trim() || '—',
-    city:g.city, group:gid, payer:company, g:{teo:null,sim:null,vuelo:null,asis:null}, flightMin:0, balance: plan==='2' ? c.price/2 : 0, enrolled: iso(TODAY), isNew:true };
+    city:g.city, group:gid, payer:company, g:{teo:null,sim:null,lab:null,asis:null}, labMin:0, balance: plan==='2' ? c.price/2 : 0, enrolled: iso(TODAY), isNew:true };
   const inv = buildInvoice(s); inv.date = iso(TODAY); inv.entry = '2026-11-'+String(entrySeq).padStart(4,'0');
   s.invoices = invoice ? [inv] : [];
   const steps = [
@@ -1200,7 +1204,7 @@ function searchHtml(q){
 function notifHtml(){
   const exp = CERTS.filter(c => daysTo(c.expires) >= 0 && daysTo(c.expires) <= 60).length;
   const items = [['warn','cert',exp+' certificados vencen pronto','Ofrece la renovación desde Certificados','certificados'],
-    ['bad','drone','DR-05 necesita mantenimiento','Llega a 100 h antes de la práctica del sábado','flota'],
+    ['bad','cloud','Créditos de SAA-201 al 86 %','Revisa el consumo de la cuenta de práctica','recursos'],
     ['acc','grade','G03 cierra notas el 28 de noviembre','3 alumnos listos para certificar','notas'],
     ['ok','coin','Cobro de $225.00 recibido','ContAme actualizó la cartera de Joaquín Salazar','alumnos']];
   return '<div class="ph eyebrow">Avisos</div>' + items.map(([c,i,t,d,h]) => `<button class="pi" data-act="go" data-h="${h}"><span class="kic" style="background:var(--${c==='acc'?'accent':c}-soft);color:var(--${c==='acc'?'accent':c})">${ic(i)}</span><span><b style="display:block;font-weight:600">${t}</b><span class="small muted">${d}</span></span></button>`).join('');
@@ -1279,16 +1283,16 @@ document.addEventListener('submit', e => {
   e.preventDefault();
   if (e.target.id === 'enroll-form') runEnroll();
   if (e.target.id === 'verify-form') { state.verifyCode = document.getElementById('vcode').value; doVerify(); }
-  if (e.target.id === 'flight-form') {
+  if (e.target.id === 'lab-form') {
     const s = STUDENTS.find(x => x.id === state.bitStudent), m = Math.max(1, Math.min(120, +document.getElementById('ff-min').value || 0));
-    flightsOf(s).unshift({date:document.getElementById('ff-date').value || iso(TODAY), drone:document.getElementById('ff-drone').value, type:document.getElementById('ff-type').value, min:m, instructor:group(s.group).instructor, ok:true, note:document.getElementById('ff-note').value.trim()});
-    s.flightMin += m; route(); toast(`Vuelo de ${m} min registrado y firmado. ${esc(s.name)} suma ${hrs(s.flightMin)} h.`);
+    labsOf(s).unshift({date:document.getElementById('ff-date').value || iso(TODAY), env:document.getElementById('ff-env').value, type:document.getElementById('ff-type').value, min:m, instructor:group(s.group).instructor, ok:true, note:document.getElementById('ff-note').value.trim()});
+    s.labMin += m; route(); toast(`Laboratorio de ${m} min registrado y revisado. ${esc(s.name)} suma ${hrs(s.labMin)} h.`);
   }
   if (e.target.id === 'course-form') {
     const name = document.getElementById('nc-name').value.trim(); if (!name) { document.getElementById('nc-name').focus(); return; }
     const id = (document.getElementById('nc-code').value.trim() || 'CUR-'+(COURSES.length+1)).toUpperCase();
-    COURSES.push({id, name, level:'Especialización', teo:+document.getElementById('nc-teo').value||10, vuelo:+document.getElementById('nc-vuelo').value||10, minFlight:+document.getElementById('nc-min').value||0, price:+document.getElementById('nc-price').value||0, months:24, modules:['Módulos por definir'], cert:name});
-    DRONES_BY[id] = ['DR-03']; FLIGHT_TYPES[id] = ['Práctica general'];
+    COURSES.push({id, name, level:'Especialización', teo:+document.getElementById('nc-teo').value||10, lab:+document.getElementById('nc-lab').value||10, minLab:+document.getElementById('nc-min').value||0, price:+document.getElementById('nc-price').value||0, months:24, modules:['Módulos por definir'], cert:name});
+    ENVS_BY[id] = ['LAB-01']; LAB_TYPES[id] = ['Práctica general'];
     closeModal(); route(); toast(`Curso ${esc(id)} creado y enlazado como producto en ContAme.`);
   }
 });
@@ -1296,12 +1300,12 @@ document.addEventListener('submit', e => {
 function courseModal(){
   openModal(mhead('Nuevo curso', 'Se crea también como producto en ContAme para poder facturarlo.') + `
   <form id="course-form"><div class="modal-body"><div class="form-grid">
-    <div class="field full"><label for="nc-name">Nombre del curso</label><input id="nc-name" class="input" placeholder="Ej.: Topografía con drones RTK"></div>
+    <div class="field full"><label for="nc-name">Nombre del curso</label><input id="nc-name" class="input" placeholder="Ej.: Topografía con envs RTK"></div>
     <div class="field"><label for="nc-code">Código</label><input id="nc-code" class="input" placeholder="TOP-330"></div>
     <div class="field"><label for="nc-price">Precio (USD)</label><input id="nc-price" class="input" type="number" min="0" value="590"></div>
     <div class="field"><label for="nc-teo">Horas de teoría</label><input id="nc-teo" class="input" type="number" min="0" value="14"></div>
-    <div class="field"><label for="nc-vuelo">Horas de práctica</label><input id="nc-vuelo" class="input" type="number" min="0" value="18"></div>
-    <div class="field"><label for="nc-min">Horas de vuelo mínimas para certificar</label><input id="nc-min" class="input" type="number" min="0" value="8"></div>
+    <div class="field"><label for="nc-lab">Horas de práctica</label><input id="nc-lab" class="input" type="number" min="0" value="18"></div>
+    <div class="field"><label for="nc-min">Horas de laboratorio mínimas para certificar</label><input id="nc-min" class="input" type="number" min="0" value="8"></div>
   </div></div>
   <div class="modal-foot"><button type="button" class="btn" data-act="close">Cancelar</button><button class="btn primary" type="submit">Crear curso</button></div></form>`);
 }
@@ -1311,7 +1315,7 @@ function attendanceModal(i){
   const r = mulberry32(i*31+7);
   openModal(mhead('Asistencia', `${esc(x.title)} · ${g.course} · ${g.id} · ${x.from}–${x.to}`) + `
     <div class="modal-body">
-      ${x.drones?`<div class="inv"><div class="inv-row"><b>Drones reservados</b><span class="mono">${x.drones}</span></div><span class="small muted">Las horas de cada alumno se suman a su bitácora al cerrar la práctica.</span></div>`:''}
+      ${x.envs?`<div class="inv"><div class="inv-row"><b>Entorno reservado</b><span class="mono">${x.envs}</span></div><span class="small muted">Las horas de cada alumno se suman a su bitácora al cerrar el laboratorio.</span></div>`:''}
       <div class="list" style="border:1px solid var(--border);border-radius:10px">${list.map(s => `
         <div style="align-items:center">${av(s.name)}<div style="flex:1;min-width:0"><b style="font-weight:600">${esc(s.name)}</b><p class="small muted">Asistencia acumulada ${s.g.asis ?? 100} %</p></div>
         <label class="switch"><input type="checkbox" data-att id="att-${i}-${s.id}" ${x.taken ? (r() > .12 ? 'checked' : '') : 'checked'}><span class="small">Presente</span></label></div>`).join('')}</div>
@@ -1325,7 +1329,7 @@ function issueCerts(){
   const c = course(group(state.notasGroup).course);
   ready.forEach(s => {
     const exp = new Date(TODAY); exp.setMonth(exp.getMonth() + c.months);
-    CERTS.unshift({code:'AA-'+c.id.replace('-','')+'-2026-'+String(certSeq++).padStart(4,'0'), name:s.name, course:c.id, issued:iso(TODAY), expires:iso(exp), grade:finalGrade(s).value, flightMin:s.flightMin, ced:s.ced, sid:s.id});
+    CERTS.unshift({code:'AA-'+c.id.replace('-','')+'-2026-'+String(certSeq++).padStart(4,'0'), name:s.name, course:c.id, issued:iso(TODAY), expires:iso(exp), grade:finalGrade(s).value, labMin:s.labMin, ced:s.ced, sid:s.id});
     EVENTS.unshift({t:'Ahora', kind:'cert', text:'Certificado emitido: '+s.name, sub:c.id+' · nota '+n1(finalGrade(s).value)+' · cuenta al día en ContAme'});
   });
   STUDENTS.filter(s => s.group === state.notasGroup).forEach(updateGradeRow);
