@@ -1,0 +1,1339 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="AmePhia Academia: gestión de cursos, alumnos, notas, bitácora de vuelo y certificaciones, conectada a ContAme.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/favicon.ico">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>AmePhia Academia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: panel de operación — barra lateral fija + área de trabajo con tarjetas elevadas; misma familia visual que ContAme (monocromo + un acento cielo). */
+:root{
+  --bg:#f5f7fa; --surface:#ffffff; --surface-2:#eef2f6; --fg:#0e1621; --muted:#5a6777; --border:#e2e7ee;
+  --accent:#0369a1; --accent-soft:#e3f1fb; --accent-fg:#ffffff;
+  --ok:#157f3c; --ok-soft:#e3f6e9; --warn:#a85d06; --warn-soft:#fdf1dc; --bad:#b42318; --bad-soft:#fde8e6;
+  --shadow:0 1px 2px rgba(14,22,33,.05),0 2px 6px rgba(14,22,33,.04);
+  --shadow-lg:0 12px 40px rgba(14,22,33,.18);
+  --cert-paper:#fffdf8; --cert-ink:#14202c; --cert-line:#c9b98f;
+  --font-sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --font-display:"Inter Tight","Inter",-apple-system,sans-serif;
+  --font-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0a1017; --surface:#101922; --surface-2:#17222e; --fg:#e6ecf2; --muted:#93a0af; --border:#212e3c;
+  --accent:#38bdf8; --accent-soft:rgba(56,189,248,.13); --accent-fg:#04202f;
+  --ok:#4ade80; --ok-soft:rgba(74,222,128,.12); --warn:#fbbf24; --warn-soft:rgba(251,191,36,.12); --bad:#f87171; --bad-soft:rgba(248,113,113,.12);
+  --shadow:0 0 0 1px rgba(255,255,255,.02); --shadow-lg:0 16px 48px rgba(0,0,0,.55);
+  --cert-paper:#fffdf8; --cert-ink:#14202c; --cert-line:#c9b98f; color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0a1017; --surface:#101922; --surface-2:#17222e; --fg:#e6ecf2; --muted:#93a0af; --border:#212e3c;
+  --accent:#38bdf8; --accent-soft:rgba(56,189,248,.13); --accent-fg:#04202f;
+  --ok:#4ade80; --ok-soft:rgba(74,222,128,.12); --warn:#fbbf24; --warn-soft:rgba(251,191,36,.12); --bad:#f87171; --bad-soft:rgba(248,113,113,.12);
+  --shadow:0 0 0 1px rgba(255,255,255,.02); --shadow-lg:0 16px 48px rgba(0,0,0,.55);
+  --cert-paper:#fffdf8; --cert-ink:#14202c; --cert-line:#c9b98f; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-sans);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+h1,h2,h3{font-family:var(--font-display);margin:0;text-wrap:balance;letter-spacing:-.01em}
+h1{font-size:1.6rem;font-weight:600}
+h2{font-size:1.05rem;font-weight:600}
+h3{font-size:.95rem;font-weight:600}
+p{margin:0;text-wrap:pretty}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.num{font-variant-numeric:tabular-nums}
+.mono{font-family:var(--font-mono);font-size:.85em}
+.muted{color:var(--muted)}
+.small{font-size:12.5px}
+.eyebrow{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+
+/* App shell */
+.app{display:grid;grid-template-columns:250px minmax(0,1fr);min-height:100%}
+.side{position:sticky;top:0;height:100vh;overflow:auto;background:var(--surface);border-right:1px solid var(--border);padding:18px 14px 24px;display:flex;flex-direction:column;gap:18px;padding-top:max(18px,env(safe-area-inset-top,0px))}
+.brand{display:flex;align-items:center;gap:10px;padding:2px 6px}
+.brand-mark{width:34px;height:34px;border-radius:9px;background:var(--fg);display:grid;place-items:center;flex:none}
+.brand-mark svg{width:22px;height:22px}
+.brand b{font-family:var(--font-display);font-size:15px;display:block;line-height:1.15}
+.brand span{font-size:11.5px;color:var(--muted)}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nav .eyebrow{padding:10px 10px 6px}
+.nav a{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:8px;color:var(--fg);text-decoration:none;font-weight:500;transition:background .15s}
+.nav a svg{width:17px;height:17px;flex:none;color:var(--muted)}
+.nav a:hover{background:var(--surface-2)}
+.nav a.on{background:var(--accent-soft);color:var(--accent)}
+.nav a.on svg{color:var(--accent)}
+.nav .badge{margin-left:auto}
+.side-foot{margin-top:auto;margin-bottom:-6px;padding:12px;border-radius:var(--r);background:var(--surface-2);display:flex;flex-direction:column;gap:6px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ok);display:inline-block;box-shadow:0 0 0 3px var(--ok-soft)}
+.main{min-width:0;display:flex;flex-direction:column}
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;padding-block:10px;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
+.topbar>*{flex-shrink:0}.topbar .search{flex-shrink:1}
+.menu-btn{display:none}
+.sync{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted);white-space:nowrap}
+.page{padding-block:24px 48px;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:20px;max-width:1320px;width:100%}
+.page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.page-head p{color:var(--muted);margin-top:4px;max-width:70ch}
+
+/* Primitives */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);min-width:0}
+.card-pad{padding:18px}
+.card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;border-bottom:1px solid var(--border)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:36px;padding:0 14px;border-radius:9px;border:1px solid var(--border);background:var(--surface);font-weight:500;cursor:pointer;transition:background .15s,border-color .15s,transform .15s;white-space:nowrap}
+.btn:hover{background:var(--surface-2)}
+.btn svg{width:16px;height:16px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.sm{height:30px;padding:0 10px;font-size:13px;border-radius:8px}
+.btn.ghost{border-color:transparent;background:transparent}
+.btn.ghost:hover{background:var(--surface-2)}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.chip{display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 8px;border-radius:999px;font-size:12px;font-weight:500;background:var(--surface-2);color:var(--muted);white-space:nowrap}
+.chip.ok{background:var(--ok-soft);color:var(--ok)}
+.chip.warn{background:var(--warn-soft);color:var(--warn)}
+.chip.bad{background:var(--bad-soft);color:var(--bad)}
+.chip.acc{background:var(--accent-soft);color:var(--accent)}
+.badge{font-size:11px;font-weight:600;min-width:20px;height:18px;padding:0 6px;border-radius:999px;background:var(--surface-2);color:var(--muted);display:inline-grid;place-items:center}
+.grid{display:grid;gap:16px}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g-main{grid-template-columns:minmax(0,1.7fr) minmax(0,1fr)}
+.kpi{padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+.kpi .v{font-family:var(--font-display);font-size:1.75rem;line-height:1;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.kpi .d{font-size:12.5px;color:var(--muted)}
+.kpi .d b{color:var(--ok);font-weight:600}
+.bar{height:6px;border-radius:99px;background:var(--surface-2);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:99px}
+.bar.ok i{background:var(--ok)} .bar.warn i{background:var(--warn)}
+.list{display:flex;flex-direction:column}
+.list>div{display:flex;gap:12px;align-items:flex-start;padding:12px 18px;border-bottom:1px solid var(--border)}
+.list>div:last-child{border-bottom:0}
+.stripe{width:3px;align-self:stretch;border-radius:3px;background:var(--accent);flex:none}
+.stripe.warn{background:var(--warn)} .stripe.bad{background:var(--bad)} .stripe.ok{background:var(--ok)}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:left;padding:10px 14px;border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:middle}
+tbody tr:last-child td{border-bottom:0}
+tbody tr.click{cursor:pointer;transition:background .15s}
+tbody tr.click:hover{background:var(--surface-2)}
+td.r,th.r{text-align:right}
+.who{display:flex;align-items:center;gap:10px;min-width:0}
+.av{width:32px;height:32px;border-radius:50%;background:var(--surface-2);display:grid;place-items:center;font-size:12px;font-weight:600;color:var(--fg);flex:none}
+.who b{font-weight:600;display:block;white-space:nowrap}
+.who span{font-size:12px;color:var(--muted)}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:14px 18px;border-bottom:1px solid var(--border)}
+.input,.select{height:36px;border:1px solid var(--border);background:var(--surface);border-radius:9px;padding:0 12px;min-width:0}
+.input:focus,.select:focus{outline:2px solid var(--accent);outline-offset:-1px}
+.seg{display:inline-flex;background:var(--surface-2);border-radius:9px;padding:3px;gap:2px}
+.seg button{border:0;background:transparent;height:30px;padding:0 11px;border-radius:7px;cursor:pointer;font-size:13px;font-weight:500;color:var(--muted)}
+.seg button.on{background:var(--surface);color:var(--fg);box-shadow:var(--shadow)}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:12.5px;font-weight:500}
+.field .input,.field .select{width:100%}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.form-grid .full{grid-column:1/-1}
+.switch{display:flex;align-items:center;gap:10px;cursor:pointer}
+.switch input{appearance:none;width:36px;height:20px;border-radius:99px;background:var(--border);position:relative;cursor:pointer;transition:background .15s;flex:none}
+.switch input::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .15s;box-shadow:0 1px 2px rgba(0,0,0,.2)}
+.switch input:checked{background:var(--accent)}
+.switch input:checked::after{transform:translateX(16px)}
+
+/* Course cards */
+.course{display:flex;flex-direction:column;gap:14px;padding:18px}
+.course .top{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.split{display:flex;height:8px;border-radius:99px;overflow:hidden;gap:2px}
+.split i{display:block;height:100%}
+.split .t{background:var(--fg);opacity:.75}
+.split .v{background:var(--accent)}
+.legend{display:flex;gap:14px;font-size:12px;color:var(--muted);flex-wrap:wrap}
+.legend i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px;vertical-align:0}
+.mods{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:5px;font-size:13px}
+.mods li{display:flex;gap:8px}
+.mods li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--muted);margin-top:8px;flex:none}
+.kv{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding-top:12px;border-top:1px solid var(--border)}
+.kv div{display:flex;flex-direction:column;gap:2px}
+.kv span{font-size:11.5px;color:var(--muted)}
+.kv b{font-weight:600;font-variant-numeric:tabular-nums}
+
+/* Calendar */
+.cal{display:grid;grid-template-columns:repeat(7,minmax(130px,1fr));min-width:920px}
+.cal .day{border-right:1px solid var(--border);min-height:300px;display:flex;flex-direction:column}
+.cal .day:last-child{border-right:0}
+.cal .dh{padding:10px 12px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:baseline}
+.cal .dh b{font-family:var(--font-display);font-size:18px}
+.cal .day.today .dh{color:var(--accent)}
+.cal .day.today{background:color-mix(in srgb,var(--accent-soft) 45%,transparent)}
+.cal .slots{padding:8px;display:flex;flex-direction:column;gap:8px}
+.sess{border-radius:9px;padding:9px 10px;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);display:flex;flex-direction:column;gap:4px;font-size:12.5px;cursor:pointer;transition:box-shadow .15s}
+.sess:hover{box-shadow:var(--shadow-lg)}
+.sess.vuelo{border-left-color:var(--ok)}
+.sess.sim{border-left-color:var(--warn)}
+.sess b{font-size:13px;font-weight:600;line-height:1.3}
+
+/* Gradebook */
+.gin{width:64px;height:32px;border:1px solid var(--border);border-radius:7px;background:var(--surface);text-align:center;font-variant-numeric:tabular-nums}
+.gin:focus{outline:2px solid var(--accent);outline-offset:-1px}
+.final{font-family:var(--font-display);font-weight:600;font-size:16px}
+.reasons{display:flex;flex-direction:column;gap:3px}
+
+/* Integration flow */
+.flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;position:relative}
+.step{position:relative;padding:16px;border-radius:12px;background:var(--surface);border:1px solid var(--border);display:flex;flex-direction:column;gap:8px}
+.step .n{width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--accent-fg);display:grid;place-items:center;font-weight:700;font-size:12.5px}
+.step.ca .n{background:var(--fg);color:var(--bg)}
+.step:not(:last-child)::after{content:"";position:absolute;right:-12px;top:28px;width:12px;height:2px;background:var(--border)}
+.who-side{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+
+/* Modal / drawer / toast */
+.overlay{position:fixed;inset:0;background:rgba(8,14,22,.45);z-index:40;display:flex;align-items:center;justify-content:center;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));animation:fade .15s}
+.modal{background:var(--surface);border-radius:16px;box-shadow:var(--shadow-lg);width:min(640px,100%);max-height:100%;overflow:auto;display:flex;flex-direction:column}
+.modal.wide{width:min(900px,100%)}
+.modal-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:18px 20px;border-bottom:1px solid var(--border)}
+.modal-body{padding:20px;display:flex;flex-direction:column;gap:16px}
+.modal-foot{padding:14px 20px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+.overlay.drawer{justify-content:flex-end;align-items:stretch;padding:0}
+.drawer .modal{width:min(560px,100%);border-radius:0;max-height:none;height:100%;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);animation:slide .2s ease-out}
+.toast-wrap{position:fixed;right:max(20px,env(safe-area-inset-right,0px));bottom:max(20px,env(safe-area-inset-bottom,0px));z-index:60;display:flex;flex-direction:column;gap:8px;align-items:flex-end;pointer-events:none}
+.toast{background:var(--fg);color:var(--bg);padding:11px 14px;border-radius:10px;box-shadow:var(--shadow-lg);font-size:13px;max-width:min(380px,calc(100vw - 40px));display:flex;gap:9px;align-items:flex-start;animation:up .2s ease-out}
+.toast svg{width:16px;height:16px;flex:none;margin-top:1px}
+@keyframes fade{from{opacity:0}}
+@keyframes slide{from{transform:translateX(40px);opacity:.4}}
+@keyframes up{from{transform:translateY(8px);opacity:0}}
+.steps{display:flex;flex-direction:column;gap:2px}
+.pstep{display:flex;gap:12px;align-items:flex-start;padding:10px 4px;opacity:.35;transition:opacity .2s}
+.pstep.done,.pstep.run{opacity:1}
+.pstep .ic{width:24px;height:24px;border-radius:50%;border:2px solid var(--border);display:grid;place-items:center;flex:none}
+.pstep.done .ic{background:var(--ok);border-color:var(--ok);color:var(--bg)}
+.pstep.run .ic{border-color:var(--accent);border-top-color:transparent;animation:spin .7s linear infinite}
+.pstep .ic svg{width:14px;height:14px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sec{display:flex;flex-direction:column;gap:10px}
+.dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 16px}
+.dl div{display:flex;flex-direction:column;gap:1px;min-width:0}
+.dl span{font-size:11.5px;color:var(--muted)}
+.dl b{font-weight:500;overflow-wrap:anywhere}
+.inv{border:1px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.inv-row{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+
+/* Certificate */
+.cert{background:var(--cert-paper);color:var(--cert-ink);border-radius:6px;padding:14px;box-shadow:0 2px 10px rgba(0,0,0,.12)}
+.cert-in{border:1.5px solid var(--cert-line);outline:1px solid var(--cert-line);outline-offset:4px;padding:34px 36px 26px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;position:relative}
+.cert .issuer{font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;color:#6b5a2e}
+.cert h2{font-family:var(--font-display);font-size:30px;font-weight:600;letter-spacing:.01em;color:var(--cert-ink)}
+.cert .name{font-family:var(--font-display);font-size:28px;font-weight:600;border-bottom:1px solid var(--cert-line);padding:2px 24px 8px;margin-top:4px}
+.cert p{font-size:13.5px;color:#3c4752;max-width:52ch}
+.cert .meta{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;font-size:12px;color:#3c4752;margin-top:6px}
+.cert .meta b{display:block;color:var(--cert-ink);font-size:13px}
+.cert-foot{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:end;width:100%;margin-top:18px}
+.sig{border-top:1px solid #8a8a8a;padding-top:6px;font-size:11.5px;color:#3c4752}
+.sig b{display:block;color:var(--cert-ink);font-size:12.5px}
+.qr{width:96px;height:96px;background:#fff;padding:4px;display:grid;place-items:center}
+.qr img,.qr canvas{width:88px!important;height:88px!important}
+.cert .code{font-family:var(--font-mono);font-size:11px;color:#3c4752;margin-top:4px}
+.seal{position:absolute;top:22px;right:24px;width:62px;height:62px;border-radius:50%;border:2px solid var(--cert-line);display:grid;place-items:center;color:#6b5a2e}
+.seal svg{width:30px;height:30px}
+
+/* Portal (phone) */
+.portal{display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:32px;align-items:start}
+.phone{border:10px solid var(--fg);border-radius:38px;background:var(--bg);overflow:hidden;box-shadow:var(--shadow-lg);max-width:100%}
+.phone-in{height:700px;overflow:auto;display:flex;flex-direction:column}
+.ph-top{background:var(--accent);color:var(--accent-fg);padding:22px 18px 46px;display:flex;flex-direction:column;gap:4px}
+.ph-top .hi{font-family:var(--font-display);font-size:20px;font-weight:600}
+.ph-body{padding:0 14px 20px;margin-top:-30px;display:flex;flex-direction:column;gap:12px}
+.ph-card{background:var(--surface);border-radius:14px;padding:14px;border:1px solid var(--border);display:flex;flex-direction:column;gap:8px}
+.ring{width:64px;height:64px;flex:none}
+.why{display:flex;flex-direction:column;gap:14px}
+.why>div{display:flex;gap:12px}
+.why .ic{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;flex:none}
+.why .ic svg{width:18px;height:18px}
+
+/* Verify */
+.verify{max-width:620px;margin:0 auto;width:100%;display:flex;flex-direction:column;gap:18px;padding-top:12px}
+.vrow{display:flex;gap:10px}
+.vrow .input{flex:1;font-family:var(--font-mono);text-transform:uppercase}
+.vres{padding:20px;display:flex;flex-direction:column;gap:14px}
+.vok{display:flex;gap:12px;align-items:center}
+.vok .big{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--ok-soft);color:var(--ok);flex:none}
+.vok .big.bad{background:var(--bad-soft);color:var(--bad)}
+.vok svg{width:22px;height:22px}
+
+/* Chart */
+.chart svg{width:100%;height:auto;display:block}
+.chart text{fill:var(--muted);font-size:11px;font-family:var(--font-sans)}
+.chart .lbl{fill:var(--fg);font-weight:600;font-size:11.5px}
+
+/* v2: identidad y detalle */
+:root{--av-l:36%;--av-bg:.13}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--av-l:76%;--av-bg:.2}}
+:root[data-theme="dark"]{--av-l:76%;--av-bg:.2}
+.av{background:hsl(var(--h,205) 70% 50% / var(--av-bg));color:hsl(var(--h,205) 62% var(--av-l))}
+.av.sm{width:28px;height:28px;font-size:11px}
+.page.enter{animation:pageIn .22s ease-out}
+@keyframes pageIn{from{opacity:0;transform:translateY(6px)}}
+.crumbs{display:flex;align-items:center;gap:8px;font-size:13px;white-space:nowrap}
+.crumbs .sep{color:var(--muted);opacity:.5}
+.search{position:relative;flex:0 1 400px;min-width:0}
+.search .si{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted);width:16px;height:16px;pointer-events:none}
+.search input{width:100%;height:36px;border:1px solid var(--border);border-radius:9px;background:var(--surface);padding:0 52px 0 34px}
+.search input:focus{outline:2px solid var(--accent);outline-offset:-1px}
+.search kbd{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-family:var(--font-mono);font-size:11px;color:var(--muted);border:1px solid var(--border);border-radius:5px;padding:1px 5px;background:var(--surface-2)}
+.spacer{flex:1 1 0}
+.pop{position:absolute;top:calc(100% + 6px);background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow-lg);z-index:20;overflow:hidden;padding-bottom:4px}
+.search .pop{left:0;right:0}
+.pop .pi{display:flex;align-items:center;gap:10px;padding:8px 12px;cursor:pointer;width:100%;border:0;background:none;text-align:left;color:var(--fg)}
+.pop .pi:hover,.pop .pi:focus-visible{background:var(--surface-2)}
+.pop .ph{padding:10px 12px 4px}
+.pop .empty{padding:14px;color:var(--muted);font-size:13px}
+.icon-btn{position:relative;width:36px;height:36px;padding:0}
+.icon-btn .count{position:absolute;top:3px;right:3px;min-width:16px;height:16px;border-radius:99px;background:var(--bad);color:#fff;font-size:10px;font-weight:700;display:grid;place-items:center;padding:0 4px}
+.notif-wrap{position:relative}
+.notif-wrap .pop{right:0;width:min(360px,calc(100vw - 32px))}
+.notif-wrap .pi{align-items:flex-start}
+.me{width:34px;height:34px;font-size:12px;cursor:default}
+.kpi-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.kic{width:30px;height:30px;border-radius:9px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;flex:none}
+.kic svg{width:16px;height:16px}
+.kpi-row{display:flex;justify-content:space-between;align-items:flex-end;gap:10px}
+.kpi-row svg{width:96px;height:32px;flex:none;overflow:visible}
+.delta{display:inline-flex;align-items:center;gap:3px;font-weight:600;font-size:12px;padding:1px 6px;border-radius:6px;margin-right:4px}
+.delta.up{color:var(--ok);background:var(--ok-soft)}.delta.down{color:var(--bad);background:var(--bad-soft)}
+.g-dash{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr) minmax(0,1fr)}
+.course{padding:0;overflow:hidden;gap:0;transition:box-shadow .15s,transform .15s}
+.course:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+.course-body{padding:30px 18px 18px;display:flex;flex-direction:column;gap:14px;flex:1}
+.course-art{height:92px;position:relative;background:hsl(var(--h) 70% 50% / var(--av-bg));border-bottom:1px solid var(--border)}
+.course-art>svg{position:absolute;inset:0;width:100%;height:100%}
+.course-art .cico{position:absolute;left:16px;bottom:-20px;width:42px;height:42px;border-radius:12px;background:var(--surface);border:1px solid var(--border);display:grid;place-items:center;color:hsl(var(--h) 62% var(--av-l));box-shadow:var(--shadow)}
+.course-art .cico svg{width:21px;height:21px}
+.course-art .ctag{position:absolute;right:12px;top:12px;background:var(--surface);color:var(--fg)}
+.code{font-family:var(--font-mono);font-size:12px;font-weight:500;padding:2px 7px;border-radius:6px;background:var(--surface-2);white-space:nowrap}
+.final.pill{display:inline-block;min-width:48px;text-align:center;padding:3px 8px;border-radius:8px;background:var(--surface-2)}
+.final.pill.ok{background:var(--ok-soft);color:var(--ok)}.final.pill.bad{background:var(--bad-soft);color:var(--bad)}
+.sess{background:color-mix(in srgb,var(--accent) 6%,var(--surface))}
+.sess.vuelo{background:color-mix(in srgb,var(--ok) 7%,var(--surface))}
+.sess.sim{background:color-mix(in srgb,var(--warn) 8%,var(--surface))}
+.wx{display:flex;gap:12px;align-items:center}
+.wind{width:40px;height:40px;border-radius:50%;border:1px solid var(--border);display:grid;place-items:center;flex:none;background:var(--surface-2)}
+.wind svg{width:18px;height:18px;color:var(--accent)}
+.wx-meta{display:flex;gap:4px 12px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.wx-meta b{color:var(--fg);font-weight:600}
+.me-card{display:flex;align-items:center;gap:10px;padding:2px 6px}
+.me-card b{display:block;font-size:13px;line-height:1.3}
+.nav a.on{font-weight:600}
+.hero-strip{display:flex;gap:10px;flex-wrap:wrap}
+.hero-strip .chip{height:26px;padding:0 10px;font-size:12.5px}
+@media (max-width:1250px){.topbar .sync{display:none}}
+@media (max-width:1100px){.g-dash{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:900px){.crumbs{display:none}}
+@media (max-width:640px){.g-dash{grid-template-columns:1fr}.search kbd{display:none}.topbar .me{display:none}.spacer{display:none}}
+
+/* Responsive */
+@media (max-width:1100px){.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(2,minmax(0,1fr))}.flow{grid-template-columns:1fr}.step:not(:last-child)::after{right:auto;left:28px;top:auto;bottom:-12px;width:2px;height:12px}}
+@media (max-width:900px){
+  .app{grid-template-columns:1fr}
+  .side{position:fixed;left:0;top:0;bottom:0;width:270px;z-index:30;transform:translateX(-102%);transition:transform .2s;height:100%;box-shadow:var(--shadow-lg);padding-left:max(14px,env(safe-area-inset-left,0px))}
+  body.nav-open .side{transform:none}
+  body.nav-open .scrim{display:block}
+  .menu-btn{display:inline-flex}
+  .g-main,.g2,.portal{grid-template-columns:1fr}
+  .sync .long{display:none}
+}
+@media (max-width:640px){
+  .g4,.g3{grid-template-columns:1fr}
+  .topbar,.page{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .form-grid,.dl{grid-template-columns:1fr}
+  .kv{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .topbar .btn .lbl{display:none}
+  .cert-in{padding:26px 14px 18px}
+  .cert h2{font-size:22px}.cert .name{font-size:21px;padding:2px 8px 8px}
+  .cert-foot{grid-template-columns:1fr 1fr}
+  .cert-foot .qr{grid-column:1/-1;justify-self:center;order:-1}
+  .seal{display:none}
+  .vrow{flex-direction:column}
+  .phone{border-width:6px;border-radius:28px}
+}
+.scrim{display:none;position:fixed;inset:0;background:rgba(8,14,22,.4);z-index:25}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side" id="side">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--bg)" stroke-width="1.8" stroke-linecap="round"><circle cx="5.5" cy="5.5" r="2.6"/><circle cx="18.5" cy="5.5" r="2.6"/><circle cx="5.5" cy="18.5" r="2.6"/><circle cx="18.5" cy="18.5" r="2.6"/><path d="M7.5 7.5l3 3M16.5 7.5l-3 3M7.5 16.5l3-3M16.5 16.5l-3-3"/><rect x="9.6" y="9.6" width="4.8" height="4.8" rx="1.2" fill="var(--bg)" stroke="none"/></svg>
+      </div>
+      <div><b>AmePhia Academia</b><span>Cursos y certificaciones</span></div>
+    </div>
+    <nav class="nav" id="nav"></nav>
+    <div class="side-foot">
+      <div class="small" style="display:flex;align-items:center;gap:8px;font-weight:600"><span class="dot"></span>Conectada a ContAme</div>
+      <div class="small muted">AeroEscuela Demo S.A. · facturación, cobros y contabilidad en línea</div>
+    </div>
+    <div class="me-card"><span class="av" style="--h:200">CA</span><div><b>Carolina Arévalo</b><span class="small muted">Coordinación académica</span></div></div>
+  </aside>
+  <div class="scrim" data-act="close-nav"></div>
+  <div class="main">
+    <header class="topbar">
+      <button class="btn sm ghost menu-btn" data-act="open-nav" aria-label="Abrir menú"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <div class="crumbs"><span class="muted" id="crumb-sec">Academia</span><span class="sep">/</span><b id="crumb">Tablero</b></div>
+      <div class="search"><svg class="si" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="gsearch" placeholder="Buscar alumno, curso o certificado" autocomplete="off" aria-label="Buscar"><kbd>⌘K</kbd><div class="pop" id="sres" hidden></div></div>
+      <div class="spacer"></div>
+      <span class="sync"><span class="dot"></span><span>ContAme · sincronizado hace 2 min</span></span>
+      <div class="notif-wrap"><button class="btn icon-btn" data-act="notif" aria-label="Avisos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg><span class="count">4</span></button><div class="pop" id="notif" hidden></div></div>
+      <button class="btn primary" data-act="enroll"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span class="lbl">Matricular alumno</span></button>
+      <span class="av me" style="--h:200" title="Carolina Arévalo · Coordinación académica">CA</span>
+    </header>
+    <main class="page" id="page"></main>
+  </div>
+</div>
+<div id="layer"></div>
+<div class="toast-wrap" id="toasts"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+/* ===================== Íconos ===================== */
+const I = {
+  home:'<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+  book:'<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5M8 7h7"/>',
+  cal:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+  users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.8c1.9.8 3.1 2.6 3.5 5.2"/>',
+  grade:'<path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h5M8 17h3"/>',
+  log:'<path d="M12 3l2.2 4.6 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5L4.8 8.3l5-.7z"/>',
+  cert:'<circle cx="12" cy="9" r="5"/><path d="M8.5 13l-1.5 8 5-2.5 5 2.5-1.5-8"/>',
+  drone:'<circle cx="5.5" cy="5.5" r="2.5"/><circle cx="18.5" cy="5.5" r="2.5"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/><path d="M7.5 7.5l3 3M16.5 7.5l-3 3M7.5 16.5l3-3M16.5 16.5l-3-3"/><rect x="10" y="10" width="4" height="4" rx="1"/>',
+  link:'<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
+  phone:'<rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10.5 18.5h3"/>',
+  shield:'<path d="M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/>',
+  check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+  x:'<path d="M6 6l12 12M18 6L6 18"/>',
+  info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.5v.5"/>',
+  receipt:'<path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6M9 16h3"/>',
+  coin:'<circle cx="12" cy="12" r="9"/><path d="M15 9.5c-.5-1-1.6-1.5-3-1.5-1.8 0-3 .9-3 2.1 0 3 6 1.6 6 4.6 0 1.2-1.3 2.3-3 2.3-1.5 0-2.6-.6-3.1-1.6M12 6v2M12 16.9V18.5"/>',
+  ledger:'<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/>',
+  wrench:'<path d="M14.7 6.3a4 4 0 0 0-5.4 5.2L3.5 17.3a1.8 1.8 0 0 0 2.5 2.5l5.8-5.8a4 4 0 0 0 5.2-5.4l-2.5 2.5-2.3-.4-.4-2.3z"/>',
+  pay:'<rect x="2.5" y="5.5" width="19" height="13" rx="2"/><path d="M2.5 10h19M6 15h4"/>',
+  spark:'<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M6 18l2.5-2.5M15.5 8.5L18 6"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>',
+  search:'<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>',
+  arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>',
+  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  pin:'<path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>',
+  download:'<path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/>',
+  map:'<path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/>',
+  leaf:'<path d="M5 19c0-8 5-14 15-14 0 10-6 15-14 15"/><path d="M5 19l8-8"/>',
+  thermo:'<path d="M10 14V5a2 2 0 0 1 4 0v9a4 4 0 1 1-4 0z"/><path d="M12 10v6"/>',
+  wind:'<path d="M3 8h11a3 3 0 1 0-3-3M3 12h16a3 3 0 1 1-3 3M3 16h8"/>',
+  nav:'<path d="M12 3l6 17-6-4-6 4z"/>'
+};
+const ic = (n, extra='') => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ${extra}>${I[n]}</svg>`;
+
+/* ===================== Utilidades ===================== */
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const rng = mulberry32(1824);
+const R = (a,b) => a + rng()*(b-a);
+const pick = arr => arr[Math.floor(rng()*arr.length)];
+const r1 = x => Math.round(x*10)/10;
+const money = n => '$' + Number(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const money0 = n => '$' + Number(n).toLocaleString('en-US',{maximumFractionDigits:0});
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pdate = s => { const [y,m,d] = s.split('-').map(Number); return new Date(y, m-1, d); };
+const iso = dt => dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0')+'-'+String(dt.getDate()).padStart(2,'0');
+const addDays = (dt,n) => { const x = new Date(dt); x.setDate(x.getDate()+n); return x; };
+const fd = (s, o={day:'numeric',month:'short',year:'numeric'}) => (typeof s === 'string' ? pdate(s) : s).toLocaleDateString('es-EC', o).replace('.', '');
+const TODAY = new Date(2026,10,18);
+const daysTo = s => Math.round((pdate(s) - TODAY)/86400000);
+const initials = n => n.split(' ').map(w => w[0]).slice(0,2).join('').toUpperCase();
+const hrs = m => r1(m/60).toLocaleString('es-EC',{minimumFractionDigits:1,maximumFractionDigits:1});
+const n1 = v => v == null ? '—' : Number(v).toLocaleString('es-EC',{minimumFractionDigits:1,maximumFractionDigits:1});
+const slug = n => n.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().split(' ').join('.');
+
+const HUES = [200,165,275,18,340,120,230,45,300,185];
+const hue = n => HUES[[...n].reduce((a,c) => (a*31 + c.charCodeAt(0)) >>> 0, 7) % HUES.length];
+const av = (n, cls='') => `<span class="av ${cls}" style="--h:${hue(n)}">${initials(n)}</span>`;
+function spark(vals){
+  const w = 96, h = 32, mn = Math.min(...vals), mx = Math.max(...vals), sp = (mx - mn) || 1;
+  const pts = vals.map((v,i) => [i*(w/(vals.length-1)), h - 3 - ((v-mn)/sp)*(h-8)]);
+  const line = pts.map(p => p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+  const last = pts[pts.length-1];
+  return `<svg viewBox="0 0 ${w} ${h}" aria-hidden="true"><polygon points="0,${h} ${line} ${w},${h}" style="fill:var(--accent);opacity:.12"/><polyline points="${line}" style="fill:none;stroke:var(--accent);stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round"/><circle cx="${last[0]}" cy="${last[1]}" r="3" style="fill:var(--accent);stroke:var(--surface);stroke-width:1.5"/></svg>`;
+}
+function kpi(label, icon, value, sub, vals, delta){
+  return `<div class="card kpi"><div class="kpi-top"><span class="eyebrow">${label}</span><span class="kic">${ic(icon)}</span></div>
+    <div class="kpi-row"><span class="v">${value}</span>${vals ? spark(vals) : ''}</div>
+    <span class="d">${delta ? `<span class="delta ${delta[1]}">${delta[0]}</span>` : ''}${sub}</span></div>`;
+}
+
+/* ===================== Datos de ejemplo ===================== */
+const COMPANY = 'AeroEscuela Demo S.A.';
+const COURSES = [
+  {id:'RPAS-101', name:'Piloto de drones · Nivel básico', level:'Básico', teo:16, vuelo:24, minFlight:10, price:450, months:24,
+   modules:['Normativa aeronáutica y espacio aéreo','Meteorología aplicada al vuelo','Planificación y listas de chequeo','Procedimientos de emergencia','Vuelo con línea de vista (VLOS)'],
+   cert:'Piloto de drones — Nivel básico'},
+  {id:'RPAS-201', name:'Piloto profesional · Operaciones avanzadas', level:'Avanzado', teo:24, vuelo:36, minFlight:20, price:780, months:24,
+   modules:['Gestión de riesgo operacional','Vuelo nocturno y en entornos urbanos','Operaciones con carga útil','Coordinación con control de tránsito aéreo','Evaluación práctica en campo'],
+   cert:'Piloto profesional de drones — Operaciones avanzadas'},
+  {id:'FOT-301', name:'Fotogrametría y mapeo con drones', level:'Especialización', teo:14, vuelo:18, minFlight:8, price:620, months:36,
+   modules:['Planes de vuelo automáticos y traslapes','Puntos de control (GCP) y RTK','Procesamiento de ortomosaicos','Modelos digitales de superficie','Entrega de planos y volumetrías'],
+   cert:'Especialista en fotogrametría con drones'},
+  {id:'AGR-310', name:'Agricultura de precisión y aspersión', level:'Especialización', teo:16, vuelo:24, minFlight:12, price:850, months:24,
+   modules:['Drones de aspersión: calibración y caudal','Mapas de prescripción por lote','Manejo seguro de agroquímicos','Operación en bananeras y cacaotales','Mantenimiento de bombas y boquillas'],
+   cert:'Operador de drones agrícolas de aspersión'},
+  {id:'TER-320', name:'Inspección termográfica industrial', level:'Especialización', teo:12, vuelo:12, minFlight:6, price:540, months:36,
+   modules:['Fundamentos de termografía','Inspección de paneles solares','Líneas eléctricas y subestaciones','Reporte técnico de hallazgos'],
+   cert:'Inspector termográfico con drones'},
+  {id:'MNT-150', name:'Mantenimiento y reparación de drones', level:'Técnico', teo:12, vuelo:8, minFlight:0, price:320, months:36,
+   modules:['Motores, hélices y ESC','Baterías LiPo: cuidado y almacenamiento','Calibración de IMU y brújula','Diagnóstico de fallas frecuentes'],
+   cert:'Técnico en mantenimiento de drones'}
+];
+const GROUPS = [
+  {id:'G14', course:'RPAS-101', city:'Guayaquil', site:'Campo de vuelo Samborondón', schedule:'Sábados 08:00–13:00', start:'2026-10-03', end:'2026-12-12', instructor:'Cap. Andrés Molina', cap:12, progress:.62, state:'En curso'},
+  {id:'G15', course:'RPAS-101', city:'Quito', site:'Aula 2 y pista Tababela', schedule:'Mar y Jue 18:30–21:30', start:'2026-11-03', end:'2027-01-14', instructor:'Ing. Valeria Cedeño', cap:12, progress:.2, state:'En curso'},
+  {id:'G06', course:'RPAS-201', city:'Guayaquil', site:'Campo de vuelo Samborondón', schedule:'Domingos 08:00–14:00', start:'2026-09-20', end:'2027-01-31', instructor:'Cap. Andrés Molina', cap:10, progress:.45, state:'En curso'},
+  {id:'G03', course:'FOT-301', city:'Cuenca', site:'Laboratorio SIG y Parque Industrial', schedule:'Vie 17:00–21:00 · Sáb 08:00–12:00', start:'2026-09-11', end:'2026-11-28', instructor:'Ing. Diego Paredes', cap:10, progress:.85, state:'Cierre de notas'},
+  {id:'G02', course:'AGR-310', city:'Quevedo', site:'Finca demostrativa El Guayabo', schedule:'Sábados 07:00–15:00', start:'2026-10-17', end:'2027-01-09', instructor:'Tnlgo. Karla Ríos', cap:10, progress:.35, state:'En curso'},
+  {id:'G01', course:'TER-320', city:'Guayaquil', site:'Planta solar de prácticas', schedule:'Sábados 08:00–14:00', start:'2026-12-05', end:'2027-01-23', instructor:'Ing. Diego Paredes', cap:10, progress:0, state:'Inscripciones abiertas'}
+];
+const course = id => COURSES.find(c => c.id === id);
+const group = id => GROUPS.find(g => g.id === id);
+
+const NAMES = ['Sofía Andrade','Mateo Villacís','Camila Briones','Joaquín Salazar','Valentina Mora','Sebastián Coello','Isabella Cárdenas','Martín Zambrano',
+  'Emilia Guerrero','Nicolás Peñafiel','Antonella Vera','Daniel Chiriboga','Renata Alvarado',
+  'Gabriel Moncayo','Paula Espinoza','Thiago Bustamante','Mía Ordóñez',
+  'Alejandro Jaramillo','Luciana Valencia','Samuel Castro','Danna Rivadeneira','Bruno Arteaga',
+  'Victoria León','Felipe Montalvo','Carla Intriago','Esteban Murillo',
+  'Ariana Cevallos','Julián Proaño'];
+const PLAN = [['G14',8],['G15',5],['G06',4],['G03',5],['G02',4],['G01',2]];
+const DRONES_BY = {'RPAS-101':['DR-01','DR-02','DR-03'],'RPAS-201':['DR-03','DR-06'],'FOT-301':['DR-04'],'AGR-310':['DR-05'],'TER-320':['DR-06'],'MNT-150':['DR-07']};
+const FLEET = [
+  {code:'DR-01', model:'DJI Mini 4 Pro', use:'Entrenamiento básico', hours:142.5, next:150, batt:'3 baterías · 118 ciclos', state:'Operativo', book:740},
+  {code:'DR-02', model:'DJI Mini 4 Pro', use:'Entrenamiento básico', hours:149.1, next:150, batt:'3 baterías · 131 ciclos', state:'Revisión próxima', book:705},
+  {code:'DR-03', model:'DJI Air 3', use:'Básico y avanzado', hours:88.4, next:150, batt:'4 baterías · 64 ciclos', state:'Operativo', book:1120},
+  {code:'DR-04', model:'DJI Mavic 3 Enterprise RTK', use:'Fotogrametría', hours:211.7, next:250, batt:'4 baterías · 152 ciclos', state:'Operativo', book:4260},
+  {code:'DR-05', model:'DJI Agras T40', use:'Aspersión agrícola', hours:96.0, next:100, batt:'2 baterías · 210 ciclos', state:'Revisión próxima', book:17480},
+  {code:'DR-06', model:'DJI Matrice 30T', use:'Termografía y avanzado', hours:64.2, next:150, batt:'2 baterías · 48 ciclos', state:'Operativo', book:9870},
+  {code:'DR-07', model:'DJI Air 3', use:'Taller de mantenimiento', hours:121.3, next:150, batt:'2 baterías · 97 ciclos', state:'En mantenimiento', book:960},
+  {code:'SIM-01', model:'Estación de simulador de vuelo', use:'Simulador (todos los cursos)', hours:612.0, next:null, batt:'—', state:'Operativo', book:2150}
+];
+const FLIGHT_TYPES = {'RPAS-101':['Despegue y aterrizaje de precisión','Circuito en ocho','Vuelo estacionario con viento','Retorno a casa manual'],
+  'RPAS-201':['Vuelo nocturno','Operación urbana simulada','Carga útil y lanzamiento','Inspección de estructura'],
+  'FOT-301':['Misión de mapeo en grilla','Vuelo oblicuo para modelo 3D','Levantamiento con RTK'],
+  'AGR-310':['Calibración de caudal','Aspersión por franjas','Mapa de prescripción'],
+  'TER-320':['Inspección de paneles','Barrido térmico de línea'], 'MNT-150':['Prueba de vuelo tras reparación']};
+
+let invSeq = 4731, entrySeq = 388;
+const STUDENTS = [];
+let ni = 0;
+PLAN.forEach(([gid, n]) => {
+  const g = group(gid), c = course(g.course);
+  for (let i = 0; i < n; i++) {
+    const name = NAMES[ni++];
+    const s = { id:'AL-'+String(1040+ni).padStart(4,'0'), name, ced:'09'+String(Math.floor(R(10000000,99999999))), email:slug(name)+'@ejemplo.ec',
+      phone:'09'+String(Math.floor(R(80000000,99999999))), city:g.city, group:gid, payer: gid==='G02' && i<3 ? 'Agrícola Demo S.A.' : null,
+      g:{teo:null, sim:null, vuelo:null, asis:null}, flightMin:0, balance:0, enrolled: iso(addDays(pdate(g.start), -Math.floor(R(3,18)))) };
+    if (gid==='G03'){ s.g = {teo:r1(R(7.4,9.6)), sim:r1(R(7.2,9.5)), vuelo:r1(R(7.5,9.4)), asis:Math.round(R(88,100))}; s.flightMin = Math.round(R(520,690)); }
+    if (gid==='G14'){ s.g = {teo:r1(R(7,9.5)), sim:r1(R(6.8,9.4)), vuelo:r1(R(6.9,9.2)), asis:Math.round(R(84,100))}; s.flightMin = Math.round(R(320,560)); }
+    if (gid==='G06'){ s.g = {teo:r1(R(7.2,9.6)), sim:r1(R(7,9.3)), vuelo:null, asis:Math.round(R(85,100))}; s.flightMin = Math.round(R(600,900)); }
+    if (gid==='G15'){ s.g = {teo:null, sim:null, vuelo:null, asis:Math.round(R(80,100))}; s.flightMin = Math.round(R(35,110)); }
+    if (gid==='G02'){ s.g = {teo:r1(R(7.3,9.5)), sim:null, vuelo:null, asis:Math.round(R(86,100))}; s.flightMin = Math.round(R(160,320)); }
+    if (rng() < .3) s.balance = Math.min(c.price, pick([150,225,190]));
+    if (gid==='G01'){ s.balance = 0; }
+    STUDENTS.push(s);
+  }
+});
+// Ajustes para que el demo cuente casos claros
+(() => { const g3 = STUDENTS.filter(s => s.group==='G03');
+  g3.forEach(s => s.balance = 0);
+  g3[3].balance = 310;                                  // aprobado con saldo pendiente
+  Object.assign(g3[4].g, {teo:6.6, vuelo:5.8}); g3[4].flightMin = 405; // en riesgo
+  const g14 = STUDENTS.filter(s => s.group==='G14');
+  g14[0].balance = 0; Object.assign(g14[5].g,{vuelo:5.9, asis:72});
+})();
+
+function buildInvoice(s){
+  const c = course(group(s.group).course);
+  const paid = c.price - s.balance;
+  return { num:'001-002-'+String(invSeq++).padStart(9,'0'), date:s.enrolled, total:c.price, paid, to: s.payer || s.name,
+    concept:'Matrícula ' + c.id + ' · ' + c.name, sri:'Autorizada', entry:'2026-'+s.enrolled.slice(5,7)+'-'+String(entrySeq++).padStart(4,'0') };
+}
+STUDENTS.forEach(s => s.invoices = [buildInvoice(s)]);
+const PORTAL_ID = STUDENTS[0].id;
+
+const ALUMNI = ['Ricardo Palacios','Fernanda Ruiz','Héctor Loor','Diana Macías','Pablo Benítez','Gabriela Toapanta','Andrés Yépez','Lorena Quiñónez','Marco Sarmiento','Tatiana Vinueza','Iván Carrera','Silvia Mendoza','Óscar Delgado','Patricia Haro','Rubén Albán','Elena Pazmiño'];
+const CERTS = [];
+let certSeq = 118;
+ALUMNI.forEach((n, i) => {
+  const cid = ['RPAS-101','RPAS-101','FOT-301','RPAS-201','AGR-310','RPAS-101','TER-320','MNT-150'][i % 8];
+  const c = course(cid);
+  const issued = i === 13 ? new Date(2024,5,4) : i < 4 ? addDays(new Date(2024,11,10), i*6) : addDays(new Date(2025,1,14), i*37);
+  const exp = new Date(issued); exp.setMonth(exp.getMonth() + c.months);
+  CERTS.push({code:'AA-'+cid.replace('-','')+'-'+issued.getFullYear()+'-'+String(certSeq++).padStart(4,'0'), name:n, course:cid, issued:iso(issued), expires:iso(exp), grade:r1(R(7.6,9.7)), flightMin:Math.round(R(c.minFlight*60, c.minFlight*60+260)), ced:'09'+String(Math.floor(R(10000000,99999999)))});
+});
+CERTS.sort((a,b) => b.issued.localeCompare(a.issued));
+
+const EVENTS = [
+  {t:'Hoy 09:12', kind:'sri', text:'Factura 001-002-000004760 autorizada por el SRI', sub:'Matrícula de Ariana Cevallos · TER-320'},
+  {t:'Hoy 09:12', kind:'ledger', text:'Asiento 2026-11-0418 contabilizado', sub:'Cuentas por cobrar contra ingresos por capacitación'},
+  {t:'Ayer 17:40', kind:'pay', text:'Cobro registrado: $225.00 por transferencia', sub:'Joaquín Salazar · cartera actualizada en la Academia'},
+  {t:'Ayer 16:05', kind:'cert', text:'Certificado liberado: cuenta al día', sub:'Paula Espinoza · RPAS-201'},
+  {t:'16 nov', kind:'pay', text:'Pago a instructor enviado a cuentas por pagar', sub:'Ing. Diego Paredes · 12 horas dictadas en FOT-301'},
+  {t:'15 nov', kind:'wrench', text:'Mantenimiento de DR-07 registrado como gasto', sub:'Cambio de gimbal y hélices · $186.40'},
+  {t:'15 nov', kind:'ledger', text:'Depreciación mensual de la flota contabilizada', sub:'8 equipos · activos fijos de ContAme'}
+];
+
+// Semana actual (lun 16 – dom 22 nov 2026)
+const SESSIONS = [
+  {day:0, from:'18:30', to:'21:30', g:'G15', type:'teo', title:'Normativa aeronáutica y espacio aéreo', room:'Aula 2 · Quito', taken:true},
+  {day:1, from:'18:30', to:'21:30', g:'G15', type:'teo', title:'Meteorología aplicada al vuelo', room:'Aula 2 · Quito', taken:true},
+  {day:2, from:'19:00', to:'21:00', g:'G06', type:'sim', title:'Simulador: emergencias en vuelo nocturno', room:'Sala de simulador · Guayaquil', taken:false},
+  {day:3, from:'18:30', to:'21:30', g:'G15', type:'sim', title:'Simulador: primeros despegues', room:'Sala de simulador · Quito', taken:false},
+  {day:4, from:'17:00', to:'21:00', g:'G03', type:'teo', title:'Procesamiento de ortomosaicos', room:'Laboratorio SIG · Cuenca', taken:false},
+  {day:5, from:'07:00', to:'15:00', g:'G02', type:'vuelo', title:'Aspersión por franjas en banano', room:'Finca El Guayabo · Quevedo', drones:'DR-05', taken:false},
+  {day:5, from:'08:00', to:'12:00', g:'G03', type:'vuelo', title:'Evaluación final: misión de mapeo', room:'Parque Industrial · Cuenca', drones:'DR-04', taken:false},
+  {day:5, from:'08:00', to:'13:00', g:'G14', type:'vuelo', title:'Circuitos y aterrizaje de precisión', room:'Campo Samborondón', drones:'DR-01 · DR-02 · DR-03', taken:false},
+  {day:6, from:'08:00', to:'14:00', g:'G06', type:'vuelo', title:'Operación urbana simulada', room:'Campo Samborondón', drones:'DR-03 · DR-06', taken:false}
+];
+
+const state = { requirePaid:true, notasGroup:'G03', bitStudent:null, q:'', fGroup:'', fState:'todos', certTab:'todos', flightsCache:{}, verifyCode:'' };
+
+/* ===================== Reglas académicas ===================== */
+const W = {teo:.30, sim:.15, vuelo:.45, asis:.10};
+const MIN_GRADE = 7;
+function finalGrade(s){
+  let sum = 0, w = 0;
+  for (const k of ['teo','sim','vuelo','asis']) { const v = s.g[k]; if (v == null || v === '') continue; const val = k==='asis' ? v/10 : +v; sum += val*W[k]; w += W[k]; }
+  if (!w) return {value:null, complete:false};
+  return {value: r1(sum/w), complete: w > .999};
+}
+function academic(s){
+  const g = group(s.group), c = course(g.course), f = finalGrade(s);
+  const hoursOk = s.flightMin >= c.minFlight*60;
+  if (g.state === 'Inscripciones abiertas') return {label:'Inscrito', cls:''};
+  if (f.value == null) return {label:'En curso', cls:'acc'};
+  if (f.value < MIN_GRADE || (s.g.asis != null && s.g.asis < 75)) return {label:'En riesgo', cls:'bad'};
+  if (f.complete && hoursOk) return {label:'Aprobado', cls:'ok'};
+  return {label:'En curso', cls:'acc'};
+}
+function eligibility(s){
+  const c = course(group(s.group).course), f = finalGrade(s), reasons = [];
+  if (!f.complete) reasons.push({t:'Faltan notas por registrar', cls:''});
+  else if (f.value < MIN_GRADE) reasons.push({t:'Nota final '+n1(f.value)+' (mínimo 7,0)', cls:'bad'});
+  if (s.flightMin < c.minFlight*60) reasons.push({t:'Horas de vuelo '+hrs(s.flightMin)+' de '+c.minFlight+' h', cls:'warn'});
+  if (state.requirePaid && s.balance > 0) reasons.push({t:'Saldo '+money(s.balance)+' en ContAme', cls:'warn'});
+  if (CERTS.some(x => x.sid === s.id)) return {ok:false, issued:true, reasons:[]};
+  return {ok: reasons.length === 0, reasons};
+}
+function payChip(s){ return s.balance > 0 ? `<span class="chip warn">Saldo ${money(s.balance)}</span>` : `<span class="chip ok">${ic('check','style="width:12px;height:12px"')}Al día</span>`; }
+
+function flightsOf(s){
+  if (state.flightsCache[s.id]) return state.flightsCache[s.id];
+  const g = group(s.group), c = course(g.course), r = mulberry32(parseInt(s.id.slice(3)) * 97);
+  const list = []; let left = s.flightMin, dt = pdate(g.start), k = 0;
+  const pool = DRONES_BY[c.id], types = FLIGHT_TYPES[c.id];
+  while (left > 0 && k < 40) {
+    const m = Math.min(left, Math.round(18 + r()*30));
+    list.push({date: iso(dt), drone: pool[Math.floor(r()*pool.length)], type: types[Math.floor(r()*types.length)], min:m, instructor:g.instructor, ok:true, note: r() < .25 ? 'Viento racheado 18 km/h; buen control' : ''});
+    left -= m; k++; if (k % 2 === 0) dt = addDays(dt, 7);
+    if (dt > TODAY) dt = addDays(TODAY, -1);
+  }
+  state.flightsCache[s.id] = list.reverse();
+  return state.flightsCache[s.id];
+}
+
+/* ===================== Navegación ===================== */
+const ROUTES = [
+  {sec:'Academia'},
+  {id:'tablero', label:'Tablero', icon:'home'},
+  {id:'cursos', label:'Cursos', icon:'book'},
+  {id:'grupos', label:'Grupos y horario', icon:'cal'},
+  {id:'alumnos', label:'Alumnos', icon:'users', badge:() => STUDENTS.length},
+  {id:'notas', label:'Notas', icon:'grade'},
+  {id:'bitacora', label:'Bitácora de vuelo', icon:'log'},
+  {id:'certificados', label:'Certificados', icon:'cert'},
+  {id:'flota', label:'Flota de drones', icon:'drone'},
+  {sec:'Conexión'},
+  {id:'contame', label:'ContAme', icon:'link'},
+  {sec:'Vistas públicas'},
+  {id:'portal', label:'Portal del alumno', icon:'phone'},
+  {id:'verificar', label:'Verificar certificado', icon:'shield'}
+];
+function renderNav(cur){
+  document.getElementById('nav').innerHTML = ROUTES.map(r => r.sec ? `<div class="eyebrow">${r.sec}</div>` :
+    `<a href="#${r.id}" class="${r.id===cur?'on':''}">${ic(r.icon)}<span>${r.label}</span>${r.badge?`<span class="badge num">${r.badge()}</span>`:''}</a>`).join('');
+}
+function route(){
+  const h = (location.hash || '#tablero').slice(1);
+  const cur = VIEWS[h] ? h : 'tablero';
+  renderNav(cur);
+  const page = document.getElementById('page');
+  page.innerHTML = VIEWS[cur]();
+  const rr = ROUTES.find(x => x.id === cur), sec = ROUTES.slice(0, ROUTES.indexOf(rr)).reverse().find(x => x.sec);
+  document.getElementById('crumb').textContent = rr.label; document.getElementById('crumb-sec').textContent = sec ? sec.sec : '';
+  page.classList.remove('enter'); void page.offsetWidth; page.classList.add('enter');
+  if (AFTER[cur]) AFTER[cur]();
+  document.body.classList.remove('nav-open');
+  window.scrollTo(0,0);
+}
+window.addEventListener('hashchange', route);
+
+/* ===================== Vistas ===================== */
+const head = (title, sub, actions='') => `<div class="page-head"><div><h1>${title}</h1>${sub?`<p>${sub}</p>`:''}</div>${actions?`<div style="display:flex;gap:8px;flex-wrap:wrap">${actions}</div>`:''}</div>`;
+
+const VIEWS = {};
+const AFTER = {};
+
+VIEWS.tablero = () => {
+  const active = STUDENTS.filter(s => group(s.group).state !== 'Inscripciones abiertas').length;
+  const running = GROUPS.filter(g => g.progress > 0).length;
+  const flightNov = Math.round(STUDENTS.reduce((a,s) => a + s.flightMin, 0) * .34);
+  const ar = STUDENTS.reduce((a,s) => a + s.balance, 0);
+  const debtors = STUDENTS.filter(s => s.balance > 0).length;
+  const expiring = CERTS.filter(c => daysTo(c.expires) >= 0 && daysTo(c.expires) <= 60);
+  const months = [['jun',6480,14],['jul',8920,19],['ago',7640,16],['sep',10310,22],['oct',11870,25],['nov',7960+STUDENTS.filter(s=>s.isNew).reduce((a,s)=>a+s.invoices[0].total,0),17+STUDENTS.filter(s=>s.isNew).length]];
+  const today = SESSIONS.filter(x => x.day >= 2).slice(0,5);
+  return head('Buenos días, Carolina', fd(TODAY,{weekday:'long',day:'numeric',month:'long',year:'numeric'})+' · '+COMPANY) + `
+  <div class="hero-strip"><span class="chip acc">${ic('cal','style="width:13px;height:13px"')}3 clases hoy y mañana</span><span class="chip ok">${ic('drone','style="width:13px;height:13px"')}4 prácticas de vuelo el fin de semana</span><span class="chip warn">${ic('cert','style="width:13px;height:13px"')}${expiring.length} certificados por renovar</span></div>
+  <div class="grid g4">
+    ${kpi('Alumnos activos','users', active, 'vs. octubre', [18,19,21,22,24,active], ['+8 %','up'])}
+    ${kpi('Grupos en curso','cal', running, '1 grupo abre el 5 de diciembre', [3,4,4,5,5,running])}
+    ${kpi('Horas de vuelo · noviembre','drone', hrs(flightNov)+' h', 'vs. octubre', [38,44,41,52,57,flightNov/60], ['+6 %','up'])}
+    ${kpi('Por cobrar · ContAme','coin', money0(ar), debtors+' alumnos con saldo', [2100,1980,1760,1840,1620,ar], ['−8 %','up'])}
+  </div>
+  <div class="grid g-main">
+    <div class="card">
+      <div class="card-head"><div><h2>Ingresos por matrículas</h2><p class="small muted">Facturado en ContAme con factura electrónica autorizada por el SRI</p></div><span class="chip acc">2026</span></div>
+      <div class="card-pad chart">${barChart(months)}</div>
+    </div>
+    <div class="card">
+      <div class="card-head"><h2>Próximas clases</h2><a href="#grupos" class="btn sm ghost">Ver horario ${ic('arrow')}</a></div>
+      <div class="list">${today.map(x => { const g = group(x.g); const dd = addDays(new Date(2026,10,16), x.day); return `
+        <div><span class="stripe ${x.type==='vuelo'?'ok':x.type==='sim'?'warn':''}"></span><div style="min-width:0;flex:1">
+          <div style="display:flex;justify-content:space-between;gap:8px"><b style="font-weight:600">${esc(x.title)}</b><span class="small muted num" style="white-space:nowrap">${x.day===2?'Hoy':fd(dd,{weekday:'short',day:'numeric'})} · ${x.from}</span></div>
+          <div class="small muted">${course(g.course).id} · ${g.id} · ${esc(x.room)}</div></div></div>`; }).join('')}
+      </div>
+    </div>
+  </div>
+  <div class="grid g-dash">
+    <div class="card">
+      <div class="card-head"><h2>Requiere atención</h2><span class="badge">4</span></div>
+      <div class="list">
+        <div><span class="stripe warn"></span><div><b style="font-weight:600">${expiring.length} certificados vencen en los próximos 60 días</b><p class="small muted">Ofrece la recertificación: la proforma se crea en ContAme con un clic.</p></div><a class="btn sm" href="#certificados" style="margin-left:auto">Revisar</a></div>
+        <div><span class="stripe warn"></span><div><b style="font-weight:600">${debtors} alumnos con saldo pendiente</b><p class="small muted">Su certificado queda retenido hasta que ContAme registre el pago.</p></div><a class="btn sm" href="#alumnos" style="margin-left:auto">Ver</a></div>
+        <div><span class="stripe bad"></span><div><b style="font-weight:600">DR-05 (Agras T40) llega a 100 h de vuelo</b><p class="small muted">Programar mantenimiento antes de la práctica del sábado en Quevedo.</p></div><a class="btn sm" href="#flota" style="margin-left:auto">Flota</a></div>
+        <div><span class="stripe"></span><div><b style="font-weight:600">FOT-301 · G03 cierra notas el 28 de noviembre</b><p class="small muted">3 alumnos ya cumplen todo para recibir su certificado.</p></div><a class="btn sm" href="#notas" style="margin-left:auto">Notas</a></div>
+      </div>
+    </div>
+    ${wxCard()}
+    <div class="card">
+      <div class="card-head"><h2>Avance de grupos</h2><a href="#grupos" class="btn sm ghost">Grupos ${ic('arrow')}</a></div>
+      <div class="list">${GROUPS.map(g => { const n = STUDENTS.filter(s=>s.group===g.id).length; return `
+        <div style="flex-direction:column;gap:8px"><div style="display:flex;justify-content:space-between;width:100%;gap:8px"><span><b style="font-weight:600">${course(g.course).id} · ${g.id}</b> <span class="muted small">${g.city}</span></span><span class="small muted num">${n}/${g.cap} alumnos · ${Math.round(g.progress*100)} %</span></div>
+        <div class="bar ${g.progress>.8?'ok':''}" style="width:100%"><i style="width:${Math.max(g.progress*100,1.5)}%"></i></div></div>`; }).join('')}
+      </div>
+    </div>
+  </div>`;
+};
+
+const WX = [
+  {site:'Campo Samborondón', who:'RPAS-101 · G14 · 08:00', wind:12, gust:19, dir:225, rain:10, vis:10},
+  {site:'Finca El Guayabo, Quevedo', who:'AGR-310 · G02 · 07:00', wind:8, gust:14, dir:180, rain:40, vis:8},
+  {site:'Parque Industrial, Cuenca', who:'FOT-301 · G03 · 08:00', wind:21, gust:31, dir:270, rain:20, vis:9}
+];
+function wxCard(){
+  return `<div class="card"><div class="card-head"><div><h2>Condiciones de vuelo</h2><p class="small muted">Sábado 21 de noviembre · pronóstico por sede</p></div></div>
+    <div class="list">${WX.map(w => { const st = w.gust >= 35 || w.rain >= 70 ? ['bad','No apto'] : w.gust >= 28 || w.rain >= 50 ? ['warn','Precaución'] : ['ok','Apto']; return `
+      <div class="wx"><span class="wind" title="Viento desde ${w.dir}°">${ic('nav','style="transform:rotate('+(w.dir+180)+'deg)"')}</span>
+      <div style="flex:1;min-width:0"><div style="display:flex;justify-content:space-between;gap:8px"><b style="font-weight:600">${w.site}</b><span class="chip ${st[0]}">${st[1]}</span></div>
+      <div class="small muted">${w.who}</div>
+      <div class="wx-meta"><span>Viento <b class="num">${w.wind} km/h</b></span><span>Ráfagas <b class="num">${w.gust}</b></span><span>Lluvia <b class="num">${w.rain} %</b></span><span>Visib. <b class="num">${w.vis} km</b></span></div></div></div>`; }).join('')}
+    </div></div>`;
+}
+function barChart(data){
+  const Wd = 640, H = 230, pl = 46, pr = 10, pt = 22, pb = 40, max = 12000;
+  const iw = Wd - pl - pr, ih = H - pt - pb, bw = iw / data.length;
+  const y = v => pt + ih - (v/max)*ih;
+  let s = `<svg viewBox="0 0 ${Wd} ${H}" role="img" aria-label="Ingresos por mes">`;
+  [0,4000,8000,12000].forEach(t => { s += `<line x1="${pl}" x2="${Wd-pr}" y1="${y(t)}" y2="${y(t)}" stroke="var(--border)" stroke-width="1"/><text x="${pl-8}" y="${y(t)+4}" text-anchor="end">${t?('$'+t/1000+'k'):'0'}</text>`; });
+  data.forEach(([m,v,n],i) => {
+    const x = pl + i*bw + bw*.22, w = bw*.56, last = i === data.length-1;
+    s += `<rect x="${x}" y="${y(v)}" width="${w}" height="${pt+ih-y(v)}" rx="5" fill="var(--accent)" opacity="${last?1:.32}"/>`;
+    s += `<text class="lbl" x="${x+w/2}" y="${y(v)-7}" text-anchor="middle">${money0(v)}</text>`;
+    s += `<text x="${x+w/2}" y="${H-pb+17}" text-anchor="middle" style="text-transform:capitalize">${m}${last?' (al 18)':''}</text>`;
+    s += `<text x="${x+w/2}" y="${H-pb+32}" text-anchor="middle">${n} matr.</text>`;
+  });
+  return s + '</svg>';
+}
+
+const COURSE_HUE = {'RPAS-101':200,'RPAS-201':228,'FOT-301':165,'AGR-310':105,'TER-320':18,'MNT-150':275};
+const COURSE_ICON = {'RPAS-101':'drone','RPAS-201':'shield','FOT-301':'map','AGR-310':'leaf','TER-320':'thermo','MNT-150':'wrench'};
+function courseArt(c){
+  const h = COURSE_HUE[c.id] ?? 200, r = mulberry32([...c.id].reduce((a,ch) => a + ch.charCodeAt(0)*7, 3));
+  const cx = 230 + r()*120, cy = 26 + r()*40, st = a => `stroke:hsl(${h} 62% var(--av-l) / ${a})`;
+  let rings = ''; for (let i = 1; i <= 8; i++) rings += `<ellipse cx="${cx.toFixed(0)}" cy="${cy.toFixed(0)}" rx="${(i*24 + r()*8).toFixed(0)}" ry="${(i*13 + r()*5).toFixed(0)}" style="fill:none;${st(.22)};stroke-width:1"/>`;
+  const pts = []; let x = -10, y = 66 + r()*16; while (x < 430) { pts.push([x, y]); x += 46 + r()*34; y = 18 + r()*58; }
+  const poly = pts.map(p => p[0].toFixed(0)+','+p[1].toFixed(0)).join(' ');
+  const dots = pts.slice(1,-1).map(p => `<circle cx="${p[0].toFixed(0)}" cy="${p[1].toFixed(0)}" r="3" style="fill:var(--surface);${st(1)};stroke-width:1.5"/>`).join('');
+  return `<div class="course-art" style="--h:${h}"><svg viewBox="0 0 400 92" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${rings}<polyline points="${poly}" style="fill:none;${st(.75)};stroke-width:1.5;stroke-dasharray:4 5"/>${dots}</svg><span class="chip ctag">${c.level}</span><span class="cico">${ic(COURSE_ICON[c.id] || 'book')}</span></div>`;
+}
+VIEWS.cursos = () => head('Cursos', 'Catálogo de programas con horas de teoría y de vuelo, requisitos para certificar y precio. Cada curso está enlazado a su producto en ContAme para facturar.', `<button class="btn" data-act="new-course">${ic('plus')}Nuevo curso</button>`) +
+  `<div class="grid g3">${COURSES.map(c => { const gs = GROUPS.filter(g => g.course===c.id); const tot = c.teo + c.vuelo; return `
+  <div class="card course">${courseArt(c)}<div class="course-body">
+    <div class="top"><span class="code">${c.id}</span><span class="small muted num">${c.teo + c.vuelo} h en total</span></div>
+    <div><h3 style="font-size:1.05rem">${esc(c.name)}</h3><p class="small muted" style="margin-top:4px">Certificado: ${esc(c.cert)}</p></div>
+    <div style="display:flex;flex-direction:column;gap:7px">
+      <div class="split"><i class="t" style="width:${c.teo/tot*100}%"></i><i class="v" style="width:${c.vuelo/tot*100}%"></i></div>
+      <div class="legend"><span><i style="background:var(--fg);opacity:.75"></i>${c.teo} h teoría</span><span><i style="background:var(--accent)"></i>${c.vuelo} h ${c.id==='MNT-150'?'taller':'práctica de vuelo'}</span></div>
+    </div>
+    <ul class="mods">${c.modules.slice(0,4).map(m => `<li>${esc(m)}</li>`).join('')}${c.modules.length>4?`<li class="muted">y ${c.modules.length-4} módulo más</li>`:''}</ul>
+    <div class="kv"><div><span>Precio</span><b>${money0(c.price)}</b></div><div><span>Vuelo mínimo</span><b>${c.minFlight ? c.minFlight+' h' : '—'}</b></div><div><span>Vigencia</span><b>${c.months} meses</b></div></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span class="small muted">${gs.length ? gs.length+' grupo'+(gs.length>1?'s':'')+' · '+gs.map(g=>g.city).join(', ') : 'Sin grupos abiertos'}</span><a class="btn sm" href="#grupos">Grupos</a></div>
+  </div></div>`; }).join('')}</div>`;
+
+VIEWS.grupos = () => {
+  const base = new Date(2026,10,16);
+  return head('Grupos y horario', 'Semana del 16 al 22 de noviembre de 2026. Las prácticas de vuelo reservan los drones de la flota automáticamente.') + `
+  <div class="grid g3">${GROUPS.map(g => { const c = course(g.course); const n = STUDENTS.filter(s=>s.group===g.id).length; return `
+    <div class="card card-pad" style="display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><b class="mono">${c.id} · ${g.id}</b><span class="chip ${g.state==='En curso'?'acc':g.state==='Cierre de notas'?'warn':''}">${g.state}</span></div>
+      <h3>${esc(c.name)}</h3>
+      <div class="small muted" style="display:flex;flex-direction:column;gap:3px">
+        <span style="display:flex;gap:6px;align-items:center">${ic('pin','style="width:14px;height:14px"')}${esc(g.site)}, ${g.city}</span>
+        <span style="display:flex;gap:6px;align-items:center">${ic('clock','style="width:14px;height:14px"')}${g.schedule} · ${fd(g.start,{day:'numeric',month:'short'})} al ${fd(g.end)}</span>
+        <span style="display:flex;gap:6px;align-items:center">${ic('users','style="width:14px;height:14px"')}${g.instructor} · ${n}/${g.cap} alumnos</span>
+      </div>
+      <div class="bar"><i style="width:${Math.max(g.progress*100,1.5)}%"></i></div>
+    </div>`; }).join('')}</div>
+  <div class="card">
+    <div class="card-head"><h2>Horario de la semana</h2><div class="legend"><span><i style="background:var(--accent)"></i>Teoría</span><span><i style="background:var(--warn)"></i>Simulador</span><span><i style="background:var(--ok)"></i>Vuelo</span></div></div>
+    <div class="tbl-wrap"><div class="cal">${[0,1,2,3,4,5,6].map(d => { const dt = addDays(base,d); return `
+      <div class="day ${d===2?'today':''}"><div class="dh"><span class="small">${fd(dt,{weekday:'short'})}</span><b class="num">${dt.getDate()}</b></div>
+      <div class="slots">${SESSIONS.map((x,i)=>[x,i]).filter(([x])=>x.day===d).map(([x,i]) => `
+        <div class="sess ${x.type}" data-act="attendance" data-i="${i}" tabindex="0" role="button">
+          <span class="small muted num">${x.from}–${x.to}</span><b>${esc(x.title)}</b>
+          <span class="small muted">${group(x.g).course} · ${x.g}</span>
+          ${x.drones?`<span class="small" style="color:var(--ok)">${ic('drone','style="width:12px;height:12px;vertical-align:-2px"')} ${x.drones}</span>`:''}
+          ${x.taken?`<span class="chip ok" style="align-self:flex-start">Asistencia tomada</span>`:d===2?`<span class="chip acc" style="align-self:flex-start">Tomar asistencia</span>`:''}
+        </div>`).join('') || '<span class="small muted" style="padding:4px">Sin clases</span>'}</div></div>`; }).join('')}
+    </div></div>
+  </div>`;
+};
+
+VIEWS.alumnos = () => head('Alumnos', 'Ficha académica y estado de pago de cada alumno. El estado de pago viene de la cartera de ContAme, en tiempo real.', `<button class="btn" data-act="import">Importar Excel</button><button class="btn primary" data-act="enroll">${ic('plus')}Matricular</button>`) + `
+  <div class="card">
+    <div class="toolbar">
+      <div style="position:relative;flex:1;min-width:200px"><span style="position:absolute;left:10px;top:9px;color:var(--muted)">${ic('search','style="width:17px;height:17px"')}</span><input id="q" class="input" style="width:100%;padding-left:34px" placeholder="Buscar por nombre, cédula o correo" value="${esc(state.q)}"></div>
+      <select id="fgroup" class="select"><option value="">Todos los grupos</option>${GROUPS.map(g => `<option value="${g.id}" ${state.fGroup===g.id?'selected':''}>${g.course} · ${g.id} · ${g.city}</option>`).join('')}</select>
+      <div class="seg" id="fstate">${[['todos','Todos'],['dia','Al día'],['saldo','Con saldo'],['riesgo','En riesgo']].map(([k,l]) => `<button data-f="${k}" class="${state.fState===k?'on':''}">${l}</button>`).join('')}</div>
+    </div>
+    <div class="tbl-wrap"><table><thead><tr><th>Alumno</th><th>Curso y grupo</th><th>Horas de vuelo</th><th class="r">Nota</th><th>Estado</th><th>Pago (ContAme)</th></tr></thead><tbody id="rows"></tbody></table></div>
+  </div>`;
+AFTER.alumnos = () => { renderRows(); };
+function renderRows(){
+  const q = state.q.trim().toLowerCase();
+  const list = STUDENTS.filter(s => (!q || (s.name+' '+s.ced+' '+s.email).toLowerCase().includes(q)) && (!state.fGroup || s.group===state.fGroup) &&
+    (state.fState==='todos' || (state.fState==='dia' && !s.balance) || (state.fState==='saldo' && s.balance>0) || (state.fState==='riesgo' && academic(s).label==='En riesgo')));
+  const el = document.getElementById('rows'); if (!el) return;
+  el.innerHTML = list.map(s => { const g = group(s.group), c = course(g.course), f = finalGrade(s), a = academic(s), pct = c.minFlight ? Math.min(1, s.flightMin/(c.minFlight*60)) : 1; return `
+    <tr class="click" data-act="student" data-id="${s.id}">
+      <td><div class="who">${av(s.name)}<div style="min-width:0"><b>${esc(s.name)}${s.isNew?' <span class="chip acc" style="height:18px">Nuevo</span>':''}</b><span>${esc(s.email)}</span></div></div></td>
+      <td style="white-space:nowrap"><span class="code">${c.id}</span><div class="small muted" style="margin-top:3px">${g.id} · ${g.city}</div></td>
+      <td style="min-width:150px"><div class="small num" style="margin-bottom:5px">${hrs(s.flightMin)} de ${c.minFlight} h</div><div class="bar ${pct>=1?'ok':''}"><i style="width:${Math.max(pct*100,2)}%"></i></div></td>
+      <td class="r num"><b>${n1(f.value)}</b>${f.value!=null && !f.complete?'<div class="small muted">parcial</div>':''}</td>
+      <td><span class="chip ${a.cls}">${a.label}</span></td>
+      <td>${payChip(s)}</td>
+    </tr>`; }).join('') || `<tr><td colspan="6" style="text-align:center;padding:36px" class="muted">Ningún alumno coincide con la búsqueda.</td></tr>`;
+}
+
+VIEWS.notas = () => {
+  const g = group(state.notasGroup), c = course(g.course);
+  return head('Notas', 'Calificación por componentes con ponderación del curso. La nota final, las horas de vuelo y el pago en ContAme deciden quién recibe el certificado.') + `
+  <div class="card">
+    <div class="toolbar" style="justify-content:space-between">
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+        <select id="ngroup" class="select">${GROUPS.filter(x=>x.progress>0).map(x => `<option value="${x.id}" ${x.id===g.id?'selected':''}>${x.course} · ${x.id} · ${x.city}</option>`).join('')}</select>
+        <span class="small muted">Teórico 30 % · Simulador 15 % · Práctica de vuelo 45 % · Asistencia 10 % · mínimo para aprobar 7,0</span>
+      </div>
+      <button class="btn primary" id="issue-btn" data-act="issue">${ic('cert')}Emitir certificados</button>
+    </div>
+    <div class="tbl-wrap"><table><thead><tr><th>Alumno</th><th class="r">Teórico</th><th class="r">Simulador</th><th class="r">Vuelo</th><th class="r">Asistencia %</th><th class="r">Final</th><th>Horas (mín. ${c.minFlight} h)</th><th>Certificado</th></tr></thead>
+    <tbody>${STUDENTS.filter(s => s.group===g.id).map(s => `
+      <tr data-sid="${s.id}">
+        <td><div class="who">${av(s.name)}<div><b>${esc(s.name)}</b><span>${payChip(s)}</span></div></div></td>
+        ${['teo','sim','vuelo'].map(k => `<td class="r"><input class="gin" id="g-${s.id}-${k}" data-grade="${k}" data-sid="${s.id}" inputmode="decimal" value="${s.g[k]==null?'':String(s.g[k]).replace('.',',')}" placeholder="—" aria-label="${k} de ${esc(s.name)}"></td>`).join('')}
+        <td class="r"><input class="gin" id="g-${s.id}-asis" data-grade="asis" data-sid="${s.id}" inputmode="numeric" value="${s.g.asis ?? ''}" placeholder="—" aria-label="asistencia de ${esc(s.name)}"></td>
+        <td class="r"><span class="final num" id="f-${s.id}"></span></td>
+        <td class="num small">${hrs(s.flightMin)} h</td>
+        <td id="e-${s.id}"></td>
+      </tr>`).join('')}</tbody></table></div>
+  </div>`;
+};
+AFTER.notas = () => STUDENTS.filter(s => s.group===state.notasGroup).forEach(updateGradeRow);
+function updateGradeRow(s){
+  const f = finalGrade(s), e = eligibility(s);
+  const fe = document.getElementById('f-'+s.id); if (!fe) return;
+  fe.textContent = n1(f.value); fe.className = 'final num pill ' + (f.value == null ? '' : f.value < MIN_GRADE ? 'bad' : f.complete ? 'ok' : '');
+  document.getElementById('e-'+s.id).innerHTML = e.issued ? `<span class="chip ok">${ic('check','style="width:12px;height:12px"')}Emitido</span>` :
+    e.ok ? `<span class="chip ok">Listo para emitir</span>` : `<div class="reasons">${e.reasons.map(r => `<span class="chip ${r.cls}">${r.t}</span>`).join('')}</div>`;
+  const ready = STUDENTS.filter(x => x.group===state.notasGroup && eligibility(x).ok).length;
+  const b = document.getElementById('issue-btn'); if (b){ b.disabled = !ready; b.innerHTML = ic('cert') + (ready ? `Emitir ${ready} certificado${ready>1?'s':''}` : 'Nadie listo para certificar'); }
+}
+
+VIEWS.bitacora = () => {
+  if (!state.bitStudent) state.bitStudent = STUDENTS.find(s => s.group==='G14').id;
+  const s = STUDENTS.find(x => x.id===state.bitStudent), g = group(s.group), c = course(g.course), fl = flightsOf(s);
+  const pct = c.minFlight ? Math.min(1, s.flightMin/(c.minFlight*60)) : 1;
+  return head('Bitácora de vuelo', 'Cada vuelo queda registrado con dron, maniobra, duración y firma del instructor. Las horas cuentan para el requisito del certificado.') + `
+  <div class="card"><div class="toolbar">
+    <select id="bstudent" class="select" style="min-width:260px">${STUDENTS.filter(x=>group(x.group).progress>0).map(x => `<option value="${x.id}" ${x.id===s.id?'selected':''}>${esc(x.name)} · ${group(x.group).course}</option>`).join('')}</select>
+    <span class="small muted">${c.id} · ${g.id} · instructor ${g.instructor}</span>
+  </div>
+  <div class="grid g4" style="padding:18px">
+    <div class="kpi" style="padding:0"><span class="eyebrow">Horas acumuladas</span><span class="v">${hrs(s.flightMin)} h</span><div class="bar ${pct>=1?'ok':''}"><i style="width:${Math.max(pct*100,2)}%"></i></div><span class="d">${pct>=1?'Cumple el mínimo del curso':'Faltan '+hrs(Math.max(0,c.minFlight*60-s.flightMin))+' h para el mínimo de '+c.minFlight+' h'}</span></div>
+    <div class="kpi" style="padding:0"><span class="eyebrow">Vuelos registrados</span><span class="v">${fl.length}</span><span class="d">Todos firmados por el instructor</span></div>
+    <div class="kpi" style="padding:0"><span class="eyebrow">Último vuelo</span><span class="v" style="font-size:1.3rem">${fl[0]?fd(fl[0].date):'—'}</span><span class="d">${fl[0]?esc(fl[0].type):''}</span></div>
+    <div class="kpi" style="padding:0"><span class="eyebrow">Nota de vuelo</span><span class="v">${n1(s.g.vuelo)}</span><span class="d">${s.g.vuelo==null?'Se califica en la evaluación práctica':'Componente con mayor peso (45 %)'}</span></div>
+  </div></div>
+  <div class="grid g-main">
+    <div class="card"><div class="card-head"><h2>Vuelos</h2></div><div class="tbl-wrap"><table><thead><tr><th>Fecha</th><th>Dron</th><th>Maniobra o misión</th><th class="r">Minutos</th><th>Firma</th></tr></thead><tbody>
+      ${fl.map(f => `<tr><td class="num" style="white-space:nowrap">${fd(f.date)}</td><td class="mono">${f.drone}</td><td>${esc(f.type)}${f.note?`<div class="small muted">${esc(f.note)}</div>`:''}</td><td class="r num">${f.min}</td><td><span class="chip ok">${ic('check','style="width:12px;height:12px"')}${esc(f.instructor.split(' ').slice(-1)[0])}</span></td></tr>`).join('') || '<tr><td colspan="5" class="muted" style="text-align:center;padding:30px">Aún no tiene vuelos registrados.</td></tr>'}
+    </tbody></table></div></div>
+    <div class="card"><div class="card-head"><h2>Registrar vuelo</h2></div>
+      <form class="card-pad" id="flight-form" style="display:flex;flex-direction:column;gap:12px">
+        <div class="field"><label for="ff-date">Fecha</label><input id="ff-date" class="input" type="date" value="${iso(TODAY)}"></div>
+        <div class="field"><label for="ff-drone">Dron</label><select id="ff-drone" class="select">${FLEET.filter(d=>d.state!=='En mantenimiento' && d.code!=='SIM-01').map(d => `<option value="${d.code}" ${DRONES_BY[c.id].includes(d.code)?'':'disabled'}>${d.code} · ${d.model}</option>`).join('')}</select></div>
+        <div class="field"><label for="ff-type">Maniobra o misión</label><select id="ff-type" class="select">${FLIGHT_TYPES[c.id].map(t => `<option>${t}</option>`).join('')}</select></div>
+        <div class="field"><label for="ff-min">Duración (minutos)</label><input id="ff-min" class="input" type="number" min="1" max="120" value="25"></div>
+        <div class="field"><label for="ff-note">Observaciones del instructor</label><input id="ff-note" class="input" placeholder="Opcional"></div>
+        <button class="btn primary" type="submit">${ic('check')}Registrar y firmar</button>
+      </form>
+    </div>
+  </div>`;
+};
+
+VIEWS.certificados = () => {
+  const list = CERTS.filter(c => state.certTab==='todos' || (state.certTab==='vencer' && daysTo(c.expires)>=0 && daysTo(c.expires)<=60) || (state.certTab==='vencidos' && daysTo(c.expires)<0));
+  const exp = CERTS.filter(c => daysTo(c.expires)>=0 && daysTo(c.expires)<=60).length;
+  return head('Certificados', 'Certificados con código único y QR. Cualquier empresa puede verificarlos en línea. Antes de que venzan, la Academia ofrece la recertificación.', `<a class="btn" href="#verificar">${ic('shield')}Página de verificación</a>`) + `
+  <div class="grid g4">
+    <div class="card kpi"><span class="eyebrow">Emitidos en 2026</span><span class="v">${64 + CERTS.filter(c=>c.sid).length}</span><span class="d">De 71 alumnos que terminaron curso</span></div>
+    <div class="card kpi"><span class="eyebrow">Vigentes</span><span class="v">${CERTS.filter(c=>daysTo(c.expires)>=0).length + 157}</span><span class="d">Verificables con QR</span></div>
+    <div class="card kpi"><span class="eyebrow">Vencen en 60 días</span><span class="v" style="color:var(--warn)">${exp}</span><span class="d">Oportunidad de recertificación</span></div>
+    <div class="card kpi"><span class="eyebrow">Verificaciones este mes</span><span class="v">38</span><span class="d">Empresas que validaron un certificado</span></div>
+  </div>
+  <div class="card">
+    <div class="toolbar"><div class="seg" id="ctab">${[['todos','Todos'],['vencer','Por vencer'],['vencidos','Vencidos']].map(([k,l]) => `<button data-t="${k}" class="${state.certTab===k?'on':''}">${l}</button>`).join('')}</div></div>
+    <div class="tbl-wrap"><table><thead><tr><th>Código</th><th>Titular</th><th>Curso</th><th>Emitido</th><th>Vence</th><th>Estado</th><th></th></tr></thead><tbody>
+    ${list.map(c => { const d = daysTo(c.expires); const st = d < 0 ? ['bad','Vencido'] : d <= 60 ? ['warn','Vence en '+d+' días'] : ['ok','Vigente']; return `
+      <tr><td class="mono">${c.code}</td><td><b style="font-weight:600">${esc(c.name)}</b>${c.sid?' <span class="chip acc" style="height:18px">Nuevo</span>':''}</td><td><span class="mono">${c.course}</span></td><td class="num">${fd(c.issued)}</td><td class="num">${fd(c.expires)}</td><td><span class="chip ${st[0]}">${st[1]}</span></td>
+      <td class="r" style="white-space:nowrap"><button class="btn sm" data-act="cert" data-code="${c.code}">Ver</button>${d<=60?` <button class="btn sm" data-act="recert" data-code="${c.code}">Ofrecer renovación</button>`:''}</td></tr>`; }).join('') || '<tr><td colspan="7" class="muted" style="text-align:center;padding:30px">No hay certificados en esta lista.</td></tr>'}
+    </tbody></table></div>
+  </div>`;
+};
+
+VIEWS.flota = () => head('Flota de drones', 'Horas de vuelo por equipo, mantenimiento preventivo y valor en libros. Cada dron es un activo fijo en ContAme y se deprecia solo cada mes.') + `
+  <div class="grid g4">
+    <div class="card kpi"><span class="eyebrow">Equipos</span><span class="v">${FLEET.length}</span><span class="d">7 drones y 1 simulador</span></div>
+    <div class="card kpi"><span class="eyebrow">Operativos hoy</span><span class="v">${FLEET.filter(f=>f.state!=='En mantenimiento').length}</span><span class="d">1 en taller</span></div>
+    <div class="card kpi"><span class="eyebrow">Horas de vuelo totales</span><span class="v">${hrs(FLEET.filter(f=>f.code!=='SIM-01').reduce((a,f)=>a+f.hours*60,0))}</span><span class="d">Suman desde la bitácora</span></div>
+    <div class="card kpi"><span class="eyebrow">Valor en libros · ContAme</span><span class="v">${money0(FLEET.reduce((a,f)=>a+f.book,0))}</span><span class="d">Depreciación de noviembre contabilizada</span></div>
+  </div>
+  <div class="card"><div class="tbl-wrap"><table><thead><tr><th>Código</th><th>Equipo</th><th>Uso</th><th>Horas</th><th>Baterías</th><th class="r">Valor en libros</th><th>Estado</th></tr></thead><tbody>
+  ${FLEET.map(f => { const pct = f.next ? f.hours/f.next : 0; const cls = f.state==='Operativo'?'ok':f.state==='En mantenimiento'?'bad':'warn'; return `
+    <tr><td class="mono">${f.code}</td><td><b style="font-weight:600">${f.model}</b></td><td class="muted">${f.use}</td>
+    <td style="min-width:170px"><div class="small num" style="margin-bottom:5px">${f.hours.toLocaleString('es-EC',{minimumFractionDigits:1})} h${f.next?` · mantenimiento a las ${f.next} h`:''}</div>${f.next?`<div class="bar ${pct>.95?'warn':''}"><i style="width:${Math.min(100,pct*100)}%;${pct>.95?'':''}"></i></div>`:''}</td>
+    <td class="small muted">${f.batt}</td><td class="r num">${money(f.book)}</td><td><span class="chip ${cls}">${f.state}</span></td></tr>`; }).join('')}
+  </tbody></table></div></div>`;
+
+VIEWS.contame = () => head('Conexión con ContAme', 'La Academia se encarga de lo académico. ContAme factura, cobra y lleva la contabilidad. Los dos sistemas comparten datos solos, sin volver a digitar nada.') + `
+  <div class="card card-pad" style="display:flex;flex-direction:column;gap:16px">
+    <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center"><h2>Qué pasa cuando se matricula un alumno</h2><div class="legend"><span><i style="background:var(--accent)"></i>AmePhia Academia</span><span><i style="background:var(--fg)"></i>ContAme</span></div></div>
+    <div class="flow">
+      <div class="step"><span class="n">1</span><span class="who-side" style="color:var(--accent)">Academia</span><b>Matrícula</b><p class="small muted">Se registra al alumno, el curso, el grupo y quién paga (el alumno o su empresa).</p></div>
+      <div class="step ca"><span class="n">2</span><span class="who-side">ContAme</span><b>Factura electrónica</b><p class="small muted">Se emite, se firma y el SRI la autoriza. El RIDE y el XML llegan al correo del alumno.</p></div>
+      <div class="step ca"><span class="n">3</span><span class="who-side">ContAme</span><b>Cobro y cartera</b><p class="small muted">Contado, cuotas o pago en línea. El saldo de cada alumno se actualiza solo.</p></div>
+      <div class="step ca"><span class="n">4</span><span class="who-side">ContAme</span><b>Asiento contable</b><p class="small muted">Ingresos por capacitación y cuentas por cobrar, sin que el contador digite nada.</p></div>
+      <div class="step"><span class="n">5</span><span class="who-side" style="color:var(--accent)">Academia</span><b>Certificado liberado</b><p class="small muted">Con la nota aprobada, las horas de vuelo y la cuenta al día, se emite con QR.</p></div>
+    </div>
+  </div>
+  <div class="grid g3">
+    ${[['receipt','Facturación electrónica SRI','Matrículas, recertificaciones y cursos para empresas con factura autorizada en segundos.'],
+       ['coin','Cobros y cartera','Saldo por alumno, cuotas, recordatorios y portal de pago. La Academia ve si está al día.'],
+       ['ledger','Contabilidad automática','Cada matrícula, cobro y pago genera su asiento NIIF para PYMES.'],
+       ['pay','Pago a instructores','Las horas dictadas pasan a cuentas por pagar o a la nómina del mes.'],
+       ['drone','Flota como activo fijo','Cada dron se deprecia solo y sus mantenimientos se registran como gasto.'],
+       ['spark','Impuestos preparados','ContAme prepara el 104, el 103 y el ATS y recomienda qué declarar; el contador revisa y presenta.']]
+      .map(([i,t,d]) => `<div class="card card-pad why" style="gap:10px"><div><span class="ic">${ic(i)}</span><div><h3>${t}</h3><p class="small muted" style="margin-top:3px">${d}</p></div></div></div>`).join('')}
+  </div>
+  <div class="grid g-main">
+    <div class="card"><div class="card-head"><h2>Actividad sincronizada</h2><span class="chip ok"><span class="dot" style="width:6px;height:6px;box-shadow:none"></span>En línea</span></div>
+      <div class="list" id="events">${eventsHtml()}</div></div>
+    <div class="card"><div class="card-head"><h2>Configuración de la conexión</h2></div>
+      <div class="card-pad" style="display:flex;flex-direction:column;gap:14px">
+        <div class="dl" style="grid-template-columns:1fr">
+          <div><span>Empresa en ContAme</span><b>${COMPANY}</b></div>
+          <div><span>Punto de emisión</span><b class="mono">001-002 · Matriz Guayaquil</b></div>
+          <div><span>Cuenta de ingresos</span><b>4.1.01.05 · Ingresos por capacitación</b></div>
+          <div><span>Cursos enlazados a productos</span><b>${COURSES.length} de ${COURSES.length}</b></div>
+        </div>
+        <label class="switch"><input type="checkbox" checked id="sw-ride"><span>Enviar RIDE y XML al alumno al autorizar</span></label>
+        <label class="switch"><input type="checkbox" ${state.requirePaid?'checked':''} id="sw-paid"><span>Retener el certificado si hay saldo pendiente</span></label>
+        <label class="switch"><input type="checkbox" checked id="sw-inst"><span>Enviar horas de instructores a cuentas por pagar</span></label>
+      </div></div>
+  </div>`;
+function eventsHtml(){
+  const icn = {sri:'receipt', ledger:'ledger', pay:'coin', cert:'cert', wrench:'wrench'};
+  return EVENTS.slice(0,8).map(e => `<div><span class="av" style="background:var(--accent-soft);color:var(--accent)">${ic(icn[e.kind],'style="width:15px;height:15px"')}</span><div style="flex:1;min-width:0"><b style="font-weight:600">${esc(e.text)}</b><p class="small muted">${esc(e.sub)}</p></div><span class="small muted" style="white-space:nowrap">${e.t}</span></div>`).join('');
+}
+
+VIEWS.portal = () => {
+  const s = STUDENTS.find(x => x.id === PORTAL_ID), g = group(s.group), c = course(g.course), f = finalGrade(s), pct = Math.min(1, s.flightMin/(c.minFlight*60));
+  const circ = 2*Math.PI*26;
+  return head('Portal del alumno', 'Lo que ve el alumno en su celular: clases, notas, horas de vuelo, pagos y su certificado.') + `
+  <div class="portal">
+    <div class="phone"><div class="phone-in">
+      <div class="ph-top"><span class="small" style="opacity:.85">AmePhia Academia</span><span class="hi">Hola, ${esc(s.name.split(' ')[0])}</span><span class="small" style="opacity:.85">${esc(c.name)} · ${g.id}</span></div>
+      <div class="ph-body">
+        <div class="ph-card" style="flex-direction:row;align-items:center;gap:14px">
+          <svg class="ring" viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="none" stroke="var(--surface-2)" stroke-width="7"/><circle cx="32" cy="32" r="26" fill="none" stroke="var(--accent)" stroke-width="7" stroke-linecap="round" stroke-dasharray="${circ*pct} ${circ}" transform="rotate(-90 32 32)"/><text x="32" y="36" text-anchor="middle" font-size="13" font-weight="700" fill="var(--fg)" font-family="Inter Tight, Inter, sans-serif">${Math.round(pct*100)}%</text></svg>
+          <div><b>Horas de vuelo</b><p class="small muted">${hrs(s.flightMin)} de ${c.minFlight} h · faltan ${hrs(Math.max(0,c.minFlight*60-s.flightMin))} h</p></div>
+        </div>
+        <div class="ph-card"><span class="eyebrow">Próxima clase</span><b>Circuitos y aterrizaje de precisión</b><span class="small muted">Sábado 21 nov · 08:00 · Campo Samborondón</span><span class="chip ok" style="align-self:flex-start">Dron asignado: DR-02</span></div>
+        <div class="ph-card"><div style="display:flex;justify-content:space-between"><span class="eyebrow">Mis notas</span><b class="num">${n1(f.value)}</b></div>
+          ${[['Teórico','teo'],['Simulador','sim'],['Práctica de vuelo','vuelo']].map(([l,k]) => `<div style="display:flex;justify-content:space-between" class="small"><span>${l}</span><b class="num">${n1(s.g[k])}</b></div>`).join('')}
+          <div style="display:flex;justify-content:space-between" class="small"><span>Asistencia</span><b class="num">${s.g.asis} %</b></div></div>
+        <div class="ph-card"><span class="eyebrow">Pagos</span>
+          <div style="display:flex;justify-content:space-between;align-items:center" class="small"><span>Factura ${s.invoices[0].num}</span><span class="chip ok">Pagada</span></div>
+          <span class="small muted">Autorizada por el SRI · ${money(s.invoices[0].total)}</span>
+          <button class="btn sm" data-act="toast" data-msg="Se descargaría el RIDE en PDF desde ContAme.">${ic('download')}Descargar factura</button></div>
+        <div class="ph-card"><span class="eyebrow">Mi certificado</span><p class="small">Se habilita al aprobar el curso y completar las ${c.minFlight} h de vuelo.</p><div class="bar"><i style="width:${Math.round(g.progress*100)}%"></i></div><span class="small muted">Curso al ${Math.round(g.progress*100)} % · termina el ${fd(g.end)}</span></div>
+      </div>
+    </div></div>
+    <div class="card card-pad why">
+      <h2>Por qué le sirve a la escuela</h2>
+      ${[['phone','Menos llamadas y mensajes','El alumno consulta su horario, el dron asignado y sus notas sin escribir a coordinación.'],
+         ['coin','Cobra antes','Ve su saldo y descarga su factura. El pago se registra en ContAme y la cartera queda al día.'],
+         ['cert','Certificado en el celular','Al aprobar, descarga su certificado con QR y lo comparte con la empresa que lo contrata.'],
+         ['shield','Confianza para las empresas','Cualquier empresa verifica el certificado en línea con el código o el QR.']]
+        .map(([i,t,d]) => `<div><span class="ic">${ic(i)}</span><div><h3>${t}</h3><p class="small muted" style="margin-top:3px">${d}</p></div></div>`).join('')}
+    </div>
+  </div>`;
+};
+
+VIEWS.verificar = () => `
+  <div class="verify">
+    <div style="text-align:center;display:flex;flex-direction:column;gap:8px;align-items:center">
+      <span class="why"><span class="ic" style="width:48px;height:48px;border-radius:14px">${ic('shield','style="width:24px;height:24px"')}</span></span>
+      <h1>Verificar un certificado</h1>
+      <p class="muted">Escribe el código impreso en el certificado o escanea su QR. Esta página es pública para que cualquier empresa compruebe que el piloto está certificado.</p>
+    </div>
+    <form class="card card-pad" id="verify-form" style="display:flex;flex-direction:column;gap:12px">
+      <div class="vrow"><input id="vcode" class="input" placeholder="AA-RPAS101-2025-0123" value="${esc(state.verifyCode)}" aria-label="Código del certificado"><button class="btn primary" type="submit">Verificar</button></div>
+      <div class="small muted" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">Prueba con: ${CERTS.slice(0,3).map(c => `<button type="button" class="chip mono" style="border:0;cursor:pointer" data-act="vfill" data-code="${c.code}">${c.code}</button>`).join('')}</div>
+    </form>
+    <div id="vres"></div>
+  </div>`;
+AFTER.verificar = () => { if (state.verifyCode) doVerify(); };
+function doVerify(){
+  const code = state.verifyCode.trim().toUpperCase(), c = CERTS.find(x => x.code === code), el = document.getElementById('vres');
+  if (!code) { el.innerHTML = ''; return; }
+  if (!c) { el.innerHTML = `<div class="card vres"><div class="vok"><span class="big bad">${ic('x')}</span><div><h2>No encontramos ese código</h2><p class="small muted">Revisa que esté escrito igual que en el certificado, con guiones.</p></div></div></div>`; return; }
+  const d = daysTo(c.expires), co = course(c.course);
+  el.innerHTML = `<div class="card vres"><div class="vok"><span class="big ${d<0?'bad':''}">${ic(d<0?'x':'check')}</span><div><h2>${d<0?'Certificado vencido':'Certificado válido'}</h2><p class="small muted">Emitido por ${COMPANY} con AmePhia Academia</p></div></div>
+    <div class="dl"><div><span>Titular</span><b>${esc(c.name)}</b></div><div><span>Cédula</span><b class="num">${c.ced.slice(0,4)}•••••${c.ced.slice(-1)}</b></div>
+    <div><span>Certificación</span><b>${esc(co.cert)}</b></div><div><span>Horas de vuelo acreditadas</span><b class="num">${hrs(c.flightMin)} h</b></div>
+    <div><span>Emitido</span><b>${fd(c.issued)}</b></div><div><span>Vigente hasta</span><b style="color:${d<0?'var(--bad)':'inherit'}">${fd(c.expires)}</b></div></div>
+    <button class="btn" data-act="cert" data-code="${c.code}" style="align-self:flex-start">Ver certificado</button></div>`;
+}
+
+/* ===================== Modales ===================== */
+function openModal(html, {wide=false, drawer=false} = {}){
+  const layer = document.getElementById('layer');
+  layer.innerHTML = `<div class="overlay ${drawer?'drawer':''}" data-act="close-overlay"><div class="modal ${wide?'wide':''}" role="dialog" aria-modal="true">${html}</div></div>`;
+  const f = layer.querySelector('input,select,button:not([data-act=close])'); if (f) setTimeout(() => f.focus(), 30);
+}
+function closeModal(){ document.getElementById('layer').innerHTML = ''; }
+const mhead = (t, s='') => `<div class="modal-head"><div><h2>${t}</h2>${s?`<p class="small muted" style="margin-top:3px">${s}</p>`:''}</div><button class="btn sm ghost" data-act="close" aria-label="Cerrar">${ic('x')}</button></div>`;
+
+function toast(msg){
+  const w = document.getElementById('toasts'), t = document.createElement('div');
+  t.className = 'toast'; t.innerHTML = ic('check') + '<span>' + msg + '</span>'; w.appendChild(t);
+  setTimeout(() => { t.style.transition = 'opacity .3s'; t.style.opacity = '0'; setTimeout(() => t.remove(), 320); }, 3600);
+}
+
+function studentDrawer(id){
+  const s = STUDENTS.find(x => x.id === id), g = group(s.group), c = course(g.course), f = finalGrade(s), a = academic(s), e = eligibility(s);
+  const cert = CERTS.find(x => x.sid === s.id);
+  openModal(mhead(esc(s.name), `${s.id} · ${c.id} · ${g.id} · ${g.city}`) + `
+    <div class="modal-body">
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><span class="chip ${a.cls}">${a.label}</span>${payChip(s)}${s.payer?`<span class="chip">Paga: ${esc(s.payer)}</span>`:''}</div>
+      <div class="sec"><span class="eyebrow">Datos</span><div class="dl">
+        <div><span>Cédula</span><b class="num">${s.ced}</b></div><div><span>Teléfono</span><b class="num">${s.phone}</b></div>
+        <div><span>Correo</span><b>${esc(s.email)}</b></div><div><span>Matriculado</span><b>${fd(s.enrolled)}</b></div></div></div>
+      <div class="sec"><span class="eyebrow">Académico</span>
+        <div class="dl">${[['Teórico (30 %)','teo'],['Simulador (15 %)','sim'],['Práctica de vuelo (45 %)','vuelo']].map(([l,k]) => `<div><span>${l}</span><b class="num">${n1(s.g[k])}</b></div>`).join('')}
+        <div><span>Asistencia (10 %)</span><b class="num">${s.g.asis ?? '—'} %</b></div><div><span>Nota ${f.complete?'final':'parcial'}</span><b class="num" style="font-size:18px;font-family:var(--font-display)">${n1(f.value)}</b></div>
+        <div><span>Horas de vuelo</span><b class="num">${hrs(s.flightMin)} de ${c.minFlight} h</b></div></div>
+        <button class="btn sm" style="align-self:flex-start" data-act="goto-log" data-id="${s.id}">${ic('log')}Ver bitácora de vuelo</button></div>
+      <div class="sec"><span class="eyebrow">Facturas y pagos · desde ContAme</span>
+        ${s.invoices.map(iv => `<div class="inv"><div class="inv-row"><b class="mono">Factura ${iv.num}</b><span class="chip ok">${ic('check','style="width:12px;height:12px"')}${iv.sri} por el SRI</span></div>
+          <div class="small muted">${esc(iv.concept)} · a nombre de ${esc(iv.to)} · ${fd(iv.date)}</div>
+          <div class="inv-row small"><span>Total <b class="num">${money(iv.total)}</b> · cobrado <b class="num">${money(iv.paid)}</b></span>${iv.total-iv.paid>0?`<span class="chip warn">Saldo ${money(iv.total-iv.paid)}</span>`:'<span class="chip ok">Pagada</span>'}</div>
+          <div class="small muted">Asiento contable <span class="mono">${iv.entry}</span></div></div>`).join('')}
+        ${s.balance>0?`<button class="btn sm" style="align-self:flex-start" data-act="pay" data-id="${s.id}">${ic('coin')}Registrar cobro de ${money(s.balance)}</button>`:''}
+      </div>
+      <div class="sec"><span class="eyebrow">Certificado</span>
+        ${cert ? `<div class="inv"><div class="inv-row"><b class="mono">${cert.code}</b><button class="btn sm" data-act="cert" data-code="${cert.code}">Ver</button></div></div>` :
+          e.ok ? `<p class="small">Cumple todos los requisitos. Puedes emitirlo desde <a href="#notas" data-act="close">Notas</a>.</p>` :
+          `<div class="reasons" style="flex-direction:row;flex-wrap:wrap;gap:6px">${e.reasons.map(r => `<span class="chip ${r.cls}">${r.t}</span>`).join('')}</div>`}
+      </div>
+    </div>`, {drawer:true});
+}
+
+function certModal(code){
+  const c = CERTS.find(x => x.code === code), co = course(c.course);
+  openModal(mhead('Certificado', c.code) + `
+    <div class="modal-body">
+      <div class="cert"><div class="cert-in">
+        <div class="seal" aria-hidden="true">${ic('drone')}</div>
+        <span class="issuer">${COMPANY}</span>
+        <h2>Certificado de competencia</h2>
+        <p>Se certifica que</p>
+        <div class="name">${esc(c.name)}</div>
+        <p>aprobó el programa <b>${esc(co.name)}</b> y queda acreditado como <b>${esc(co.cert)}</b>, con ${co.teo} horas de formación teórica y ${hrs(c.flightMin)} horas de vuelo registradas en bitácora.</p>
+        <div class="meta"><div>Nota final<b>${n1(c.grade)} / 10</b></div><div>Emitido<b>${fd(c.issued,{day:'numeric',month:'long',year:'numeric'})}</b></div><div>Vigente hasta<b>${fd(c.expires,{day:'numeric',month:'long',year:'numeric'})}</b></div></div>
+        <div class="cert-foot">
+          <div class="sig"><b>Cap. Andrés Molina</b>Director académico</div>
+          <div style="display:flex;flex-direction:column;align-items:center"><div class="qr" id="qr"></div><span class="code">${c.code}</span></div>
+          <div class="sig"><b>${esc(GROUPS.find(g=>g.course===c.course)?.instructor || 'Ing. Diego Paredes')}</b>Instructor evaluador</div>
+        </div>
+      </div></div>
+      <p class="small muted">El QR abre la página pública de verificación con este código.</p>
+    </div>
+    <div class="modal-foot"><a class="btn" href="#verificar" data-act="verify-this" data-code="${c.code}">${ic('shield')}Verificar</a><button class="btn primary" data-act="toast" data-msg="Certificado enviado al correo del titular (simulado en el demo).">Enviar al alumno</button></div>`, {wide:true});
+  const q = document.getElementById('qr');
+  try { new QRCode(q, {text:'https://amephia.com/academia/#verificar', width:88, height:88, colorDark:'#14202c', colorLight:'#ffffff', correctLevel:QRCode.CorrectLevel.M}); }
+  catch(e){ q.innerHTML = '<span class="code">QR</span>'; }
+}
+
+function enrollModal(){
+  const opts = GROUPS.map(g => { const c = course(g.course); return `<option value="${g.id}">${c.id} · ${g.id} · ${g.city} — ${money0(c.price)}</option>`; }).join('');
+  openModal(mhead('Matricular alumno', 'La factura se emite en ContAme y el SRI la autoriza en el mismo paso.') + `
+    <form id="enroll-form">
+    <div class="modal-body">
+      <div style="display:flex;justify-content:flex-end"><button type="button" class="btn sm ghost" data-act="enroll-sample">Llenar con datos de ejemplo</button></div>
+      <div class="form-grid">
+        <div class="field full"><label for="en-name">Nombre completo</label><input id="en-name" class="input" required placeholder="Nombre y apellido"></div>
+        <div class="field"><label for="en-ced">Cédula</label><input id="en-ced" class="input" inputmode="numeric" maxlength="10" placeholder="10 dígitos"></div>
+        <div class="field"><label for="en-phone">Celular</label><input id="en-phone" class="input" inputmode="tel" placeholder="09…"></div>
+        <div class="field full"><label for="en-email">Correo (recibe la factura y el acceso al portal)</label><input id="en-email" class="input" type="email" placeholder="nombre@correo.com"></div>
+        <div class="field full"><label for="en-group">Curso y grupo</label><select id="en-group" class="select">${opts}</select></div>
+        <div class="field"><label for="en-payer">¿Quién paga?</label><select id="en-payer" class="select"><option value="">El alumno</option><option value="company">Una empresa</option></select></div>
+        <div class="field"><label for="en-plan">Forma de pago</label><select id="en-plan" class="select"><option value="full">Contado · transferencia</option><option value="card">Contado · tarjeta</option><option value="2">Dos cuotas</option></select></div>
+        <div class="field full" id="company-field" hidden><label for="en-company">Razón social de la empresa</label><input id="en-company" class="input" placeholder="Razón social que va en la factura"></div>
+      </div>
+      <label class="switch"><input type="checkbox" id="en-inv" checked><span>Emitir la factura electrónica en ContAme ahora</span></label>
+      <p class="small" id="en-err" style="color:var(--bad)" hidden>Escribe el nombre del alumno para continuar.</p>
+    </div>
+    <div class="modal-foot"><button type="button" class="btn" data-act="close">Cancelar</button><button type="submit" class="btn primary">${ic('check')}Matricular y facturar</button></div>
+    </form>`);
+}
+function runEnroll(){
+  const name = document.getElementById('en-name').value.trim();
+  if (!name) { document.getElementById('en-err').hidden = false; document.getElementById('en-name').focus(); return; }
+  const gid = document.getElementById('en-group').value, g = group(gid), c = course(g.course);
+  const plan = document.getElementById('en-plan').value, invoice = document.getElementById('en-inv').checked;
+  const company = document.getElementById('en-payer').value === 'company' ? (document.getElementById('en-company').value.trim() || 'Empresa patrocinadora') : null;
+  const email = document.getElementById('en-email').value.trim() || slug(name)+'@ejemplo.ec';
+  const s = { id:'AL-'+String(1040 + STUDENTS.length + 1).padStart(4,'0'), name, ced: document.getElementById('en-ced').value.trim() || '0900000000', email, phone: document.getElementById('en-phone').value.trim() || '—',
+    city:g.city, group:gid, payer:company, g:{teo:null,sim:null,vuelo:null,asis:null}, flightMin:0, balance: plan==='2' ? c.price/2 : 0, enrolled: iso(TODAY), isNew:true };
+  const inv = buildInvoice(s); inv.date = iso(TODAY); inv.entry = '2026-11-'+String(entrySeq).padStart(4,'0');
+  s.invoices = invoice ? [inv] : [];
+  const steps = [
+    ['Alumno registrado en la Academia', `${s.id} · ${c.id} · ${g.id}`],
+    ['Cliente creado en ContAme', company ? company : name],
+    ...(invoice ? [
+      ['Factura generada', `${inv.num} · ${money(c.price)}`],
+      ['Firmada y enviada al SRI', 'Firma electrónica de la empresa'],
+      ['Autorizada por el SRI', 'Clave de acceso de 49 dígitos registrada'],
+      ['RIDE y XML enviados al correo', email],
+      ['Asiento contable registrado', `${inv.entry} · cuentas por cobrar e ingresos por capacitación`],
+      [plan==='2' ? 'Primera cuota cobrada, segunda en cartera' : 'Cobro registrado', plan==='2' ? `Cobrado ${money(c.price/2)} · saldo ${money(c.price/2)}` : money(c.price)]
+    ] : []),
+    ['Acceso al portal enviado', 'El alumno ya ve su horario y su próxima clase']
+  ];
+  document.querySelector('.modal').innerHTML = mhead('Matriculando a ' + esc(name), 'AmePhia Academia y ContAme trabajando juntos') +
+    `<div class="modal-body"><div class="steps">${steps.map(([t,d],i) => `<div class="pstep" id="ps-${i}"><span class="ic"></span><div><b style="font-weight:600">${esc(t)}</b><p class="small muted">${esc(d)}</p></div></div>`).join('')}</div></div>
+     <div class="modal-foot" id="ps-foot" hidden><button class="btn" data-act="close">Cerrar</button><button class="btn primary" data-act="student-after" data-id="${s.id}">Ver ficha del alumno</button></div>`;
+  let i = 0;
+  const tick = () => {
+    if (i > 0) { const p = document.getElementById('ps-'+(i-1)); if (!p) return; p.className = 'pstep done'; p.querySelector('.ic').innerHTML = ic('check'); }
+    if (i < steps.length) { const p = document.getElementById('ps-'+i); if (!p) return; p.className = 'pstep run'; i++; setTimeout(tick, i===4||i===5 ? 750 : 480); return; }
+    STUDENTS.unshift(s);
+    if (invoice) { EVENTS.unshift({t:'Ahora', kind:'ledger', text:'Asiento '+inv.entry+' contabilizado', sub:'Matrícula de '+name}, {t:'Ahora', kind:'sri', text:'Factura '+inv.num+' autorizada por el SRI', sub:'Matrícula de '+name+' · '+c.id}); entrySeq++; }
+    document.getElementById('ps-foot').hidden = false;
+    renderNav((location.hash||'#tablero').slice(1));
+    if (['alumnos','tablero','contame'].includes((location.hash||'#tablero').slice(1))) route();
+  };
+  tick();
+}
+
+function searchHtml(q){
+  q = q.trim().toLowerCase(); if (!q) return '';
+  const st = STUDENTS.filter(s => (s.name+' '+s.ced+' '+s.email).toLowerCase().includes(q)).slice(0,5);
+  const co = COURSES.filter(c => (c.id+' '+c.name).toLowerCase().includes(q)).slice(0,3);
+  const ce = CERTS.filter(c => (c.code+' '+c.name).toLowerCase().includes(q)).slice(0,3);
+  if (!st.length && !co.length && !ce.length) return `<div class="empty">Sin resultados para «${esc(q)}».</div>`;
+  return (st.length ? '<div class="ph eyebrow">Alumnos</div>' + st.map(s => `<button class="pi" data-act="student" data-id="${s.id}">${av(s.name,'sm')}<span style="min-width:0"><b style="display:block;font-weight:600">${esc(s.name)}</b><span class="small muted">${group(s.group).course} · ${s.group} · ${s.city}</span></span></button>`).join('') : '')
+    + (co.length ? '<div class="ph eyebrow">Cursos</div>' + co.map(c => `<button class="pi" data-act="go" data-h="cursos"><span class="kic">${ic(COURSE_ICON[c.id] || 'book')}</span><span><b style="display:block;font-weight:600">${esc(c.name)}</b><span class="small muted">${c.id} · ${money0(c.price)}</span></span></button>`).join('') : '')
+    + (ce.length ? '<div class="ph eyebrow">Certificados</div>' + ce.map(c => `<button class="pi" data-act="cert" data-code="${c.code}"><span class="kic">${ic('cert')}</span><span><b style="display:block;font-weight:600">${esc(c.name)}</b><span class="small muted mono">${c.code}</span></span></button>`).join('') : '');
+}
+function notifHtml(){
+  const exp = CERTS.filter(c => daysTo(c.expires) >= 0 && daysTo(c.expires) <= 60).length;
+  const items = [['warn','cert',exp+' certificados vencen pronto','Ofrece la renovación desde Certificados','certificados'],
+    ['bad','drone','DR-05 necesita mantenimiento','Llega a 100 h antes de la práctica del sábado','flota'],
+    ['acc','grade','G03 cierra notas el 28 de noviembre','3 alumnos listos para certificar','notas'],
+    ['ok','coin','Cobro de $225.00 recibido','ContAme actualizó la cartera de Joaquín Salazar','alumnos']];
+  return '<div class="ph eyebrow">Avisos</div>' + items.map(([c,i,t,d,h]) => `<button class="pi" data-act="go" data-h="${h}"><span class="kic" style="background:var(--${c==='acc'?'accent':c}-soft);color:var(--${c==='acc'?'accent':c})">${ic(i)}</span><span><b style="display:block;font-weight:600">${t}</b><span class="small muted">${d}</span></span></button>`).join('');
+}
+function closePops(){ const a = document.getElementById('sres'), b = document.getElementById('notif'); if (a) a.hidden = true; if (b) b.hidden = true; }
+document.addEventListener('click', e => { if (e.target.closest('.pop .pi') || (!e.target.closest('.search') && !e.target.closest('.notif-wrap'))) closePops(); }, true);
+document.addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); document.getElementById('gsearch').focus(); }
+  if (e.key === 'Escape') closePops();
+});
+
+/* ===================== Eventos ===================== */
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-act]'); if (!t) return;
+  const act = t.dataset.act;
+  if (act === 'close-overlay' && e.target !== t) return;
+  switch (act) {
+    case 'open-nav': document.body.classList.add('nav-open'); break;
+    case 'close-nav': document.body.classList.remove('nav-open'); break;
+    case 'close': case 'close-overlay': closeModal(); break;
+    case 'enroll': enrollModal(); break;
+    case 'enroll-sample':
+      document.getElementById('en-name').value = 'Renato Aguirre'; document.getElementById('en-ced').value = '0923456781';
+      document.getElementById('en-phone').value = '0987654321'; document.getElementById('en-email').value = 'renato.aguirre@ejemplo.ec';
+      document.getElementById('en-group').value = 'G15'; document.getElementById('en-plan').value = '2'; break;
+    case 'student': studentDrawer(t.dataset.id); break;
+    case 'student-after': location.hash = 'alumnos'; setTimeout(() => studentDrawer(t.dataset.id), 30); break;
+    case 'goto-log': state.bitStudent = t.dataset.id; closeModal(); location.hash === '#bitacora' ? route() : (location.hash = 'bitacora'); break;
+    case 'pay': { const s = STUDENTS.find(x => x.id === t.dataset.id); const amt = s.balance; if (s.invoices[0]) s.invoices[0].paid += amt; s.balance = 0;
+      EVENTS.unshift({t:'Ahora', kind:'pay', text:'Cobro registrado: '+money(amt), sub:s.name+' · cartera al día'});
+      studentDrawer(s.id); toast(`Cobro de ${money(amt)} registrado en ContAme. ${esc(s.name)} queda al día.`); if ((location.hash||'').slice(1)==='alumnos') renderRows(); break; }
+    case 'cert': certModal(t.dataset.code); break;
+    case 'verify-this': state.verifyCode = t.dataset.code; closeModal(); if (location.hash === '#verificar') route(); break;
+    case 'vfill': state.verifyCode = t.dataset.code; document.getElementById('vcode').value = t.dataset.code; doVerify(); break;
+    case 'recert': { const c = CERTS.find(x => x.code === t.dataset.code); toast(`Proforma de recertificación creada en ContAme para ${esc(c.name)} y lista para enviar.`); break; }
+    case 'toast': toast(t.dataset.msg); break;
+    case 'go': if (location.hash === '#'+t.dataset.h) route(); else location.hash = t.dataset.h; break;
+    case 'notif': { const n = document.getElementById('notif'); const open = n.hidden; closePops(); if (open) { n.innerHTML = notifHtml(); n.hidden = false; } break; }
+    case 'import': toast('Importa alumnos desde Excel o CSV; los repetidos se detectan por cédula.'); break;
+    case 'new-course': courseModal(); break;
+    case 'attendance': attendanceModal(+t.dataset.i); break;
+    case 'att-save': { const i = +t.dataset.i, x = SESSIONS[i]; const boxes = [...document.querySelectorAll('[data-att]')]; const p = boxes.filter(b => b.checked).length;
+      x.taken = true; closeModal(); route(); toast(`Asistencia guardada: ${p} de ${boxes.length} presentes.`); break; }
+    case 'issue': issueCerts(); break;
+  }
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+  if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('.sess')) { e.preventDefault(); e.target.click(); }
+});
+document.addEventListener('input', e => {
+  const t = e.target;
+  if (t.id === 'q') { state.q = t.value; renderRows(); }
+  if (t.id === 'gsearch') { const r = document.getElementById('sres'); const h = searchHtml(t.value); r.innerHTML = h; r.hidden = !h; }
+  if (t.dataset.grade) {
+    const s = STUDENTS.find(x => x.id === t.dataset.sid), raw = t.value.replace(',', '.').trim();
+    let v = raw === '' ? null : Number(raw);
+    if (v != null && (isNaN(v) || v < 0 || v > (t.dataset.grade==='asis' ? 100 : 10))) { t.style.borderColor = 'var(--bad)'; return; }
+    t.style.borderColor = ''; s.g[t.dataset.grade] = v; updateGradeRow(s);
+  }
+});
+document.addEventListener('change', e => {
+  const t = e.target;
+  if (t.id === 'fgroup') { state.fGroup = t.value; renderRows(); }
+  if (t.id === 'ngroup') { state.notasGroup = t.value; route(); }
+  if (t.id === 'bstudent') { state.bitStudent = t.value; route(); }
+  if (t.id === 'en-payer') document.getElementById('company-field').hidden = t.value !== 'company';
+  if (t.id === 'sw-paid') { state.requirePaid = t.checked; toast(t.checked ? 'El certificado se retiene mientras haya saldo pendiente.' : 'El certificado ya no depende del pago.'); }
+  if (t.id === 'sw-ride' || t.id === 'sw-inst') toast('Preferencia guardada.');
+});
+document.addEventListener('click', e => {
+  const f = e.target.closest('#fstate button'); if (f) { state.fState = f.dataset.f; document.querySelectorAll('#fstate button').forEach(b => b.classList.toggle('on', b === f)); renderRows(); }
+  const c = e.target.closest('#ctab button'); if (c) { state.certTab = c.dataset.t; route(); }
+});
+document.addEventListener('submit', e => {
+  e.preventDefault();
+  if (e.target.id === 'enroll-form') runEnroll();
+  if (e.target.id === 'verify-form') { state.verifyCode = document.getElementById('vcode').value; doVerify(); }
+  if (e.target.id === 'flight-form') {
+    const s = STUDENTS.find(x => x.id === state.bitStudent), m = Math.max(1, Math.min(120, +document.getElementById('ff-min').value || 0));
+    flightsOf(s).unshift({date:document.getElementById('ff-date').value || iso(TODAY), drone:document.getElementById('ff-drone').value, type:document.getElementById('ff-type').value, min:m, instructor:group(s.group).instructor, ok:true, note:document.getElementById('ff-note').value.trim()});
+    s.flightMin += m; route(); toast(`Vuelo de ${m} min registrado y firmado. ${esc(s.name)} suma ${hrs(s.flightMin)} h.`);
+  }
+  if (e.target.id === 'course-form') {
+    const name = document.getElementById('nc-name').value.trim(); if (!name) { document.getElementById('nc-name').focus(); return; }
+    const id = (document.getElementById('nc-code').value.trim() || 'CUR-'+(COURSES.length+1)).toUpperCase();
+    COURSES.push({id, name, level:'Especialización', teo:+document.getElementById('nc-teo').value||10, vuelo:+document.getElementById('nc-vuelo').value||10, minFlight:+document.getElementById('nc-min').value||0, price:+document.getElementById('nc-price').value||0, months:24, modules:['Módulos por definir'], cert:name});
+    DRONES_BY[id] = ['DR-03']; FLIGHT_TYPES[id] = ['Práctica general'];
+    closeModal(); route(); toast(`Curso ${esc(id)} creado y enlazado como producto en ContAme.`);
+  }
+});
+
+function courseModal(){
+  openModal(mhead('Nuevo curso', 'Se crea también como producto en ContAme para poder facturarlo.') + `
+  <form id="course-form"><div class="modal-body"><div class="form-grid">
+    <div class="field full"><label for="nc-name">Nombre del curso</label><input id="nc-name" class="input" placeholder="Ej.: Topografía con drones RTK"></div>
+    <div class="field"><label for="nc-code">Código</label><input id="nc-code" class="input" placeholder="TOP-330"></div>
+    <div class="field"><label for="nc-price">Precio (USD)</label><input id="nc-price" class="input" type="number" min="0" value="590"></div>
+    <div class="field"><label for="nc-teo">Horas de teoría</label><input id="nc-teo" class="input" type="number" min="0" value="14"></div>
+    <div class="field"><label for="nc-vuelo">Horas de práctica</label><input id="nc-vuelo" class="input" type="number" min="0" value="18"></div>
+    <div class="field"><label for="nc-min">Horas de vuelo mínimas para certificar</label><input id="nc-min" class="input" type="number" min="0" value="8"></div>
+  </div></div>
+  <div class="modal-foot"><button type="button" class="btn" data-act="close">Cancelar</button><button class="btn primary" type="submit">Crear curso</button></div></form>`);
+}
+
+function attendanceModal(i){
+  const x = SESSIONS[i], g = group(x.g), list = STUDENTS.filter(s => s.group === x.g);
+  const r = mulberry32(i*31+7);
+  openModal(mhead('Asistencia', `${esc(x.title)} · ${g.course} · ${g.id} · ${x.from}–${x.to}`) + `
+    <div class="modal-body">
+      ${x.drones?`<div class="inv"><div class="inv-row"><b>Drones reservados</b><span class="mono">${x.drones}</span></div><span class="small muted">Las horas de cada alumno se suman a su bitácora al cerrar la práctica.</span></div>`:''}
+      <div class="list" style="border:1px solid var(--border);border-radius:10px">${list.map(s => `
+        <div style="align-items:center">${av(s.name)}<div style="flex:1;min-width:0"><b style="font-weight:600">${esc(s.name)}</b><p class="small muted">Asistencia acumulada ${s.g.asis ?? 100} %</p></div>
+        <label class="switch"><input type="checkbox" data-att id="att-${i}-${s.id}" ${x.taken ? (r() > .12 ? 'checked' : '') : 'checked'}><span class="small">Presente</span></label></div>`).join('')}</div>
+    </div>
+    <div class="modal-foot"><button class="btn" data-act="close">Cancelar</button><button class="btn primary" data-act="att-save" data-i="${i}">${ic('check')}Guardar asistencia</button></div>`);
+}
+
+function issueCerts(){
+  const ready = STUDENTS.filter(s => s.group === state.notasGroup && eligibility(s).ok);
+  if (!ready.length) return;
+  const c = course(group(state.notasGroup).course);
+  ready.forEach(s => {
+    const exp = new Date(TODAY); exp.setMonth(exp.getMonth() + c.months);
+    CERTS.unshift({code:'AA-'+c.id.replace('-','')+'-2026-'+String(certSeq++).padStart(4,'0'), name:s.name, course:c.id, issued:iso(TODAY), expires:iso(exp), grade:finalGrade(s).value, flightMin:s.flightMin, ced:s.ced, sid:s.id});
+    EVENTS.unshift({t:'Ahora', kind:'cert', text:'Certificado emitido: '+s.name, sub:c.id+' · nota '+n1(finalGrade(s).value)+' · cuenta al día en ContAme'});
+  });
+  STUDENTS.filter(s => s.group === state.notasGroup).forEach(updateGradeRow);
+  toast(`${ready.length} certificado${ready.length>1?'s':''} emitido${ready.length>1?'s':''} con código y QR. Se enviaron a cada alumno.`);
+  setTimeout(() => certModal(CERTS[0].code), 400);
+}
+
+route();
+</script>
+</body>
+</html>
